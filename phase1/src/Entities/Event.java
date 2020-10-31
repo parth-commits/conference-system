@@ -1,6 +1,7 @@
-// import neccessary libraries
+package Entities;// import neccessary libraries
+import Entities.Attendee;
+
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class Event {
@@ -56,7 +57,7 @@ public class Event {
         return this.organizers;
     }
 
-    // add get Attendee using ID, index, name?
+    // add get Entities.Attendee using ID, index, name?
 
     // Setters
 
@@ -146,7 +147,7 @@ public class Event {
         return false;
     }
 
-    // shadows if an Organizer object is passed in
+    // shadows if an Entities.Organizer object is passed in
     public boolean removeorganizer(Organizer organizer){
         for (int i = 0; i < this.organizers.size(); i++){
             if (Organizer.equals(this.organizers.get(i), organizer)){
@@ -155,7 +156,7 @@ public class Event {
         }
         return false;
     }
-    // shadows if an Organizer id is passed in
+    // shadows if an Entities.Organizer id is passed in
     public boolean removeorganizer(int id){
         for (int i = 0; i < this.organizers.size(); i++){
             if (this.organizers.get(i).getId.equals(id)){
