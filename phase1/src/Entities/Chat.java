@@ -1,4 +1,5 @@
 package Entities;
+import java.util.ArrayList;
 
 public class Chat {
     private int id1;
@@ -6,8 +7,14 @@ public class Chat {
     private List<Message> messages;
 
     public Chat(int id1, int id2){
-        this.id1 = id1;
-        this.id2 = id2;
+        if (id1 > id2){
+            this.id1 = id2;
+            this.id2 = id1;
+        }
+        else{
+            this.id1 = id1;
+            this.id2 = id2;
+        }
         messages = new ArrayList<>();
     }
 
