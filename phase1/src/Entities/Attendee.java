@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Attendee extends User{
 
-    private ArrayList<String> signedUpEvents;
+    private ArrayList<Integer> signedUpEvents;
 
     private ArrayList<String> contacts;
 
@@ -18,23 +18,23 @@ public class Attendee extends User{
         return contacts;
     }
 
-    public ArrayList<String> getSignedUpEvents() {
+    public ArrayList<Integer> getSignedUpEvents() {
         return signedUpEvents;
     }
 
-    public void addContact(Integer user_id){
-        this.contacts.add(Integer.toString(user_id));
+    public boolean addContact(String user_id){
+        return this.contacts.add(user_id);
     }
 
-    public boolean removeContact(Integer user_id){
-        return this.contacts.remove(Integer.toString(user_id));
+    public boolean removeContact(String user_id){
+        return this.contacts.remove(user_id);
     }
 
-    public void addEvent(String eventTitle){
-        this.signedUpEvents.add(eventTitle);
+    public void addEvent(Integer EventId){
+        this.signedUpEvents.add(EventId);
     }
 
-    public boolean removeEvent(String eventTitle){
-        return this.signedUpEvents.remove(eventTitle);
+    public boolean removeEvent(Integer EventId){
+        return this.signedUpEvents.remove(EventId);
     }
 }
