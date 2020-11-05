@@ -26,15 +26,11 @@ public class AttendeeManager {
     }
 
     private boolean userExist(String userId){
-        if (tableOfAttendees.containsKey(userId)){
-            return true;
-        }
-        return false;
+        return tableOfAttendees.containsKey(userId);
     }
 
     private Attendee getAttendee(String userId){
-        Attendee attendee = tableOfAttendees.get(userId);
-        return attendee;
+        return tableOfAttendees.get(userId);
     }
 
     public void addEventToAttendee (Integer EventId, String userId){
