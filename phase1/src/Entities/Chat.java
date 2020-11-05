@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Chat {
     private int id1;
     private int id2;
-    private List<Message> messages;
+    private ArrayList<Message> messages;
 
     public Chat(int id1, int id2){
         if (id1 > id2){
@@ -26,12 +26,12 @@ public class Chat {
         return id2;
     }
 
-    public List<Message> getMessages() {
+    public ArrayList<Message> getMessages() {
         return messages;
     }
 
     public void addMessages(int sender, int recipient, String context){
-        newMessage = Message(sender, recipient, context);
+        Message newMessage = new Message(sender, recipient, context);
         messages.add(newMessage);
     }
 

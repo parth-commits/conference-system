@@ -1,6 +1,6 @@
 package Entities;
-import Java.util.Date;
-import java.util.String;
+import java.util.Date;
+
 
 public class Message {
     private int sender;
@@ -12,7 +12,7 @@ public class Message {
         this.sender = sender;
         this.recipient = recipient;
         this.context = context;
-        this.time = Date();
+        this.time = new Date();
     }
 
     public int getSender() {
@@ -27,7 +27,7 @@ public class Message {
         return context;
     }
 
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 }
