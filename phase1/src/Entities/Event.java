@@ -1,4 +1,5 @@
-package Entities;// import neccessary libraries
+package Entities;
+// import neccessary libraries
 import Entities.Attendee;
 
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ public class Event {
     // private String locationID;
     private Speaker speaker;
     private ArrayList<Attendee> attendees = new ArrayList<Attendee>();
-    private ArrayList<Organizer> organizers = new ArrayList<Organizer>();
+    // only one organizer
+    private Organizer organizer; // only 1 organizer, the organizer who created this event
 
 
     public Event(String title, String time, String location, Speaker speaker, Organizer organizer) {
@@ -24,7 +26,7 @@ public class Event {
         this.time = time;
         this.location = location;
         this.speaker = speaker;
-        this.organizers.add(organizer);
+        this.organizer = organizer;
     }
 
     // Getters
@@ -53,17 +55,17 @@ public class Event {
         return this.attendees;
     }
 
-    public ArrayList<Organizer> getOrganizers(){
-        return this.organizers;
+    public Organizer getOrganizer(){
+        return this.organizer;
     }
 
     // add get Entities.Attendee using ID, index, name?
 
     // Setters
 
-    public void setID(int id){
-        this.id = id;
-    }
+//    public void setID(int id){
+//        this.id = id;
+//    }
 
     public void setTitle(String title){
         this.title = title;
@@ -85,8 +87,8 @@ public class Event {
         this.attendees = attendees;
     }
 
-    public void setOrganizers(ArrayList<Organizer> organizers){
-        this.organizers = organizers;
+    public void setOrganizers(Organizer organizer){
+        this.organizer = organizer;
     }
 
     // Adding methods for attendees and organizers
@@ -96,9 +98,9 @@ public class Event {
     }
 
 
-    public void addOrganizer(Organizer organizer){
-        this.organizers.add(organizer);
-    }
+//    public void addOrganizer(Organizer organizer){
+//        this.organizers.add(organizer);
+//    }
 
     // Removing methods for attendees
 
@@ -133,37 +135,38 @@ public class Event {
         return false;
     }
 
+    // No longer needed since Organizer can only be 1
     // Removing methods for organizers
-
-    public boolean removeOrganizerID(int index){
-        // add to check if index within length
-        if (index >= this.organizers.size()){
-            return false;
-        }
-        Organizer x = this.organizers.remove(index);
-        if (x != null){
-            return true;
-        }
-        return false;
-    }
-
-    // shadows if an Entities.Organizer object is passed in
-    public boolean removeorganizer(Organizer organizer){
-        for (int i = 0; i < this.organizers.size(); i++){
-            if (Organizer.equals(this.organizers.get(i), organizer)){
-                return this.removeOrganizerID(i);
-            }
-        }
-        return false;
-    }
-    // shadows if an Entities.Organizer id is passed in
-    public boolean removeorganizer(int id){
-        for (int i = 0; i < this.organizers.size(); i++){
-            if (this.organizers.get(i).getId.equals(id)){
-                return this.removeOrganizerID(i);
-            }
-        }
-        return false;
-    }
+//
+//    public boolean removeOrganizerID(int index){
+//        // add to check if index within length
+//        if (index >= this.organizers.size()){
+//            return false;
+//        }
+//        Organizer x = this.organizers.remove(index);
+//        if (x != null){
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    // shadows if an Entities.Organizer object is passed in
+//    public boolean removeorganizer(Organizer organizer){
+//        for (int i = 0; i < this.organizers.size(); i++){
+//            if (Organizer.equals(this.organizers.get(i), organizer)){
+//                return this.removeOrganizerID(i);
+//            }
+//        }
+//        return false;
+//    }
+//    // shadows if an Entities.Organizer id is passed in
+//    public boolean removeorganizer(int id){
+//        for (int i = 0; i < this.organizers.size(); i++){
+//            if (this.organizers.get(i).getId.equals(id)){
+//                return this.removeOrganizerID(i);
+//            }
+//        }
+//        return false;
+//    }
 }
 
