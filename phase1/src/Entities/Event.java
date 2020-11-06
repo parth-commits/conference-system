@@ -128,7 +128,7 @@ public class Event {
     // shadows if an attendee id is passed in
     public boolean removeAttendee(int id){
         for (int i = 0; i < this.attendees.size(); i++){
-            if (this.attendees.get(i).getId.equals(id)){
+            if (this.attendees.get(i).getUser_id().equals(id)){
                 return this.removeAttendeeID(i);
             }
         }

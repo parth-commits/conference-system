@@ -49,8 +49,8 @@ public class AttendeeManager {
     public void addContact (String userId, String otherUserId){
         // let's decide if we want string?
         if (userExist(userId) && userExist(otherUserId)){
-            (getAttendee(userId).addContact(otherUserId)) &&
-                    getAttendee(otherUserId).addContact(userId)
+            getAttendee(userId).addContact(otherUserId);
+                    getAttendee(otherUserId).addContact(userId);
         }
     }
 
