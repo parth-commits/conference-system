@@ -16,8 +16,8 @@ public class Organizer extends Attendee{
         this.eventsCreated = new ArrayList<>();
     }
 
-    public void addSpeakerCreated(Integer user_id){
-        this.speakersCreated.add(Integer.toString(user_id));
+    public void addSpeakerCreated(String user_id){
+        this.speakersCreated.add(user_id);
     }
 
     public void addEventCreated(String event_id){

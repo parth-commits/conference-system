@@ -22,13 +22,16 @@ public class ChatManager {
 
     public Chat findChat(int id1, int id2){
         int temp;
-        if (id1 > id2){
-            temp = id2;
-            id1 = id2;
-            id2 = temp;
-        }
+//        if (id1 > id2){
+//            temp = id2;
+//            id1 = id2;
+//            id2 = temp;
+//        }
         for (Chat chat : chats) {
             if ((chat.getId1() == id1) && (chat.getId2() == id2)) {
+                return chat;
+            }
+            else if ((chat.getId1() == id2) && (chat.getId2() == id1)){
                 return chat;
             }
         }
