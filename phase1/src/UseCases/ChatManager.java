@@ -21,7 +21,7 @@ public class ChatManager {
 
 
     public Chat findChat(int id1, int id2){
-        int temp;
+//        int temp;
 //        if (id1 > id2){
 //            temp = id2;
 //            id1 = id2;
