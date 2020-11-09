@@ -31,35 +31,43 @@ public class Event {
 
     // Getters
 
-    public int getID(){
+    public int getID() {
         return this.id;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return this.title;
     }
 
-    public String getTime(){
+    public String getTime() {
         return this.time;
     }
 
-    public String getLocation(){
+    public String getLocation() {
         return this.location;
     }
 
-    public Speaker getSpeaker(){
+    public Speaker getSpeaker() {
         return this.speaker;
     }
 
-    public ArrayList<Attendee> getAttendees(){
+    public ArrayList<Attendee> getAttendees() {
         return this.attendees;
     }
 
-    public Organizer getOrganizer(){
+    public Organizer getOrganizer() {
         return this.organizer;
     }
 
     // add get Entities.Attendee using ID, index, name?
+    public Attendee getAttendeeID(int id) {
+        for (Attendee x : attendees) {
+            if (x.getUser_id == id) {
+                return x;
+            }
+        }
+        return null;
+    }
 
     // Setters
 
@@ -67,33 +75,33 @@ public class Event {
 //        this.id = id;
 //    }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setTime(String time){
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public void setLocation(String location){
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setSpeaker(Speaker speaker){
+    public void setSpeaker(Speaker speaker) {
         this.speaker = speaker;
     }
 
-    public void setAttendees(ArrayList<Attendee> attendees){
+    public void setAttendees(ArrayList<Attendee> attendees) {
         this.attendees = attendees;
     }
 
-    public void setOrganizers(Organizer organizer){
+    public void setOrganizers(Organizer organizer) {
         this.organizer = organizer;
     }
 
     // Adding methods for attendees and organizers
 
-    public void addAttendee(Attendee attendee){
+    public void addAttendee(Attendee attendee) {
         this.attendees.add(attendee);
     }
 
@@ -104,37 +112,38 @@ public class Event {
 
     // Removing methods for attendees
 
-    public boolean removeAttendeeID(int index){
+    public boolean removeAttendeeIndex(int index) {
         // add to check if index within length
-        if (index >= this.attendees.size()){
+        if (index >= this.attendees.size()) {
             return false;
         }
         Attendee x = this.attendees.remove(index);
-        if (x != null){
+        if (x != null) {
             return true;
         }
         return false;
     }
 
     // shadows if an attendee object is passed in
-    public boolean removeAttendee(Attendee attendee){
-        for (int i = 0; i < this.attendees.size(); i++){
-            if (Attendee.equals(this.attendees.get(i), attendee)){
-                return this.removeAttendeeID(i);
-            }
-        }
-        return false;
-    }
-    // shadows if an attendee id is passed in
-    public boolean removeAttendee(int id){
-        for (int i = 0; i < this.attendees.size(); i++){
-            if (this.attendees.get(i).getId.equals(id)){
-                return this.removeAttendeeID(i);
+    public boolean removeAttendee(Attendee attendee) {
+        for (int i = 0; i < this.attendees.size(); i++) {
+            if (Attendee.equals(this.attendees.get(i), attendee)) {
+                return this.removeAttendeeIndex(i);
             }
         }
         return false;
     }
 
+    // shadows if an attendee id is passed in
+    public boolean removeAttendee(int id) {
+        for (int i = 0; i < this.attendees.size(); i++) {
+            if (this.attendees.get(i).getUser_id.equals(id)) {
+                return this.removeAttendeeIndex(i);
+            }
+        }
+        return false;
+    }
+}
     // No longer needed since Organizer can only be 1
     // Removing methods for organizers
 //
@@ -168,5 +177,5 @@ public class Event {
 //        }
 //        return false;
 //    }
-}
+
 
