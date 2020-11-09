@@ -8,8 +8,7 @@ public class Room {
     private String name;
     private Integer capacity = 2;
     //should we use date or time???
-    private Hashtable<Date, Integer
-            > bookedTime;
+    private Hashtable<Date, Integer> bookedTime;
 
     public Room(String name){
         this.name = name;
