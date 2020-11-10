@@ -3,11 +3,11 @@ import Entities.User;
 
 public class ConferenceSystem {
     //UserManager userManager = new UserManager;
-    Eventmanager ....
+    //Eventmanager ....
 
     public void run (){
-        serialize();
-        /*create an instance of all use cases*/
+        /*serialize();
+        /*create an instance of all use cases
         LogInSystem login = new LogInSystem(Usermanager, eventmananger, etc);
 
 
@@ -20,7 +20,7 @@ public class ConferenceSystem {
         or speakermaanger.userExists(friends)
         attendeemanager.addContact(userInContext.getUser_id(), friendsuserid, organizermanager.getListofIDS(),  speakermanager.getlistofIDS());
 
-        organziermanager.addContact(friendsUserid, userInContext.getUser_id(), attendeemanager.getListofIDS(), speakermanager.getListofIDS());
+        organziermanager.addContact(friendsUserid, userInContext.getUser_id(), attendeemanager.getListofIDS(), speakermanager.getListofIDS());*/
 
         // do u want to login, sign up
 

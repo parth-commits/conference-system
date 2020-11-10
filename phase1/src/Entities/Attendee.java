@@ -22,8 +22,8 @@ public class Attendee extends User{
         return signedUpEvents;
     }
 
-    public boolean addContact(String user_id){
-        return this.contacts.add(user_id);
+    public void addContact(String user_id){
+        this.contacts.add(user_id);
     }
 
     public boolean removeContact(String user_id){
