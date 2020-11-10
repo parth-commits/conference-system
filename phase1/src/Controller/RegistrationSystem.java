@@ -7,12 +7,14 @@ import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.AttendeeManager;
 import UseCases.OrganizerManager;
+import UseCases.UserManager;
 
 import java.util.ArrayList;
 
 public class RegistrationSystem {
     private TextPresenter output;
     private KeyboardInput input;
+    private UserManager userManager;
     public RegistrationSystem() {
         this.output = new TextPresenter();
         this.input = new KeyboardInput();

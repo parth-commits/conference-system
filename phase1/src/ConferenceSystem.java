@@ -2,16 +2,17 @@ import Controller.LogInSystem;
 import Entities.User;
 
 public class ConferenceSystem {
-
+    //UserManager userManager = new UserManager;
+    Eventmanager ....
 
     public void run (){
-        UserManager userManager = new UserManager;
-        Eventmanager ....
+        serialize();
         /*create an instance of all use cases*/
-        LogInSystem login = new LogInSystem();
+        LogInSystem login = new LogInSystem(Usermanager, eventmananger, etc);
 
 
-        User userInContext;
+
+        User userInContext =  login.loginuser();
 
         if organziermanager.userExists(friendsid):
             att
