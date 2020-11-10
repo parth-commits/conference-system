@@ -10,8 +10,9 @@ public class ConferenceSystem {
         /*create an instance of all use cases*/
         LogInSystem login = new LogInSystem();
 
-        User userInContext;
 
+        User userInContext;
+        attendeemanager.addContact(userInContext.getUser_id(), friendsuserid, organizermanager.getListofIDS(),  speakermanager.getlistofIDS());
         // do u want to login, sign up
 
         /* loop until gets a valid id pass
