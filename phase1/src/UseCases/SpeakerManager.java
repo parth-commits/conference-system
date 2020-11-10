@@ -13,8 +13,8 @@ public class SpeakerManager {
         tableOfSpeakers = new Hashtable<>();
     }
 
-    public void addSpeaker(String user_id, String username, String passwords){
-        Organizer newSpeaker = new Speaker(user_id, username, passwords);
+    public void addSpeaker(String user_id, String username, String passwords, String organizerID){
+        Speaker newSpeaker = new Speaker(user_id, username, passwords, organizerID);
         tableOfSpeakers.put(newSpeaker.getUser_id(), newSpeaker);
     }
 
@@ -23,6 +23,10 @@ public class SpeakerManager {
             Speaker speaker = tableOfSpeakers.get(inputUserId);
             return speaker.getPasswords().equals(inputUserPassword);
         }return false;
+    }
+
+    public ArrayList<String> getUserIDs(){
+        return new ArrayList<String>(tableOfSpeakers.keySet());
     }
 
     private boolean userExist(String userId){

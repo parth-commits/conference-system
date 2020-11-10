@@ -2,7 +2,7 @@ package Gateway;
 import java.util.Scanner;
 
 public class KeyboardInput {
-    public String getKeyboardInput(String[] args){
+    public String getKeyboardInput(){
         Scanner scanner = new Scanner(System.in);
         String inputString = scanner.nextLine();
         return inputString;

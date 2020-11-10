@@ -3,6 +3,7 @@ package UseCases;
 import Entities.Attendee;
 import Entities.Organizer;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class OrganizerManager {
@@ -24,6 +25,10 @@ public class OrganizerManager {
             return organizer.getPasswords().equals(inputUserPassword);
         }
         return false;
+    }
+
+    public ArrayList<String> getUserIDs(){
+        return new ArrayList<String>(tableOfOrganizers.keySet());
     }
 
     private boolean userExist(String userId){

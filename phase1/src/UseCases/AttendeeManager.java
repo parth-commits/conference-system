@@ -24,6 +24,9 @@ public class AttendeeManager {
             return attendee.getPasswords().equals(inputUserPassword);
         }return false;
     }
+    public ArrayList<String> getUserIDs(){
+        return new ArrayList<String>(tableOfAttendees.keySet());
+    }
 
     private boolean userExist(String userId){
         return tableOfAttendees.containsKey(userId);

@@ -12,6 +12,11 @@ public class ConferenceSystem {
 
 
         User userInContext;
+
+        if organziermanager.userExists(friendsid):
+            att
+
+        or speakermaanger.userExists(friends)
         attendeemanager.addContact(userInContext.getUser_id(), friendsuserid, organizermanager.getListofIDS(),  speakermanager.getlistofIDS());
 
         organziermanager.addContact(friendsUserid, userInContext.getUser_id(), attendeemanager.getListofIDS(), speakermanager.getListofIDS());
@@ -31,3 +36,13 @@ public class ConferenceSystem {
             else if its a speaker, make it a speaker*/
     }
 }
+
+getinput = () from gateway
+while getinput != LOGOUT :
+    if getinput is x:
+        do x
+    else if getinput is y:
+        do y
+    ...
+    else:
+        getinput = () from gateway
