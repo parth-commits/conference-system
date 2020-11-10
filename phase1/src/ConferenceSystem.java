@@ -13,6 +13,9 @@ public class ConferenceSystem {
 
         User userInContext;
         attendeemanager.addContact(userInContext.getUser_id(), friendsuserid, organizermanager.getListofIDS(),  speakermanager.getlistofIDS());
+
+        organziermanager.addContact(friendsUserid, userInContext.getUser_id(), attendeemanager.getListofIDS(), speakermanager.getListofIDS());
+
         // do u want to login, sign up
 
         /* loop until gets a valid id pass
