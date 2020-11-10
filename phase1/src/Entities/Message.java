@@ -3,23 +3,23 @@ import java.util.Date;
 
 
 public class Message {
-    private int sender;
-    private int recipient;
+    private String sender;
+    private String recipient;
     private String context;
     private Date time;
 
-    public Message(int sender, int recipient, String context){
+    public Message(String sender, String recipient, String context){
         this.sender = sender;
         this.recipient = recipient;
         this.context = context;
         this.time = new Date();
     }
 
-    public int getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public int getRecipient() {
+    public String getRecipient() {
         return recipient;
     }
 

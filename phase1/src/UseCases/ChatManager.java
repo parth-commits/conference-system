@@ -10,17 +10,18 @@ public class ChatManager {
         chats = new ArrayList<>();
     }
 
-    public void addMessageToChat(int sender, int recipient, String context){
+    // add confirmation when creating new chat instances?
+    public void addMessageToChat(String sender, String recipient, String context){
         Chat chat = findChat(sender, recipient);
         chat.addMessages(sender, recipient, context);
     }
 
-    private void createChat(int id1, int id2){
+    private void createChat(String id1, String id2){
         chats.add(new Chat(id1, id2));
     }
 
 
-    public Chat findChat(int id1, int id2){
+    public Chat findChat(String id1, String id2){
 //        int temp;
 //        if (id1 > id2){
 //            temp = id2;
@@ -28,10 +29,10 @@ public class ChatManager {
 //            id2 = temp;
 //        }
         for (Chat chat : chats) {
-            if ((chat.getId1() == id1) && (chat.getId2() == id2)) {
+            if ((chat.getId1().equals(id1)) && (chat.getId2().equals(id2))) {
                 return chat;
             }
-            else if ((chat.getId1() == id2) && (chat.getId2() == id1)){
+            else if ((chat.getId1().equals(id2)) && (chat.getId2().equals(id1))){
                 return chat;
             }
         }

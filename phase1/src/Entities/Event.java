@@ -14,7 +14,7 @@ public class Event {
     private String location;
     // private String locationID;
     private Speaker speaker;
-    private ArrayList<Attendee> attendees = new ArrayList<Attendee>();
+    private ArrayList<Attendee> attendees = new ArrayList<>();
     // only one organizer
     private Organizer organizer; // only 1 organizer, the organizer who created this event
 
