@@ -70,7 +70,7 @@ public class OrganizerManager {
 
     /*but we need to actually create the speaker!!!*/
     //Following are Organizer ONLY actions
-    public void addSpeakerCreated(String user_id, String speaker_user_id){
+    public void setAddSpeakerCreated(String user_id, String speaker_user_id){
         if (userExist(user_id)) {
             getOrganizer(user_id).addSpeakerCreated(speaker_user_id);
         }
@@ -78,7 +78,7 @@ public class OrganizerManager {
 
     //but we actually have to add event to event system stuff!!!
     //this only tells that this user made the event, doesnt acc make the event
-    public void addEventCreated(String user_id, String event_id){
+    public void setAddEventCreated(String user_id, String event_id){
         if (userExist(user_id)) {
             getOrganizer(user_id).addEventCreated(event_id);
         }
@@ -86,11 +86,10 @@ public class OrganizerManager {
 
     //but we acc have to make a event!!
     //this only deletes it from the organizers list!!!
-    public void deleteEventCreated(String user_id, String event_id){
+    public void setDeleteEventCreated(String user_id, String event_id){
         if (userExist(user_id)) {
             getOrganizer(user_id).deleteEventCreated(event_id);
         }
     }
-
 
 }
