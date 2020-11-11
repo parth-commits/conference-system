@@ -5,6 +5,7 @@ public class Chat {
     //id of one of the person
     private String id1;
 
+
     //id of the other person
     private String id2;
 
