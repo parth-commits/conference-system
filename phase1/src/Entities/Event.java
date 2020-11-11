@@ -47,7 +47,7 @@ public class Event {
     }
 
     //gets the speaker
-    public String getSpeaker() {
+    public String getSpeakerID() {
         return this.speakerID;
     }
 

@@ -5,33 +5,38 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class AttendeeManager {
-/*    private ArrayList<Attendee> listOfAttendees;
-    private ArrayList<String> listOfAttendeeId;*/
+
+    //dictionary of all attendees
     private Hashtable<String, Attendee> tableOfAttendees;
 
+    //constructor
     public AttendeeManager(){tableOfAttendees = new Hashtable<>();}
 
+    //adds an attendee
     public void addAttendee(String user_id, String username, String passwords){
         Attendee newAttendee = new Attendee(user_id, username, passwords);
         tableOfAttendees.put(newAttendee.getUser_id(), newAttendee);
-//        listOfAttendees.add(newAttendee);
-//        listOfAttendeeId.add(user_id.toString());
     }
 
+    //verifys the login given the inputted credentials. true if correct login info, false otherwise
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
-            Attendee attendee = tableOfAttendees.get(inputUserId);
-            return attendee.getPasswords().equals(inputUserPassword);
-        }return false;
+            return tableOfAttendees.get(inputUserId).getPasswords().equals(inputUserPassword);
+        }
+        return false;
     }
+
+    //gets all the list of userids
     public ArrayList<String> getUserIDs(){
         return new ArrayList<String>(tableOfAttendees.keySet());
     }
 
+    //checks if the user exists
     private boolean userExist(String userId){
         return tableOfAttendees.containsKey(userId);
     }
 
+    //returns the attendee
     private Attendee getAttendee(String userId){
         return tableOfAttendees.get(userId);
     }

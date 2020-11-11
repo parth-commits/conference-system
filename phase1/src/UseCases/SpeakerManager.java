@@ -22,7 +22,8 @@ public class SpeakerManager {
         if (userExist(inputUserId)) {
             Speaker speaker = tableOfSpeakers.get(inputUserId);
             return speaker.getPasswords().equals(inputUserPassword);
-        }return false;
+        }
+        return false;
     }
 
     public ArrayList<String> getUserIDs(){

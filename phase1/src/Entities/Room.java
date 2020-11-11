@@ -6,9 +6,6 @@ import java.util.Hashtable;
 
 public class Room {
 
-    //name of the room
-    private String name;
-
     //capacity of the room
     private Integer capacity = 2;
 
@@ -20,25 +17,15 @@ public class Room {
 
 
     //the constructor
-    public Room(String name, String roomLoc){
-        this.name = name;
+    public Room(String roomLoc){
         this.roomLocation = roomLoc;
         this.bookedTime = new Hashtable<>();
     }
 
-    //returns the name of the room
-    public String getName(){
-        return this.name;
-    }
 
     //get the room location
     public String getRoomLocation() {
         return roomLocation;
-    }
-
-    //sets the name of the room
-    public void setName(String newName){
-        this.name = newName;
     }
 
     //gets the capacity of the room
