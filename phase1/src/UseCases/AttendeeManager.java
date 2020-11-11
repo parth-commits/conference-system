@@ -4,7 +4,7 @@ import Entities.Attendee;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class AttendeeManager {
+public class  AttendeeManager {
 
     //dictionary of all attendees
     private Hashtable<String, Attendee> tableOfAttendees;
@@ -32,7 +32,7 @@ public class AttendeeManager {
     }
 
     //checks if the user exists
-    private boolean userExist(String userId){
+    public boolean userExist(String userId){
         return tableOfAttendees.containsKey(userId);
     }
 

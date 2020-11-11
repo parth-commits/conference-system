@@ -31,7 +31,7 @@ public class OrganizerManager {
         return new ArrayList<String>(tableOfOrganizers.keySet());
     }
 
-    private boolean userExist(String userId){
+    public boolean userExist(String userId){
         return tableOfOrganizers.containsKey(userId);
     }
 

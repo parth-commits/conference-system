@@ -57,4 +57,24 @@ public class TextPresenter {
         System.out.println("1. Organizer");
         System.out.println("2. Attendee");
     }
+
+    public void loginEnterID(boolean checker){
+        if (checker){
+            System.out.println("Please enter your user id");
+        }
+        else {
+            System.out.println("Your userid and/or password are incorrect. Please try again.");
+        }
+    }
+
+    public void loginPassword(boolean checker){
+        if (checker){
+            System.out.println("Please enter your password");
+        }
+    }
+    public void loginOrRegister(){
+        System.out.println("Would you like to register or login?");
+        System.out.println("1. Register");
+        System.out.println("2. Login");
+    }
 }

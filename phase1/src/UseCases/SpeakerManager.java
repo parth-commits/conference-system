@@ -30,7 +30,7 @@ public class SpeakerManager {
         return new ArrayList<String>(tableOfSpeakers.keySet());
     }
 
-    private boolean userExist(String userId){
+    public boolean userExist(String userId){
         return tableOfSpeakers.containsKey(userId);
     }
 
