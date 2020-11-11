@@ -34,4 +34,7 @@ public abstract class User {
         this.passwords = passwords;
     }
 
+    public abstract void addContact(String currentUserId);
+
+    public abstract boolean removeContact(String currentUserId);
 }

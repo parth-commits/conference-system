@@ -2,16 +2,17 @@ import Controller.LogInSystem;
 import Entities.User;
 
 public class ConferenceSystem {
-
+    //UserManager userManager = new UserManager;
+    //Eventmanager ....
 
     public void run (){
-        UserManager userManager = new UserManager;
-        Eventmanager ....
-        /*create an instance of all use cases*/
-        LogInSystem login = new LogInSystem();
+        /*serialize();
+        /*create an instance of all use cases
+        LogInSystem login = new LogInSystem(Usermanager, eventmananger, etc);
 
 
-        User userInContext;
+
+        User userInContext =  login.loginuser();
 
         if organziermanager.userExists(friendsid):
             att
@@ -19,7 +20,7 @@ public class ConferenceSystem {
         or speakermaanger.userExists(friends)
         attendeemanager.addContact(userInContext.getUser_id(), friendsuserid, organizermanager.getListofIDS(),  speakermanager.getlistofIDS());
 
-        organziermanager.addContact(friendsUserid, userInContext.getUser_id(), attendeemanager.getListofIDS(), speakermanager.getListofIDS());
+        organziermanager.addContact(friendsUserid, userInContext.getUser_id(), attendeemanager.getListofIDS(), speakermanager.getListofIDS());*/
 
         // do u want to login, sign up
 
