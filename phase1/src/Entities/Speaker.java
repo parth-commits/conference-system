@@ -4,41 +4,31 @@ import java.util.ArrayList;
 
 public class Speaker extends User{
 
-    private ArrayList<String> contacts;
-    //store the user_id of an Attendee instead of the Attendee to avoid breaking clean architecture.
-    private ArrayList<String> assignEvents;
-    //we store the event_id of an event.
+    //list of assigned events
+    private ArrayList<Integer> assignEvents;
+
+    //userid of the organizer who created this event
     private String createdOrganizer;
-    //store the user_id of an Organizer.
 
     public Speaker(String user_id, String passwords, String name,  String organizer_id){
         super(user_id, name, passwords);
-        this.contacts = new ArrayList<>();
         this.assignEvents = new ArrayList<>();
         this.createdOrganizer = organizer_id;
-
-        this.contacts.add(organizer_id); //the speaker can send message to the Organizer who creates this account
+        this.addContact(organizer_id);//the speaker can send message to the Organizer who creates this account
     }
 
-
-    public ArrayList<String> getContacts(){
-        return contacts;
-    }
-
-    public ArrayList<String> getAssignEvents(){
+    //returns the list of assigned events
+    public ArrayList<Integer> getAssignEvents(){
         return assignEvents;
     }
 
-    public void setName(String name){
-        this.name = name;
+    //assigns the speaker a new event
+    public void setAssignEvent(int event_id){
+        assignEvents.add(event_id);
     }
 
-    public void addContact(String user_id){
-        this.contacts.add(user_id);
+    //gets the organizer who created this speaker
+    public String getCreatedOrganizer(){
+        return this.createdOrganizer;
     }
-
-    public boolean removeContact(String user_id){
-        return this.contacts.remove(user_id);
-    }
-
 }

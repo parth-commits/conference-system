@@ -10,7 +10,6 @@ public class Event {
     private String title;
     private String time;
     private String location;
-    // private String locationID;
     private String speakerID;
     private ArrayList<String> attendees;
     private String organizerID;
