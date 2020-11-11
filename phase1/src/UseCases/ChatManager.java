@@ -22,12 +22,6 @@ public class ChatManager {
 
 
     public Chat findChat(String id1, String id2){
-//        int temp;
-//        if (id1 > id2){
-//            temp = id2;
-//            id1 = id2;
-//            id2 = temp;
-//        }
         for (Chat chat : chats) {
             if ((chat.getId1().equals(id1)) && (chat.getId2().equals(id2))) {
                 return chat;
