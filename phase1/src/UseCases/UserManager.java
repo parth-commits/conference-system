@@ -81,12 +81,6 @@ public class UserManager {
         if (exists == 1){
             return tableOfOrganizers.get(userId);
         }
-        else if (exists == 2){
-            return tableOfAttendees.get(userId);
-        }
-        else{
-            return tableOfSpeakers.get(userId);
-        }
     }
 
     //returns 1 if entered id is a organizer, 2 if its a attendee, 3 if its a speaker. returns -1 if the given id doesnt
@@ -132,6 +126,7 @@ public class UserManager {
             return true;
         }
     }
+
 
     public void addEventToAttendeeOrOrganizer (Integer EventId, String userId){
         int current = userExistandType(userId);
