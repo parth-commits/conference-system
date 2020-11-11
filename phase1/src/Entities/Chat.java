@@ -1,6 +1,5 @@
 package Entities;
 import java.util.ArrayList;
-
 public class Chat {
     private String id1;
     private String id2;
