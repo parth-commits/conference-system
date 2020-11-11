@@ -1,6 +1,4 @@
 package Entities;
-// import neccessary libraries
-import Entities.Attendee;
 
 import java.util.ArrayList;
 
@@ -12,170 +10,89 @@ public class Event {
     private String title;
     private String time;
     private String location;
-    // private String locationID;
-    private Speaker speaker;
-    private ArrayList<Attendee> attendees = new ArrayList<>();
-    // only one organizer
-    private Organizer organizer; // only 1 organizer, the organizer who created this event
+    private String speakerID;
+    private ArrayList<String> attendees;
+    private String organizerID;
 
 
-    public Event(String title, String time, String location, Speaker speaker, Organizer organizer) {
+    public Event(String title, String time, String location, String speakerID, String organizerID) {
         this.id = id_counter + 1;
         id_counter++;
         this.title = title;
         this.time = time;
         this.location = location;
-        this.speaker = speaker;
-        this.organizer = organizer;
+        this.speakerID = speakerID;
+        this.organizerID = organizerID;
+        this.attendees = new ArrayList<>();
     }
 
-    // Getters
-
+    //gets the id of the event
     public int getID() {
         return this.id;
     }
 
+    //gts the title of event
     public String getTitle() {
         return this.title;
     }
 
+    //gets the time of event
     public String getTime() {
         return this.time;
     }
 
+    //gets the location of event
     public String getLocation() {
         return this.location;
     }
 
-    public Speaker getSpeaker() {
-        return this.speaker;
+    //gets the speaker
+    public String getSpeaker() {
+        return this.speakerID;
     }
 
-    public ArrayList<Attendee> getAttendees() {
+    //returns the entire list of attendees
+    public ArrayList<String> getAttendees() {
         return this.attendees;
     }
 
-    public Organizer getOrganizer() {
-        return this.organizer;
+    //gets the organizer by id
+    public String getOrganizerID() {
+        return this.organizerID;
     }
 
-    // add get Entities.Attendee using ID, index, name?
-    public Attendee getAttendeeID(int id) {
-        for (Attendee x : attendees) {
-            if (x.getUser_id == id) {
-                return x;
-            }
-        }
-        return null;
-    }
-
-    // Setters
-
-//    public void setID(int id){
-//        this.id = id;
-//    }
-
+    //sets title of event
     public void setTitle(String title) {
         this.title = title;
     }
 
+    //sets time of event
     public void setTime(String time) {
         this.time = time;
     }
 
+    //sets location of event
     public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setSpeaker(Speaker speaker) {
-        this.speaker = speaker;
+    //sets speaker by id
+    public void setSpeaker(String speaker) {
+        this.speakerID = speaker;
     }
 
-    public void setAttendees(ArrayList<Attendee> attendees) {
-        this.attendees = attendees;
+    //sets organizer
+    public void setOrganizer(String organizer) {
+        this.organizerID = organizer;
     }
 
-    public void setOrganizers(Organizer organizer) {
-        this.organizer = organizer;
+    // adds attendee based on given id
+    public void addAttendee(String attendeeID) {
+        this.attendees.add(attendeeID);
     }
 
-    // Adding methods for attendees and organizers
-
-    public void addAttendee(Attendee attendee) {
-        this.attendees.add(attendee);
-    }
-
-
-//    public void addOrganizer(Organizer organizer){
-//        this.organizers.add(organizer);
-//    }
-
-    // Removing methods for attendees
-
-    public boolean removeAttendeeIndex(int index) {
-        // add to check if index within length
-        if (index >= this.attendees.size()) {
-            return false;
-        }
-        Attendee x = this.attendees.remove(index);
-        if (x != null) {
-            return true;
-        }
-        return false;
-    }
-
-    // shadows if an attendee object is passed in
-    public boolean removeAttendee(Attendee attendee) {
-        for (int i = 0; i < this.attendees.size(); i++) {
-            if (Attendee.equals(this.attendees.get(i), attendee)) {
-                return this.removeAttendeeIndex(i);
-            }
-        }
-        return false;
-    }
-
-    // shadows if an attendee id is passed in
-    public boolean removeAttendee(int id) {
-        for (int i = 0; i < this.attendees.size(); i++) {
-            if (this.attendees.get(i).getUser_id.equals(id)) {
-                return this.removeAttendeeIndex(i);
-            }
-        }
-        return false;
+    // Remove attendee based on given id. returns true if it removed the attendee, false otherwise
+    public boolean removeAttendee(String attendeeID) {
+        return this.attendees.remove(attendeeID);
     }
 }
-    // No longer needed since Organizer can only be 1
-    // Removing methods for organizers
-//
-//    public boolean removeOrganizerID(int index){
-//        // add to check if index within length
-//        if (index >= this.organizers.size()){
-//            return false;
-//        }
-//        Organizer x = this.organizers.remove(index);
-//        if (x != null){
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    // shadows if an Entities.Organizer object is passed in
-//    public boolean removeorganizer(Organizer organizer){
-//        for (int i = 0; i < this.organizers.size(); i++){
-//            if (Organizer.equals(this.organizers.get(i), organizer)){
-//                return this.removeOrganizerID(i);
-//            }
-//        }
-//        return false;
-//    }
-//    // shadows if an Entities.Organizer id is passed in
-//    public boolean removeorganizer(int id){
-//        for (int i = 0; i < this.organizers.size(); i++){
-//            if (this.organizers.get(i).getId.equals(id)){
-//                return this.removeOrganizerID(i);
-//            }
-//        }
-//        return false;
-//    }
-
-
