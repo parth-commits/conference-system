@@ -40,4 +40,18 @@ public class ChatManager {
         createChat(id1, id2);
         return chats.get(chats.size()-1);
     }
+
+    public boolean deleteChat(String id1, String id2){
+        for (int i = 0; i < chats.size(); i++){
+            if ((chats.get(i).getId1().equals(id1)) && (chats.get(i).getId2().equals(id2))) {
+                chats.remove(i);
+                return true;
+            }
+            else if ((chats.get(i).getId1().equals(id2)) && (chats.get(i).getId2().equals(id1))){
+                chats.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 }
