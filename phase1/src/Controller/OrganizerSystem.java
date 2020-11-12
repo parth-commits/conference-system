@@ -83,8 +83,12 @@ public class OrganizerSystem {
     private void joinLeaveEvent() {
     }
 
-
-
-
+    //returns true if the given userid exists in any 3 people's managers
+    private boolean userExists(String userid){
+        if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
+            return true;
+        }
+        return false;
+    }
 
 }
