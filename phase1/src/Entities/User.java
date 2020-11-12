@@ -60,6 +60,11 @@ public abstract class User {
         this.contacts.add(user_id);
     }
 
+    //checks if contact already exists
+    public boolean checkContact(String user_id){
+        return this.contacts.contains(user_id);
+    }
+
     //removes the contact by id from the users list of contacts. returns true if removing was successful, false otherwise
     public boolean removeContact(String user_id){
         return this.contacts.remove(user_id);
