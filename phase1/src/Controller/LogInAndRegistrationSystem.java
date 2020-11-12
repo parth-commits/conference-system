@@ -20,7 +20,7 @@ public class LogInAndRegistrationSystem {
         private SpeakerManager speakerManager;
 
         //constructor
-        public void LoginAndRegistrationSystem(AttendeeManager a, OrganizerManager b, SpeakerManager c) {
+        public LogInAndRegistrationSystem(AttendeeManager a, OrganizerManager b, SpeakerManager c) {
             this.output = new TextPresenter();
             this.input = new KeyboardInput();
             this.attendeeManager = a;
