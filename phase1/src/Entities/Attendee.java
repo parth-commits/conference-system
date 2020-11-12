@@ -27,4 +27,3 @@ public class Attendee extends User{
         return this.signedUpEvents.remove(EventId);
     }
     }
-
