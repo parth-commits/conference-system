@@ -115,14 +115,21 @@ public class TextPresenter {
 
     //Should One line outputs still be in presenter
     public void promptRecipient(){
-        System.out.println("Please enter user id of the recipient");
+        System.out.println("Please enter user id of the recipient: ");
+    }
+    public void promptEvents(){
+        System.out.println("Please enter the ids of the event (separated by a comma): ");
     }
     public void confirmCreateChat(String id){
-        System.out.println("Please confirm create chat with user" + id);
+        System.out.println("Please confirm create chat with user" + id + ": ");
         System.out.println("y/n");
     }
     public void promptContext(){
-        System.out.println("Please enter the message:");
+        System.out.println("Please enter the message: ");
+    }
+
+    public void promptContextEvent(String title){
+        System.out.println("Please enter the message for event " + title + ": ");
     }
 
     public void chatDNE(){
@@ -139,14 +146,23 @@ public class TextPresenter {
 
     // Outputs for Message System
     public void sendMsgOptions(int role){
+        // Organizer
         if (role == 1){
+            System.out.println("Send to: 1. all speakers, 2. one speaker, 3. all attendees, or 4. one attendee? ");
+        }
+        // Attendee
+        else if (role == 2){
             System.out.println("Would you like to send to 1. another Attendee or 2. a Speaker? ");
         }
-        else if (role == 2){
-            System.out.println("Select an event to send to all participants.");
-        }
+        // Speaker
         else if (role == 3){
-            System.out.println("Send to: 1. all speakers, 2. one speaker, 3. all attendees, or 4. one attendee?");
+            System.out.println("1. Select an event to send to all participants. 2. respond to an attendee ");
         }
+    }
+    public void msgOptionInvalid(){
+        System.out.println("Invalid Option, please enter again: ");
+    }
+    public void invalidRecipient(){
+        System.out.println("Invalid user ID, please enter again: ");
     }
 }
