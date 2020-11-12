@@ -18,7 +18,7 @@ public class  AttendeeManager {
         tableOfAttendees.put(newAttendee.getUser_id(), newAttendee);
     }
 
-    //verifys the login given the inputted credentials. true if correct login info, false otherwise
+    //verifies the login given the inputted credentials. true if correct login info, false otherwise
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
             return tableOfAttendees.get(inputUserId).getPasswords().equals(inputUserPassword);
@@ -26,7 +26,7 @@ public class  AttendeeManager {
         return false;
     }
 
-    //gets all the list of userids
+    //gets the list of all userids
     public ArrayList<String> getUserIDs(){
         return new ArrayList<String>(tableOfAttendees.keySet());
     }
@@ -42,31 +42,25 @@ public class  AttendeeManager {
     }
 
     public void addEventToAttendee (Integer EventId, String userId){
-        if (userExist(userId)) {
-            getAttendee(userId).addEvent(EventId);
-        }
+        getAttendee(userId).addEvent(EventId);
+
     }
 
     public void removeEvent(Integer EventId, String userId) {
-        // call the method of event manager
-        if (userExist(userId)) {
-            getAttendee(userId).removeEvent(EventId);
-        }
+        getAttendee(userId).removeEvent(EventId);
     }
 
     public void addContact (String userId, String otherUserId){
-        // let's decide if we want string?
-        if (userExist(userId) && userExist(otherUserId)){
-            getAttendee(userId).addContact(otherUserId);
-                    getAttendee(otherUserId).addContact(userId);
+        // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
+        getAttendee(userId).addContact(otherUserId);
         }
-    }
 
     public void removeContact (String userId, String otherUserId){
-        if (userExist(userId) && userExist(otherUserId)){
-            if (getAttendee(userId).removeContact(otherUserId)) {
-                getAttendee(otherUserId).removeContact(userId);
-            }
-        }
+        //assume both users exists (checked in controller) and userid is removed from otherUserID's contacts in controller as well.
+        getAttendee(userId).removeContact(otherUserId);
+    }
+
+    public ArrayList<Integer> getSignedUpEvents (String userId){
+        return getAttendee(userId).getSignedUpEvents();
     }
 }

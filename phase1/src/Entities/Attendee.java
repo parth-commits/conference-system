@@ -26,4 +26,6 @@ public class Attendee extends User{
     public boolean removeEvent(Integer EventId){
         return this.signedUpEvents.remove(EventId);
     }
+    }
+
 }
