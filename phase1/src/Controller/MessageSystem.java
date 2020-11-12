@@ -94,13 +94,13 @@ public class MessageSystem {
     public int userType(String id){
         // check current user status
         // 1 for attendee, 2 for speaker, 3 for organizer
-        if (attendeeManager.userExist(current)){
+        if (attendeeManager.userExist(id)){
             return 1;
         }
-        else if(speakerManager.userExist(current)){
+        else if(speakerManager.userExist(id)){
             return 2;
         }
-        else if (organizerManager.userExist(current)){
+        else if (organizerManager.userExist(id)){
             return 3;
         }
         else {
