@@ -129,6 +129,7 @@ public class TextPresenter {
         System.out.println("The chat doesn't exists.");
     }
 
+
     public void printChat(Chat chat){
         ArrayList<Message> messages = chat.getMessages();
         for (Message m:messages){
