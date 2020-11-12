@@ -91,10 +91,10 @@ public class TextPresenter {
 
     public void loginEnterID(boolean checker){
         if (checker){
-            System.out.println("Please enter your user id.");
+            System.out.println("Please enter your UserID.");
         }
         else {
-            System.out.println("Your user id and/or password are incorrect. Please try again.");
+            System.out.println("Your UserID and/or password are incorrect. Please try again.");
         }
     }
 
