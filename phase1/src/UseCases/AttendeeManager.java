@@ -46,6 +46,13 @@ public class  AttendeeManager {
 
     }
 
+    public boolean SignedUp(Integer EventId, String userId) {
+        if(getAttendee(userId).getSignedUpEvents().contains(EventId)){
+            return true;
+        }
+        return false;
+    }
+
     public void removeEvent(Integer EventId, String userId) {
         getAttendee(userId).removeEvent(EventId);
     }

@@ -31,7 +31,7 @@ public class SpeakerManager {
     public boolean userExist(String userId){ return tableOfSpeakers.containsKey(userId);
     }
 
-    private Speaker getSpeaker(String userId){
+    public Speaker getSpeaker(String userId){
         return tableOfSpeakers.get(userId);
     }
 
