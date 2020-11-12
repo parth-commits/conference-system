@@ -27,6 +27,9 @@ public class Speaker extends User{
         assignEvents.add(event_id);
     }
 
+    //removes an assigned event
+    public void removeAssignEvent(int event_id){assignEvents.remove(event_id);}
+
     //gets the organizer who created this speaker
     public String getCreatedOrganizer(){
         return this.createdOrganizer;

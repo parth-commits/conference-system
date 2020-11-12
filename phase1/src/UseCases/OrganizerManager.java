@@ -21,8 +21,7 @@ public class OrganizerManager {
 
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
-            Organizer organizer = tableOfOrganizers.get(inputUserId);
-            return organizer.getPasswords().equals(inputUserPassword);
+            return tableOfOrganizers.get(inputUserId).getPasswords().equals(inputUserPassword);
         }
         return false;
     }
@@ -31,7 +30,7 @@ public class OrganizerManager {
         return new ArrayList<String>(tableOfOrganizers.keySet());
     }
 
-    private boolean userExist(String userId){
+    public boolean userExist(String userId){
         return tableOfOrganizers.containsKey(userId);
     }
 
@@ -41,60 +40,45 @@ public class OrganizerManager {
 
     //An attendee action
     public void addEventToOrganizer (Integer EventId, String userId){
-        if (userExist(userId)) {
-            getOrganizer(userId).addEvent(EventId);
-        }
+        getOrganizer(userId).addEvent(EventId);
     }
 
     //An attendee action
     public void removeEvent(Integer EventId, String userId) {
-        // call the method of event manager
-        if (userExist(userId)) {
-            getOrganizer(userId).removeEvent(EventId);
-        }
+        getOrganizer(userId).removeEvent(EventId);
     }
 
     //An attendee action
     public void addContact (String userId, String otherUserId){
-        // let's decide if we want string?
-        if (userExist(userId) && userExist(otherUserId)){
-            getOrganizer(userId).addContact(otherUserId);
-            getOrganizer(otherUserId).addContact(userId);
-        }
+        // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
+        getOrganizer(userId).addContact(otherUserId);
     }
 
     //An attendee action
     public void removeContact (String userId, String otherUserId){
-        if (userExist(userId) && userExist(otherUserId)){
-            if (getOrganizer(userId).removeContact(otherUserId)) {
-                getOrganizer(otherUserId).removeContact(userId);
-            }
-        }
+        //assume both users exists (checked in controller) and userid is removed from otherUserID's contacts in controller as well.
+        getOrganizer(userId).removeContact(otherUserId);
     }
 
-
+    public ArrayList<Integer> getSignedUpEvents (String userId){
+        return getOrganizer(userId).getSignedUpEvents();
+    }
     /*but we need to actually create the speaker!!!*/
     //Following are Organizer ONLY actions
     public void setAddSpeakerCreated(String user_id, String speaker_user_id){
-        if (userExist(user_id)) {
-            getOrganizer(user_id).addSpeakerCreated(speaker_user_id);
-        }
+        getOrganizer(user_id).addSpeakerCreated(speaker_user_id);
     }
 
     //but we actually have to add event to event system stuff!!!
     //this only tells that this user made the event, doesnt acc make the event
     public void setAddEventCreated(String user_id, String event_id){
-        if (userExist(user_id)) {
-            getOrganizer(user_id).addEventCreated(event_id);
-        }
+        getOrganizer(user_id).addEventCreated(event_id);
     }
 
     //but we acc have to make a event!!
     //this only deletes it from the organizers list!!!
     public void setDeleteEventCreated(String user_id, String event_id){
-        if (userExist(user_id)) {
-            getOrganizer(user_id).deleteEventCreated(event_id);
-        }
+        getOrganizer(user_id).deleteEventCreated(event_id);
     }
 
 }

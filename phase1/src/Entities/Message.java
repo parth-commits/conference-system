@@ -5,10 +5,10 @@ import java.util.Date;
 
 public class Message {
 
-    //sender of the message, make sure this is the name of the person, not its id!!
+    //sender of the message
     private String sender;
 
-    //receipent of the message, make sure this is the name of the person, not its id!!
+    //receipent of the message
     private String recipient;
 
     //the actual text of the message
@@ -53,3 +53,7 @@ public class Message {
         return "[" + formatter.format(getTime()) + "] " + sender + ": " + context;
     }
 }
+
+/*example of the toString method*/
+//[01/12/2020 23:59:45] parth: hi!
+//[01/12/2020 23:59:59] tanmay: hi again!

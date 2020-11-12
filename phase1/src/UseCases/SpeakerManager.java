@@ -1,6 +1,5 @@
 package UseCases;
 
-import Entities.Attendee;
 import Entities.Speaker;
 
 import java.util.ArrayList;
@@ -13,24 +12,23 @@ public class SpeakerManager {
         tableOfSpeakers = new Hashtable<>();
     }
 
-    public void addSpeaker(String user_id, String username, String passwords, String organizerID){
-        Speaker newSpeaker = new Speaker(user_id, username, passwords, organizerID);
+    public void addSpeaker(String user_id, String passwords, String name, String organizerID){
+        Speaker newSpeaker = new Speaker(user_id, name, passwords, organizerID);
         tableOfSpeakers.put(newSpeaker.getUser_id(), newSpeaker);
     }
 
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
-            Speaker speaker = tableOfSpeakers.get(inputUserId);
-            return speaker.getPasswords().equals(inputUserPassword);
-        }return false;
+            return tableOfSpeakers.get(inputUserId).getPasswords().equals(inputUserPassword);
+        }
+        return false;
     }
 
     public ArrayList<String> getUserIDs(){
         return new ArrayList<String>(tableOfSpeakers.keySet());
     }
 
-    private boolean userExist(String userId){
-        return tableOfSpeakers.containsKey(userId);
+    public boolean userExist(String userId){ return tableOfSpeakers.containsKey(userId);
     }
 
     private Speaker getSpeaker(String userId){
@@ -38,30 +36,22 @@ public class SpeakerManager {
     }
 
     public void addEventToSpeaker (Integer EventId, String userId){
-        if (userExist(userId)) {
-            getSpeaker(userId).addEvent(EventId);
-        }
+        //assume the userid exists and is a speaker
+        getSpeaker(userId).setAssignEvent(EventId);
     }
 
     public void removeEvent(Integer EventId, String userId) {
-        if (userExist(userId)) {
-            getSpeaker(userId).removeEvent(EventId);
-        }
+        getSpeaker(userId).removeAssignEvent(EventId);
     }
 
     public void addContact (String userId, String otherUserId){
-        if (userExist(userId) && userExist(otherUserId)){
-            (getSpeaker(userId).addContact(otherUserId)) &&
-                    getSpeaker(otherUserId).addContact(userId);
-        }
+        // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
+        getSpeaker(userId).addContact(otherUserId);
     }
 
     public void removeContact (String userId, String otherUserId){
-        if (userExist(userId) && userExist(otherUserId)){
-            if (getSpeaker(userId).removeContact(otherUserId)) {
-                getSpeaker(otherUserId).removeContact(userId);
-            }
-        }
+        //assume both users exists (checked in controller) and userid is removed from otherUserID's contacts in controller as well.
+        getSpeaker(userId).removeContact(otherUserId);
     }
 
 
