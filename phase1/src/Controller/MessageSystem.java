@@ -10,19 +10,12 @@ public class MessageSystem {
     private TextPresenter output;
     private KeyboardInput input;
     private ChatManager chatManager;
-    private TextPresenter output;
-    private KeyboardInput input;
 
     private SpeakerManager speakerManager;
     private OrganizerManager organizerManager;
     private EventManager eventManager;
     private AttendeeManager attendeeManager;
 
-    public MessageSystem (){
-        this.chatManager = new ChatManager();
-        this.output = new TextPresenter();
-        this.input = new KeyboardInput();
-    }
 
     public MessageSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager) {
         this.speakerManager = speakerManager;
@@ -39,14 +32,14 @@ public class MessageSystem {
         return chatManager.findChat(id1, id2);
     }
 
-    public void sendMessage(String sender, String recipient, String context){
+    /*public void sendMessage(String sender, String recipient, String context){
         int role = userType(sender);
         output.sendMsgOptions(role);
         if (role == 1){
             // unfinished Ray
         }
         chatManager.addMessageToChat(sender, recipient, context);
-    }
+    }*/
 
     public void sendMessage(String sender){
         String recipient;
@@ -94,9 +87,9 @@ public class MessageSystem {
 
 
     // Do we need delete chat?
-    public boolean deleteChat(String id1, String id2){
+    /*public boolean deleteChat(String id1, String id2){
         return chatManager.deleteChat(id1, id2);
-    }
+    }*/
 
     public int userType(String id){
         // check current user status
