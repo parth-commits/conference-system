@@ -38,6 +38,11 @@ public class Room {
         return this.bookedTime;
     }
 
+    //checks if the room is booked at a given date/time
+    public boolean isBooked(Date date){
+        return bookedTime.containsKey(date);
+    }
+
     //adds an event to the given time in our dictionary
     public boolean addBookedTime(Date date, Integer EventId){
         //if the room is already booked, you cant add a new event!

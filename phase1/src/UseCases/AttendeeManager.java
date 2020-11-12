@@ -37,7 +37,7 @@ public class  AttendeeManager {
     }
 
     //returns the attendee
-    private Attendee getAttendee(String userId){
+    public Attendee getAttendee(String userId){
         return tableOfAttendees.get(userId);
     }
 
@@ -46,8 +46,20 @@ public class  AttendeeManager {
 
     }
 
+    public boolean SignedUp(Integer EventId, String userId) {
+        if(getAttendee(userId).getSignedUpEvents().contains(EventId)){
+            return true;
+        }
+        return false;
+    }
+
     public void removeEvent(Integer EventId, String userId) {
         getAttendee(userId).removeEvent(EventId);
+    }
+
+    //check if contact already exists
+    public boolean contactExists(String userId, String otherUserId){
+        return getAttendee(userId).checkContact(otherUserId);
     }
 
     public void addContact (String userId, String otherUserId){

@@ -48,6 +48,11 @@ public class OrganizerManager {
         getOrganizer(userId).removeEvent(EventId);
     }
 
+    //check if contact is in
+    public boolean contactExists(String userId, String otherUserId){
+        return getOrganizer(userId).checkContact(otherUserId);
+    }
+
     //An attendee action
     public void addContact (String userId, String otherUserId){
         // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
