@@ -38,7 +38,7 @@ public class OrganizerSystem {
             output.organizationSystemStartOptions();
             o = input.getKeyboardInput();
             if (o.equals("1")){
-                createSpeaker();
+                createSpeaker(userID);
             }
             else if (o.equals("2")){
                 scheduleASpeaker();
@@ -65,7 +65,34 @@ public class OrganizerSystem {
 
     }
 
-    private void createSpeaker() {
+    private void createSpeaker(String userID) {
+        output.enterSpeakerName();
+        String inputName = input.getKeyboardInput();
+        boolean untilCorrect = true;
+        boolean correct = true;
+        String inputID = "";
+        while (untilCorrect) {
+            output.enterSpeakerID(correct);
+            inputID = input.getKeyboardInput();
+            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
+                correct = false;
+            } else {
+                untilCorrect = false;
+            }
+        }
+        untilCorrect = true;
+        correct = true;
+        String inputPass = "";
+        while (untilCorrect) {
+            output.enterPassword(correct);
+            inputPass = input.getKeyboardInput();
+            if (inputPass.length() > 14 || inputPass.length() < 8) {
+                correct = false;
+            } else {
+                untilCorrect = false;
+            }
+        }
+        speakerManager.addSpeaker(inputID,inputPass,inputName, userID);
     }
 
     private void scheduleASpeaker() {

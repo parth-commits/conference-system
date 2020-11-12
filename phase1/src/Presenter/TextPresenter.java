@@ -114,7 +114,7 @@ public class TextPresenter {
     }
 
 
-    //Should One line outputs still be in presenter
+    //Should One line outputs still be in presenter answer by parth: yes!
     public void promptRecipient(){
         System.out.println("Please enter user id of the recipient: ");
     }
@@ -180,5 +180,16 @@ public class TextPresenter {
         System.out.println("\t6. Join/leave event");
         System.out.println("\t7. LOGOUT");
         System.out.println("\t8. SHUTDOWN");
+    }
+    public void enterSpeakerName(){
+        System.out.println("Please enter the name of the speaker you wish to create: ");
+    }
+    public void enterSpeakerID(boolean checker){
+        if (checker){
+            System.out.println("Please enter the UserID for the speaker: ");
+        }
+        else{
+            System.out.println("That UserID is taken, please enter another UserID:");
+        }
     }
 }
