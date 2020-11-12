@@ -1,5 +1,7 @@
 package Presenter;
 
+import java.util.ArrayList;
+
 public class TextPresenter {
     public void PrintPrompt(){
         System.out.println("Please enter what action from the menu you would like to perform.");
@@ -12,12 +14,11 @@ public class TextPresenter {
     }
     public void AttendeeMenu(){
         System.out.println("Menu:");
-        System.out.println("Check All Events");
-        System.out.println("Sign Up for Events");
-        System.out.println("Check Schedule for an Signed Up Event");
-        System.out.println("Cancel an Event Signed Up for");
-        System.out.println("Message Other Users");
-
+        System.out.println("1. See Events");
+        System.out.println("2. Sign Up for Events");
+        System.out.println("3. Check Schedule for an Signed Up Event");
+        System.out.println("4. Cancel an Event Signed Up for");
+        System.out.println("5. Message Other Users");
     }
     public void enterName(){
         System.out.println("Please enter your name: ");
@@ -38,6 +39,12 @@ public class TextPresenter {
         else{
             System.out.println("That is an invalid password. Please enter a valid password: ");
         }
+    }
+
+    public void Events(ArrayList<String> listOfEventsSchedule){
+    for (String event: listOfEventsSchedule){
+        System.out.println(event);
+    }
     }
 
     public static void main(String[] args){

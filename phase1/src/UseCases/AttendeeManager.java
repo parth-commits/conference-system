@@ -37,7 +37,7 @@ public class  AttendeeManager {
     }
 
     //returns the attendee
-    private Attendee getAttendee(String userId){
+    public Attendee getAttendee(String userId){
         return tableOfAttendees.get(userId);
     }
 

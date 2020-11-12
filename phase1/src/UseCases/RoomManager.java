@@ -1,4 +1,5 @@
 package UseCases;
+import Entities.Event;
 import Entities.Room;
 
 import java.util.ArrayList;
@@ -42,5 +43,19 @@ public class RoomManager {
     //remove an event from a room at a given time (takes in room location, eventid and date)
     public void removeEventFromRoom(String roomLocation, Integer eventID, Date date){
         tableOfRooms.get(roomLocation).removeBookedTime(date, eventID);
+    }
+
+    public Room getRoom(String roomloc){
+        for ( String loc : tableOfRooms.keySet()){
+            if (loc == roomloc){
+                return tableOfRooms.get(loc);
+            }
+        }
+        return null;
+    }
+
+    public int getSpots(String roomloc){
+        Room r = getRoom(roomloc);
+        return r.getCapacity();
     }
 }

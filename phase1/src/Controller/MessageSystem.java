@@ -1,6 +1,8 @@
 package Controller;
 
 import Entities.Chat;
+import Gateway.KeyboardInput;
+import Presenter.TextPresenter;
 import UseCases.*;
 
 public class MessageSystem {
