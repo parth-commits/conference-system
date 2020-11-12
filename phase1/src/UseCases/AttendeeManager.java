@@ -50,9 +50,11 @@ public class  AttendeeManager {
         getAttendee(userId).removeEvent(EventId);
     }
 
+    //check if contact already exists
     public boolean contactExists(String userId, String otherUserId){
         return getAttendee(userId).checkContact(otherUserId);
     }
+
     public void addContact (String userId, String otherUserId){
         // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
         getAttendee(userId).addContact(otherUserId);

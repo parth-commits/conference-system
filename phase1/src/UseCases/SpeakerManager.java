@@ -44,6 +44,11 @@ public class SpeakerManager {
         getSpeaker(userId).removeAssignEvent(EventId);
     }
 
+    //check if contact is in
+    public boolean contactExists(String userId, String otherUserId){
+        return getOrganizer(userId).checkContact(otherUserId);
+    }
+
     public void addContact (String userId, String otherUserId){
         // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
         getSpeaker(userId).addContact(otherUserId);
