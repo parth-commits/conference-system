@@ -3,6 +3,8 @@ package Controller;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
+import Entities.Organizer;
+
 
 public class OrganizerSystem {
 
@@ -16,14 +18,22 @@ public class OrganizerSystem {
     private ChatManager chatManager;
 
 
-    public OrganizerSystem(SpeakerManager speakerManager, RoomManager roomManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager) {
+    public OrganizerSystem(SpeakerManager SpeakerManager, RoomManager roomManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager) {
         this.attendeeManager = attendeeManager;
         this.roomManager = roomManager;
         this.organizerManager = organizerManager;
         this.eventManager = eventManager;
-        this.speakerManager = speakerManager;
+        this.speakerManager = SpeakerManager;
         this.chatManager = chatManager;
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
     }
+
+
+
+
+
+
 }
+
+
