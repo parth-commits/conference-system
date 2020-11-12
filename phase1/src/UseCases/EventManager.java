@@ -52,6 +52,10 @@ public class EventManager {
         }
     }
 
+    public ArrayList<String> getEventAttendees(int eventID){
+        return getEvent(eventID).getAttendees();
+    }
+
     public void removeAttendee(int eventID,String userID){
         for (Event e:listOfEvents){
             if (eventID == e.getID()){
