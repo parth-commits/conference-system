@@ -46,7 +46,7 @@ public class SpeakerManager {
 
     //check if contact is in
     public boolean contactExists(String userId, String otherUserId){
-        return getOrganizer(userId).checkContact(otherUserId);
+        return getSpeaker(userId).checkContact(otherUserId);
     }
 
     public void addContact (String userId, String otherUserId){
