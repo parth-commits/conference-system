@@ -77,4 +77,17 @@ public class TextPresenter {
         System.out.println("1. Register");
         System.out.println("2. Login");
     }
+
+    // Outputs for Message System
+    public void sendMsgOptions(int role){
+        if (role == 1){
+            System.out.println("Would you like to send to 1. another Attendee or 2. a Speaker? ");
+        }
+        else if (role == 2){
+            System.out.println("Select an event to send to all participants");
+        }
+        else if (role == 3){
+            System.out.println("Send to: 1. all speakers, 2. one speaker, 3. all attendees, or 4. one attendee?");
+        }
+    }
 }
