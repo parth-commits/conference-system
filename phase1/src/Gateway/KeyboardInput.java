@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class KeyboardInput {
     public String getKeyboardInput(){
         Scanner scanner = new Scanner(System.in);
-        String inputString = scanner.nextLine();
-        return inputString;
+        return scanner.nextLine();
         // system suggests inputString.nextLine()
     }
     public static void main (String[] args) {

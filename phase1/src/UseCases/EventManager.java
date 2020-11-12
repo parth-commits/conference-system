@@ -13,6 +13,15 @@ public class EventManager {
         return listOfEvents;
     }
 
+    public Event getEvent(int eventId){
+        for (Event e:listOfEvents){
+            if (eventId == e.getID()){
+                return e;
+            }
+        }
+        return null;
+    }
+
     public void addEvent(String title, String time, String location, String speakerID, String organizerID) {
         // check time (speaker??? room???)
         for (Event e:listOfEvents){
@@ -43,12 +52,20 @@ public class EventManager {
         }
     }
 
+    public ArrayList<String> getEventAttendees(int eventID){
+        return getEvent(eventID).getAttendees();
+    }
+
     public void removeAttendee(int eventID,String userID){
         for (Event e:listOfEvents){
             if (eventID == e.getID()){
                 e.removeAttendee(userID);
             }
         }
+    }
+
+    public String getLocation(int eventID){
+        return getEvent(eventID).getLocation();
     }
 
     public void setListOfEvents(ArrayList<Event> listOfEvents){
