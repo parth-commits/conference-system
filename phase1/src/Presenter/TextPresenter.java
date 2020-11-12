@@ -3,6 +3,7 @@ package Presenter;
 import Entities.Chat;
 import Entities.Message;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class TextPresenter {
@@ -164,5 +165,20 @@ public class TextPresenter {
     }
     public void invalidRecipient(){
         System.out.println("Invalid user ID, please enter again: ");
+    }
+
+    //OrganizerSystem methods
+    public void organizationSystemStartOptions(){
+        System.out.println("What would you like to do:\n");
+        System.out.println("Organizer Specific Options:");
+        System.out.println("\t1. Create a new Speaker");
+        System.out.println("\t2. schedule a Speaker");
+        System.out.println("\t3. Message");
+        System.out.println("\t4. Create/Delete event\n");
+        System.out.println("Regular Attendee Options:");
+        System.out.println("\t5. add/remove contact");
+        System.out.println("\t6. Join/leave event");
+        System.out.println("\t7. LOGOUT");
+        System.out.println("\t8. SHUTDOWN");
     }
 }

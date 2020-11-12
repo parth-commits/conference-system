@@ -1,7 +1,4 @@
-import Controller.EventSystem;
-import Controller.LogInAndRegistrationSystem;
-import Controller.MessageSystem;
-import Controller.OrganizerSystem;
+import Controller.*;
 import Entities.Event;
 import Entities.User;
 import UseCases.*;
@@ -19,63 +16,46 @@ public class ConferenceSystem {
     private MessageSystem messageSystem;
     private LogInAndRegistrationSystem logInAndRegistrationSystem;
     private EventSystem eventSystem;
+    private AttendeeSystem attendeeSystem;
+    private SpeakerSystem speakerSystem;
 
     //constructor
     public ConferenceSystem(){
         serialize();// this function will bring back the managers and initialize them
-        organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager);
         logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
         messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
+        eventSystem = new EventSystem(speakerManager, roomManager, organizerManager, eventManager, attendeeManager);
+        organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem);
+        //initilaize attendeeSystem
+        //initialize speakersystem
     }
 
     private void serialize() {
         //this method will serialize the managers - the usecases
     }
 
-    //UserManager userManager = new UserManager;
-    //Eventmanager ....
+    public void run () {
 
-    public void run (){
-        /*serialize();
-        /*create an instance of all use cases
-        LogInSystem login = new LogInSystem(Usermanager, eventmananger, etc);
+        boolean shutdown = false;
 
+        while (!shutdown) {
+            String userID = logInAndRegistrationSystem.start();
+            if (organizerManager.userExist(userID)) {
+                shutdown = organizerSystem.start(userID);
+            }
+            else if (attendeeManager.userExist(userID)) {
+                shutdown = attendeeSystem.start(userID);
+            }
+            else {
+                shutdown = speakerSystem.start(userID);
+            }
+        }
+        deserialize();
+    }
 
-
-        User userInContext =  login.loginuser();
-
-        if organziermanager.userExists(friendsid):
-            att
-
-        or speakermaanger.userExists(friends)
-        attendeemanager.addContact(userInContext.getUser_id(), friendsuserid, organizermanager.getListofIDS(),  speakermanager.getlistofIDS());
-
-        organziermanager.addContact(friendsUserid, userInContext.getUser_id(), attendeemanager.getListofIDS(), speakermanager.getListofIDS());*/
-
-        // do u want to login, sign up
-
-        /* loop until gets a valid id pass
-        {
-            // get user input of id and pass
-            userInContext = login.verifyIDPass(id, pass, userManager?!)
-        }*/
-
-        /*if userInContext is a attendee:
-        attendeemanager = //we need an attendee manager!! instead of user manager
-        else if its an organizer:
-        make it an organzier manager!!!!
-            else if its a speaker, make it a speaker*/
+    private void deserialize() {
+        //save the state back in!!!
     }
 }
-
-getinput = () from gateway
-while getinput != LOGOUT :
-    if getinput is x:
-        do x
-    else if getinput is y:
-        do y
-    ...
-    else:
-        getinput = () from gateway
 
 
