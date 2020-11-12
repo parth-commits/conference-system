@@ -1,5 +1,10 @@
 package Presenter;
 
+import Entities.Chat;
+import Entities.Message;
+
+import java.util.ArrayList;
+
 public class TextPresenter {
     public void PrintPrompt(){
         System.out.println("Please enter what action from the menu you would like to perform.");
@@ -76,5 +81,29 @@ public class TextPresenter {
         System.out.println("Would you like to register or login?");
         System.out.println("1. Register");
         System.out.println("2. Login");
+    }
+
+
+    //Should One line outputs still be in presenter
+    public void promptRecipient(){
+        System.out.println("Please enter user id of the recipient");
+    }
+    public void confirmCreateChat(String id){
+        System.out.println("Please confirm create chat with user" + id);
+        System.out.println("y/n");
+    }
+    public void promptContext(){
+        System.out.println("Please enter the message:");
+    }
+
+    public void chatDNE(){
+        System.out.println("The chat doesn't exists.");
+    }
+
+    public void printChat(Chat chat){
+        ArrayList<Message> messages = chat.getMessages();
+        for (Message m:messages){
+            System.out.println(m.getSender()+": "+m.getContext());
+        }
     }
 }
