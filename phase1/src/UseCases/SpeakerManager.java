@@ -1,6 +1,5 @@
 package UseCases;
 
-import Entities.Attendee;
 import Entities.Speaker;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class SpeakerManager {
     public boolean userExist(String userId){ return tableOfSpeakers.containsKey(userId);
     }
 
-    private Speaker getSpeaker(String userId){
+    public Speaker getSpeaker(String userId){
         return tableOfSpeakers.get(userId);
     }
 
@@ -43,6 +42,11 @@ public class SpeakerManager {
 
     public void removeEvent(Integer EventId, String userId) {
         getSpeaker(userId).removeAssignEvent(EventId);
+    }
+
+    //check if contact is in
+    public boolean contactExists(String userId, String otherUserId){
+        return getOrganizer(userId).checkContact(otherUserId);
     }
 
     public void addContact (String userId, String otherUserId){

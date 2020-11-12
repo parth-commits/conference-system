@@ -1,7 +1,37 @@
-import Controller.LogInSystem;
+import Controller.EventSystem;
+import Controller.LogInAndRegistrationSystem;
+import Controller.MessageSystem;
+import Controller.OrganizerSystem;
+import Entities.Event;
 import Entities.User;
+import UseCases.*;
 
 public class ConferenceSystem {
+
+    private SpeakerManager speakerManager;
+    private RoomManager roomManager;
+    private OrganizerManager organizerManager;
+    private EventManager eventManager;
+    private ChatManager chatManager;
+    private AttendeeManager attendeeManager;
+
+    private OrganizerSystem organizerSystem;
+    private MessageSystem messageSystem;
+    private LogInAndRegistrationSystem logInAndRegistrationSystem;
+    private EventSystem eventSystem;
+
+    //constructor
+    public ConferenceSystem(){
+        serialize();// this function will bring back the managers and initialize them
+        organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager);
+        logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
+        messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
+    }
+
+    private void serialize() {
+        //this method will serialize the managers - the usecases
+    }
+
     //UserManager userManager = new UserManager;
     //Eventmanager ....
 
