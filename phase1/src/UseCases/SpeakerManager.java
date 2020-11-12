@@ -1,6 +1,5 @@
 package UseCases;
 
-import Entities.Attendee;
 import Entities.Speaker;
 
 import java.util.ArrayList;
