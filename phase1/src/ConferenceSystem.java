@@ -49,6 +49,7 @@ public class ConferenceSystem {
             else {
                 shutdown = speakerSystem.start(userID);
             }
+
         }
         deserialize();
     }

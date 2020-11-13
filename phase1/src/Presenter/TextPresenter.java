@@ -117,6 +117,20 @@ public class TextPresenter {
         System.out.println("You have no contacts! Please add a contact before trying again.");
     }
 
+    public void addRemoveContact(){
+        System.out.println("Would you like to add or remove contact?");
+        System.out.println("\t1. Add contact");
+        System.out.println("\t2. Remove contact");
+    }
+
+    public void enterContactUserid(boolean invalid){
+        if (invalid){
+            System.out.println("Invalid userID. Enter valid UserID of the contact:");
+        }
+        else {
+            System.out.println("Enter the userID of the contact:");
+        }
+    }
 
     //Should One line outputs still be in presenter. answer by parth: yes!
     public void promptRecipient(ArrayList<String> contactList, boolean invalid){
@@ -127,6 +141,7 @@ public class TextPresenter {
         for (int i = 0; i < contactList.size(); i++) {
             System.out.println((i+1)+". "+ contactList.get(i));
         }
+        System.out.println("Enter 0 if you would like to cancel.");
     }
     public void promptEvents(){
         System.out.println("Please enter the ids of the event (separated by a comma): ");
@@ -136,7 +151,7 @@ public class TextPresenter {
         System.out.println("y/n");
     }
     public void promptContext(){
-        System.out.println("Please enter the message: ");
+        System.out.println("Please enter the message, or enter 'return' to cancel: ");
     }
 
     public void promptContextEvent(String title){

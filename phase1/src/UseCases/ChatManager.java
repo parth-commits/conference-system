@@ -68,4 +68,18 @@ public class ChatManager {
         }
         return listOfChatsPeople;
     }
+
+    //given 2 userids, deletes the chat between them
+    public void deleteChat(String id1, String id2){
+        for (int i = 0; i<chats.size();i++){
+            if (chats.get(i).getId1().equals(id1)&&chats.get(i).getId2().equals(id2)){
+                chats.remove(i);
+                return;
+            }
+            else if (chats.get(i).getId1().equals(id2)&&chats.get(i).getId2().equals(id1)){
+                chats.remove(i);
+                return;
+            }
+        }
+    }
 }
