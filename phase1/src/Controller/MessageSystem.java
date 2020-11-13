@@ -77,6 +77,16 @@ public class MessageSystem {
                     if ( !(chatManager.chatExists(sender, id)) ){
                         chatManager.createChat(sender, id);
                         organizerManager.addContact(sender, id);
+                        int usertype = userType(id);
+                        if (usertype == 1){
+                            organizerManager.addContact(id, sender);
+                        }
+                        else if (usertype == 2){
+                            attendeeManager.addContact(id, sender);
+                        }
+                        else{
+                            speakerManager.addContact(id, sender);
+                        }
                     }
                     chatManager.addMessageToChat(sender, id, context);
                 }
@@ -91,10 +101,24 @@ public class MessageSystem {
                 //shows user their contact list
                 output.promptRecipient(contactList, false);
                 //tells them to choose 1 contact
-                int personNumber = Integer.parseInt(input.getKeyboardInput());
-                while (!(1 <= personNumber && personNumber <= contactList.size())){
-                    output.promptRecipient(contactList, true);
+                int personNumber;
+                try {
                     personNumber = Integer.parseInt(input.getKeyboardInput());
+                }
+                catch (NumberFormatException e){
+                    personNumber = -1;
+                }
+                while (!(0 <= personNumber && personNumber <= contactList.size())){
+                    output.promptRecipient(contactList, true);
+                    try {
+                        personNumber = Integer.parseInt(input.getKeyboardInput());
+                    }
+                    catch (NumberFormatException e){
+                        personNumber = -1;
+                    }
+                }
+                if (personNumber == 0){
+                    return;
                 }
                 String contactID = contactList.get(personNumber-1);
                 Chat conversation = getChat(sender, contactID);
@@ -103,6 +127,9 @@ public class MessageSystem {
                 //ask user to type a message
                 output.promptContext();
                 context = input.getKeyboardInput();
+                if (context.equals("return")){
+                    return;
+                }
                 // add message
                 chatManager.addMessageToChat(sender, contactID, context);
             }
@@ -215,9 +242,6 @@ public class MessageSystem {
         chatManager.getContactsWithChat(id);
     }
 
-    public void showChat(String id1, String id2){
-
-    }
 
     public void viewChat(String id1){
         String id2;
