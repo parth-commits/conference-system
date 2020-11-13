@@ -75,4 +75,9 @@ public class  AttendeeManager {
     public ArrayList<Integer> getSignedUpEvents (String userId){
         return getAttendee(userId).getSignedUpEvents();
     }
+
+    //returns a list of contacts of the given user
+    public ArrayList<String> contactList(String userID){
+        return getAttendee(userID).getContacts();
+    }
 }

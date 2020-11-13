@@ -136,7 +136,46 @@ public class MessageSystem {
         }
         // Attendee
         else if (role == 2){
-            while ( !(action.equals("1")||action.equals("2")) ){
+            ArrayList<String> contactList = attendeeManager.contactList(sender);
+            if (contactList.size() == 0){
+                output.youHaveNoContacts();
+                return;
+            }
+            //shows user their contact list
+            output.promptRecipient(contactList, false);
+            //tells them to choose 1 contact
+            int personNumber;
+            try {
+                personNumber = Integer.parseInt(input.getKeyboardInput());
+            }
+            catch (NumberFormatException e){
+                personNumber = -1;
+            }
+            while (!(0 <= personNumber && personNumber <= contactList.size())){
+                output.promptRecipient(contactList, true);
+                try {
+                    personNumber = Integer.parseInt(input.getKeyboardInput());
+                }
+                catch (NumberFormatException e){
+                    personNumber = -1;
+                }
+            }
+            if (personNumber == 0){
+                return;
+            }
+            String contactID = contactList.get(personNumber-1);
+            Chat conversation = getChat(sender, contactID);
+            //prints the chat of the user
+            output.printChat(conversation);
+            //ask user to type a message
+            output.promptContext();
+            context = input.getKeyboardInput();
+            if (context.equals("return")){
+                return;
+            }
+            // add message
+            chatManager.addMessageToChat(sender, contactID, context);
+            /*while ( !(action.equals("1")||action.equals("2")) ){
                 output.msgOptionInvalid();
                 action = input.getKeyboardInput();
             }
@@ -191,7 +230,7 @@ public class MessageSystem {
                 context = input.getKeyboardInput();
                 // add message
                 chatManager.addMessageToChat(sender, recipient, context);
-            }
+            }*/
         }
         // Speaker
         else if (role == 3){
