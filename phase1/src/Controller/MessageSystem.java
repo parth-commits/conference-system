@@ -281,7 +281,7 @@ public class MessageSystem {
         chatManager.getContactsWithChat(id);
     }
 
-
+    /* pretty sure we dont need the following function, but its here if we do in the future.
     public void viewChat(String id1){
         String id2;
         // prompt user for recipient
@@ -298,7 +298,7 @@ public class MessageSystem {
             Chat conversation = getChat(id1, id2);
             output.printChat(conversation);
         }
-    }
+    }*/
 
 
     // Do we need delete chat?
