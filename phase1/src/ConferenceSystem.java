@@ -3,6 +3,8 @@ import Entities.Event;
 import Entities.User;
 import UseCases.*;
 
+import java.io.IOException;
+
 public class ConferenceSystem {
 
     private SpeakerManager speakerManager;
@@ -21,7 +23,7 @@ public class ConferenceSystem {
 
     //constructor
     public ConferenceSystem(){
-        serialize();// this function will bring back the managers and initialize them
+        importState();// this function will bring back the managers and initialize them
         logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
         messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
         eventSystem = new EventSystem(speakerManager, roomManager, organizerManager, eventManager, attendeeManager);
@@ -30,11 +32,14 @@ public class ConferenceSystem {
         //initialize speakersystem
     }
 
-    private void serialize() {
+    private void importState() {
         //this method will serialize the managers - the usecases
+        SpeakerManager s = new SpeakerManager();
+        this.speakerManager = s.importState();
+
     }
 
-    public void run () {
+    public void run () throws IOException {
 
         boolean shutdown = false;
 
@@ -51,11 +56,12 @@ public class ConferenceSystem {
             }
 
         }
-        deserialize();
+        saveState();
     }
 
-    private void deserialize() {
+    private void saveState() throws IOException {
         //save the state back in!!!
+        speakerManager.saveState();
     }
 }
 

@@ -2,6 +2,7 @@ package UseCases;
 
 import Entities.Speaker;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -59,6 +60,27 @@ public class SpeakerManager {
         getSpeaker(userId).removeContact(otherUserId);
     }
 
+    public void saveState() throws IOException{
+        OutputStream file = new FileOutputStream("src/SpeakerManager.ser");
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
 
+        // serialize the Map
+        output.writeObject(this); //students);
+        output.close();
+    }
 
+    public SpeakerManager importState(){
+        try {
+            InputStream file = new FileInputStream("src/SpeakerManager.ser");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            SpeakerManager speakerManager = (SpeakerManager) input.readObject();
+            input.close();
+            return speakerManager;
+
+        } catch (ClassNotFoundException | IOException e) {
+            return new SpeakerManager();
+        }
+    }
 }

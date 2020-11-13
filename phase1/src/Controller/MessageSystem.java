@@ -170,62 +170,6 @@ public class MessageSystem {
             }
             // add message
             chatManager.addMessageToChat(sender, contactID, context);
-            /*while ( !(action.equals("1")||action.equals("2")) ){
-                output.msgOptionInvalid();
-                action = input.getKeyboardInput();
-            }
-            // one attendee
-            if (action.equals("1")){
-                // prompt user for recipient
-                // check if chat exists
-                output.promptRecipient();
-                // maybe display all contacts???
-                recipient = input.getKeyboardInput();
-                // check recipient is attendee
-                if (!(attendeeManager.userExist(recipient))){
-                    output.invalidRecipient();
-                    return;
-                }
-                if (chatManager.findChat(sender, recipient) == null){
-                    //prompt create chat confirmation
-                    output.confirmCreateChat(recipient);
-                    if (input.getKeyboardInput().equals("y")){
-                        chatManager.createChat(sender, recipient);
-                    }
-                    else{return; }
-                }
-                // prompt context
-                output.promptContext();
-                context = input.getKeyboardInput();
-                // add message
-                chatManager.addMessageToChat(sender, recipient, context);
-            }
-            // one speaker
-            else if (action.equals("2")){
-                // prompt user for recipient
-                // check if chat exists
-                output.promptRecipient();
-                recipient = input.getKeyboardInput();
-                // check recipient is speaker
-                // check if attendee is signed up to the event???
-                if (!(speakerManager.userExist(recipient))){
-                    output.invalidRecipient();
-                    return;
-                }
-                if (chatManager.findChat(sender, recipient) == null){
-                    //prompt create chat confirmation
-                    output.confirmCreateChat(recipient);
-                    if (input.getKeyboardInput().equals("y")){
-                        chatManager.createChat(sender, recipient);
-                    }
-                    else{return; }
-                }
-                // prompt context
-                output.promptContext();
-                context = input.getKeyboardInput();
-                // add message
-                chatManager.addMessageToChat(sender, recipient, context);
-            }*/
         }
         // Speaker
         else if (role == 3) {
