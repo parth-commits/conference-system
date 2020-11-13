@@ -1,6 +1,7 @@
 package UseCases;
 import Entities.Chat;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class ChatManager {
@@ -82,4 +83,29 @@ public class ChatManager {
             }
         }
     }
+
+    public void saveState() throws IOException {
+        OutputStream file = new FileOutputStream("src/ChatManager.ser");
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
+
+        output.writeObject(this);
+        output.close();
+    }
+
+
+    public ChatManager importState() {
+        try {
+            InputStream file = new FileInputStream("src/ChatManager.ser");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            ChatManager chatManager = (ChatManager) input.readObject();
+            input.close();
+            return chatManager;
+
+        } catch (ClassNotFoundException | IOException e) {
+            return new ChatManager();
+        }
+    }
+
 }

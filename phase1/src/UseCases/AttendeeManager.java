@@ -1,6 +1,7 @@
 package UseCases;
 import Entities.Attendee;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -80,4 +81,29 @@ public class  AttendeeManager {
     public ArrayList<String> contactList(String userID){
         return getAttendee(userID).getContacts();
     }
+
+    public void saveState() throws IOException {
+        OutputStream file = new FileOutputStream("src/AttendeeManager.ser");
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
+
+        output.writeObject(this);
+        output.close();
+    }
+
+
+    public AttendeeManager importState() {
+        try {
+            InputStream file = new FileInputStream("src/AttendeeManager.ser");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            AttendeeManager attendeeManager = (AttendeeManager) input.readObject();
+            input.close();
+            return attendeeManager;
+
+        } catch (ClassNotFoundException | IOException e) {
+            return new AttendeeManager();
+        }
+    }
+
 }

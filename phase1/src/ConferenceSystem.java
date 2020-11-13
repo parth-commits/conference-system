@@ -37,8 +37,34 @@ public class ConferenceSystem {
         SpeakerManager s = new SpeakerManager();
         this.speakerManager = s.importState();
 
+        RoomManager r = new RoomManager();
+        this.roomManager = r.importState();
+
+        OrganizerManager o = new OrganizerManager();
+        this.organizerManager = o.importState();
+
+        EventManager e = new EventManager();
+        this.eventManager = e.importState();
+
+        ChatManager c = new ChatManager();
+        this.chatManager = c.importState();
+
+        AttendeeManager a = new AttendeeManager();
+        this.attendeeManager = a.importState();
+
+
     }
 
+    private void saveState() throws IOException {
+        //save the state back in!!!
+        speakerManager.saveState();
+        roomManager.saveState();
+        organizerManager.saveState();
+        eventManager.saveState();
+        chatManager.saveState();
+        attendeeManager.saveState();
+
+    }
     public void run () throws IOException {
 
         boolean shutdown = false;
@@ -59,10 +85,7 @@ public class ConferenceSystem {
         saveState();
     }
 
-    private void saveState() throws IOException {
-        //save the state back in!!!
-        speakerManager.saveState();
-    }
+
 }
 
 

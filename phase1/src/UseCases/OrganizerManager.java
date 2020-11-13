@@ -3,6 +3,7 @@ package UseCases;
 import Entities.Attendee;
 import Entities.Organizer;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -89,5 +90,30 @@ public class OrganizerManager {
     public void setDeleteEventCreated(String user_id, String event_id){
         getOrganizer(user_id).deleteEventCreated(event_id);
     }
+
+    public void saveState() throws IOException {
+        OutputStream file = new FileOutputStream("src/OrganizerManager.ser");
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
+
+        output.writeObject(this);
+        output.close();
+    }
+
+
+    public OrganizerManager importState() {
+        try {
+            InputStream file = new FileInputStream("src/OrganizerManager.ser");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            OrganizerManager organizerManager = (OrganizerManager) input.readObject();
+            input.close();
+            return organizerManager;
+
+        } catch (ClassNotFoundException | IOException e) {
+            return new OrganizerManager();
+        }
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package UseCases;
 import Entities.Event;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class EventManager {
@@ -85,4 +86,29 @@ public class EventManager {
     public void setListOfEvents(ArrayList<Event> listOfEvents){
         this.listOfEvents.addAll(listOfEvents);
     }
+
+    public void saveState() throws IOException {
+        OutputStream file = new FileOutputStream("src/EventManager.ser");
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
+
+        output.writeObject(this);
+        output.close();
+    }
+
+
+    public EventManager importState() {
+        try {
+            InputStream file = new FileInputStream("src/EventManager.ser");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            EventManager eventManager = (EventManager) input.readObject();
+            input.close();
+            return eventManager;
+
+        } catch (ClassNotFoundException | IOException e) {
+            return new EventManager();
+        }
+    }
+
 }

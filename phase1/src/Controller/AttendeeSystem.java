@@ -25,4 +25,6 @@ public class AttendeeSystem {
 
     }
 
+    public boolean start(String userID) {
+    }
 }

@@ -2,6 +2,7 @@ package UseCases;
 import Entities.Event;
 import Entities.Room;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -57,5 +58,29 @@ public class RoomManager {
     public int getSpots(String roomloc){
         Room r = getRoom(roomloc);
         return r.getCapacity();
+    }
+
+    public void saveState() throws IOException{
+        OutputStream file = new FileOutputStream("src/RoomManager.ser");
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
+
+        output.writeObject(this);
+        output.close();
+    }
+
+
+    public RoomManager importState() {
+        try {
+            InputStream file = new FileInputStream("src/RoomManager.ser");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+            RoomManager roomManager = (RoomManager) input.readObject();
+            input.close();
+            return roomManager;
+
+        } catch (ClassNotFoundException | IOException e) {
+            return new RoomManager();
+        }
     }
 }

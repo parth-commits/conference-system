@@ -19,12 +19,15 @@ public class SpeakerSystem {
     private EventManager eventManager;
     private SpeakerManager speakerManager;
 
-    public AttendeeSystem (AttendeeManager attendeeManager, RoomManager roomManager, EventManager eventManager,
+    public SpeakerSystem (AttendeeManager attendeeManager, RoomManager roomManager, EventManager eventManager,
                            SpeakerManager speakerManager){
         this.attendeeManager = attendeeManager;
         this.roomManager = roomManager;
         this.eventManager = eventManager;
-        this.speakerManager = SpeakerManager;
+        this.speakerManager = speakerManager;
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
 }
+
+    public boolean start(String userID) {
+    }
