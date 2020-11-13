@@ -10,10 +10,14 @@ public class Organizer extends Attendee{
     //list of all events created by this Organzier
     private ArrayList<String> eventsCreated;
 
+    //contact list for organizer
+    private ArrayList<String> contactList;
+
     public Organizer(String user_id, String name, String passwords) {
         super(user_id, name, passwords);
         this.speakersCreated = new ArrayList<>();
         this.eventsCreated = new ArrayList<>();
+        this.contactList = new ArrayList<>();
     }
 
     //adds a speaker that this organizer created
@@ -31,4 +35,7 @@ public class Organizer extends Attendee{
         return this.eventsCreated.remove(event_id);
     }
 
+    public void addContact(String id){
+        this.contactList.add(id);
+    }
 }
