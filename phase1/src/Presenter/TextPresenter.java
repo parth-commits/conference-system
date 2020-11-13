@@ -205,6 +205,9 @@ public class TextPresenter {
     public void invalidRecipient(){
         System.out.println("Invalid user ID, please enter again: ");
     }
+    public void addContactFailed(){
+        System.out.println("Failed to add contact, please check the input ID.");
+    }
 
     //OrganizerSystem methods
     public void organizationSystemStartOptions(){

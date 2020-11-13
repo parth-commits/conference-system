@@ -75,6 +75,7 @@ public class MessageSystem {
                 for (String id : ids) {
                     if (!(chatManager.chatExists(sender, id))) {
                         chatManager.createChat(sender, id);
+                        // ** user built in add contact method
                         organizerManager.addContact(sender, id);
                         int usertype = userType(id);
                         if (usertype == 1) {
@@ -84,6 +85,7 @@ public class MessageSystem {
                         } else {
                             speakerManager.addContact(id, sender);
                         }
+                        // **
                     }
                     chatManager.addMessageToChat(sender, id, context);
                 }
@@ -271,6 +273,7 @@ public class MessageSystem {
             for (String id : attendeesOfEvent) {
                 if (!(chatManager.chatExists(sender, id))) {
                     chatManager.createChat(sender, id);
+                    // ** use built in add contact method
                     speakerManager.addContact(sender, id);
                     int usertype = userType(id);
                     if (usertype == 1) {
@@ -280,6 +283,7 @@ public class MessageSystem {
                     } else {
                         speakerManager.addContact(id, sender);
                     }
+                    //
                 }
                 chatManager.addMessageToChat(sender, id, context);
             }
@@ -318,13 +322,13 @@ public class MessageSystem {
     public int userType(String id){
         // check current user status
         // 1 for attendee, 2 for speaker, 3 for organizer
-        if (attendeeManager.userExist(id)){
+        if (organizerManager.userExist(id)){
             return 1;
         }
-        else if(speakerManager.userExist(id)){
+        else if(attendeeManager.userExist(id)){
             return 2;
         }
-        else if (organizerManager.userExist(id)){
+        else if (speakerManager.userExist(id)){
             return 3;
         }
         else {
@@ -336,21 +340,38 @@ public class MessageSystem {
     public void addContact (String current, String id){
         int current_role = userType(current);
         int id_role = userType(id);
+        boolean success = true;
         // adding contact based on their authority
+        // organizer
         if (current_role == 1){
-            if (id_role < 3){
-
+            // adding contacts that are attendee, organizer, or speaker
+            if (id_role == 1 || id_role == 2 || id_role == 3){
+                if (!organizerManager.contactExists(current, id)){
+                    organizerManager.addContact(current, id);
+                }
             }
+            else{success = false;}
         }
+        // attendee
         else if (current_role == 2){
-            if (id_role == 1){
-
+            if (id_role == 2 || id_role == 3){
+                if (!attendeeManager.contactExists(current, id)){
+                    attendeeManager.addContact(current, id);
+                }
             }
+            else{success = false;}
         }
+        // speaker
         else if (current_role == 3) {
-            if (id_role < 3){
-
+            if (id_role == 2){
+                if (!speakerManager.contactExists(current, id)){
+                    speakerManager.addContact(current, id);
+                }
             }
+            else{success = false;}
+        }
+        if (!success){
+            output.addContactFailed();
         }
     }
 
