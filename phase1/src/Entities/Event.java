@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Event {
 
-    public static int id_counter;
+    public static int id_counter = 0;
     private int id;
     private String title;
     private String time;

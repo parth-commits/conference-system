@@ -43,48 +43,45 @@ public class MessageSystem {
         chatManager.addMessageToChat(sender, recipient, context);
     }*/
 
-    public void sendMessage(String sender){
+    public void sendMessage(String sender) {
         // simplify it by separating common methods?  send message
         String recipient;
         String context;
         int role = userType(sender);
-        output.sendMsgOptions(role);
-        String action = input.getKeyboardInput();
         // Organizer
-        if (role == 1){
-            while (!(action.equals("1")||action.equals("2")||action.equals("3")||action.equals("4")||action.equals("5")||action.equals("6"))){
+        if (role == 1) {
+            output.sendMsgOptions(role);
+            String action = input.getKeyboardInput();
+
+            while (!(action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5") || action.equals("6"))) {
                 // may need to double check if user wants to quit
                 output.msgOptionInvalid();
                 action = input.getKeyboardInput();
             }
             // send to all speakers, organizers, attendees
-            if (action.equals("1")||action.equals("3")||action.equals("5")){
+            if (action.equals("1") || action.equals("3") || action.equals("5")) {
                 // prompt context
                 output.promptContext();
                 context = input.getKeyboardInput();
                 // add message
                 ArrayList<String> ids;
-                if (action.equals("1")){
+                if (action.equals("1")) {
                     ids = speakerManager.getUserIDs();
-                }
-                else if (action.equals("3")){
+                } else if (action.equals("3")) {
                     ids = organizerManager.getUserIDs();
-                }
-                else {
+                } else {
                     ids = attendeeManager.getUserIDs();
                 }
-                for (String id : ids){
-                    if ( !(chatManager.chatExists(sender, id)) ){
+                for (String id : ids) {
+                    if (!(chatManager.chatExists(sender, id))) {
                         chatManager.createChat(sender, id);
                         organizerManager.addContact(sender, id);
                         int usertype = userType(id);
-                        if (usertype == 1){
+                        if (usertype == 1) {
                             organizerManager.addContact(id, sender);
-                        }
-                        else if (usertype == 2){
+                        } else if (usertype == 2) {
                             attendeeManager.addContact(id, sender);
-                        }
-                        else{
+                        } else {
                             speakerManager.addContact(id, sender);
                         }
                     }
@@ -94,7 +91,7 @@ public class MessageSystem {
             // send to one user in contact list
             else {
                 ArrayList<String> contactList = organizerManager.contactList(sender);
-                if (contactList.size() == 0){
+                if (contactList.size() == 0) {
                     output.youHaveNoContacts();
                     return;
                 }
@@ -104,30 +101,28 @@ public class MessageSystem {
                 int personNumber;
                 try {
                     personNumber = Integer.parseInt(input.getKeyboardInput());
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     personNumber = -1;
                 }
-                while (!(0 <= personNumber && personNumber <= contactList.size())){
+                while (!(0 <= personNumber && personNumber <= contactList.size())) {
                     output.promptRecipient(contactList, true);
                     try {
                         personNumber = Integer.parseInt(input.getKeyboardInput());
-                    }
-                    catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         personNumber = -1;
                     }
                 }
-                if (personNumber == 0){
+                if (personNumber == 0) {
                     return;
                 }
-                String contactID = contactList.get(personNumber-1);
+                String contactID = contactList.get(personNumber - 1);
                 Chat conversation = getChat(sender, contactID);
                 //prints the chat of the user
                 output.printChat(conversation);
                 //ask user to type a message
                 output.promptContext();
                 context = input.getKeyboardInput();
-                if (context.equals("return")){
+                if (context.equals("return")) {
                     return;
                 }
                 // add message
@@ -135,9 +130,9 @@ public class MessageSystem {
             }
         }
         // Attendee
-        else if (role == 2){
+        else if (role == 2) {
             ArrayList<String> contactList = attendeeManager.contactList(sender);
-            if (contactList.size() == 0){
+            if (contactList.size() == 0) {
                 output.youHaveNoContacts();
                 return;
             }
@@ -147,30 +142,28 @@ public class MessageSystem {
             int personNumber;
             try {
                 personNumber = Integer.parseInt(input.getKeyboardInput());
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 personNumber = -1;
             }
-            while (!(0 <= personNumber && personNumber <= contactList.size())){
+            while (!(0 <= personNumber && personNumber <= contactList.size())) {
                 output.promptRecipient(contactList, true);
                 try {
                     personNumber = Integer.parseInt(input.getKeyboardInput());
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     personNumber = -1;
                 }
             }
-            if (personNumber == 0){
+            if (personNumber == 0) {
                 return;
             }
-            String contactID = contactList.get(personNumber-1);
+            String contactID = contactList.get(personNumber - 1);
             Chat conversation = getChat(sender, contactID);
             //prints the chat of the user
             output.printChat(conversation);
             //ask user to type a message
             output.promptContext();
             context = input.getKeyboardInput();
-            if (context.equals("return")){
+            if (context.equals("return")) {
                 return;
             }
             // add message
@@ -233,46 +226,62 @@ public class MessageSystem {
             }*/
         }
         // Speaker
-        else if (role == 3){
-            while ( !(action.equals("1")||action.equals("2")) ){
-                output.msgOptionInvalid();
-                action = input.getKeyboardInput();
-            }
+        else if (role == 3) {
+            //speaker CURRENTLY can only send an automatic message to all the users in 1 of his talks
+
             // Select an event
-            if (action.equals("1")){
-                output.promptEvents();
-                String raw_events = input.getKeyboardInput();
-                String[] events = raw_events.split(",");
-                for (String event: events){
-                    int event_id = Integer.parseInt(event.trim());
-                    if (eventManager.getEvent(event_id) != null){
-                        output.promptContextEvent(eventManager.getEvent(event_id).getTitle());
-                        context = input.getKeyboardInput();
-                        for (String attendee_id: eventManager.getEvent(event_id).getAttendees()){
-                            // automatically creates chat if chat DNE
-                            if (chatManager.findChat(sender, attendee_id) == null){
-                                chatManager.createChat(sender, attendee_id);
-                            }
-                            chatManager.addMessageToChat(sender, attendee_id, context);
-                        }
+            ArrayList<ArrayList<String>> eventIDsandTitle = eventManager.getListofEventsBySpeaker(sender);
+            if (eventIDsandTitle.size() == 0) {
+                output.youHaveNoEvents();
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    System.out.println("couldnt not sleep thread");
+                }
+            }
+            output.promptEvents(eventIDsandTitle, false);
+            //String getInput = input.getKeyboardInput();
+
+            String getInput = input.getKeyboardInput();
+            boolean validInput = false;
+            int eventIDChoosen = -1;// will guarantee change, -1 is a place holder
+            for (ArrayList<String> stringArrayList : eventIDsandTitle) {
+                if (stringArrayList.get(0).equals(getInput)) {
+                    validInput = true;
+                    eventIDChoosen = Integer.parseInt(getInput);
+                    break;
+                }
+            }
+
+            while (!validInput) {
+                output.promptEvents(eventIDsandTitle, true);
+                getInput = input.getKeyboardInput();
+                for (ArrayList<String> strings : eventIDsandTitle) {
+                    if (strings.get(0).equals(getInput)) {
+                        validInput = true;
+                        eventIDChoosen = Integer.parseInt(getInput);
+                        break;
                     }
                 }
             }
-            // respond to attendee
-            else if (action.equals("2")){
-                output.promptRecipient();
-                recipient = input.getKeyboardInput();
-                if (chatManager.findChat(sender, recipient) != null){
-                    // prompt context
-                    output.promptContext();
-                    context = input.getKeyboardInput();
-                    // add message
-                    chatManager.addMessageToChat(sender, recipient, context);
+            output.promptContextEvent(eventManager.getEvent(eventIDChoosen).getTitle());
+            context = input.getKeyboardInput();
+
+            ArrayList<String> attendeesOfEvent = eventManager.getEventAttendees(eventIDChoosen);
+            for (String id : attendeesOfEvent) {
+                if (!(chatManager.chatExists(sender, id))) {
+                    chatManager.createChat(sender, id);
+                    speakerManager.addContact(sender, id);
+                    int usertype = userType(id);
+                    if (usertype == 1) {
+                        organizerManager.addContact(id, sender);
+                    } else if (usertype == 2) {
+                        attendeeManager.addContact(id, sender);
+                    } else {
+                        speakerManager.addContact(id, sender);
+                    }
                 }
-                else{
-                    // does not have chat , cannot respond
-                    output.invalidRecipient();
-                }
+                chatManager.addMessageToChat(sender, id, context);
             }
         }
     }

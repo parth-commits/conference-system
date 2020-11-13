@@ -143,8 +143,15 @@ public class TextPresenter {
         }
         System.out.println("Enter 0 if you would like to cancel.");
     }
-    public void promptEvents(){
-        System.out.println("Please enter the ids of the event (separated by a comma): ");
+    public void promptEvents(ArrayList<ArrayList<String>> eventList, boolean invalid){
+        if (invalid){
+            System.out.println("Invalid input, try again:");
+        }
+        System.out.println("Please select a Event to send an Automatic message to all Attendees of that event:");
+        for (int i = 0; i < eventList.size(); i++) {
+            System.out.println((i+1)+". ID: "+ eventList.get(i).get(0) + " Name: " + eventList.get(i).get(0));
+        }
+        System.out.println("Enter the Event ID of your choice:");
     }
     public void confirmCreateChat(String id){
         System.out.println("Please confirm create chat with user" + id + ": ");
@@ -155,7 +162,7 @@ public class TextPresenter {
     }
 
     public void promptContextEvent(String title){
-        System.out.println("Please enter the message for event " + title + ": ");
+        System.out.println("Please enter the Automated message for " + title + " event: ");
     }
 
     public void chatDNE(){
@@ -223,5 +230,9 @@ public class TextPresenter {
         else{
             System.out.println("That UserID is taken, please enter another UserID:");
         }
+    }
+
+    public void youHaveNoEvents(){
+        System.out.println("You have no events, please contact an Organizer to be assigned an event");
     }
 }

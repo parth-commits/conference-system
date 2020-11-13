@@ -1,5 +1,6 @@
 package UseCases;
 import Entities.Event;
+
 import java.util.ArrayList;
 
 public class EventManager {
@@ -20,6 +21,19 @@ public class EventManager {
             }
         }
         return null;
+    }
+
+    public ArrayList<ArrayList<String>> getListofEventsBySpeaker(String speakerID){
+        ArrayList<ArrayList<String>> listofEventsbySpeaker = new ArrayList<>();
+        for (Event listOfEvent : listOfEvents) {
+            if (listOfEvent.getSpeakerID().equals(speakerID)) {
+                ArrayList<String> eventInfo = new ArrayList<>();
+                eventInfo.add(String.valueOf(listOfEvent.getID()));
+                eventInfo.add(listOfEvent.getTitle());
+                listofEventsbySpeaker.add(eventInfo);
+            }
+        }
+        return listofEventsbySpeaker;
     }
 
     public void addEvent(String title, String time, String location, String speakerID, String organizerID) {
