@@ -59,6 +59,10 @@ public class OrganizerManager {
         getOrganizer(userId).addContact(otherUserId);
     }
 
+    //returns a list of contacts of the given user
+    public ArrayList<String> contactList(String userID){
+        return getOrganizer(userID).getContacts();
+    }
     //An attendee action
     public void removeContact (String userId, String otherUserId){
         //assume both users exists (checked in controller) and userid is removed from otherUserID's contacts in controller as well.

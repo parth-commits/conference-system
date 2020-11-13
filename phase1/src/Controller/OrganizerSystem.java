@@ -3,6 +3,8 @@ package Controller;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
+import jdk.internal.net.http.common.Log;
+import jdk.jfr.internal.Logger;
 
 public class OrganizerSystem {
 
@@ -65,6 +67,7 @@ public class OrganizerSystem {
 
     }
 
+    //creates a new speaker
     private void createSpeaker(String userID) {
         output.enterSpeakerName();
         String inputName = input.getKeyboardInput();
@@ -93,6 +96,15 @@ public class OrganizerSystem {
             }
         }
         speakerManager.addSpeaker(inputID,inputPass,inputName, userID);
+        organizerManager.setAddSpeakerCreated(userID,inputID);
+        output.ActionDone();
+        try {
+            Thread.sleep(1000);
+        }
+        catch (Exception e){
+            System.out.println("Was not able to sleep");
+        }
+
     }
 
     private void scheduleASpeaker() {
