@@ -3,6 +3,7 @@ package Presenter;
 import Entities.Chat;
 import Entities.Message;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class TextPresenter {
@@ -112,10 +113,20 @@ public class TextPresenter {
         System.out.println("2. Login");
     }
 
+    public void youHaveNoContacts(){
+        System.out.println("You have no contacts! Please add a contact before trying again.");
+    }
 
-    //Should One line outputs still be in presenter
-    public void promptRecipient(){
-        System.out.println("Please enter user id of the recipient: ");
+
+    //Should One line outputs still be in presenter. answer by parth: yes!
+    public void promptRecipient(ArrayList<String> contactList, boolean invalid){
+        if (invalid){
+            System.out.println("Invalid input, try again:");
+        }
+        System.out.println("Please select a contact:");
+        for (int i = 0; i < contactList.size(); i++) {
+            System.out.println((i+1)+". "+ contactList.get(i));
+        }
     }
     public void promptEvents(){
         System.out.println("Please enter the ids of the event (separated by a comma): ");
@@ -148,7 +159,14 @@ public class TextPresenter {
     public void sendMsgOptions(int role){
         // Organizer
         if (role == 1){
-            System.out.println("Send to: 1. all speakers, 2. one speaker, 3. all attendees, or 4. one attendee? ");
+            System.out.println("Who would you like to send a message to?");
+            System.out.println("Note: to send a message to a single user, they must be on your contact list!");
+            System.out.println("\t1. All Speakers");
+            System.out.println("\t2. Single Speaker");
+            System.out.println("\t3. All Organizers");
+            System.out.println("\t4. Single Organizer");
+            System.out.println("\t5. All Attendees");
+            System.out.println("\t6. Single Attendee");
         }
         // Attendee
         else if (role == 2){
@@ -164,5 +182,31 @@ public class TextPresenter {
     }
     public void invalidRecipient(){
         System.out.println("Invalid user ID, please enter again: ");
+    }
+
+    //OrganizerSystem methods
+    public void organizationSystemStartOptions(){
+        System.out.println("What would you like to do:\n");
+        System.out.println("Organizer Specific Options:");
+        System.out.println("\t1. Create a new Speaker");
+        System.out.println("\t2. schedule a Speaker");
+        System.out.println("\t3. Message");
+        System.out.println("\t4. Create/Delete event\n");
+        System.out.println("Regular Attendee Options:");
+        System.out.println("\t5. add/remove contact");
+        System.out.println("\t6. Join/leave event");
+        System.out.println("\t7. LOGOUT");
+        System.out.println("\t8. SHUTDOWN");
+    }
+    public void enterSpeakerName(){
+        System.out.println("Please enter the name of the speaker you wish to create: ");
+    }
+    public void enterSpeakerID(boolean checker){
+        if (checker){
+            System.out.println("Please enter the UserID for the speaker: ");
+        }
+        else{
+            System.out.println("That UserID is taken, please enter another UserID:");
+        }
     }
 }
