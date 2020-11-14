@@ -12,7 +12,6 @@ public class MessageSystem {
     private TextPresenter output;
     private KeyboardInput input;
     private ChatManager chatManager;
-
     private SpeakerManager speakerManager;
     private OrganizerManager organizerManager;
     private EventManager eventManager;
