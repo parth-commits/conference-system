@@ -1,6 +1,7 @@
 package Presenter;
 
 import Entities.Chat;
+import Entities.Event;
 import Entities.Message;
 
 import java.sql.SQLOutput;
@@ -237,5 +238,53 @@ public class TextPresenter {
 
     public void youHaveNoEvents(){
         System.out.println("You have no events, please contact an Organizer to be assigned an event");
+    }
+
+    public void scheduleSpeaker(){
+        System.out.println("Please enter the userid of the speaker you wish to schedule.");
+        System.out.println("If you would like to go back and select a different event id, please press 0");
+    }
+
+    public void scheduleSpeakerInvalidEventID(){
+        System.out.println("That event id does not exist. Please try again.");
+    }
+
+    public void scheduleSpeakerNoSpeakerlessEvents(){
+        System.out.println("Currently all events have a speaker. There are no events that you can schedule a speaker for.");
+    }
+
+    public void scheduleSpeakerSelectEvent(ArrayList<Event> events){
+        System.out.println("Please select one of the following events\n");
+        for (int i=1; i<events.size()+1; i++){
+            String tempstr = Integer.toString(i);
+            System.out.println("\t" + tempstr + " " + events.get(i).getTitle());
+
+        }
+        System.out.println("\nTo return to the previous menu please press 0");
+    }
+
+    public void joinLeaveEvent(){
+        System.out.println("Please type the event id you wish to join or leave");
+    }
+
+    public void invalidEventID(){
+        System.out.println("The event id you entered was invalid, please try again");
+    }
+
+    public void joinOrLeave(){
+        System.out.println("Would you like to join or leave this event?");
+        System.out.println("1. Join");
+        System.out.println("2. Leave");
+    }
+
+    public void joinLeaveInvalidResponse(){
+        System.out.println("That was an invalid response, please try again");
+    }
+
+    public void scheduleSpeakerSpeakerBusy(){
+        System.out.println("The speaker is already giving a talk ");
+    }
+    public void scheduleSpeakerInvalidSpeakerID(){
+        System.out.println("The speaker id you entered is not valid. Please try again");
     }
 }

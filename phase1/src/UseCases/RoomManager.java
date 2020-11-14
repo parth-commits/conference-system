@@ -47,7 +47,7 @@ public class RoomManager {
     }
 
     public Room getRoom(String roomloc){
-        for ( String loc : tableOfRooms.keySet()){
+        for (String loc : tableOfRooms.keySet()){
             if (loc.equals(roomloc)){
                 return tableOfRooms.get(loc);
             }

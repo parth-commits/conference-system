@@ -2,6 +2,7 @@ package UseCases;
 import Entities.Event;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EventManager {
@@ -109,6 +110,16 @@ public class EventManager {
         } catch (ClassNotFoundException | IOException e) {
             return new EventManager();
         }
+    }
+
+    public ArrayList<Event> listOfEventsWithoutSpeaker(){       //gets a list of events that do not have speakers
+        ArrayList<Event> newList = new ArrayList<>();
+        for(Event event: listOfEvents){
+            if (event.noSpeaker()){
+                newList.add(event);
+            }
+        }
+        return newList;
     }
 
 }
