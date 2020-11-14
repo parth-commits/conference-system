@@ -60,7 +60,23 @@ public class EventSystem {
         }
     }
 
-    public void checkSignedUpEvent(String UserId, Integer EventId){
+    public void checkSignedUpEvent(String UserId){
+        ArrayList<Event> listOfEvents = new ArrayList<>();
+        ArrayList<String> listOfEventSchedule = new ArrayList<>();
+        ArrayList<Integer> listOfEventsId = attendeeManager.getSignedUpEvents(UserId);
+        for(Integer i: listOfEventsId){
+            listOfEvents.add(eventManager.getEvent(i));
+        }
+        for (Event event :listOfEvents){
+            String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
+                    + "Time: " + event.getTime() + "\n"
+                    + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+            listOfEventSchedule.add(schedule);
+        }
+        output.Events(listOfEventSchedule);
+    }
+
+    public void checkAssignedEvent(String UserId){
         ArrayList<Event> listOfEvents = new ArrayList<>();
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
         ArrayList<Integer> listOfEventsId = attendeeManager.getSignedUpEvents(UserId);
@@ -77,5 +93,4 @@ public class EventSystem {
     }
 
     }
-
 
