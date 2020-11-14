@@ -35,13 +35,13 @@ public class AttendeeSystem {
             else if (i.equals("2")) {
                 addRemoveContact(userID);
             }
-            else if (o.equals("3")){
+            else if (i.equals("3")){
                 joinLeaveEvent();
             }
-            else if (o.equals("4")){
+            else if (i.equals("4")){
                 return false;
             }
-            else if (o.equals("4")){
+            else if (i.equals("4")){
                 return true;
             }
         }
