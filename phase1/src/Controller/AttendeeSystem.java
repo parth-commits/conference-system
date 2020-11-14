@@ -1,15 +1,8 @@
 package Controller;
 
-import java.util.ArrayList;
-
-import Entities.Attendee;
-import Entities.Organizer;
-import Entities.User;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
-
-import Controller.EventSystem;
 
 public class AttendeeSystem {
     private TextPresenter output;
