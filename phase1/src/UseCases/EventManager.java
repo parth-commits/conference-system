@@ -4,16 +4,27 @@ import Entities.Event;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
+
 
 public class EventManager {
     private ArrayList<Event> listOfEvents;
 
     public EventManager(){
         listOfEvents = new ArrayList<>();
+
     }
 
     public ArrayList<Event> getListOfEvents(){
         return listOfEvents;
+    }
+
+    public ArrayList<Integer> getListOfEventIDs(){
+        ArrayList<Integer> listOfEventIDs = new ArrayList<>();
+        for(Event event: listOfEvents){
+            listOfEventIDs.add(event.getID());
+        }
+        return listOfEventIDs;
     }
 
     public Event getEvent(int eventId){
@@ -23,6 +34,10 @@ public class EventManager {
             }
         }
         return null;
+    }
+
+    public Date getTime(int eventID){
+        return getEvent(eventID).getTime();
     }
 
     public ArrayList<ArrayList<String>> getListofEventsBySpeaker(String speakerID){

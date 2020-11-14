@@ -263,28 +263,41 @@ public class TextPresenter {
         System.out.println("\nTo return to the previous menu please press 0");
     }
 
-    public void joinLeaveEvent(){
-        System.out.println("Please type the event id you wish to join or leave");
+    public void scheduleSpeakerSpeakerBusy(){
+        System.out.println("This speaker is already giving a talk at another event at this time.");
+    }
+    public void scheduleSpeakerInvalidSpeakerID(){
+        System.out.println("The speaker id you entered is not valid. Please try again");
     }
 
     public void invalidEventID(){
         System.out.println("The event id you entered was invalid, please try again");
     }
 
+    public void joinEvent(){
+        System.out.println("Please type the event id you wish to join.");
+    }
+
     public void joinOrLeave(){
         System.out.println("Would you like to join or leave this event?");
         System.out.println("1. Join");
         System.out.println("2. Leave");
+        System.out.println("If you would like to go back to the previous menu, please press 0");
     }
 
     public void joinLeaveInvalidResponse(){
         System.out.println("That was an invalid response, please try again");
     }
 
-    public void scheduleSpeakerSpeakerBusy(){
-        System.out.println("The speaker is already giving a talk ");
+    public void joinDeleteEventSelector(ArrayList<Event> listOfEvents){
+        System.out.println("Please select one of the following events\n");
+        for (int i=1; i<listOfEvents.size()+1; i++){
+            String tempstr = Integer.toString(i);
+            System.out.println("\t" + tempstr + " " + listOfEvents.get(i).getTitle());
+
+        }
+        System.out.println("\nTo return to the previous menu please press 0");
     }
-    public void scheduleSpeakerInvalidSpeakerID(){
-        System.out.println("The speaker id you entered is not valid. Please try again");
-    }
+
+
 }
