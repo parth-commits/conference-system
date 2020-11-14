@@ -60,6 +60,11 @@ public class SpeakerManager {
         getSpeaker(userId).removeContact(otherUserId);
     }
 
+    public ArrayList<Integer> getSignedUpEvents (String userId){
+        return getSpeaker(userId).getAssignEvents();
+    }
+
+
     public void saveState() throws IOException{
         OutputStream file = new FileOutputStream("src/SpeakerManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
