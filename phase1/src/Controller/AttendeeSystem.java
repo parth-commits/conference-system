@@ -41,7 +41,7 @@ public class AttendeeSystem {
             else if (i.equals("4")){
                 return false;
             }
-            else if (i.equals("4")){
+            else if (i.equals("5")){
                 return true;
             }
         }
