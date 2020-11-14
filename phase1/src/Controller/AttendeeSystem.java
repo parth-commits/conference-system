@@ -28,7 +28,7 @@ public class AttendeeSystem {
     public boolean start(String userID) {
         while (true) {
             boolean validInput = false;
-            i = input.getKeyboardInput()
+            String i = input.getKeyboardInput();
             if (i.equals("1")) {
                 message(userID);
             }
