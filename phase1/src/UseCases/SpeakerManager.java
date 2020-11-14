@@ -60,7 +60,7 @@ public class SpeakerManager {
         getSpeaker(userId).removeContact(otherUserId);
     }
 
-    public ArrayList<Integer> getSignedUpEvents (String userId){
+    public ArrayList<Integer> getAssignedEvent (String userId){
         return getSpeaker(userId).getAssignEvents();
     }
 

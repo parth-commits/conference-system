@@ -79,7 +79,7 @@ public class EventSystem {
     public void checkAssignedEvent(String UserId){
         ArrayList<Event> listOfEvents = new ArrayList<>();
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
-        ArrayList<Integer> listOfEventsId = speakerManager.getSignedUpEvents(UserId);
+        ArrayList<Integer> listOfEventsId = speakerManager.getAssignedEvent(UserId);
         for(Integer i: listOfEventsId){
             listOfEvents.add(eventManager.getEvent(i));
         }
