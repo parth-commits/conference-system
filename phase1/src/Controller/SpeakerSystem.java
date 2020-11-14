@@ -14,52 +14,52 @@ public class SpeakerSystem {
     private TextPresenter output;
     private KeyboardInput input;
     private AttendeeManager attendeeManager;
-    private ChatManager chatManager;
-    private RoomManager roomManager;
-    private EventManager eventManager;
+    private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
+    private ChatManager chatManager;
+    private MessageSystem messageSystem;
+    private EventSystem eventSystem;
 
-    public SpeakerSystem (AttendeeManager attendeeManager, RoomManager roomManager, EventManager eventManager,
-                           SpeakerManager speakerManager){
-        this.attendeeManager = attendeeManager;
-        this.roomManager = roomManager;
-        this.eventManager = eventManager;
+    public SpeakerSystem (SpeakerManager speakerManager, OrganizerManager organizerManager, ChatManager chatManager,
+                          AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem){
         this.speakerManager = speakerManager;
+        this.organizerManager = organizerManager;
+        this.attendeeManager = attendeeManager;
+        this.chatManager = chatManager;
+        this.messageSystem = messageSystem;
+        this.eventSystem = eventSystem;
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
     }
 
+
+    //We need a Speaker Menu in Text Presenter which allows Speakers to:
+    //1. see all Events. 2. see the Events they're assigned to. 3. Message Attendees
     public boolean start(String userID) {
         while (true) {
             boolean validInput = false;
             i = input.getKeyboardInput()
             if (i.equals("1")) {
-                message(userID);
+                eventSystem.checkAllEvents();
             }
             else if (i.equals("2")) {
-                addRemoveContact(userID);
+                //need a method in EventSystem to see the Events that this Speaker assigned to
             }
             else if (i.equals("3")){
-                joinLeaveEvent();
-            }
-            else if (i.equals("4")){
-                return false;
-            }
-            else if (i.equals("5")){
-                return true;
+                messageSystem.sendMessage(userID);
             }
         }
     }
 
-
+    //why do we need this Jack?
     private void message(String userID) {
         messageSystem.sendMessage(userID);
     }
-
+    //why do we need this Jack?
     private void joinLeaveEvent() {
     }
 
-
+    //why do we need this Jack?
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;
