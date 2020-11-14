@@ -44,6 +44,7 @@ public class OrganizerManager {
         getOrganizer(userId).addEvent(EventId);
     }
 
+
     //An attendee action
     public void removeEvent(Integer EventId, String userId) {
         getOrganizer(userId).removeEvent(EventId);
@@ -70,9 +71,8 @@ public class OrganizerManager {
         getOrganizer(userId).removeContact(otherUserId);
     }
 
-    public ArrayList<Integer> getSignedUpEvents (String userId){
-        return getOrganizer(userId).getSignedUpEvents();
-    }
+    public ArrayList<Integer> getSignedUpEvents (String userId){ return getOrganizer(userId).getSignedUpEvents(); }
+
     /*but we need to actually create the speaker!!!*/
     //Following are Organizer ONLY actions
     public void setAddSpeakerCreated(String user_id, String speaker_user_id){

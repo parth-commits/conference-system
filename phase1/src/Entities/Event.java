@@ -1,6 +1,7 @@
 package Entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class Event {
@@ -8,20 +9,19 @@ public class Event {
     public static int id_counter = 0;
     private int id;
     private String title;
-    private String time;
+    private Date time;
     private String location;
     private String speakerID;
     private ArrayList<String> attendees;
     private String organizerID;
 
 
-    public Event(String title, String time, String location, String speakerID, String organizerID) {
+    public Event(String title, Date time, String location, String organizerID) {
         this.id = id_counter + 1;
         id_counter++;
         this.title = title;
         this.time = time;
         this.location = location;
-        this.speakerID = speakerID;
         this.organizerID = organizerID;
         this.attendees = new ArrayList<>();
     }
@@ -37,9 +37,7 @@ public class Event {
     }
 
     //gets the time of event
-    public String getTime() {
-        return this.time;
-    }
+    public Date getTime() { return this.time; }
 
     //gets the location of event
     public String getLocation() {
@@ -67,7 +65,7 @@ public class Event {
     }
 
     //sets time of event
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -95,4 +93,6 @@ public class Event {
     public boolean removeAttendee(String attendeeID) {
         return this.attendees.remove(attendeeID);
     }
+
+    public boolean noSpeaker(){return this.speakerID.isEmpty();}
 }
