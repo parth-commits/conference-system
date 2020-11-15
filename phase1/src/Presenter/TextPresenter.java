@@ -17,14 +17,39 @@ public class TextPresenter {
     public void ActionFailed(){
         System.out.println("Action Failed.");
     }
+
+    //AttendeeSystem
     public void AttendeeMenu(){
         System.out.println("Menu:");
-        System.out.println("1. See Events");
-        System.out.println("2. Sign Up for Events");
-        System.out.println("3. Check Schedule for an Signed Up Event");
-        System.out.println("4. Cancel an Event Signed Up for");
-        System.out.println("5. Message Other Users");
+        System.out.println("\t1. See Events");
+        System.out.println("\t2. Sign Up for Events");
+        System.out.println("\t3. Check Schedule for an Signed Up Event");
+        System.out.println("\t4. Cancel an Event Signed Up for");
+        System.out.println("\t5. Add or Remove Attendee in Contact");
+        System.out.println("\t6. Message Other Users");
+        System.out.println("\t7. LOGOUT");
+        System.out.println("\t8. SHUTDOWN");
     }
+    public void enterEvent(){
+        System.out.println("Please enter the event ID for the event you want to sign up for: ");
+    }
+    public void enterEventCancel(){
+        System.out.println("Please enter the event ID for the event you want to cancel: ");
+    }
+    public void enterUserID(){
+        System.out.println("Please enter the User ID that you want to add or remove from your contact list");
+    }
+
+    //SpeakerSystem
+    public void SpeakerMenu(){
+        System.out.println("Menu:");
+        System.out.println("\t1. See all Events");
+        System.out.println("\t2. see assigned Events");
+        System.out.println("\t3. Message Attendee");
+        System.out.println("\t4. LOGOUT");
+        System.out.println("\t5. SHUTDOWN");
+    }
+
     public void enterName(){
         System.out.println("Please enter your name: ");
     }

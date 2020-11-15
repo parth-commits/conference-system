@@ -92,5 +92,17 @@ public class EventSystem {
         output.Events(listOfEventSchedule);
     }
 
+    //I add a new method which shows a list of event titles and IDs for Attendee to signup (by Harold)
+    public void checkEventTitleIDs(){
+        ArrayList<String> entireEventList = new ArrayList<>();
+        ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
+        int i = 0;
+        for (Event event :listOfEvents){
+            String s = String.valueOf(i);
+            String schedule = s +". " + event.getTitle() + ".   EventID: " + event.getID();
+            entireEventList.add(schedule);
+        }
+        output.Events(entireEventList);
+    }
     }
 
