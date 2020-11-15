@@ -1,11 +1,9 @@
 package Controller;
 
-import Entities.Event;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
-import java.util.ArrayList;
 
 public class AttendeeSystem {
     private TextPresenter output;
@@ -30,7 +28,8 @@ public class AttendeeSystem {
 
     }
     // Attendee is allowed to 1. see Events. 2. Sign up for Events
-    // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Message Other Users
+    // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Add or Remove Attendee in Contact
+    //6. Message Other Users
     public boolean start(String userID) {
         while (true) {
             String i;
@@ -59,16 +58,22 @@ public class AttendeeSystem {
                 Integer event_id = Integer.parseInt(input.getKeyboardInput());
                 eventSystem.cancelSignedUpEvent(userID, event_id);
             }
-            //5. Message Other Users
+            //5. Add or Remove Attendee in Contact
             else if (i.equals("5")){
+                output.enterUserID();
+                String user_ID = input.getKeyboardInput();
+                addRemoveContact(user_ID);
+            }
+            //6. Message Other Users
+            else if (i.equals("6")){
                 messageSystem.sendMessage(userID);
             }
-            //6. logout
-            else if (i.equals("6")){
+            //7. logout
+            else if (i.equals("7")){
                 return false;
             }
-            //7. shutdown
-            else if (i.equals("7")) {
+            //8. shutdown
+            else if (i.equals("8")) {
                 return true;
             }
         }
