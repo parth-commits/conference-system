@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class EventSystem {
     private TextPresenter output;
     private KeyboardInput input;
-    private ChatManager chatManager;
     private SpeakerManager speakerManager;
     private OrganizerManager organizerManager;
     private EventManager eventManager;
@@ -92,7 +91,6 @@ public class EventSystem {
         output.Events(listOfEventSchedule);
     }
 
-    //I add a new method which shows a list of event titles and IDs for Attendee to signup (by Harold)
     public void checkEventTitleIDs(){
         ArrayList<String> entireEventList = new ArrayList<>();
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();

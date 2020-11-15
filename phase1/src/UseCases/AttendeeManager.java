@@ -19,7 +19,7 @@ public class  AttendeeManager {
         tableOfAttendees.put(newAttendee.getUser_id(), newAttendee);
     }
 
-    //verifies the login given the inputted credentials. true if correct login info, false otherwise
+    //verifies the login given the inputted credentials. true if the login info is correct, false otherwise
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
             return tableOfAttendees.get(inputUserId).getPasswords().equals(inputUserPassword);
@@ -58,18 +58,18 @@ public class  AttendeeManager {
         getAttendee(userId).removeEvent(EventId);
     }
 
-    //check if contact already exists
+    //check if the contact already exists
     public boolean contactExists(String userId, String otherUserId){
         return getAttendee(userId).checkContact(otherUserId);
     }
 
     public void addContact (String userId, String otherUserId){
-        // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
+        // assume both users exist (checked in controller) and userid is added to otherUserID's contacts in controller as well.
         getAttendee(userId).addContact(otherUserId);
         }
 
     public void removeContact (String userId, String otherUserId){
-        //assume both users exists (checked in controller) and userid is removed from otherUserID's contacts in controller as well.
+        //assume both users exist (checked in controller) and userid is removed from otherUserID's contacts in controller as well.
         getAttendee(userId).removeContact(otherUserId);
     }
 
