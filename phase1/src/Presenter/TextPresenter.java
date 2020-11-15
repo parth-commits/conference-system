@@ -18,7 +18,7 @@ public class TextPresenter {
         System.out.println("Action Failed.");
     }
 
-    //Attendee
+    //AttendeeSystem
     public void AttendeeMenu(){
         System.out.println("Menu:");
         System.out.println("\t1. See Events");
@@ -38,6 +38,16 @@ public class TextPresenter {
     }
     public void enterUserID(){
         System.out.println("Please enter the User ID that you want to add or remove from your contact list");
+    }
+
+    //SpeakerSystem
+    public void SpeakerMenu(){
+        System.out.println("Menu:");
+        System.out.println("\t1. See all Events");
+        System.out.println("\t2. see assigned Events");
+        System.out.println("\t3. Message Attendee");
+        System.out.println("\t4. LOGOUT");
+        System.out.println("\t5. SHUTDOWN");
     }
 
     public void enterName(){

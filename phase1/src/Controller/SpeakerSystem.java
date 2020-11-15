@@ -34,16 +34,29 @@ public class SpeakerSystem {
     //1. see all Events. 2. see the Events they're assigned to. 3. Message Attendees
     public boolean start(String userID) {
         while (true) {
+            String i;
             boolean validInput = false;
+            output.AttendeeMenu();
             i = input.getKeyboardInput();
+            //1. see all Events.
             if (i.equals("1")) {
                 eventSystem.checkAllEvents();
             }
+            //2. see the Events they're assigned to.
             else if (i.equals("2")) {
                 eventSystem.checkAssignedEvent(userID);
             }
+            //3. Message Attendees
             else if (i.equals("3")){
                 messageSystem.sendMessage(userID);
+            }
+            //4. logout
+            else if (i.equals("4")){
+                return false;
+            }
+            //5. shutdown
+            else if (i.equals("5")){
+                return true;
             }
         }
     }
