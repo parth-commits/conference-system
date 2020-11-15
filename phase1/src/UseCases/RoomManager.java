@@ -13,6 +13,7 @@ public class RoomManager {
 
     //constructor should create 5 rooms (different roomlocations)
     public RoomManager(){
+        this.tableOfRooms = new Hashtable<>();
         Room r1 = new Room("room1");
         tableOfRooms.put("room1", r1);
         Room r2 = new Room("room2");

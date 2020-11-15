@@ -191,7 +191,8 @@ public class TextPresenter {
     public void printChat(Chat chat){
         ArrayList<Message> messages = chat.getMessages();
         for (Message m:messages){
-            System.out.println(m.getSender()+": "+m.getContext());
+            System.out.println(m);
+            //System.out.println(m.getSender()+": "+m.getContext());
         }
     }
 

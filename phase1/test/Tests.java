@@ -1,9 +1,9 @@
-import org.junit.*;
+/*import org.junit.*;
 import static org.junit.Assert.*;
 import Entities.Attendee;
 import Entities.User;
 import Entities.Organizer;
-
+*/
 
 //public class Tests {
 //    public void contacts(){
