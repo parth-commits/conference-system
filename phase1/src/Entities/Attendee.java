@@ -17,12 +17,12 @@ public class Attendee extends User{
         return signedUpEvents;
     }
 
-    //adds an event by id to the list of signedUpEvents
+    //adds an event by event id to the list of signedUpEvents
     public void addEvent(Integer EventId){
         this.signedUpEvents.add(EventId);
     }
 
-    //removes an event by id from the list of signedUpEvents
+    //removes an event by event id from the list of signedUpEvents
     public boolean removeEvent(Integer EventId){
         return this.signedUpEvents.remove(EventId);
     }

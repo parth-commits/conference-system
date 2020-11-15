@@ -14,9 +14,7 @@ public class TextPresenter {
     public void ActionDone(){
         System.out.println("Action Done!");
     }
-    public void ActionFailed(){
-        System.out.println("Action Failed.");
-    }
+    public void ActionFailed(){ System.out.println("Action Failed."); }
 
     //AttendeeSystem
     public void AttendeeMenu(){
@@ -43,9 +41,9 @@ public class TextPresenter {
     //SpeakerSystem
     public void SpeakerMenu(){
         System.out.println("Menu:");
-        System.out.println("\t1. See all Events");
-        System.out.println("\t2. see assigned Events");
-        System.out.println("\t3. Message Attendee");
+        System.out.println("\t1. See Events");
+        System.out.println("\t2. See Assigned Events");
+        System.out.println("\t3. Message Attendees");
         System.out.println("\t4. LOGOUT");
         System.out.println("\t5. SHUTDOWN");
     }
@@ -84,9 +82,6 @@ public class TextPresenter {
         System.out.println("Cancel Events");
     }
 
-    // I added this 2 verifying text becuz I noticed I usually encounter those confirming questions when I decide to do the action,
-    // and it indeed needs a checker
-    // but if you think it is overlapped with the action done/action failed method we can delete it tho
     public void verifySignUp(boolean checker){
         System.out.println("Are you sure you want to sign up for this event? ");
         if (checker){
@@ -140,7 +135,7 @@ public class TextPresenter {
     }
 
     public void youHaveNoContacts(){
-        System.out.println("You have no contacts! Please add a contact before trying again.");
+        System.out.println("You have no contacts yet! Please add a contact before sending a message.");
     }
 
     public void addRemoveContact(){
@@ -151,7 +146,7 @@ public class TextPresenter {
 
     public void enterContactUserid(boolean invalid){
         if (invalid){
-            System.out.println("Invalid userID. Enter valid UserID of the contact:");
+            System.out.println("Invalid userID. Enter a valid UserID of the contact:");
         }
         else {
             System.out.println("Enter the userID of the contact:");
@@ -161,7 +156,7 @@ public class TextPresenter {
     //Should One line outputs still be in presenter. answer by parth: yes!
     public void promptRecipient(ArrayList<String> contactList, boolean invalid){
         if (invalid){
-            System.out.println("Invalid input, try again:");
+            System.out.println("Invalid input, please try again:");
         }
         System.out.println("Please select a contact:");
         for (int i = 0; i < contactList.size(); i++) {
@@ -171,30 +166,27 @@ public class TextPresenter {
     }
     public void promptEvents(ArrayList<ArrayList<String>> eventList, boolean invalid){
         if (invalid){
-            System.out.println("Invalid input, try again:");
+            System.out.println("Invalid input, please try again:");
         }
-        System.out.println("Please select a Event to send an Automatic message to all Attendees of that event:");
+        System.out.println("Please select an event to send an automatic message to all attendees of that event:");
         for (int i = 0; i < eventList.size(); i++) {
             System.out.println((i+1)+". ID: "+ eventList.get(i).get(0) + " Name: " + eventList.get(i).get(0));
         }
-        System.out.println("Enter the Event ID of your choice:");
+        System.out.println("Enter the event ID of your choice:");
     }
     public void confirmCreateChat(String id){
-        System.out.println("Please confirm create chat with user" + id + ": ");
-        System.out.println("y/n");
+        System.out.println("Please confirm create a chat with user" + id + ": ");
+        System.out.println("yes/no");
     }
     public void promptContext(){
         System.out.println("Please enter the message, or enter 'return' to cancel: ");
     }
 
     public void promptContextEvent(String title){
-        System.out.println("Please enter the Automated message for " + title + " event: ");
+        System.out.println("Please enter the automated message for " + title + " event: ");
     }
 
-    public void chatDNE(){
-        System.out.println("The chat doesn't exists.");
-    }
-
+    public void chatDNE(){ System.out.println("The chat doesn't exist."); }
 
     public void printChat(Chat chat){
         ArrayList<Message> messages = chat.getMessages();
@@ -203,9 +195,9 @@ public class TextPresenter {
         }
     }
 
-    // Outputs for Message System
+    //MessageSystem
     public void sendMsgOptions(int role){
-        // Organizer
+        //Organizer
         if (role == 1){
             System.out.println("Who would you like to send a message to?");
             System.out.println("Note: to send a message to a single user, they must be on your contact list!");
@@ -216,36 +208,36 @@ public class TextPresenter {
             System.out.println("\t5. All Attendees");
             System.out.println("\t6. Single Attendee");
         }
-        // Attendee
+        //Attendee
         else if (role == 2){
             System.out.println("Would you like to send to 1. another Attendee or 2. a Speaker? ");
         }
-        // Speaker
+        //Speaker
         else if (role == 3){
-            System.out.println("1. Select an event to send to all participants. 2. respond to an attendee ");
+            System.out.println("1. Select an event to send to all attendees 2. respond to an attendee ");
         }
     }
     public void msgOptionInvalid(){
-        System.out.println("Invalid Option, please enter again: ");
+        System.out.println("Invalid option, please enter again: ");
     }
     public void invalidRecipient(){
         System.out.println("Invalid user ID, please enter again: ");
     }
     public void addContactFailed(){
-        System.out.println("Failed to add contact, please check the input ID.");
+        System.out.println("Failed to add contact, please provide valid input ID.");
     }
 
-    //OrganizerSystem methods
+    //OrganizerSystem
     public void organizationSystemStartOptions(){
         System.out.println("What would you like to do:\n");
         System.out.println("Organizer Specific Options:");
         System.out.println("\t1. Create a new Speaker");
-        System.out.println("\t2. schedule a Speaker");
+        System.out.println("\t2. Schedule a Speaker");
         System.out.println("\t3. Message");
         System.out.println("\t4. Create/Delete event\n");
         System.out.println("Regular Attendee Options:");
-        System.out.println("\t5. add/remove contact");
-        System.out.println("\t6. Join/leave event");
+        System.out.println("\t5. Add/Remove contact");
+        System.out.println("\t6. Join/Leave event");
         System.out.println("\t7. LOGOUT");
         System.out.println("\t8. SHUTDOWN");
     }
@@ -254,10 +246,10 @@ public class TextPresenter {
     }
     public void enterSpeakerID(boolean checker){
         if (checker){
-            System.out.println("Please enter the UserID for the speaker: ");
+            System.out.println("Please enter the userid for the speaker: ");
         }
         else{
-            System.out.println("That UserID is taken, please enter another UserID:");
+            System.out.println("That userid is taken, please enter another UserID:");
         }
     }
 
