@@ -61,15 +61,15 @@ public class SpeakerSystem {
         }
     }
 
-    //why do we need this Jack?
+
     private void message(String userID) {
         messageSystem.sendMessage(userID);
     }
-    //why do we need this Jack?
+
     private void joinLeaveEvent() {
     }
 
-    //why do we need this Jack?
+
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;

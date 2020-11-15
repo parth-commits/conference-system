@@ -79,15 +79,14 @@ public class AttendeeSystem {
         }
     }
 
-    //Not sure why we have this
-    /*
+
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;
         }
         return false;
     }
-    */
+
 
 
     private void addRemoveContact(String userID){
