@@ -4,6 +4,7 @@ import Entities.User;
 import UseCases.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class ConferenceSystem {
 
@@ -65,7 +66,7 @@ public class ConferenceSystem {
         attendeeManager.saveState();
 
     }
-    public void run () throws IOException {
+    public void run () throws IOException, ParseException {
 
         boolean shutdown = false;
 

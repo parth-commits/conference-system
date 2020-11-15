@@ -72,6 +72,9 @@ public class MessageSystem {
                     ids = attendeeManager.getUserIDs();
                 }
                 for (String id : ids) {
+                    if (sender.equals(id)){
+                        continue;
+                    }
                     if (!(chatManager.chatExists(sender, id))) {
                         chatManager.createChat(sender, id);
                         // ** user built in add contact method

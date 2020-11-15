@@ -4,10 +4,6 @@ import Entities.Event;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
-import jdk.internal.net.http.common.Log;
-import jdk.jfr.internal.Logger;
-
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
