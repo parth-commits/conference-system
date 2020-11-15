@@ -2,9 +2,6 @@ package Controller;
 
 import java.util.ArrayList;
 
-import Entities.Attendee;
-import Entities.Speaker;
-import Entities.User;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
@@ -37,29 +34,42 @@ public class SpeakerSystem {
     //1. see all Events. 2. see the Events they're assigned to. 3. Message Attendees
     public boolean start(String userID) {
         while (true) {
+            String i;
             boolean validInput = false;
-            i = input.getKeyboardInput()
+            output.AttendeeMenu();
+            i = input.getKeyboardInput();
+            //1. see all Events.
             if (i.equals("1")) {
                 eventSystem.checkAllEvents();
             }
+            //2. see the Events they're assigned to.
             else if (i.equals("2")) {
-                //need a method in EventSystem to see the Events that this Speaker assigned to
+                eventSystem.checkAssignedEvent(userID);
             }
+            //3. Message Attendees
             else if (i.equals("3")){
                 messageSystem.sendMessage(userID);
+            }
+            //4. logout
+            else if (i.equals("4")){
+                return false;
+            }
+            //5. shutdown
+            else if (i.equals("5")){
+                return true;
             }
         }
     }
 
-    //why do we need this Jack?
+
     private void message(String userID) {
         messageSystem.sendMessage(userID);
     }
-    //why do we need this Jack?
+
     private void joinLeaveEvent() {
     }
 
-    //why do we need this Jack?
+
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;

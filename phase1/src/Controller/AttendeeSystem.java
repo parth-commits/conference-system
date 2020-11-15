@@ -4,6 +4,7 @@ import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
+
 public class AttendeeSystem {
     private TextPresenter output;
     private KeyboardInput input;
@@ -27,49 +28,58 @@ public class AttendeeSystem {
 
     }
     // Attendee is allowed to 1. see Events. 2. Sign up for Events
-    // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Message Other Users
+    // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Add or Remove Attendee in Contact
+    //6. Message Other Users
     public boolean start(String userID) {
         while (true) {
+            String i;
             boolean validInput = false;
+            output.AttendeeMenu();
             i = input.getKeyboardInput();
-
-            //see Events
+            //1. see Events
             if (i.equals("1")) {
                 eventSystem.checkAllEvents();
             }
-
-            //Sign up for Events
+            //2. Sign up for Events
             else if (i.equals("2")) {
-                //how should ppl signup?? by eventid? or event title?*
-                output.EventID;
+                output.enterEvent();
+                eventSystem.checkEventTitleIDs();
                 Integer event_id = Integer.parseInt(input.getKeyboardInput());
                 eventSystem.signUpEvent(userID, event_id);
-                //addRemoveContact(userID);
             }
-            //Check Schedule for an Signed Up Event
+            //3. Check Schedule for an Signed Up Event
             else if (i.equals("3")){
-                // event id in checkSignedUpEvent is never used!!*
                 eventSystem.checkSignedUpEvent(userID);
             }
-
             //4. Cancel an Event Signed Up for
             else if (i.equals("4")){
                 //need the user to enter event id(or title)*
-                output.EventID;
+                output.enterEventCancel();
                 Integer event_id = Integer.parseInt(input.getKeyboardInput());
                 eventSystem.cancelSignedUpEvent(userID, event_id);
             }
-
-            //5. Message Other Users
+            //5. Add or Remove Attendee in Contact
             else if (i.equals("5")){
-                // just want to make sure we check if the userID is in the contact list in MessageSystem*
+                output.enterUserID();
+                String user_ID = input.getKeyboardInput();
+                addRemoveContact(user_ID);
+            }
+            //6. Message Other Users
+            else if (i.equals("6")){
                 messageSystem.sendMessage(userID);
+            }
+            //7. logout
+            else if (i.equals("7")){
+                return false;
+            }
+            //8. shutdown
+            else if (i.equals("8")) {
+                return true;
             }
         }
     }
 
 
-    //Not sure why we have this
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;
@@ -79,7 +89,7 @@ public class AttendeeSystem {
 
 
 
-    private void addRemoveContact(String userID) {
+    private void addRemoveContact(String userID){
         output.addRemoveContact();
         String option = input.getKeyboardInput();
         while (!(option.equals("1")||option.equals("2"))){
@@ -126,13 +136,5 @@ public class AttendeeSystem {
         }
 
     }
-
-
-
-
-
-
-
-
 
 }

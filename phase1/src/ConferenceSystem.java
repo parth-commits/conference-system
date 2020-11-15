@@ -28,8 +28,8 @@ public class ConferenceSystem {
         messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
         eventSystem = new EventSystem(speakerManager, roomManager, organizerManager, eventManager, attendeeManager);
         organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem);
-        //initilaize attendeeSystem
-        //initialize speakersystem
+        attendeeSystem = new AttendeeSystem(speakerManager, organizerManager, chatManager,attendeeManager, messageSystem, eventSystem);
+        speakerSystem = new SpeakerSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem);
     }
 
     private void importState() {
