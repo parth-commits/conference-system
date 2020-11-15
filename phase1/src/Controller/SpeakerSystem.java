@@ -2,9 +2,6 @@ package Controller;
 
 import java.util.ArrayList;
 
-import Entities.Attendee;
-import Entities.Speaker;
-import Entities.User;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
@@ -38,12 +35,12 @@ public class SpeakerSystem {
     public boolean start(String userID) {
         while (true) {
             boolean validInput = false;
-            i = input.getKeyboardInput()
+            i = input.getKeyboardInput();
             if (i.equals("1")) {
                 eventSystem.checkAllEvents();
             }
             else if (i.equals("2")) {
-                //need a method in EventSystem to see the Events that this Speaker assigned to
+                eventSystem.checkAssignedEvent(userID);
             }
             else if (i.equals("3")){
                 messageSystem.sendMessage(userID);

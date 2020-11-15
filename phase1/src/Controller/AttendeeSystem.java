@@ -1,8 +1,11 @@
 package Controller;
 
+import Entities.Event;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
+
+import java.util.ArrayList;
 
 public class AttendeeSystem {
     private TextPresenter output;
@@ -33,25 +36,22 @@ public class AttendeeSystem {
             boolean validInput = false;
             i = input.getKeyboardInput();
 
-            //see Events
+            //1. see Events
             if (i.equals("1")) {
                 eventSystem.checkAllEvents();
             }
 
-            //Sign up for Events
+            //2. Sign up for Events
             else if (i.equals("2")) {
                 //how should ppl signup?? by eventid? or event title?*
                 output.EventID;
                 Integer event_id = Integer.parseInt(input.getKeyboardInput());
                 eventSystem.signUpEvent(userID, event_id);
-                //addRemoveContact(userID);
             }
-            //Check Schedule for an Signed Up Event
+            //3. Check Schedule for an Signed Up Event
             else if (i.equals("3")){
-                // event id in checkSignedUpEvent is never used!!*
                 eventSystem.checkSignedUpEvent(userID);
             }
-
             //4. Cancel an Event Signed Up for
             else if (i.equals("4")){
                 //need the user to enter event id(or title)*
@@ -59,12 +59,17 @@ public class AttendeeSystem {
                 Integer event_id = Integer.parseInt(input.getKeyboardInput());
                 eventSystem.cancelSignedUpEvent(userID, event_id);
             }
-
             //5. Message Other Users
             else if (i.equals("5")){
-                // just want to make sure we check if the userID is in the contact list in MessageSystem*
                 messageSystem.sendMessage(userID);
             }
+            //6. logout
+            else if (o.equals("6")){
+                return false;
+            }
+            //7. shutdown
+            else if (o.equals("7")){
+                return true;
         }
     }
 
@@ -76,7 +81,6 @@ public class AttendeeSystem {
         }
         return false;
     }
-
 
 
     private void addRemoveContact(String userID) {
@@ -126,7 +130,6 @@ public class AttendeeSystem {
         }
 
     }
-
 
 
 

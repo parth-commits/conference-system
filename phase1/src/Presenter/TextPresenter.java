@@ -19,11 +19,13 @@ public class TextPresenter {
     }
     public void AttendeeMenu(){
         System.out.println("Menu:");
-        System.out.println("1. See Events");
-        System.out.println("2. Sign Up for Events");
-        System.out.println("3. Check Schedule for an Signed Up Event");
-        System.out.println("4. Cancel an Event Signed Up for");
-        System.out.println("5. Message Other Users");
+        System.out.println("\t1. See Events");
+        System.out.println("\t2. Sign Up for Events");
+        System.out.println("\t3. Check Schedule for an Signed Up Event");
+        System.out.println("\t4. Cancel an Event Signed Up for");
+        System.out.println("\t5. Message Other Users");
+        System.out.println("\t6. LOGOUT");
+        System.out.println("\t7. SHUTDOWN");
     }
     public void enterName(){
         System.out.println("Please enter your name: ");
