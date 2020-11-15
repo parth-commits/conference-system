@@ -17,6 +17,8 @@ public class TextPresenter {
     public void ActionFailed(){
         System.out.println("Action Failed.");
     }
+
+    //Attendee
     public void AttendeeMenu(){
         System.out.println("Menu:");
         System.out.println("\t1. See Events");
@@ -27,6 +29,13 @@ public class TextPresenter {
         System.out.println("\t6. LOGOUT");
         System.out.println("\t7. SHUTDOWN");
     }
+    public void enterEvent(){
+        System.out.println("Please enter the event ID for the event you want to sign up for: ");
+    }
+    public void enterEventCancel(){
+        System.out.println("Please enter the event ID for the event you want to cancel: ");
+    }
+
     public void enterName(){
         System.out.println("Please enter your name: ");
     }

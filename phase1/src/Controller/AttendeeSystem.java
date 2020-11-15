@@ -33,18 +33,18 @@ public class AttendeeSystem {
     // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Message Other Users
     public boolean start(String userID) {
         while (true) {
+            String i;
             boolean validInput = false;
+            output.AttendeeMenu();
             i = input.getKeyboardInput();
-
             //1. see Events
             if (i.equals("1")) {
                 eventSystem.checkAllEvents();
             }
-
             //2. Sign up for Events
             else if (i.equals("2")) {
-                //how should ppl signup?? by eventid? or event title?*
-                output.EventID;
+                output.enterEvent();
+                eventSystem.checkEventTitleIDs();
                 Integer event_id = Integer.parseInt(input.getKeyboardInput());
                 eventSystem.signUpEvent(userID, event_id);
             }
@@ -55,7 +55,7 @@ public class AttendeeSystem {
             //4. Cancel an Event Signed Up for
             else if (i.equals("4")){
                 //need the user to enter event id(or title)*
-                output.EventID;
+                output.enterEventCancel();
                 Integer event_id = Integer.parseInt(input.getKeyboardInput());
                 eventSystem.cancelSignedUpEvent(userID, event_id);
             }
@@ -64,26 +64,28 @@ public class AttendeeSystem {
                 messageSystem.sendMessage(userID);
             }
             //6. logout
-            else if (o.equals("6")){
+            else if (i.equals("6")){
                 return false;
             }
             //7. shutdown
-            else if (o.equals("7")){
+            else if (i.equals("7")) {
                 return true;
+            }
         }
     }
 
-
     //Not sure why we have this
+    /*
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;
         }
         return false;
     }
+    */
 
 
-    private void addRemoveContact(String userID) {
+    private void addRemoveContact(String userID){
         output.addRemoveContact();
         String option = input.getKeyboardInput();
         while (!(option.equals("1")||option.equals("2"))){
@@ -130,12 +132,5 @@ public class AttendeeSystem {
         }
 
     }
-
-
-
-
-
-
-
 
 }
