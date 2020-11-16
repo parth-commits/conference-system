@@ -330,7 +330,7 @@ public class TextPresenter {
     public void createEnterTime(){
         System.out.println("Please enter a date and time for this new event. Please note it must follow the following format:" +
                 " dd-mm-yyyy hh:mm:ss. The hours must be in the 24 hour format and must be between 09 and 16, inclusive. Since all events start on the hour, mm and ss must be 00." +
-                " The time you enter cannot be in the past.");
+                " The time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M. you would type '20-12-2020 13:00:00.'");
         System.out.println("Please press 0 to return to the previous menu");
     }
 
