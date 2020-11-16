@@ -239,8 +239,11 @@ public class TextPresenter {
         System.out.println("Regular Attendee Options:");
         System.out.println("\t5. Add/Remove contact");
         System.out.println("\t6. Join/Leave event");
-        System.out.println("\t7. LOGOUT");
-        System.out.println("\t8. SHUTDOWN");
+        System.out.println("\t7. See all Events");
+        System.out.println("\t8. See Scheduled Events");
+        System.out.println("\t9. Create Rooms");
+        System.out.println("\t10. LOGOUT");
+        System.out.println("\t11. SHUTDOWN");
     }
     public void enterSpeakerName(){
         System.out.println("Please enter the name of the speaker you wish to create: ");
@@ -348,5 +351,12 @@ public class TextPresenter {
         System.out.println("The event id you entered was invalid, please try again.");
     }
 
+    public void createRoom(){
+        System.out.println("Please enter a name for this room. This will be known as the room's location.");
+        System.out.println("Press 0 to return to the previous menu");
+    }
+    public void createRoomUnavailable(){
+        System.out.println("The room name/location has already been taken by an existing room. Please try again.");
+    }
 
 }

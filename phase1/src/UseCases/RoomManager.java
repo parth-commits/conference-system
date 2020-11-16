@@ -14,18 +14,15 @@ public class RoomManager implements Serializable{
     //constructor should create 5 rooms (different roomlocations)
     public RoomManager(){
         this.tableOfRooms = new Hashtable<>();
-        Room r1 = new Room("room1");
-        tableOfRooms.put("room1", r1);
-        Room r2 = new Room("room2");
-        tableOfRooms.put("room2", r2);
-        Room r3 = new Room("room3");
-        tableOfRooms.put("room3", r3);
-        Room r4 = new Room("room4");
-        tableOfRooms.put("room4", r4);
-        Room r5 = new Room("room5");
-        tableOfRooms.put("room5", r5);
     }
 
+    public void createRoom(String location){
+        Room room = new Room(location);
+        tableOfRooms.put(location, room);
+    }
+    public boolean locationIDAvailable(String location){
+        return !tableOfRooms.containsKey(location);
+    }
     //room manager should be able to pull up a list of rooms that are free at a given time
     public ArrayList<String> getAvailableRooms(Date date){
         ArrayList<String> availableRooms = new ArrayList<String>();

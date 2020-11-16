@@ -64,9 +64,18 @@ public class OrganizerSystem {
                 joinLeaveEvent(userID);
             }
             else if (o.equals("7")){
-                return false;
+                eventSystem.checkAllEvents();
             }
             else if (o.equals("8")){
+                eventSystem.checkSignedUpEvent(userID);
+            }
+            else if (o.equals("9")){
+                createRoom();
+            }
+            else if (o.equals("10")){
+                return false;
+            }
+            else if (o.equals("11")){
                 return true;
             }
         }
@@ -187,7 +196,7 @@ public class OrganizerSystem {
             output.createDeleteEvent();
             String createDeleteInput = input.getKeyboardInput();
             int createDeleteInt = Integer.parseInt(createDeleteInput);
-            if (createDeleteInt==1){                                                    //Creates event
+            if (createDeleteInt==1){                                                    //Create event
                 boolean validTime = false;
                 while (!validTime){
                     output.createEnterTime();
@@ -458,6 +467,25 @@ public class OrganizerSystem {
             }
         }
     }
+    }
+
+    public void createRoom(){
+        boolean validLocation = false;
+        while (!validLocation){
+            output.createRoom();
+            String roomLocation = input.getKeyboardInput();
+            if (roomLocation.equals("0")){
+                validLocation = true;
+            }
+            else if (roomManager.locationIDAvailable(roomLocation)){
+                roomManager.createRoom(roomLocation);
+                output.ActionDone();
+                validLocation = true;
+            }
+            else{
+                output.createRoomUnavailable();
+            }
+        }
     }
 
 

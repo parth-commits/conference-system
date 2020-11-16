@@ -2,10 +2,12 @@ package Controller;
 
 import Entities.Event;
 import Entities.Speaker;
+import Entities.User;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EventSystem {
@@ -62,7 +64,13 @@ public class EventSystem {
     public void checkSignedUpEvent(String UserId){
         ArrayList<Event> listOfEvents = new ArrayList<>();
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
-        ArrayList<Integer> listOfEventsId = attendeeManager.getSignedUpEvents(UserId);
+        ArrayList<Integer> listOfEventsId = new ArrayList<>();
+        if (attendeeManager.userExist(UserId)) {
+            listOfEventsId = attendeeManager.getSignedUpEvents(UserId);
+        }
+        else if (organizerManager.userExist(UserId)){
+            listOfEventsId = organizerManager.getSignedUpEvents(UserId);
+        }
         for(Integer i: listOfEventsId){
             listOfEvents.add(eventManager.getEvent(i));
         }
