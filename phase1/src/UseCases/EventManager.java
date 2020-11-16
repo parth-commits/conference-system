@@ -70,6 +70,23 @@ public class EventManager {
         listOfEvents.remove(index);
     }
 
+    public boolean hasSpeaker(int eventID){
+        for (Event event: listOfEvents){
+            if (event.getID()==eventID){
+                return !event.noSpeaker();
+            }
+        }
+        return false;
+    }
+    public String getSpeakerID(int eventID){
+        for (Event event: listOfEvents){
+            if (event.getID()==eventID){
+                return event.getSpeakerID();
+            }
+        }
+        return null;
+    }
+
     public void addAttendee(int eventID,String userID){
         for (Event e:listOfEvents){
             if (eventID == e.getID()){

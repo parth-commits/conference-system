@@ -81,13 +81,13 @@ public class OrganizerManager {
 
     //but we actually have to add event to event system stuff!!!
     //this only tells that this user made the event, doesnt acc make the event
-    public void setAddEventCreated(String user_id, String event_id){
+    public void setAddEventCreated(String user_id, Integer event_id){
         getOrganizer(user_id).addEventCreated(event_id);
     }
 
     //but we acc have to make a event!!
     //this only deletes it from the organizers list!!!
-    public void setDeleteEventCreated(String user_id, String event_id){
+    public void setDeleteEventCreated(String user_id, Integer event_id){
         getOrganizer(user_id).deleteEventCreated(event_id);
     }
 
