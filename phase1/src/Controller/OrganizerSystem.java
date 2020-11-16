@@ -4,9 +4,15 @@ import Entities.Event;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
+import jdk.internal.net.http.common.Log;
+import jdk.jfr.internal.Logger;
 
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class OrganizerSystem {
 
@@ -177,9 +183,111 @@ public class OrganizerSystem {
         messageSystem.sendMessage(userID);
     }
     //to do
-    private void createDeleteEvent() {
+    private void createDeleteEvent() throws ParseException {
+        boolean createDelete = false;
+        while (!createDelete){
+            output.createDeleteEvent();
+            String createDeleteInput = input.getKeyboardInput();
+            int createDeleteInt = Integer.parseInt(createDeleteInput);
+            if (createDeleteInt==1){                                                    //Creates event
+                boolean validTime = false;
+                while (!validTime){
+                    output.createEnterTime();
+                    String inputTime = input.getKeyboardInput();
+                    if (verifyDateTimeEntered(inputTime)){                                //they entered a valid date time
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                        Date d1 = formatter.parse(inputTime);
+                        ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1);
+                        if (availableRooms.isEmpty()){
+                            output.createNoRoomAvailable();                                 //MAKE SURE THIS STAYS FOR SOME TIME
+                        }
+                        else{                                                               //there is a room available
+                            output.createProvideEventTitle();
+                            String eventTitle = input.getKeyboardInput();                   //gets title for event.
+
+                        }
+
+
+
+                    }
+                    else if (inputTime.equals("0")){
+                        validTime = true;
+                    }
+                    else{                                                                  //they enetered an invalid date time
+                        output.createEnterTimeInvalidTime();
+                    }
+                }
+            }
+            else if (createDeleteInt==2){                                               //Deletes Event
+
+            }
+            else{
+                output.msgOptionInvalid();          //MAKE SURE THIS MESSAGE STAYS ON FOR A COUPLE SECONDS
+            }
 
         }
+
+    }
+
+    //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't returns false,
+    //and we get the user to re-enter the date.
+    private boolean verifyDateTimeEntered(String date){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date currentDateTime = new Date();                  //current dateandtime
+        //checks if the string date provided fits the format and is after the current date. else, returns false. HOWCOME .BEFORE IS IGNORED?
+        Date d1;
+        try
+    {
+        d1 = formatter.parse(date);
+    }
+        catch (ParseException e) {
+            return false;
+        }
+
+        if (currentDateTime.after(d1)){
+            return false;
+        }
+        //if the month isn't between 01-12, return false
+        String month = date.substring(3,5);
+        if (!month.matches("01|02|03|04|05|06|07|08|09|10|11|12")){
+            return false;
+        }
+        //if the day is greater than 31 in months with at max 31 days, return false
+        String day = date.substring(0,2);
+        int dayInt = Integer.parseInt(day);
+        if (month.matches("01|03|05|07|08|10|12")){
+            if (0>dayInt || dayInt>31){
+                return false;
+            }
+        }
+        //if the month is feb, and date is greater than 28, return false
+        if (month.equals("02")){
+            if(0>dayInt || dayInt>28){
+                return false;
+            }
+        }
+        //if the month has at max 30 days, and they entered something more, return false.
+        if (month.matches("04|06|09|11")){
+            if (0>dayInt || dayInt>30){
+                return false;
+            }
+        }
+        //checks if hours is between 09-16
+        String hour = date.substring(12,14);
+        if (!hour.matches("09|10|11|12|13|14|15|16")){
+            return false;
+        }
+
+        //checks if minutes and seconds are both 00
+        String minutes = date.substring(15,17);
+        String seconds = date.substring(18,20);
+        if(!minutes.equals("00")||!seconds.equals("00")){
+            return false;
+        }
+        return true;
+    }
+
+
 
 
     //when you add a contact, a new empty chat object gets created with them. And it follows that when you remove a contact,the chat with them is deleted.
@@ -244,7 +352,7 @@ public class OrganizerSystem {
                 boolean validEventSelected = false;
                 while(!validEventSelected){
                     ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
-                    ArrayList<Integer> listOfCurrentlyAttendingEventIds = attendeeManager.getSignedUpEvents(userID);    //gets list of all events this organizer is already attending
+                    ArrayList<Integer> listOfCurrentlyAttendingEventIds = organizerManager.getSignedUpEvents(userID);    //gets list of all events this organizer is already attending
                     listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
                     for(Integer eventid: listOfAllEventIDs){                                                            //goes through every event this organizer is not attending (list of events he can possible join)
                         Date newEventTime = eventManager.getTime(eventid);                                              //finds its time

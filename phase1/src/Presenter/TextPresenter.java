@@ -317,5 +317,28 @@ public class TextPresenter {
         System.out.println("\nTo return to the previous menu please press 0");
     }
 
+    public void createDeleteEvent(){
+        System.out.println("Would you like to create an event of delete?");
+        System.out.println("1. Create");
+        System.out.println("2. Delete");
+    }
+
+    public void createEnterTime(){
+        System.out.println("Please enter a date and time for this new event. Please note it must follow the following format:" +
+                " dd//mm//yyyy hh/mm/ss. The hours must be in the 24 hour format and must be between 09 and 16, inclusive. Since all events start on the hour, mm and ss must be 00." +
+                " The time you enter cannot be in the past.");
+        System.out.println("Please press 0 to return to the previous menu");
+    }
+
+    public void createEnterTimeInvalidTime(){
+        System.out.println("The time you entered did not fit the formatting requirements. Please try again.");
+    }
+    public void createNoRoomAvailable(){
+        System.out.println("Unfortunately there are no rooms available for you to schedule this room. Please select another date." );
+    }
+    public void createProvideEventTitle(){
+        System.out.println("Please provide the event title");
+    }
+
 
 }
