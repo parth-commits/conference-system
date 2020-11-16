@@ -10,7 +10,7 @@ import java.io.*;
  * @since November 16, 2020
  */
 
-public class Attendee extends User{
+public class Attendee extends User implements Serializable{
 
     private ArrayList<Integer> signedUpEvents;
 

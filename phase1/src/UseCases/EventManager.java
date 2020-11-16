@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class EventManager {
+public class EventManager implements Serializable{
     private ArrayList<Event> listOfEvents;
 
     public EventManager(){
@@ -99,7 +99,7 @@ public class EventManager {
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("src/EventManager.ser");
+        OutputStream file = new FileOutputStream("EventManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -110,7 +110,7 @@ public class EventManager {
 
     public EventManager importState() {
         try {
-            InputStream file = new FileInputStream("src/EventManager.ser");
+            InputStream file = new FileInputStream("EventManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             EventManager eventManager = (EventManager) input.readObject();

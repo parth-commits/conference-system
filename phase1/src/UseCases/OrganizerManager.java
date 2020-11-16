@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class OrganizerManager {
+public class OrganizerManager implements Serializable{
 
     private Hashtable<String, Organizer> tableOfOrganizers;
 
@@ -92,7 +92,7 @@ public class OrganizerManager {
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("src/OrganizerManager.ser");
+        OutputStream file = new FileOutputStream("OrganizerManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -103,7 +103,7 @@ public class OrganizerManager {
 
     public OrganizerManager importState() {
         try {
-            InputStream file = new FileInputStream("src/OrganizerManager.ser");
+            InputStream file = new FileInputStream("OrganizerManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             OrganizerManager organizerManager = (OrganizerManager) input.readObject();

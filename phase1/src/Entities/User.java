@@ -1,8 +1,9 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class User {
+public abstract class User implements Serializable {
 
     /* this is an abstract class as all types of people are users, and have the following basic properties*/
 

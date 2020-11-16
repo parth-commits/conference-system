@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class  AttendeeManager {
+public class  AttendeeManager implements Serializable{
 
     //dictionary of all attendees
     private Hashtable<String, Attendee> tableOfAttendees;
@@ -83,7 +83,7 @@ public class  AttendeeManager {
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("src/AttendeeManager.ser");
+        OutputStream file = new FileOutputStream("AttendeeManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -94,7 +94,7 @@ public class  AttendeeManager {
 
     public AttendeeManager importState() {
         try {
-            InputStream file = new FileInputStream("src/AttendeeManager.ser");
+            InputStream file = new FileInputStream("AttendeeManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             AttendeeManager attendeeManager = (AttendeeManager) input.readObject();

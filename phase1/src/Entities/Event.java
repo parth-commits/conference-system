@@ -1,10 +1,11 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Event {
+public class Event implements Serializable {
 
     public static int id_counter = 0;
     private int id;

@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class SpeakerManager {
+public class SpeakerManager implements Serializable{
     private Hashtable<String, Speaker> tableOfSpeakers;
 
     public SpeakerManager (){
@@ -66,7 +66,7 @@ public class SpeakerManager {
 
 
     public void saveState() throws IOException{
-        OutputStream file = new FileOutputStream("src/SpeakerManager.ser");
+        OutputStream file = new FileOutputStream("SpeakerManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -77,7 +77,7 @@ public class SpeakerManager {
 
     public SpeakerManager importState(){
         try {
-            InputStream file = new FileInputStream("src/SpeakerManager.ser");
+            InputStream file = new FileInputStream("SpeakerManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             SpeakerManager speakerManager = (SpeakerManager) input.readObject();

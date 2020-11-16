@@ -1,8 +1,9 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Organizer extends Attendee{
+public class Organizer extends Attendee implements Serializable {
 
     //list of all speakers created
     private ArrayList<String> speakersCreated;

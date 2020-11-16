@@ -1,9 +1,10 @@
 package Entities;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Message {
+public class Message implements Serializable {
 
     //sender of the message
     private String sender;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
-public class RoomManager {
+public class RoomManager implements Serializable{
     //dictionary of all rooms (key is the roomlocation)
     private Hashtable<String, Room> tableOfRooms;
 
@@ -62,7 +62,7 @@ public class RoomManager {
     }
 
     public void saveState() throws IOException{
-        OutputStream file = new FileOutputStream("src/RoomManager.ser");
+        OutputStream file = new FileOutputStream("RoomManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -73,7 +73,7 @@ public class RoomManager {
 
     public RoomManager importState() {
         try {
-            InputStream file = new FileInputStream("src/RoomManager.ser");
+            InputStream file = new FileInputStream("RoomManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             RoomManager roomManager = (RoomManager) input.readObject();

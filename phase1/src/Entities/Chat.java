@@ -1,6 +1,7 @@
 package Entities;
+import java.io.Serializable;
 import java.util.ArrayList;
-public class Chat {
+public class Chat implements Serializable {
 
     //id of one of the person
     private String id1;
