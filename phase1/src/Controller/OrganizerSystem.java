@@ -4,6 +4,8 @@ import Entities.Event;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
+
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -203,10 +205,11 @@ public class OrganizerSystem {
                             String locationSelected = availableRooms.get(0);
                             int eventID = eventManager.addEvent(eventTitle, d1, locationSelected, userID);
                             roomManager.addEventToRoom(locationSelected, eventID, d1);
+                            organizerManager.setAddEventCreated(userID, eventID);           //adds to the list of events this organizer has created
+                            output.ActionDone();
+                            validTime = true;
+                            createDelete=true;
                         }
-
-
-
                     }
                     else if (inputTime.equals("0")){
                         validTime = true;
@@ -217,7 +220,45 @@ public class OrganizerSystem {
                 }
             }
             else if (createDeleteInt==2){                                               //Deletes Event
-
+                boolean validEvent = false;
+                while(!validEvent){
+                    output.deleteGetEventId();
+                    String event = input.getKeyboardInput();
+                    int eventInt = Integer.parseInt(event);
+                    ArrayList<Integer> listOfExistingEventIds = eventManager.getListOfEventIDs();
+                    if (listOfExistingEventIds.contains(eventInt)){                             //if the event exists
+                        String eventLocation = eventManager.getLocation(eventInt);
+                        Date eventTime = eventManager.getTime(eventInt);
+                        roomManager.removeEventFromRoom(eventLocation,eventInt,eventTime);      //the room no longer holds this event at that time.
+                        eventManager.cancelEvent(eventInt);                                     //removes from list of events
+                        organizerManager.setDeleteEventCreated(userID,eventInt);                //removes event from the list of events this organizer has created
+                        ArrayList<String> listofAttendees = eventManager.getEventAttendees(eventInt);
+                        for (String attendeeID: listofAttendees){                                   //removes this event from all attendees list of attending events
+                            if (organizerManager.userExist(attendeeID)){
+                                organizerManager.removeEvent(eventInt, attendeeID);
+                            }
+                            else if (attendeeManager.userExist(attendeeID)){
+                                attendeeManager.removeEvent(eventInt, attendeeID);
+                            }
+                        }
+                        if (eventManager.hasSpeaker(eventInt)){                                 //if this event has a speaker, delete this event from that speakers list of assigned events.
+                            String speakerID = eventManager.getSpeakerID(eventInt);
+                            speakerManager.removeEvent(eventInt, speakerID);
+                        }
+                        output.ActionDone();
+                        validEvent = true;
+                        createDelete = true;
+                    }
+                    else if (eventInt==0){
+                        validEvent = true;
+                    }
+                    else{                                                                       //either event id does not exist, or they typed something random
+                        output.deleteInvalidEventId();
+                    }
+                }
+            }
+            else if (createDeleteInt==0){
+                createDelete=true;
             }
             else{
                 output.msgOptionInvalid();          //MAKE SURE THIS MESSAGE STAYS ON FOR A COUPLE SECONDS

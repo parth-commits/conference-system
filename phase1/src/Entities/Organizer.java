@@ -9,7 +9,7 @@ public class Organizer extends Attendee implements Serializable {
     private ArrayList<String> speakersCreated;
 
     //list of all events created by this Organzier
-    private ArrayList<String> eventsCreated;
+    private ArrayList<Integer> eventsCreated;
 
     public Organizer(String user_id, String name, String passwords) {
         super(user_id, name, passwords);
@@ -23,12 +23,12 @@ public class Organizer extends Attendee implements Serializable {
     }
 
     //adds an event created by this organizer. (Only adds id of event)
-    public void addEventCreated(String event_id){
+    public void addEventCreated(Integer event_id){
         this.eventsCreated.add(event_id);
     }
 
     //deletes an event created by this organizer from the list eventsCreated.
-    public boolean deleteEventCreated(String event_id){
+    public boolean deleteEventCreated(Integer event_id){
         return this.eventsCreated.remove(event_id);
     }
 }
