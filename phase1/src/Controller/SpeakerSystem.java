@@ -36,7 +36,7 @@ public class SpeakerSystem {
         while (true) {
             String i;
             boolean validInput = false;
-            output.AttendeeMenu();
+            output.SpeakerMenu();
             i = input.getKeyboardInput();
             //1. see all Events.
             if (i.equals("1")) {
