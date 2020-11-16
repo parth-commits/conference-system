@@ -62,7 +62,7 @@ public class RoomManager implements Serializable{
     }
 
     public void saveState() throws IOException{
-        OutputStream file = new FileOutputStream("RoomManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/RoomManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -73,7 +73,7 @@ public class RoomManager implements Serializable{
 
     public RoomManager importState() {
         try {
-            InputStream file = new FileInputStream("RoomManager.ser");
+            InputStream file = new FileInputStream("phase1/src/RoomManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             RoomManager roomManager = (RoomManager) input.readObject();

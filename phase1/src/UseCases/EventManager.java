@@ -116,7 +116,7 @@ public class EventManager implements Serializable{
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("EventManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/EventManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -127,7 +127,7 @@ public class EventManager implements Serializable{
 
     public EventManager importState() {
         try {
-            InputStream file = new FileInputStream("EventManager.ser");
+            InputStream file = new FileInputStream("phase1/src/EventManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             EventManager eventManager = (EventManager) input.readObject();

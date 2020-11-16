@@ -66,7 +66,7 @@ public class SpeakerManager implements Serializable{
 
 
     public void saveState() throws IOException{
-        OutputStream file = new FileOutputStream("SpeakerManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/SpeakerManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -77,7 +77,7 @@ public class SpeakerManager implements Serializable{
 
     public SpeakerManager importState(){
         try {
-            InputStream file = new FileInputStream("SpeakerManager.ser");
+            InputStream file = new FileInputStream("phase1/src/SpeakerManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             SpeakerManager speakerManager = (SpeakerManager) input.readObject();

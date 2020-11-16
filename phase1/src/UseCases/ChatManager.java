@@ -85,7 +85,7 @@ public class ChatManager implements Serializable{
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("ChatManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/ChatManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -96,7 +96,7 @@ public class ChatManager implements Serializable{
 
     public ChatManager importState() {
         try {
-            InputStream file = new FileInputStream("ChatManager.ser");
+            InputStream file = new FileInputStream("phase1/src/ChatManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             ChatManager chatManager = (ChatManager) input.readObject();

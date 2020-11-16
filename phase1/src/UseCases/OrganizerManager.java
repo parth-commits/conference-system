@@ -92,7 +92,7 @@ public class OrganizerManager implements Serializable{
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("OrganizerManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/OrganizerManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -103,7 +103,7 @@ public class OrganizerManager implements Serializable{
 
     public OrganizerManager importState() {
         try {
-            InputStream file = new FileInputStream("OrganizerManager.ser");
+            InputStream file = new FileInputStream("phase1/src/OrganizerManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             OrganizerManager organizerManager = (OrganizerManager) input.readObject();

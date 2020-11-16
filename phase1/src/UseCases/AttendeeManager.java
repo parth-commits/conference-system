@@ -83,7 +83,7 @@ public class  AttendeeManager implements Serializable{
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("AttendeeManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/AttendeeManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -94,7 +94,7 @@ public class  AttendeeManager implements Serializable{
 
     public AttendeeManager importState() {
         try {
-            InputStream file = new FileInputStream("AttendeeManager.ser");
+            InputStream file = new FileInputStream("phase1/src/AttendeeManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             AttendeeManager attendeeManager = (AttendeeManager) input.readObject();
