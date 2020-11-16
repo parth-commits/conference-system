@@ -41,7 +41,7 @@ public class OrganizerSystem {
         this.eventSystem = eventSystem;
     }
 
-    public boolean start(String userID) {
+    public boolean start(String userID) throws ParseException {
         while(true){
             String o;
             boolean validInput = false;
@@ -57,7 +57,7 @@ public class OrganizerSystem {
                 message(userID);
             }
             else if (o.equals("4")){
-                createDeleteEvent();
+                createDeleteEvent(userID);
             }
             else if (o.equals("5")){
                 addRemoveContact(userID);
@@ -183,7 +183,7 @@ public class OrganizerSystem {
         messageSystem.sendMessage(userID);
     }
     //to do
-    private void createDeleteEvent() throws ParseException {
+    private void createDeleteEvent(String userID) throws ParseException {
         boolean createDelete = false;
         while (!createDelete){
             output.createDeleteEvent();
@@ -204,7 +204,9 @@ public class OrganizerSystem {
                         else{                                                               //there is a room available
                             output.createProvideEventTitle();
                             String eventTitle = input.getKeyboardInput();                   //gets title for event.
-
+                            String locationSelected = availableRooms.get(0);
+                            int eventID = eventManager.addEvent(eventTitle, d1, locationSelected, userID);
+                            roomManager.addEventToRoom(locationSelected, eventID, d1);
                         }
 
 

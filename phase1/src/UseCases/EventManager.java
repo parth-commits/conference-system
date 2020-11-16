@@ -53,16 +53,11 @@ public class EventManager {
         return listofEventsbySpeaker;
     }
 
-    public void addEvent(String title, Date time, String location, /*String speakerID,*/ String organizerID) {
+    public int addEvent(String title, Date time, String location, String organizerID) {
         // check time (speaker??? room???)
-        for (Event e:listOfEvents){
-            if (e.getTime().equals(time)){
-                return;
-            }
-        }
-        Event event;
-        event = new Event(title, time, location, /*speakerID,*/ organizerID);
+        Event event = new Event(title, time, location, organizerID);
         listOfEvents.add(event);
+        return event.getID();
     }
 
     public void cancelEvent(int id){
