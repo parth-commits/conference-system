@@ -7,7 +7,7 @@ import java.io.*;
  * and their list of signed-event. Events can be added or removed.
  * @author Natalie (Yun-Ho)
  * @version 1.0
- * @since November 16, 2020
+ * @since November 16th, 2020
  */
 
 public class Attendee extends User implements Serializable{
