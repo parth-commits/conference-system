@@ -160,17 +160,73 @@ public class AttendeeSystem {
                 boolean validEventSelected = false;
                 while(!validEventSelected){
                     ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
-                    ArrayList<Integer> listOfCurrentlyAttendingEventIds = attendeeManager.getSignedUpEvents(userID);    //gets list of all events this organizer is already attending
+                    ArrayList<Integer> listOfCurrentlyAttendingEventIds = attendeeManager.getSignedUpEvents(userID);    //gets list of all events this attendee is already attending
                     listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
                     for(Integer eventid: listOfAllEventIDs){                                                            //goes through every event this organizer is not attending (list of events he can possible join)
                         Date newEventTime = eventManager.getTime(eventid);                                              //finds its time
                         for(Integer currenteventid: listOfCurrentlyAttendingEventIds){
                             Date currentEventTime = eventManager.getTime(currenteventid);
-                            if (newEventTime.equals(currentEventTime)){                                                 //if this time is the same as any event the organizer is already attending,
+                            if (newEventTime.equals(currentEventTime)){                                                 //if this time is the same as any event the attendee is already attending,
                                 listOfAllEventIDs.remove(eventid);                                                      //remove that event from the event from list of event he can possible join (listOfAllEventIDs)
                             }
                         }
-
+                        //by now, listOfAllEventIDs contains the eventIDs of events that the attendee has not joined already and whose timings do not
+                        //overlap/interfere with events he/she is already going to! Now from these events, we want to remove those that do not have
+                        //room (sufficient capacity) to support one more attendee.
+                        Event actualEvent = eventManager.getEvent(eventid);
+                        int capacity = roomManager.getRoom(actualEvent.getLocation()).getCapacity();                    //gets the capacity of the room this event is held in
+                        int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
+                        if(capacity-numExistingAttendees==0){                                                           //if the number of attendees attending this event has reached the max capacity of the room,
+                            listOfAllEventIDs.remove(eventid);                                                          //the organizer cannot join this room. Remove it from the list.
+                        }
+                    }
+                    ArrayList<Event> listOfJoinableEvents = new ArrayList<>();                                          //list of all events this Attendee can join
+                    for(Integer eventid: listOfAllEventIDs){
+                        listOfJoinableEvents.add(eventManager.getEvent(eventid));
+                    }
+                    output.joinDeleteEventSelector(listOfJoinableEvents);
+                    String eventSelected = input.getKeyboardInput();
+                    int eventSelectedInt = Integer.parseInt(eventSelected);
+                    if (eventSelectedInt==0){
+                        validEventSelected = true;
+                    }
+                    else if (1<=eventSelectedInt && eventSelectedInt<=listOfJoinableEvents.size()){
+                        attendeeManager.addEventToAttendee(listOfAllEventIDs.get(eventSelectedInt-1),userID);         //add eventid to the attendees list of events.
+                        eventManager.addAttendee(listOfAllEventIDs.get(eventSelectedInt-1),userID);                     //add attendee to events list of attendees for this event.
+                        validEventSelected = true;
+                        validInput = true;
+                    }
+                    else {
+                        output.joinLeaveInvalidResponse();
+                    }
+                }
+            }
+            else if(joinLeaveInt==2){                                                                                   //we need to delete an event here
+                boolean validEventSelected = false;
+                while(!validEventSelected){
+                    ArrayList<Integer> listOfAttendingEventIds = organizerManager.getSignedUpEvents(userID);            //get the list of signed up eventids
+                    ArrayList<Event> listofAttendingEvents = new ArrayList<>();
+                    for(Integer eventid: listOfAttendingEventIds){                                                      //get the list of events
+                        listofAttendingEvents.add(eventManager.getEvent(eventid));
+                    }
+                    output.joinDeleteEventSelector(listofAttendingEvents);                                              //select which event they want to leave
+                    String eventSelected = input.getKeyboardInput();
+                    int eventSelectedInt = Integer.parseInt(eventSelected);
+                    if(eventSelectedInt==0){
+                        validEventSelected = true;
+                    }
+                    else if(1<=eventSelectedInt && eventSelectedInt<= listofAttendingEvents.size()){
+                        attendeeManager.removeEvent(listOfAttendingEventIds.get(eventSelectedInt-1),userID);
+                        eventManager.removeAttendee(listOfAttendingEventIds.get(eventSelectedInt-1),userID);
+                        validEventSelected=true;
+                        validInput=true;
+                    }
+                    else{
+                        output.joinLeaveInvalidResponse();
+                    }
+                }
+            }
+        }
 
     }
 
