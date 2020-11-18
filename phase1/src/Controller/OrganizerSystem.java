@@ -397,15 +397,15 @@ public class OrganizerSystem {
                         if (user.equals("0")) {
                             validUserID = true;
                         } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            organizerManager.removeContact(userID, input);
-                            if (organizerManager.userExist(input)) {
-                                organizerManager.removeContact(input, userID);
-                            } else if (attendeeManager.userExist(input)) {
-                                attendeeManager.removeContact(input, userID);
+                            organizerManager.removeContact(userID, user);
+                            if (organizerManager.userExist(user)) {
+                                organizerManager.removeContact(user, userID);
+                            } else if (attendeeManager.userExist(user)) {
+                                attendeeManager.removeContact(user, userID);
                             } else {
-                                speakerManager.removeContact(input, userID);
+                                speakerManager.removeContact(user, userID);
                             }
-                            chatManager.deleteChat(input, userID);
+                            chatManager.deleteChat(user, userID);
                             validUserID = true;
                             validAddRemove = true;
                             goBack = true;
