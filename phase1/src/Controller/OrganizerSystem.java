@@ -5,6 +5,7 @@ import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,10 +40,9 @@ public class OrganizerSystem {
         this.eventSystem = eventSystem;
     }
 
-    public boolean start(String userID) throws ParseException {
+    public boolean start(String userID) throws ParseException, IOException {
         while(true){
             String o;
-            boolean validInput = false;
             output.organizationSystemStartOptions();
             o = input.getKeyboardInput();
             if (o.equals("1")){
@@ -78,9 +78,23 @@ public class OrganizerSystem {
             else if (o.equals("11")){
                 return true;
             }
+            saveState();
         }
 
     }
+
+    private void saveState() throws IOException {
+        //save the state back in!!!
+        speakerManager.saveState();
+        roomManager.saveState();
+        organizerManager.saveState();
+        eventManager.saveState();
+        chatManager.saveState();
+        attendeeManager.saveState();
+
+    }
+
+
 
     //creates a new speaker
     private void createSpeaker(String userID) {
@@ -202,7 +216,7 @@ public class OrganizerSystem {
         }
     }
 
-    private void message(String userID) {
+    private void message(String userID) throws IOException {
         messageSystem.sendMessage(userID);
     }
     //to do
@@ -337,14 +351,14 @@ public class OrganizerSystem {
             }
         }
         //checks if hours is between 09-16
-        String hour = date.substring(12,14);
+        String hour = date.substring(11,13);
         if (!hour.matches("09|10|11|12|13|14|15|16")){
             return false;
         }
 
         //checks if minutes and seconds are both 00
-        String minutes = date.substring(15,17);
-        String seconds = date.substring(18,20);
+        String minutes = date.substring(14,16);
+        String seconds = date.substring(17,19);
         if(!minutes.equals("00")||!seconds.equals("00")){
             return false;
         }

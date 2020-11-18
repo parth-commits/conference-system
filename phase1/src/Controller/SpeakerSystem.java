@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Gateway.KeyboardInput;
@@ -32,7 +33,7 @@ public class SpeakerSystem {
 
     //We need a Speaker Menu in Text Presenter which allows Speakers to:
     //1. see all Events. 2. see the Events they're assigned to. 3. Message Attendees
-    public boolean start(String userID) {
+    public boolean start(String userID) throws IOException {
         while (true) {
             String i;
             boolean validInput = false;
@@ -62,7 +63,18 @@ public class SpeakerSystem {
     }
 
 
-    private void message(String userID) {
+    private void saveState() throws IOException {
+        //save the state back in!!!
+        speakerManager.saveState();
+        organizerManager.saveState();
+        //eventManager.saveState();
+        chatManager.saveState();
+        attendeeManager.saveState();
+
+    }
+
+
+    private void message(String userID) throws IOException {
         messageSystem.sendMessage(userID);
     }
 

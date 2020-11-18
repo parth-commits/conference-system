@@ -7,6 +7,7 @@ import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -34,11 +35,24 @@ public class EventSystem {
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
         for (Event event :listOfEvents){
             String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + event.getTime() + "\n"
-                    + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+                    + "Time: " + event.getTime();
+            if (eventManager.hasSpeaker(event.getID())){
+                schedule +=  "\n" + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+            }
             listOfEventSchedule.add(schedule);
         }
         output.Events(listOfEventSchedule);
+    }
+
+    private void saveState() throws IOException {
+        //save the state back in!!!
+        speakerManager.saveState();
+        roomManager.saveState();
+        organizerManager.saveState();
+        eventManager.saveState();
+        //chatManager.saveState();
+        attendeeManager.saveState();
+
     }
 
     public void signUpEvent(String UserId, Integer EventId){

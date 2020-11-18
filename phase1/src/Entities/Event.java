@@ -95,5 +95,7 @@ public class Event implements Serializable {
         return this.attendees.remove(attendeeID);
     }
 
-    public boolean noSpeaker(){return this.speakerID.isEmpty();}
+    public boolean noSpeaker(){
+        return this.speakerID == null;
+    }
 }

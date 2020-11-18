@@ -4,6 +4,8 @@ import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
+import java.io.IOException;
+
 
 public class AttendeeSystem {
     private TextPresenter output;
@@ -30,7 +32,7 @@ public class AttendeeSystem {
     // Attendee is allowed to 1. see Events. 2. Sign up for Events
     // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Add or Remove Attendee in Contact
     //6. Message Other Users
-    public boolean start(String userID) {
+    public boolean start(String userID) throws IOException {
         while (true) {
             String i;
             boolean validInput = false;
@@ -77,6 +79,18 @@ public class AttendeeSystem {
                 return true;
             }
         }
+    }
+
+
+    private void saveState() throws IOException {
+        //save the state back in!!!
+        speakerManager.saveState();
+        //roomManager.saveState();
+        organizerManager.saveState();
+        //eventManager.saveState();
+        chatManager.saveState();
+        attendeeManager.saveState();
+
     }
 
 
