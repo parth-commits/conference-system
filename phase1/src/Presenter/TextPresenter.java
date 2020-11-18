@@ -143,6 +143,7 @@ public class TextPresenter {
         System.out.println("Would you like to add or remove contact?");
         System.out.println("\t1. Add contact");
         System.out.println("\t2. Remove contact");
+        System.out.println("Please type 0 to return to the previous menu");
     }
 
     public void enterContactUserid(boolean invalid){
@@ -152,6 +153,7 @@ public class TextPresenter {
         else {
             System.out.println("Enter the userID of the contact:");
         }
+        System.out.println("Please type 0 to go back.");
     }
 
     //Should One line outputs still be in presenter. answer by parth: yes!
@@ -360,6 +362,9 @@ public class TextPresenter {
     }
     public void createRoomUnavailable(){
         System.out.println("The room name/location has already been taken by an existing room. Please try again.");
+    }
+    public void invalidInputSelection(){
+        System.out.println("Your input was invalid. Please try again.");
     }
 
 }

@@ -356,52 +356,71 @@ public class OrganizerSystem {
 
     //when you add a contact, a new empty chat object gets created with them. And it follows that when you remove a contact,the chat with them is deleted.
     private void addRemoveContact(String userID) {
-        output.addRemoveContact();
-        String option = input.getKeyboardInput();
-        while (!(option.equals("1")||option.equals("2"))){
-            output.addRemoveContact();
-            option = input.getKeyboardInput();
+        boolean goBack = false;
+        while (!goBack) {
+            boolean validAddRemove = false;
+            while (!validAddRemove) {
+                output.addRemoveContact();
+                String option = input.getKeyboardInput();
+                if (option.equals("0")) {
+                    validAddRemove = true;
+                    goBack = true;
+                } else if (option.equals("1")) {
+                    boolean validUserID = false;
+                    while (!validUserID) {
+                        output.enterContactUserid(false);
+                        String user = input.getKeyboardInput();
+                        if (user.equals("0")) {
+                            validUserID = true;
+                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
+                            organizerManager.addContact(userID, user);
+                            if (organizerManager.userExist(user)) {
+                                organizerManager.addContact(user, userID);
+                            } else if (attendeeManager.userExist(user)) {
+                                attendeeManager.addContact(user, userID);
+                            } else {
+                                speakerManager.addContact(user, userID);
+                            }
+                            chatManager.createChat(user, userID);
+                            validUserID = true;
+                            validAddRemove = true;
+                            goBack = true;
+                        } else {
+                            output.enterContactUserid(true);
+                        }
+                    }
+                } else if (option.equals("2")) {
+                    boolean validUserID = false;
+                    while (!validUserID) {
+                        output.enterContactUserid(false);
+                        String user = input.getKeyboardInput();
+                        if (user.equals("0")) {
+                            validUserID = true;
+                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
+                            organizerManager.removeContact(userID, input);
+                            if (organizerManager.userExist(input)) {
+                                organizerManager.removeContact(input, userID);
+                            } else if (attendeeManager.userExist(input)) {
+                                attendeeManager.removeContact(input, userID);
+                            } else {
+                                speakerManager.removeContact(input, userID);
+                            }
+                            chatManager.deleteChat(input, userID);
+                            validUserID = true;
+                            validAddRemove = true;
+                            goBack = true;
+                        } else {
+                            output.enterContactUserid(true);
+                        }
+                    }
+                } else {
+                    output.invalidInputSelection();
+                }
+            }
         }
-        if (option.equals("1")){
-            output.enterContactUserid(false);
-            String input = this.input.getKeyboardInput();
-            while (!(organizerManager.userExist(input)||attendeeManager.userExist(input)||speakerManager.userExist(input))){
-                output.enterContactUserid(true);
-                input = this.input.getKeyboardInput();
-            }
-            organizerManager.addContact(userID, input);
-            if (organizerManager.userExist(input)){
-                organizerManager.addContact(input, userID);
-            }
-            else if (attendeeManager.userExist(input)){
-                attendeeManager.addContact(input, userID);
-            }
-            else{
-                speakerManager.addContact(input, userID);
-            }
-            chatManager.createChat(input, userID);
-        }
-        else {
-            output.enterContactUserid(false);
-            String input = this.input.getKeyboardInput();
-            while (!(organizerManager.userExist(input)||attendeeManager.userExist(input)||speakerManager.userExist(input))){
-                output.enterContactUserid(true);
-                input = this.input.getKeyboardInput();
-            }
-            organizerManager.removeContact(userID, input);
-            if (organizerManager.userExist(input)){
-                organizerManager.removeContact(input, userID);
-            }
-            else if (attendeeManager.userExist(input)){
-                attendeeManager.removeContact(input, userID);
-            }
-            else{
-                speakerManager.removeContact(input, userID);
-            }
-            chatManager.deleteChat(input,userID);
-        }
-
     }
+
+
     //to do
     private void joinLeaveEvent(String userID) {
         boolean validInput = false;
