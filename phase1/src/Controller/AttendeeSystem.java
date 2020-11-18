@@ -42,22 +42,14 @@ public class AttendeeSystem {
             }
             //2. Sign up for Events
             else if (i.equals("2")) {
-                output.enterEvent();
-                eventSystem.checkEventTitleIDs();
-                Integer event_id = Integer.parseInt(input.getKeyboardInput());
-                eventSystem.signUpEvent(userID, event_id);
-            }
+                joinLeaveEvent(userID);
             //3. Check Schedule for an Signed Up Event
             else if (i.equals("3")){
                 eventSystem.checkSignedUpEvent(userID);
             }
             //4. Cancel an Event Signed Up for
             else if (i.equals("4")){
-                //need the user to enter event id(or title)*
-                output.enterEventCancel();
-                Integer event_id = Integer.parseInt(input.getKeyboardInput());
-                eventSystem.cancelSignedUpEvent(userID, event_id);
-            }
+                joinLeaveEvent(userID);
             //5. Add or Remove Attendee in Contact
             else if (i.equals("5")){
                 output.enterUserID();
@@ -86,6 +78,9 @@ public class AttendeeSystem {
         }
         return false;
     }
+
+
+
 
 
 
@@ -136,5 +131,34 @@ public class AttendeeSystem {
         }
 
     }
+
+
+    private void joinLeaveEvent(String userID){
+        boolean validInput = false;
+        while (!validInput) {
+            output.joinOrLeave();                                                     //checks whether attendee wants to join or leave an event, or wants to return back to menu
+            String joinLeave = input.getKeyboardInput();
+            int joinLeaveInt = Integer.parseInt(joinLeave);
+            if (joinLeaveInt == 0) {                                                  //if attendee wants to return to menu, we exit this loop, having done nothing.
+               validInput = true;
+                    }
+            else if (joinLeaveInt == 1) {                                           //in this case, org wants to join an event
+                boolean validEventSelected = false;
+                while(!validEventSelected){
+                    ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
+                    ArrayList<Integer> listOfCurrentlyAttendingEventIds = attendeeManager.getSignedUpEvents(userID);    //gets list of all events this organizer is already attending
+                    listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
+                    for(Integer eventid: listOfAllEventIDs){                                                            //goes through every event this organizer is not attending (list of events he can possible join)
+                        Date newEventTime = eventManager.getTime(eventid);                                              //finds its time
+                        for(Integer currenteventid: listOfCurrentlyAttendingEventIds){
+                            Date currentEventTime = eventManager.getTime(currenteventid);
+                            if (newEventTime.equals(currentEventTime)){                                                 //if this time is the same as any event the organizer is already attending,
+                                listOfAllEventIDs.remove(eventid);                                                      //remove that event from the event from list of event he can possible join (listOfAllEventIDs)
+                            }
+                        }
+
+
+    }
+
 
 }
