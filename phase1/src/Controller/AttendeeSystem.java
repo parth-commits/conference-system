@@ -44,22 +44,14 @@ public class AttendeeSystem {
             }
             //2. Sign up for Events
             else if (i.equals("2")) {
-                output.enterEvent();
-                eventSystem.checkEventTitleIDs();
-                Integer event_id = Integer.parseInt(input.getKeyboardInput());
-                eventSystem.signUpEvent(userID, event_id);
-            }
+                joinLeaveEvent(userID);
             //3. Check Schedule for an Signed Up Event
             else if (i.equals("3")){
                 eventSystem.checkSignedUpEvent(userID);
             }
             //4. Cancel an Event Signed Up for
             else if (i.equals("4")){
-                //need the user to enter event id(or title)*
-                output.enterEventCancel();
-                Integer event_id = Integer.parseInt(input.getKeyboardInput());
-                eventSystem.cancelSignedUpEvent(userID, event_id);
-            }
+                joinLeaveEvent(userID);
             //5. Add or Remove Attendee in Contact
             else if (i.equals("5")){
                 addRemoveContact(userID);
@@ -98,6 +90,9 @@ public class AttendeeSystem {
         }
         return false;
     }
+
+
+
 
 
 
@@ -211,5 +206,90 @@ public class AttendeeSystem {
         }*/
 
     }
+
+
+    private void joinLeaveEvent(String userID){
+        boolean validInput = false;
+        while (!validInput) {
+            output.joinOrLeave();                                                     //checks whether attendee wants to join or leave an event, or wants to return back to menu
+            String joinLeave = input.getKeyboardInput();
+            int joinLeaveInt = Integer.parseInt(joinLeave);
+            if (joinLeaveInt == 0) {                                                  //if attendee wants to return to menu, we exit this loop, having done nothing.
+               validInput = true;
+                    }
+            else if (joinLeaveInt == 1) {                                           //in this case, org wants to join an event
+                boolean validEventSelected = false;
+                while(!validEventSelected){
+                    ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
+                    ArrayList<Integer> listOfCurrentlyAttendingEventIds = attendeeManager.getSignedUpEvents(userID);    //gets list of all events this attendee is already attending
+                    listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
+                    for(Integer eventid: listOfAllEventIDs){                                                            //goes through every event this organizer is not attending (list of events he can possible join)
+                        Date newEventTime = eventManager.getTime(eventid);                                              //finds its time
+                        for(Integer currenteventid: listOfCurrentlyAttendingEventIds){
+                            Date currentEventTime = eventManager.getTime(currenteventid);
+                            if (newEventTime.equals(currentEventTime)){                                                 //if this time is the same as any event the attendee is already attending,
+                                listOfAllEventIDs.remove(eventid);                                                      //remove that event from the event from list of event he can possible join (listOfAllEventIDs)
+                            }
+                        }
+                        //by now, listOfAllEventIDs contains the eventIDs of events that the attendee has not joined already and whose timings do not
+                        //overlap/interfere with events he/she is already going to! Now from these events, we want to remove those that do not have
+                        //room (sufficient capacity) to support one more attendee.
+                        Event actualEvent = eventManager.getEvent(eventid);
+                        int capacity = roomManager.getRoom(actualEvent.getLocation()).getCapacity();                    //gets the capacity of the room this event is held in
+                        int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
+                        if(capacity-numExistingAttendees==0){                                                           //if the number of attendees attending this event has reached the max capacity of the room,
+                            listOfAllEventIDs.remove(eventid);                                                          //the organizer cannot join this room. Remove it from the list.
+                        }
+                    }
+                    ArrayList<Event> listOfJoinableEvents = new ArrayList<>();                                          //list of all events this Attendee can join
+                    for(Integer eventid: listOfAllEventIDs){
+                        listOfJoinableEvents.add(eventManager.getEvent(eventid));
+                    }
+                    output.joinDeleteEventSelector(listOfJoinableEvents);
+                    String eventSelected = input.getKeyboardInput();
+                    int eventSelectedInt = Integer.parseInt(eventSelected);
+                    if (eventSelectedInt==0){
+                        validEventSelected = true;
+                    }
+                    else if (1<=eventSelectedInt && eventSelectedInt<=listOfJoinableEvents.size()){
+                        attendeeManager.addEventToAttendee(listOfAllEventIDs.get(eventSelectedInt-1),userID);         //add eventid to the attendees list of events.
+                        eventManager.addAttendee(listOfAllEventIDs.get(eventSelectedInt-1),userID);                     //add attendee to events list of attendees for this event.
+                        validEventSelected = true;
+                        validInput = true;
+                    }
+                    else {
+                        output.joinLeaveInvalidResponse();
+                    }
+                }
+            }
+            else if(joinLeaveInt==2){                                                                                   //we need to delete an event here
+                boolean validEventSelected = false;
+                while(!validEventSelected){
+                    ArrayList<Integer> listOfAttendingEventIds = organizerManager.getSignedUpEvents(userID);            //get the list of signed up eventids
+                    ArrayList<Event> listofAttendingEvents = new ArrayList<>();
+                    for(Integer eventid: listOfAttendingEventIds){                                                      //get the list of events
+                        listofAttendingEvents.add(eventManager.getEvent(eventid));
+                    }
+                    output.joinDeleteEventSelector(listofAttendingEvents);                                              //select which event they want to leave
+                    String eventSelected = input.getKeyboardInput();
+                    int eventSelectedInt = Integer.parseInt(eventSelected);
+                    if(eventSelectedInt==0){
+                        validEventSelected = true;
+                    }
+                    else if(1<=eventSelectedInt && eventSelectedInt<= listofAttendingEvents.size()){
+                        attendeeManager.removeEvent(listOfAttendingEventIds.get(eventSelectedInt-1),userID);
+                        eventManager.removeAttendee(listOfAttendingEventIds.get(eventSelectedInt-1),userID);
+                        validEventSelected=true;
+                        validInput=true;
+                    }
+                    else{
+                        output.joinLeaveInvalidResponse();
+                    }
+                }
+            }
+        }
+
+    }
+
 
 }
