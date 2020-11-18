@@ -67,6 +67,7 @@ public class TextPresenter {
         else{
             System.out.println("That is an invalid password. Please enter a valid password: ");
         }
+        System.out.println("Please enter 0 to return to the previous menu");
     }
 
     public void Events(ArrayList<String> listOfEventsSchedule){
@@ -247,6 +248,7 @@ public class TextPresenter {
     }
     public void enterSpeakerName(){
         System.out.println("Please enter the name of the speaker you wish to create: ");
+        System.out.println("Please press 0 to return to the previous menu.");
     }
     public void enterSpeakerID(boolean checker){
         if (checker){
@@ -255,6 +257,7 @@ public class TextPresenter {
         else{
             System.out.println("That userid is taken, please enter another UserID:");
         }
+        System.out.println("Please type 0 to return to the previous menu");
     }
 
     public void youHaveNoEvents(){

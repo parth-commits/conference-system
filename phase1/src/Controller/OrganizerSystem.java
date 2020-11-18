@@ -84,37 +84,53 @@ public class OrganizerSystem {
 
     //creates a new speaker
     private void createSpeaker(String userID) {
-        output.enterSpeakerName();
-        String inputName = input.getKeyboardInput();
-        boolean untilCorrect = true;
-        boolean correct = true;
-        String inputID = "";
-        while (untilCorrect) {
-            output.enterSpeakerID(correct);
-            inputID = input.getKeyboardInput();
-            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
-                correct = false;
-            } else {
-                untilCorrect = false;
+        boolean goBack = false;
+        while (!goBack){
+            output.enterSpeakerName();
+            String inputName = input.getKeyboardInput();
+            if (inputName.equals("0")){
+                goBack = true;
+            }
+            else{
+                boolean untilCorrect = true;
+                boolean correct = true;
+                while (untilCorrect) {
+                    output.enterSpeakerID(correct);
+                    String inputID = input.getKeyboardInput();
+                    if (inputID.equals("0")){
+                        untilCorrect = false;
+                    }
+                    else if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
+                        correct = false;
+                    }
+                    else {
+                        boolean untilCorrectNew = true;
+                        boolean correctNew = true;
+                        while (untilCorrectNew) {
+                            output.enterPassword(correctNew);
+                            String inputPass = input.getKeyboardInput();
+                            if (inputPass.equals("0")){
+                                untilCorrectNew = false;
+                            }
+                            if (inputPass.length() > 14 || inputPass.length() < 8) {
+                                correctNew = false;
+                            }
+                            else {
+                                speakerManager.addSpeaker(inputID,inputPass,inputName, userID);
+                                organizerManager.setAddSpeakerCreated(userID,inputID);
+                                output.ActionDone();
+                                untilCorrectNew = false;
+                                untilCorrect = false;
+                                goBack = true;
+                            }
+                        }
+                    }
+                }
             }
         }
-        untilCorrect = true;
-        correct = true;
-        String inputPass = "";
-        while (untilCorrect) {
-            output.enterPassword(correct);
-            inputPass = input.getKeyboardInput();
-            if (inputPass.length() > 14 || inputPass.length() < 8) {
-                correct = false;
-            } else {
-                untilCorrect = false;
-            }
-        }
-        speakerManager.addSpeaker(inputID,inputPass,inputName, userID);
-        organizerManager.setAddSpeakerCreated(userID,inputID);
-        output.ActionDone();
+
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1000);                             //Do we really need this anymore?
         }
         catch (Exception e){
             System.out.println("Was not able to sleep");
