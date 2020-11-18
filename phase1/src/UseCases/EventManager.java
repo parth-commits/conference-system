@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class EventManager {
+public class EventManager implements Serializable{
     private ArrayList<Event> listOfEvents;
 
     public EventManager(){
@@ -53,16 +53,11 @@ public class EventManager {
         return listofEventsbySpeaker;
     }
 
-    public void addEvent(String title, String time, String location, String speakerID, String organizerID) {
+    public int addEvent(String title, Date time, String location, String organizerID) {
         // check time (speaker??? room???)
-        for (Event e:listOfEvents){
-            if (e.getTime().equals(time)){
-                return;
-            }
-        }
-        Event event;
-        event = new Event(title, time, location, speakerID, organizerID);
+        Event event = new Event(title, time, location, organizerID);
         listOfEvents.add(event);
+        return event.getID();
     }
 
     public void cancelEvent(int id){
@@ -73,6 +68,23 @@ public class EventManager {
             }
         }
         listOfEvents.remove(index);
+    }
+
+    public boolean hasSpeaker(int eventID){
+        for (Event event: listOfEvents){
+            if (event.getID()==eventID){
+                return !event.noSpeaker();
+            }
+        }
+        return false;
+    }
+    public String getSpeakerID(int eventID){
+        for (Event event: listOfEvents){
+            if (event.getID()==eventID){
+                return event.getSpeakerID();
+            }
+        }
+        return null;
     }
 
     public void addAttendee(int eventID,String userID){
@@ -104,7 +116,7 @@ public class EventManager {
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("src/EventManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/EventManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -115,7 +127,7 @@ public class EventManager {
 
     public EventManager importState() {
         try {
-            InputStream file = new FileInputStream("src/EventManager.ser");
+            InputStream file = new FileInputStream("phase1/src/EventManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             EventManager eventManager = (EventManager) input.readObject();

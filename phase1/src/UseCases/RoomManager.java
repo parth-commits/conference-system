@@ -7,24 +7,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
-public class RoomManager {
+public class RoomManager implements Serializable{
     //dictionary of all rooms (key is the roomlocation)
     private Hashtable<String, Room> tableOfRooms;
 
     //constructor should create 5 rooms (different roomlocations)
     public RoomManager(){
-        Room r1 = new Room("room1");
-        tableOfRooms.put("room1", r1);
-        Room r2 = new Room("room2");
-        tableOfRooms.put("room2", r2);
-        Room r3 = new Room("room3");
-        tableOfRooms.put("room3", r3);
-        Room r4 = new Room("room4");
-        tableOfRooms.put("room4", r4);
-        Room r5 = new Room("room5");
-        tableOfRooms.put("room5", r5);
+        this.tableOfRooms = new Hashtable<>();
     }
 
+    public void createRoom(String location){
+        Room room = new Room(location);
+        tableOfRooms.put(location, room);
+    }
+    public boolean locationIDAvailable(String location){
+        return !tableOfRooms.containsKey(location);
+    }
     //room manager should be able to pull up a list of rooms that are free at a given time
     public ArrayList<String> getAvailableRooms(Date date){
         ArrayList<String> availableRooms = new ArrayList<String>();
@@ -61,7 +59,7 @@ public class RoomManager {
     }
 
     public void saveState() throws IOException{
-        OutputStream file = new FileOutputStream("src/RoomManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/RoomManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -72,7 +70,7 @@ public class RoomManager {
 
     public RoomManager importState() {
         try {
-            InputStream file = new FileInputStream("src/RoomManager.ser");
+            InputStream file = new FileInputStream("phase1/src/RoomManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             RoomManager roomManager = (RoomManager) input.readObject();

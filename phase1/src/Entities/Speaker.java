@@ -1,8 +1,9 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Speaker extends User{
+public class Speaker extends User implements Serializable {
 
     //list of assigned events
     private ArrayList<Integer> assignEvents;

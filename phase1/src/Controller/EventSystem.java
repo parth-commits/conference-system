@@ -2,10 +2,13 @@ package Controller;
 
 import Entities.Event;
 import Entities.Speaker;
+import Entities.User;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EventSystem {
@@ -32,11 +35,24 @@ public class EventSystem {
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
         for (Event event :listOfEvents){
             String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + event.getTime() + "\n"
-                    + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+                    + "Time: " + event.getTime();
+            if (eventManager.hasSpeaker(event.getID())){
+                schedule +=  "\n" + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+            }
             listOfEventSchedule.add(schedule);
         }
         output.Events(listOfEventSchedule);
+    }
+
+    private void saveState() throws IOException {
+        //save the state back in!!!
+        speakerManager.saveState();
+        roomManager.saveState();
+        organizerManager.saveState();
+        eventManager.saveState();
+        //chatManager.saveState();
+        attendeeManager.saveState();
+
     }
 
     public void signUpEvent(String UserId, Integer EventId){
@@ -62,7 +78,13 @@ public class EventSystem {
     public void checkSignedUpEvent(String UserId){
         ArrayList<Event> listOfEvents = new ArrayList<>();
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
-        ArrayList<Integer> listOfEventsId = attendeeManager.getSignedUpEvents(UserId);
+        ArrayList<Integer> listOfEventsId = new ArrayList<>();
+        if (attendeeManager.userExist(UserId)) {
+            listOfEventsId = attendeeManager.getSignedUpEvents(UserId);
+        }
+        else if (organizerManager.userExist(UserId)){
+            listOfEventsId = organizerManager.getSignedUpEvents(UserId);
+        }
         for(Integer i: listOfEventsId){
             listOfEvents.add(eventManager.getEvent(i));
         }

@@ -1,10 +1,11 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Event {
+public class Event implements Serializable {
 
     public static int id_counter = 0;
     private int id;
@@ -94,5 +95,7 @@ public class Event {
         return this.attendees.remove(attendeeID);
     }
 
-    public boolean noSpeaker(){return this.speakerID.isEmpty();}
+    public boolean noSpeaker(){
+        return this.speakerID == null;
+    }
 }

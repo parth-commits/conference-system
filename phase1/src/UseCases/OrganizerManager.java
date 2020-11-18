@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class OrganizerManager {
+public class OrganizerManager implements Serializable{
 
     private Hashtable<String, Organizer> tableOfOrganizers;
 
@@ -81,18 +81,18 @@ public class OrganizerManager {
 
     //but we actually have to add event to event system stuff!!!
     //this only tells that this user made the event, doesnt acc make the event
-    public void setAddEventCreated(String user_id, String event_id){
+    public void setAddEventCreated(String user_id, Integer event_id){
         getOrganizer(user_id).addEventCreated(event_id);
     }
 
     //but we acc have to make a event!!
     //this only deletes it from the organizers list!!!
-    public void setDeleteEventCreated(String user_id, String event_id){
+    public void setDeleteEventCreated(String user_id, Integer event_id){
         getOrganizer(user_id).deleteEventCreated(event_id);
     }
 
     public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("src/OrganizerManager.ser");
+        OutputStream file = new FileOutputStream("phase1/src/OrganizerManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
@@ -103,7 +103,7 @@ public class OrganizerManager {
 
     public OrganizerManager importState() {
         try {
-            InputStream file = new FileInputStream("src/OrganizerManager.ser");
+            InputStream file = new FileInputStream("phase1/src/OrganizerManager.ser");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
             OrganizerManager organizerManager = (OrganizerManager) input.readObject();

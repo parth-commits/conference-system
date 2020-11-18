@@ -67,6 +67,7 @@ public class TextPresenter {
         else{
             System.out.println("That is an invalid password. Please enter a valid password: ");
         }
+        System.out.println("Please enter 0 to return to the previous menu");
     }
 
     public void Events(ArrayList<String> listOfEventsSchedule){
@@ -129,7 +130,7 @@ public class TextPresenter {
         }
     }
     public void loginOrRegister(){
-        System.out.println("Please selection the action you'd like to do.");
+        System.out.println("Please select the action you'd like to do.");
         System.out.println("1. Register");
         System.out.println("2. Login");
     }
@@ -142,6 +143,7 @@ public class TextPresenter {
         System.out.println("Would you like to add or remove contact?");
         System.out.println("\t1. Add contact");
         System.out.println("\t2. Remove contact");
+        System.out.println("Please type 0 to return to the previous menu");
     }
 
     public void enterContactUserid(boolean invalid){
@@ -151,6 +153,7 @@ public class TextPresenter {
         else {
             System.out.println("Enter the userID of the contact:");
         }
+        System.out.println("Please type 0 to go back.");
     }
 
     //Should One line outputs still be in presenter. answer by parth: yes!
@@ -191,7 +194,8 @@ public class TextPresenter {
     public void printChat(Chat chat){
         ArrayList<Message> messages = chat.getMessages();
         for (Message m:messages){
-            System.out.println(m.getSender()+": "+m.getContext());
+            System.out.println(m);
+            //System.out.println(m.getSender()+": "+m.getContext());
         }
     }
 
@@ -238,11 +242,15 @@ public class TextPresenter {
         System.out.println("Regular Attendee Options:");
         System.out.println("\t5. Add/Remove contact");
         System.out.println("\t6. Join/Leave event");
-        System.out.println("\t7. LOGOUT");
-        System.out.println("\t8. SHUTDOWN");
+        System.out.println("\t7. See all Events");
+        System.out.println("\t8. See Scheduled Events");
+        System.out.println("\t9. Create Rooms");
+        System.out.println("\t10. LOGOUT");
+        System.out.println("\t11. SHUTDOWN");
     }
     public void enterSpeakerName(){
         System.out.println("Please enter the name of the speaker you wish to create: ");
+        System.out.println("Please press 0 to return to the previous menu.");
     }
     public void enterSpeakerID(boolean checker){
         if (checker){
@@ -251,6 +259,7 @@ public class TextPresenter {
         else{
             System.out.println("That userid is taken, please enter another UserID:");
         }
+        System.out.println("Please type 0 to return to the previous menu");
     }
 
     public void youHaveNoEvents(){
@@ -296,9 +305,9 @@ public class TextPresenter {
     }
 
     public void joinOrLeave(){
-        System.out.println("Would you like to join or leave this event?");
+        System.out.println("Would you like to join or cancel this event?");
         System.out.println("1. Join");
-        System.out.println("2. Leave");
+        System.out.println("2. Cancel");
         System.out.println("If you would like to go back to the previous menu, please press 0");
     }
 
@@ -316,5 +325,46 @@ public class TextPresenter {
         System.out.println("\nTo return to the previous menu please press 0");
     }
 
+    public void createDeleteEvent(){
+        System.out.println("Would you like to create or delete an event?");
+        System.out.println("1. Create");
+        System.out.println("2. Delete");
+        System.out.println("If you want to return to the previous menu, please press 0");
+    }
+
+    public void createEnterTime(){
+        System.out.println("Please enter a date and time for this new event. \nPlease note it must follow the following format:" +
+                " dd-mm-yyyy hh:mm:ss. \nThe hours must be in the 24 hour format and must be between 09 and 16, inclusive. \nSince all events start on the hour, mm and ss must be 00." +
+                " \nThe time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M. you would type '20-12-2020 13:00:00.'");
+        System.out.println("Please press 0 to return to the previous menu");
+    }
+
+    public void createEnterTimeInvalidTime(){
+        System.out.println("The time you entered did not fit the formatting requirements. Please try again.");
+    }
+    public void createNoRoomAvailable(){
+        System.out.println("Unfortunately there are no rooms available for you to schedule this room. Please select another date and/or time." );
+    }
+    public void createProvideEventTitle(){
+        System.out.println("Please provide the event title");
+    }
+    public void deleteGetEventId(){
+        System.out.println("Please enter the event id that you would like to delete.");
+        System.out.println("Press 0 to return to the previous menu.");
+    }
+    public void deleteInvalidEventId(){
+        System.out.println("The event id you entered was invalid, please try again.");
+    }
+
+    public void createRoom(){
+        System.out.println("Please enter a name for this room. This will be known as the room's location.");
+        System.out.println("Press 0 to return to the previous menu");
+    }
+    public void createRoomUnavailable(){
+        System.out.println("The room name/location has already been taken by an existing room. Please try again.");
+    }
+    public void invalidInputSelection(){
+        System.out.println("Your input was invalid. Please try again.");
+    }
 
 }

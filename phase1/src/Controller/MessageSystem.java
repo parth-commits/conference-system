@@ -6,6 +6,7 @@ import UseCases.ChatManager;
 
 import UseCases.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MessageSystem {
@@ -42,7 +43,7 @@ public class MessageSystem {
         chatManager.addMessageToChat(sender, recipient, context);
     }*/
 
-    public void sendMessage(String sender) {
+    public void sendMessage(String sender) throws IOException {
         // simplify it by separating common methods?  send message
         String recipient;
         String context;
@@ -72,6 +73,9 @@ public class MessageSystem {
                     ids = attendeeManager.getUserIDs();
                 }
                 for (String id : ids) {
+                    if (sender.equals(id)){
+                        continue;
+                    }
                     if (!(chatManager.chatExists(sender, id))) {
                         chatManager.createChat(sender, id);
                         // ** user built in add contact method
@@ -231,7 +235,20 @@ public class MessageSystem {
                 chatManager.addMessageToChat(sender, id, context);
             }
         }
+        saveState();
     }
+
+    private void saveState() throws IOException {
+        //save the state back in!!!
+        speakerManager.saveState();
+        //roomManager.saveState();
+        organizerManager.saveState();
+        eventManager.saveState();
+        chatManager.saveState();
+        attendeeManager.saveState();
+
+    }
+
     public void viewContacts(String id){
         //view all contacts of user
         chatManager.getContactsWithChat(id);
