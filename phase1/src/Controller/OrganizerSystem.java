@@ -263,6 +263,7 @@ public class OrganizerSystem {
                 while(!validEvent){
                     output.deleteGetEventId();
                     String event = input.getKeyboardInput();
+
                     int eventInt = Integer.parseInt(event);
                     ArrayList<Integer> listOfExistingEventIds = eventManager.getListOfEventIDs();
                     if (listOfExistingEventIds.contains(eventInt)){                             //if the event exists

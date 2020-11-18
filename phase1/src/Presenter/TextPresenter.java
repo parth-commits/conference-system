@@ -73,6 +73,7 @@ public class TextPresenter {
     public void Events(ArrayList<String> listOfEventsSchedule){
     for (String event: listOfEventsSchedule){
         System.out.println(event);
+        System.out.println();
     }
     }
 
@@ -283,7 +284,7 @@ public class TextPresenter {
         System.out.println("Please select one of the following events\n");
         for (int i=1; i<events.size()+1; i++){
             String tempstr = Integer.toString(i);
-            System.out.println("\t" + tempstr + " " + events.get(i).getTitle());
+            System.out.println("\t" + tempstr + " " + events.get(i-1).getTitle());
 
         }
         System.out.println("\nTo return to the previous menu please press 0");
@@ -366,5 +367,13 @@ public class TextPresenter {
     public void invalidInputSelection(){
         System.out.println("Your input was invalid. Please try again.");
     }
+
+    public void replyOrAutomessage(){
+        System.out.println("Would you like to reply to a specific user or send an automatic message?");
+        System.out.println("\t1. Automatic message");
+        System.out.println("\t2. Reply to a specific user");
+        System.out.println("\nPress 0 to return to the previous menu");
+    }
+
 
 }

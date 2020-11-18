@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Event implements Serializable {
 
-    public static int id_counter = 0;
+    public static int id_counter;
     private int id;
     private String title;
     private Date time;

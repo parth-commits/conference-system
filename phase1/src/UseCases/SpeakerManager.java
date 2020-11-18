@@ -14,7 +14,7 @@ public class SpeakerManager implements Serializable{
     }
 
     public void addSpeaker(String user_id, String passwords, String name, String organizerID){
-        Speaker newSpeaker = new Speaker(user_id, name, passwords, organizerID);
+        Speaker newSpeaker = new Speaker(user_id,  passwords, name, organizerID);
         tableOfSpeakers.put(newSpeaker.getUser_id(), newSpeaker);
     }
 
@@ -23,6 +23,11 @@ public class SpeakerManager implements Serializable{
             return tableOfSpeakers.get(inputUserId).getPasswords().equals(inputUserPassword);
         }
         return false;
+    }
+
+    //returns a list of contacts of the given user
+    public ArrayList<String> contactList(String userID){
+        return getSpeaker(userID).getContacts();
     }
 
     public ArrayList<String> getUserIDs(){

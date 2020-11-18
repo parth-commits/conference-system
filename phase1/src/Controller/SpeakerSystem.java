@@ -59,6 +59,7 @@ public class SpeakerSystem {
             else if (i.equals("5")){
                 return true;
             }
+            saveState();
         }
     }
 

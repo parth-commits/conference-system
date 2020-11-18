@@ -62,9 +62,7 @@ public class AttendeeSystem {
             }
             //5. Add or Remove Attendee in Contact
             else if (i.equals("5")){
-                output.enterUserID();
-                String user_ID = input.getKeyboardInput();
-                addRemoveContact(user_ID);
+                addRemoveContact(userID);
             }
             //6. Message Other Users
             else if (i.equals("6")){
@@ -104,7 +102,70 @@ public class AttendeeSystem {
 
 
     private void addRemoveContact(String userID){
-        output.addRemoveContact();
+        boolean goBack = false;
+        while (!goBack) {
+            boolean validAddRemove = false;
+            while (!validAddRemove) {
+                output.addRemoveContact();
+                String option = input.getKeyboardInput();
+                if (option.equals("0")) {
+                    validAddRemove = true;
+                    goBack = true;
+                } else if (option.equals("1")) {
+                    boolean validUserID = false;
+                    while (!validUserID) {
+                        output.enterContactUserid(false);
+                        String user = input.getKeyboardInput();
+                        if (user.equals("0")) {
+                            validUserID = true;
+                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
+                            attendeeManager.addContact(userID, user);
+                            if (organizerManager.userExist(user)) {
+                                organizerManager.addContact(user, userID);
+                            } else if (attendeeManager.userExist(user)) {
+                                attendeeManager.addContact(user, userID);
+                            } else {
+                                speakerManager.addContact(user, userID);
+                            }
+                            chatManager.createChat(user, userID);
+                            validUserID = true;
+                            validAddRemove = true;
+                            goBack = true;
+                        } else {
+                            output.enterContactUserid(true);
+                        }
+                    }
+                } else if (option.equals("2")) {
+                    boolean validUserID = false;
+                    while (!validUserID) {
+                        output.enterContactUserid(false);
+                        String user = input.getKeyboardInput();
+                        if (user.equals("0")) {
+                            validUserID = true;
+                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
+                            attendeeManager.removeContact(userID, user);
+                            if (organizerManager.userExist(user)) {
+                                organizerManager.removeContact(user, userID);
+                            } else if (attendeeManager.userExist(user)) {
+                                attendeeManager.removeContact(user, userID);
+                            } else {
+                                speakerManager.removeContact(user, userID);
+                            }
+                            chatManager.deleteChat(user, userID);
+                            validUserID = true;
+                            validAddRemove = true;
+                            goBack = true;
+                        } else {
+                            output.enterContactUserid(true);
+                        }
+                    }
+                } else {
+                    output.invalidInputSelection();
+                }
+            }
+        }
+
+        /*output.addRemoveContact();
         String option = input.getKeyboardInput();
         while (!(option.equals("1")||option.equals("2"))){
             output.addRemoveContact();
@@ -147,7 +208,7 @@ public class AttendeeSystem {
                 speakerManager.removeContact(input, userID);
             }
             chatManager.deleteChat(input,userID);
-        }
+        }*/
 
     }
 

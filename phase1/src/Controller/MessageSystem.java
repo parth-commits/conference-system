@@ -176,63 +176,116 @@ public class MessageSystem {
         }
         // Speaker
         else if (role == 3) {
-            //speaker CURRENTLY can only send an automatic message to all the users in 1 of his talks
+            String in;
+            boolean validInput1 = false;
+            while (!validInput1){
+                output.replyOrAutomessage();
+                in = input.getKeyboardInput();
 
-            // Select an event
-            ArrayList<ArrayList<String>> eventIDsandTitle = eventManager.getListofEventsBySpeaker(sender);
-            if (eventIDsandTitle.size() == 0) {
-                output.youHaveNoEvents();
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    System.out.println("couldnt not sleep thread");
+                if (in.equals("0")){
+                    validInput1 = true;
                 }
-            }
-            output.promptEvents(eventIDsandTitle, false);
-            //String getInput = input.getKeyboardInput();
+                else if (in.equals("1")){
+                    // Select an event
+                    ArrayList<ArrayList<String>> eventIDsandTitle = eventManager.getListofEventsBySpeaker(sender);
+                    if (eventIDsandTitle.size() == 0) {
+                        output.youHaveNoEvents();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (Exception e) {
+                            System.out.println("couldnt not sleep thread");
+                        }
+                        return;
+                    }
+                    output.promptEvents(eventIDsandTitle, false);
+                    //String getInput = input.getKeyboardInput();
 
-            String getInput = input.getKeyboardInput();
-            boolean validInput = false;
-            int eventIDChoosen = -1;// will guarantee change, -1 is a place holder
-            for (ArrayList<String> stringArrayList : eventIDsandTitle) {
-                if (stringArrayList.get(0).equals(getInput)) {
-                    validInput = true;
-                    eventIDChoosen = Integer.parseInt(getInput);
-                    break;
-                }
-            }
+                    String getInput = input.getKeyboardInput();
+                    boolean validInput = false;
+                    int eventIDChoosen = -1;// will guarantee change, -1 is a place holder
+                    for (ArrayList<String> stringArrayList : eventIDsandTitle) {
+                        if (stringArrayList.get(0).equals(getInput)) {
+                            validInput = true;
+                            eventIDChoosen = Integer.parseInt(getInput);
+                            break;
+                        }
+                    }
 
-            while (!validInput) {
-                output.promptEvents(eventIDsandTitle, true);
-                getInput = input.getKeyboardInput();
-                for (ArrayList<String> strings : eventIDsandTitle) {
-                    if (strings.get(0).equals(getInput)) {
-                        validInput = true;
-                        eventIDChoosen = Integer.parseInt(getInput);
-                        break;
+                    while (!validInput) {
+                        output.promptEvents(eventIDsandTitle, true);
+                        getInput = input.getKeyboardInput();
+                        for (ArrayList<String> strings : eventIDsandTitle) {
+                            if (strings.get(0).equals(getInput)) {
+                                validInput = true;
+                                eventIDChoosen = Integer.parseInt(getInput);
+                                break;
+                            }
+                        }
+                    }
+                    output.promptContextEvent(eventManager.getEvent(eventIDChoosen).getTitle());
+                    context = input.getKeyboardInput();
+
+                    ArrayList<String> attendeesOfEvent = eventManager.getEventAttendees(eventIDChoosen);
+                    for (String id : attendeesOfEvent) {
+                        if (!(chatManager.chatExists(sender, id))) {
+                            chatManager.createChat(sender, id);
+                            // ** use built in add contact method
+                            speakerManager.addContact(sender, id);
+                            int usertype = userType(id);
+                            if (usertype == 1) {
+                                organizerManager.addContact(id, sender);
+                            } else if (usertype == 2) {
+                                attendeeManager.addContact(id, sender);
+                            } else {
+                                speakerManager.addContact(id, sender);
+                            }
+
+                        }
+                        chatManager.addMessageToChat(sender, id, context);
                     }
                 }
-            }
-            output.promptContextEvent(eventManager.getEvent(eventIDChoosen).getTitle());
-            context = input.getKeyboardInput();
-
-            ArrayList<String> attendeesOfEvent = eventManager.getEventAttendees(eventIDChoosen);
-            for (String id : attendeesOfEvent) {
-                if (!(chatManager.chatExists(sender, id))) {
-                    chatManager.createChat(sender, id);
-                    // ** use built in add contact method
-                    speakerManager.addContact(sender, id);
-                    int usertype = userType(id);
-                    if (usertype == 1) {
-                        organizerManager.addContact(id, sender);
-                    } else if (usertype == 2) {
-                        attendeeManager.addContact(id, sender);
-                    } else {
-                        speakerManager.addContact(id, sender);
+                else if (in.equals("2")){
+                    ArrayList<String> contactList = speakerManager.contactList(sender);
+                    if (contactList.size() == 0) {
+                        output.youHaveNoContacts();
+                        return;
                     }
-                    //
+                    //shows user their contact list
+                    output.promptRecipient(contactList, false);
+                    //tells them to choose 1 contact
+                    int personNumber;
+                    try {
+                        personNumber = Integer.parseInt(input.getKeyboardInput());
+                    } catch (NumberFormatException e) {
+                        personNumber = -1;
+                    }
+                    while (!(0 <= personNumber && personNumber <= contactList.size())) {
+                        output.promptRecipient(contactList, true);
+                        try {
+                            personNumber = Integer.parseInt(input.getKeyboardInput());
+                        } catch (NumberFormatException e) {
+                            personNumber = -1;
+                        }
+                    }
+                    if (personNumber == 0) {
+                        return;
+                    }
+                    String contactID = contactList.get(personNumber - 1);
+                    Chat conversation = getChat(sender, contactID);
+                    //prints the chat of the user
+                    output.printChat(conversation);
+                    //ask user to type a message
+                    output.promptContext();
+                    context = input.getKeyboardInput();
+                    if (context.equals("return")) {
+                        return;
+                    }
+                    // add message
+                    chatManager.addMessageToChat(sender, contactID, context);
                 }
-                chatManager.addMessageToChat(sender, id, context);
+                else {
+                    output.invalidInputSelection();
+                }
             }
         }
         saveState();

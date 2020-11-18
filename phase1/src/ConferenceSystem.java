@@ -5,6 +5,7 @@ import UseCases.*;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 public class ConferenceSystem {
 
@@ -69,7 +70,7 @@ public class ConferenceSystem {
     public void run () throws IOException, ParseException {
 
         boolean shutdown = false;
-
+        listofIDPass();
         while (!shutdown) {
             String userID = logInAndRegistrationSystem.start();
             if (organizerManager.userExist(userID)) {
@@ -84,6 +85,15 @@ public class ConferenceSystem {
 
         }
         saveState();
+    }
+
+    private void listofIDPass() {
+        ArrayList<String> speakers = speakerManager.getUserIDs();
+        for (String speaker: speakers){
+            System.out.println(speakerManager.getSpeaker(speaker).getName());
+            System.out.println(speakerManager.getSpeaker(speaker).getUser_id());
+            System.out.println(speakerManager.getSpeaker(speaker).getPasswords());
+        }
     }
 
 

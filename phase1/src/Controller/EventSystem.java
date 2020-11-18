@@ -35,7 +35,7 @@ public class EventSystem {
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
         for (Event event :listOfEvents){
             String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + event.getTime();
+                    + "Time: " + event.getTime() + "Event ID: " + event.getID();
             if (eventManager.hasSpeaker(event.getID())){
                 schedule +=  "\n" + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
             }
