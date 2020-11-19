@@ -69,11 +69,38 @@ public class TextPresenter {
         System.out.println("Please enter 0 to return to the previous menu");
     }
 
-    public void Events(ArrayList<String> listOfEventsSchedule){
-    for (String event: listOfEventsSchedule){
-        System.out.println(event);
-        System.out.println();
+    public void eventsSpeaker(ArrayList<String> listOfEventsSchedule){
+        if (listOfEventsSchedule.isEmpty()){
+            System.out.println("You currently have no assigned talks. ");
+        }
+        else{
+            for (String event: listOfEventsSchedule){
+                System.out.println(event);
+                System.out.println();
+            }
+        }
     }
+    public void eventsAttendeeAndOrganizer(ArrayList<String> listOfEventsSchedule){
+        if (listOfEventsSchedule.isEmpty()){
+            System.out.println("You are currently not attending any events.");
+        }
+        else {
+            for (String event: listOfEventsSchedule){
+                System.out.println(event);
+                System.out.println();
+            }
+        }
+    }
+    public void eventsCheckAll(ArrayList<String> listOfEventsSchedule){
+        if (listOfEventsSchedule.isEmpty()){
+            System.out.println("There are currently no events being held in this conference.");
+        }
+        else {
+            for (String event: listOfEventsSchedule){
+                System.out.println(event);
+                System.out.println();
+            }
+        }
     }
 
     public static void main(String[] args){
@@ -206,11 +233,9 @@ public class TextPresenter {
             System.out.println("Who would you like to send a message to?");
             System.out.println("Note: to send a message to a single user, they must be on your contact list!");
             System.out.println("\t1. All Speakers");
-            System.out.println("\t2. Single Speaker");
-            System.out.println("\t3. All Organizers");
-            System.out.println("\t4. Single Organizer");
-            System.out.println("\t5. All Attendees");
-            System.out.println("\t6. Single Attendee");
+            System.out.println("\t2. All Organizers");
+            System.out.println("\t3. All Attendees");
+            System.out.println("\t4. An Individual");
         }
         //Attendee
         else if (role == 2){
@@ -366,7 +391,12 @@ public class TextPresenter {
     public void invalidInputSelection(){
         System.out.println("Your input was invalid. Please try again.");
     }
-
+    public void userAlreadyInYourContacts(){
+        System.out.println("This person is already in your contacts. You can add someone else or return.");
+    }
+    public void userNotInYourContacts(){
+        System.out.println("This person is not in your contacts. You can remove someone else or return.");
+    }
     public void replyOrAutomessage(){
         System.out.println("Would you like to reply to a specific user or send an automatic message?");
         System.out.println("\t1. Automatic message");

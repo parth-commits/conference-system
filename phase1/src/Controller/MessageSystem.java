@@ -53,13 +53,13 @@ public class MessageSystem {
             output.sendMsgOptions(role);
             String action = input.getKeyboardInput();
 
-            while (!(action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5") || action.equals("6"))) {
+            while (!(action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4"))) {
                 // may need to double check if user wants to quit
                 output.msgOptionInvalid();
                 action = input.getKeyboardInput();
             }
             // send to all speakers, organizers, attendees
-            if (action.equals("1") || action.equals("3") || action.equals("5")) {
+            if (action.equals("1") || action.equals("2") || action.equals("3")) {
                 // prompt context
                 output.promptContext();
                 context = input.getKeyboardInput();
@@ -67,7 +67,7 @@ public class MessageSystem {
                 ArrayList<String> ids;
                 if (action.equals("1")) {
                     ids = speakerManager.getUserIDs();
-                } else if (action.equals("3")) {
+                } else if (action.equals("2")) {
                     ids = organizerManager.getUserIDs();
                 } else {
                     ids = attendeeManager.getUserIDs();

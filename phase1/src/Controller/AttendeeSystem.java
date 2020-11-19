@@ -111,26 +111,33 @@ public class AttendeeSystem {
                 if (option.equals("0")) {
                     validAddRemove = true;
                     goBack = true;
-                } else if (option.equals("1")) {
+                }
+                else if (option.equals("1")) {
                     boolean validUserID = false;
                     while (!validUserID) {
                         output.enterContactUserid(false);
                         String user = input.getKeyboardInput();
                         if (user.equals("0")) {
                             validUserID = true;
-                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            attendeeManager.addContact(userID, user);
-                            if (organizerManager.userExist(user)) {
-                                organizerManager.addContact(user, userID);
-                            } else if (attendeeManager.userExist(user)) {
-                                attendeeManager.addContact(user, userID);
-                            } else {
-                                speakerManager.addContact(user, userID);
+                        }
+                        else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
+                            if (!attendeeManager.contactExists(userID, user)){
+                                attendeeManager.addContact(userID, user);
+                                if (organizerManager.userExist(user)) {
+                                    organizerManager.addContact(user, userID);
+                                } else if (attendeeManager.userExist(user)) {
+                                    attendeeManager.addContact(user, userID);
+                                } else {
+                                    speakerManager.addContact(user, userID);
+                                }
+                                chatManager.createChat(user, userID);
+                                validUserID = true;
+                                validAddRemove = true;
+                                goBack = true;
                             }
-                            chatManager.createChat(user, userID);
-                            validUserID = true;
-                            validAddRemove = true;
-                            goBack = true;
+                            else{
+                                output.userAlreadyInYourContacts();
+                            }
                         } else {
                             output.enterContactUserid(true);
                         }
@@ -143,18 +150,23 @@ public class AttendeeSystem {
                         if (user.equals("0")) {
                             validUserID = true;
                         } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            attendeeManager.removeContact(userID, user);
-                            if (organizerManager.userExist(user)) {
-                                organizerManager.removeContact(user, userID);
-                            } else if (attendeeManager.userExist(user)) {
-                                attendeeManager.removeContact(user, userID);
-                            } else {
-                                speakerManager.removeContact(user, userID);
+                            if (attendeeManager.contactExists(userID,user)){
+                                attendeeManager.removeContact(userID, user);
+                                if (organizerManager.userExist(user)) {
+                                    organizerManager.removeContact(user, userID);
+                                } else if (attendeeManager.userExist(user)) {
+                                    attendeeManager.removeContact(user, userID);
+                                } else {
+                                    speakerManager.removeContact(user, userID);
+                                }
+                                chatManager.deleteChat(user, userID);
+                                validUserID = true;
+                                validAddRemove = true;
+                                goBack = true;
                             }
-                            chatManager.deleteChat(user, userID);
-                            validUserID = true;
-                            validAddRemove = true;
-                            goBack = true;
+                            else{
+                                output.userNotInYourContacts();
+                            }
                         } else {
                             output.enterContactUserid(true);
                         }
