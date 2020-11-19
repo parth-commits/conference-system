@@ -5,7 +5,7 @@ import java.io.*;
 
 /** The Attendee program implements an application that simply records users
  * and their list of signed-event. Events can be added or removed.
- * @author Natalie (Yun-Ho)
+ * @author Group_0112
  * @version 1.0
  * @since November 16th, 2020
  */

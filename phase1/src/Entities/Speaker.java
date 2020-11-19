@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /** The Speaker program implements an application that simply records users
  * , their list of assigned-event and the organizer who creates this speaker. Events can be added or removed.
- * @author Harold WANG(Hao-te WANG)
+ * @author Group_0112
  * @version 1.0
  * @since November 19th, 2020
  */
@@ -19,8 +19,9 @@ public class Speaker extends User implements Serializable {
 
     /** Constructor
      * @param user_id the user id of this user. User id is an unique integer for each user.
-     * @param name    the registered name of this user.
-     * @param passwords the registered passwords of this user.
+     * @param passwords the registered passwords of this user
+     * @param name the registered name of this user
+     * @param organizer_id the organizer who created this Speaker
      */
     public Speaker(String user_id, String passwords, String name,  String organizer_id){
         super(user_id, name, passwords);
@@ -30,7 +31,7 @@ public class Speaker extends User implements Serializable {
     }
 
     /** Returns an arraylist of ids of assigned-event by the user.
-     * @return ArrayList of all IDs of assigned-events
+     * @return ArrayList a list of all IDs of assigned-events
      */
     public ArrayList<Integer> getAssignEvents(){
         return assignEvents;
@@ -45,12 +46,12 @@ public class Speaker extends User implements Serializable {
 
     /** Removes an event by event id from the list of assigned events of the speaker.
      * @param event_id  the id of an event that is wished to be removed
-     * @return boolean  returns true if the event has been successfully removed, false otherwise.
+     * @return boolean  returns true if the event has been successfully removed, false otherwise
      */
     public void removeAssignEvent(int event_id){assignEvents.remove(event_id);}
 
     /** Returns the organizer who creates this speaker.
-     * @return an Organizer.
+     * @return Organizer the organizer who creates this speaker
      */
     public String getCreatedOrganizer(){
         return this.createdOrganizer;
