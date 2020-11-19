@@ -30,14 +30,13 @@ public class Event implements Serializable {
      * @param location the location of this event
      * @param organizerID the user_id of organizer who hosts this event
      */
-    public Event(String title, Date time, String location, String organizerID) {
-        this.id = id_counter + 1;
-        id_counter++;
-    public Event(String title, Date time, String location, String organizerID, int id) {
+
+    public Event(String title, Date time, String location,String speakerID, String organizerID, int id) {
         this.id = id;
         this.title = title;
         this.time = time;
         this.location = location;
+        this.speakerID = speakerID;
         this.organizerID = organizerID;
         this.attendees = new ArrayList<>();
     }
@@ -161,6 +160,10 @@ public class Event implements Serializable {
         return this.speakerID == null;
     }
 
+    /**
+     * Override the toString method for event
+     * @return "Event{id, title, time, location, speakerID, attendees, organizerID}
+     */
     @Override
     public String toString() {
         return "Event{ id=" + id + " | title='" + title +" | time=" + time + ", location='" + location + " | speakerID='" + speakerID + " | attendees=" + attendees + ", organizerID='" + organizerID +  '}';
