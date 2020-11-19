@@ -233,11 +233,9 @@ public class TextPresenter {
             System.out.println("Who would you like to send a message to?");
             System.out.println("Note: to send a message to a single user, they must be on your contact list!");
             System.out.println("\t1. All Speakers");
-            System.out.println("\t2. Single Speaker");
-            System.out.println("\t3. All Organizers");
-            System.out.println("\t4. Single Organizer");
-            System.out.println("\t5. All Attendees");
-            System.out.println("\t6. Single Attendee");
+            System.out.println("\t2. All Organizers");
+            System.out.println("\t3. All Attendees");
+            System.out.println("\t4. An Individual");
         }
         //Attendee
         else if (role == 2){
