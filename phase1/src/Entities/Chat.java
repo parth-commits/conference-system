@@ -19,8 +19,8 @@ public class Chat implements Serializable {
 
     /**
      * Constructor
-     * @param id1
-     * @param id2
+     * @param id1 the user_id of user1
+     * @param id2 the user_id of user2
      */
     public Chat(String id1, String id2){
         this.id1 = id1;
@@ -28,22 +28,36 @@ public class Chat implements Serializable {
         messages = new ArrayList<>();
     }
 
-    //returns the id of the first user
+    /**
+     * Gets the user_id of user1.
+     * @return id1 the user_id of user1
+     */
     public String getId1() {
         return id1;
     }
 
-    //returns the id of the second user
+    /**
+     * Gets the user_id of user2
+     * @return id2 the user_id of user2
+     */
     public String getId2() {
         return id2;
     }
 
-    //returns the list of messages between the 2 people
+    /**
+     * Gets the list of messages between user1 and user2.
+     * @return ArrayList<Message> a list of messages between user1 and user2.
+     */
     public ArrayList<Message> getMessages() {
         return messages;
     }
 
-    //adds a new message to the messages list.
+    /**
+     * Adds a new message to the messages list.
+     * @param sender sender's user id of this message
+     * @param recipient user id of the account receiving this message
+     * @param context context of the message
+     */
     public void addMessages(String sender, String recipient, String context){
         Message newMessage = new Message(sender, recipient, context);
         messages.add(newMessage);

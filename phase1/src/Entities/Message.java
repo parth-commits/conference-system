@@ -3,8 +3,10 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/** The Message class records basic information of a single message, including
- *  sender, recipient, text and date.
+/** Message entity records basic information of a single message, including sender, recipient, text and date.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
  */
 
 public class Message implements Serializable {
@@ -36,20 +38,6 @@ public class Message implements Serializable {
         this.time = new Date();
     }
 
-
-    /* unused methods
-    //gets the sender of the message
-    public String getSender() {
-        return sender;
-    }
-    //gets the recipeint of the message
-    public String getRecipient() {
-        return recipient;
-    }
-    */
-
-
-
     //gets the actual text of the message
     /** Returns a context of the message as a String
      * @return context of the message
@@ -75,6 +63,19 @@ public class Message implements Serializable {
     public String toString() {
         return "[" + formatter.format(getTime()) + "] " + sender + ": " + context;
     }
+
+
+    /* unused methods
+    //gets the sender of the message
+    public String getSender() {
+        return sender;
+    }
+    //gets the recipeint of the message
+    public String getRecipient() {
+        return recipient;
+    }
+    */
+
 }
 
 /*example of the toString method*/

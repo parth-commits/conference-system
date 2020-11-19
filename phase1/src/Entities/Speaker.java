@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * The Speaker program implements an application that simply records users, their list
+ * Speaker entity implements an application that simply records users, their list
  * of assigned-event and the organizer who creates this speaker. Events can be added or removed.
  * @author Group_0112
  * @version 1.0
