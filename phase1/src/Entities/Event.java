@@ -31,12 +31,11 @@ public class Event implements Serializable {
      * @param organizerID the user_id of organizer who hosts this event
      */
 
-    public Event(String title, Date time, String location,String speakerID, String organizerID, int id) {
+    public Event(String title, Date time, String location, String organizerID, int id) {
         this.id = id;
         this.title = title;
         this.time = time;
         this.location = location;
-        this.speakerID = speakerID;
         this.organizerID = organizerID;
         this.attendees = new ArrayList<>();
     }
