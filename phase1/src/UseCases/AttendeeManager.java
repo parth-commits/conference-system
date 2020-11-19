@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
- * The AttendeeManager class implements
- * @author group0112
+ * The AttendeeManager class stores all attendees in an arraylist, and implements various actions that
+ * can be done for an attendee, including verifying login/ if user exists/ event sign-up/ if contact exists,
+ * adding/removing events, adding/ removing contacts, and getting a list of signed-up event and contacts.
+ *
+ * @author Group_0112
  * @version 1.0
- * @since November 16th, 2020
+ * @since November 19th, 2020
  */
 
 public class  AttendeeManager implements Serializable{
@@ -46,7 +49,6 @@ public class  AttendeeManager implements Serializable{
         }
         return false;
     }
-
 
     /**
      * Gets the arraylist of all user ids.
@@ -160,8 +162,8 @@ public class  AttendeeManager implements Serializable{
     }
 
     /**
-     * Save states of attendee manager
-     * @throws IOException if
+     * Saves states of attendee manager.
+     * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveState() throws IOException {
         OutputStream file = new FileOutputStream("phase1/src/AttendeeManager.ser");
@@ -173,8 +175,8 @@ public class  AttendeeManager implements Serializable{
     }
 
     /**
-     * Import ser files.
-     * @return AttendeeManager
+     * Imports ser files.
+     * @return AttendeeManager returns an implement of this use case
      */
     public AttendeeManager importState() {
         try {

@@ -4,17 +4,33 @@ import Entities.Chat;
 import java.io.*;
 import java.util.ArrayList;
 
+/** The class ChatManager stores all chats in an arraylist,
+ * and implements various actions that are relevant to the chats.
+ * Actions include adding message, creating chats, verifying chats,
+ * finding chats, finding contacts, and deleting chats.
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
+
 public class ChatManager implements Serializable{
 
-    //list of chats. so this will be a 2 dimensional list
+    //list of chats. this will be a 2 dimensional list.
     private ArrayList<Chat> chats;
 
-    //constructor
+    /**
+     * Constructor that creates a new arraylist of chats.
+     */
     public ChatManager(){
         chats = new ArrayList<>();
     }
 
-    // add confirmation when creating new chat instances?
+    /**
+     * Adds message to chat.
+     * @param sender the name of user who sends this message
+     * @param recipient the name of user who receives this message
+     * @param context the text of the message
+     */
     public void addMessageToChat(String sender, String recipient, String context){
         if (chatExists(sender, recipient)) {
             Chat chat = findChat(sender, recipient);
@@ -22,14 +38,24 @@ public class ChatManager implements Serializable{
         }
     }
 
-    //creates a new chat between 2 people
+    /**
+     * Creates a new chat between 2 users.
+     * @param id1 the id of user1
+     * @param id2 the id of user2
+     */
     public void createChat(String id1, String id2){
         if (!chatExists(id1, id2)) {
             chats.add(new Chat(id1, id2));
         }
     }
 
-    //returns true if chat exists, false otherwise
+    /**
+     * Checks if the chat already exists in the system.
+     * @param id1 the id of user1
+     * @param id2 the id of user2
+     * @return boolean return true if the chat exists,
+     * return false otherwise
+     */
     public boolean chatExists(String id1, String id2){
         for (Chat chat : chats) {
             if ((chat.getId1().equals(id1)) && (chat.getId2().equals(id2))) {
@@ -42,7 +68,12 @@ public class ChatManager implements Serializable{
         return false;
     }
 
-    //given 2 user's ids, find the chat between them and returns them
+    /**
+     * Finds the chat between 2 users (given their user ids).
+     * @param id1 the id of user1
+     * @param id2 the id of user2
+     * @return Chat the Chat object between the two users
+     */
     public Chat findChat(String id1, String id2){
 
         for (Chat chat : chats) {
@@ -56,7 +87,12 @@ public class ChatManager implements Serializable{
         return null;
     }
 
-    //given a single userid, find all the people this person has a chat with and returns them in a list
+
+    /**
+     * Finds all the contacts this person has a chat with and stores it in an arraylist.
+     * @param id1 the id of user who wants to perform this action
+     * @return ArraryList </Sting> a list containing all usernames of its contact
+     */
     public ArrayList<String> getContactsWithChat(String id1){
         ArrayList<String> listOfChatsPeople = new ArrayList<>();
         for (Chat chat : chats) {
@@ -70,7 +106,12 @@ public class ChatManager implements Serializable{
         return listOfChatsPeople;
     }
 
-    //given 2 userids, deletes the chat between them
+
+    /**
+     * Deletes the chat between 2 users (given their user ids).
+     * @param id1 the id of user1
+     * @param id2 the id of user2
+     */
     public void deleteChat(String id1, String id2){
         for (int i = 0; i<chats.size();i++){
             if (chats.get(i).getId1().equals(id1)&&chats.get(i).getId2().equals(id2)){
@@ -84,6 +125,10 @@ public class ChatManager implements Serializable{
         }
     }
 
+    /**
+     * Saves states of attendee manager.
+     * @throws IOException throw IOException to avoid errors that might occur
+     */
     public void saveState() throws IOException {
         OutputStream file = new FileOutputStream("phase1/src/ChatManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
@@ -93,6 +138,10 @@ public class ChatManager implements Serializable{
         output.close();
     }
 
+    /**
+     * Imports ser files.
+     * @return ChatManager returns an implement of this use case
+     */
 
     public ChatManager importState() {
         try {
