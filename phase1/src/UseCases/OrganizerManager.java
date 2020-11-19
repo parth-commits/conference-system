@@ -91,6 +91,10 @@ public class OrganizerManager implements Serializable{
         getOrganizer(user_id).deleteEventCreated(event_id);
     }
 
+    /**
+     * Saves states of organizer manager.
+     * @throws IOException throw IOException to avoid errors that might occur
+     */
     public void saveState() throws IOException {
         OutputStream file = new FileOutputStream("phase1/src/OrganizerManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
@@ -100,7 +104,10 @@ public class OrganizerManager implements Serializable{
         output.close();
     }
 
-
+    /**
+     * Imports ser files.
+     * @return OrganizerManager returns an implement of this use case
+     */
     public OrganizerManager importState() {
         try {
             InputStream file = new FileInputStream("phase1/src/OrganizerManager.ser");

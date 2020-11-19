@@ -126,7 +126,7 @@ public class ChatManager implements Serializable{
     }
 
     /**
-     * Saves states of attendee manager.
+     * Saves states of chat manager.
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveState() throws IOException {

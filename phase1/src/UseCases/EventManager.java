@@ -6,24 +6,45 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
+/** The class EventManager stores all events in an arraylist,
+ * and implements various of actions that are relevant to the Event object.
+ * Actions including
 
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
 public class EventManager implements Serializable{
     private ArrayList<Event> listOfEvents;
 
+    /**
+     * Constructor
+     */
     public EventManager(){
         listOfEvents = new ArrayList<>();
 
     }
 
+    /**
+     * Gets an event list.
+     * @return ArrayList </Event> a list that contains all event objects.
+     */
     public ArrayList<Event> getListOfEvents(){
         return listOfEvents;
     }
 
-
+    /**
+     * Removes an event from the list.
+     * @param eventID the id of event that we wish to remove.
+     */
     public void removeEvent(int eventID){
         listOfEvents.remove(getEvent(eventID));
     }
 
+    /**
+     * Gets an arraylist of event ids.
+     * @return ArrayList </Integer> a list of event ids.
+     */
 
     public ArrayList<Integer> getListOfEventIDs(){
         ArrayList<Integer> listOfEventIDs = new ArrayList<>();
@@ -33,6 +54,12 @@ public class EventManager implements Serializable{
         return listOfEventIDs;
     }
 
+    /**
+     * Gets an event object.
+     * @param eventId the id of event that we wish to return
+     * @return Event event object
+     * @see Event
+     */
     public Event getEvent(int eventId){
         for (Event e:listOfEvents){
             if (eventId == e.getID()){
@@ -42,10 +69,21 @@ public class EventManager implements Serializable{
         return null;
     }
 
+    /**
+     * Gets the time of an event.
+     * @param eventID the id of event that we wish to return
+     * @return Date an object that records the timing of the event
+     * @see Date
+     */
     public Date getTime(int eventID){
         return getEvent(eventID).getTime();
     }
 
+    /**
+     * Gets an arraylist of events, given the infomration of speaker id.
+     * @param speakerID the id of speaker who are involved in the events
+     * @return ArrayList <ArrayList </String>>
+     */
     public ArrayList<ArrayList<String>> getListofEventsBySpeaker(String speakerID){
         ArrayList<ArrayList<String>> listofEventsbySpeaker = new ArrayList<>();
         for (Event listOfEvent : listOfEvents) {
@@ -59,6 +97,15 @@ public class EventManager implements Serializable{
         return listofEventsbySpeaker;
     }
 
+    /**
+     * Adds an event to the existing event arraylist, given the event information.
+     * @param title the name of the event
+     * @param time the time of the event
+     * @param location the location (room) of the event
+     * @param organizerID the id of the organizer who hold the event
+     * @param id the id of the event
+     * @return int the id of the added event
+     */
     public int addEvent(String title, Date time, String location, String organizerID, int id) {
         // check time (speaker??? room???)
         Event event = new Event(title, time, location, organizerID, id);
@@ -66,6 +113,10 @@ public class EventManager implements Serializable{
         return event.getID();
     }
 
+    /**
+     * Cancels an event.
+     * @param id the id of the event that is wished to be cancelled
+     */
     public void cancelEvent(int id){
         int index = -1;
         for (int i = 0; i < listOfEvents.size(); i++){
@@ -76,6 +127,12 @@ public class EventManager implements Serializable{
         listOfEvents.remove(index);
     }
 
+    /**
+     * Checks if the event has a speaker.
+     * @param eventID the id of the event that we want to check
+     * @return boolean return true if the event has speaker,
+     * return false otherwise
+     */
     public boolean hasSpeaker(int eventID){
         for (Event event: listOfEvents){
             if (event.getID()==eventID){
@@ -84,6 +141,12 @@ public class EventManager implements Serializable{
         }
         return false;
     }
+
+    /**
+     * Gets the id of the speakers in an event.
+     * @param eventID the id of event that we want to check
+     * @return String the id of speaker
+     */
     public String getSpeakerID(int eventID){
         for (Event event: listOfEvents){
             if (event.getID()==eventID){
@@ -93,6 +156,11 @@ public class EventManager implements Serializable{
         return null;
     }
 
+    /**
+     * Adds an attendee to the event.
+     * @param eventID the id of added event
+     * @param userID the id of user who wants to perform this task
+     */
     public void addAttendee(int eventID,String userID){
         for (Event e:listOfEvents){
             if (eventID == e.getID()){
@@ -101,10 +169,20 @@ public class EventManager implements Serializable{
         }
     }
 
+    /**
+     * Gets a list of attendees in an event.
+     * @param eventID the id of event that we want to look into
+     * @return ArrayList </String> a list of all attendees
+     */
     public ArrayList<String> getEventAttendees(int eventID){
         return getEvent(eventID).getAttendees();
     }
 
+    /**
+     * Removes an attendee from the event.
+     * @param eventID the id of event that is wished to be removed
+     * @param userID the id of user who wants to perform this task
+     */
     public void removeAttendee(int eventID,String userID){
         for (Event e:listOfEvents){
             if (eventID == e.getID()){
@@ -113,14 +191,27 @@ public class EventManager implements Serializable{
         }
     }
 
+    /**
+     * Gets the location of an event.
+     * @param eventID the id of event that we want to know the location of
+     * @return String the room name
+     */
     public String getLocation(int eventID){
         return getEvent(eventID).getLocation();
     }
 
+    /**
+     * Sets a list of events.
+     * @param listOfEvents a list that contains all events in the system.
+     */
     public void setListOfEvents(ArrayList<Event> listOfEvents){
         this.listOfEvents.addAll(listOfEvents);
     }
 
+    /**
+     * Saves states of event manager.
+     * @throws IOException throw IOException to avoid errors that might occur
+     */
     public void saveState() throws IOException {
         OutputStream file = new FileOutputStream("phase1/src/EventManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
@@ -130,7 +221,10 @@ public class EventManager implements Serializable{
         output.close();
     }
 
-
+    /**
+     * Imports ser files.
+     * @return EventManager an implement of this use case
+     */
     public EventManager importState() {
         try {
             InputStream file = new FileInputStream("phase1/src/EventManager.ser");

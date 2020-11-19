@@ -144,7 +144,7 @@ public class SpeakerManager implements Serializable{
     }
 
     /**
-     * Saves states for SpeakerManager.
+     * Saves states for speaker manager.
      * @throws IOException throw IOException to avoid the Errors might occur
      */
     public void saveState() throws IOException{

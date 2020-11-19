@@ -57,7 +57,10 @@ public class RoomManager implements Serializable{
         Room r = getRoom(roomloc);
         return r.getCapacity();
     }
-
+    /**
+     * Saves states of room manager.
+     * @throws IOException throw IOException to avoid errors that might occur
+     */
     public void saveState() throws IOException{
         OutputStream file = new FileOutputStream("phase1/src/RoomManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
@@ -67,7 +70,10 @@ public class RoomManager implements Serializable{
         output.close();
     }
 
-
+    /**
+     * Imports ser files.
+     * @return RoomManager returns an implement of this use case
+     */
     public RoomManager importState() {
         try {
             InputStream file = new FileInputStream("phase1/src/RoomManager.ser");

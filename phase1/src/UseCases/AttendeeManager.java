@@ -27,9 +27,9 @@ public class  AttendeeManager implements Serializable{
 
     /**
      * Adds an attendee to the hashtable of all attendees.
-     * @param user_id the id of user that we wished to add
-     * @param username the name of the user that we wished to add
-     * @param passwords the passwords of the user that we wished to add
+     * @param user_id the id of user that we wish to add
+     * @param username the name of the user that we wish to add
+     * @param passwords the passwords of the user that we wish to add
      */
     public void addAttendee(String user_id, String username, String passwords){
         Attendee newAttendee = new Attendee(user_id, username, passwords);
@@ -59,9 +59,9 @@ public class  AttendeeManager implements Serializable{
     }
 
     /**
-     * Checks if a particular user exists in the arrarylist of attendees.
+     * Checks if a particular user exists in the arraylist of attendees.
      * @param userId the id of user that we'd like to look into
-     * @return boolean return true if the user already registed in the system,
+     * @return boolean return true if the user already registered in the system,
      * return false otherwise
      */
     public boolean userExist(String userId){
@@ -80,7 +80,7 @@ public class  AttendeeManager implements Serializable{
 
     /**
      * Adds an event to the an attendee's event list.
-     * @param EventId the id of event that we wished to add
+     * @param EventId the id of event that we wish to add
      * @param userId the id of user who wants to perform this task
      */
     public void addEventToAttendee (Integer EventId, String userId){
