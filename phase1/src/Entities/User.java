@@ -70,4 +70,10 @@ public abstract class User implements Serializable {
     public boolean removeContact(String user_id){
         return this.contacts.remove(user_id);
     }
+
+    @Override
+    public String toString() {
+        return "Organizer -> Name: " + getName() + " | UserID: " + getUser_id() + " | Password: " + getPasswords() + " \n\tContacts: " + getContacts();
+    }
+
 }

@@ -19,6 +19,12 @@ public class EventManager implements Serializable{
         return listOfEvents;
     }
 
+
+    public void removeEvent(int eventID){
+        listOfEvents.remove(getEvent(eventID));
+    }
+
+
     public ArrayList<Integer> getListOfEventIDs(){
         ArrayList<Integer> listOfEventIDs = new ArrayList<>();
         for(Event event: listOfEvents){
@@ -53,9 +59,9 @@ public class EventManager implements Serializable{
         return listofEventsbySpeaker;
     }
 
-    public int addEvent(String title, Date time, String location, String organizerID) {
+    public int addEvent(String title, Date time, String location, String organizerID, int id) {
         // check time (speaker??? room???)
-        Event event = new Event(title, time, location, organizerID);
+        Event event = new Event(title, time, location, organizerID, id);
         listOfEvents.add(event);
         return event.getID();
     }

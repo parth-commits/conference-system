@@ -6,6 +6,12 @@ import Entities.Message;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import Entities.Chat;
+import Entities.Event;
+import Entities.Message;
+
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class TextPresenter {
     public void PrintPrompt(){
@@ -29,6 +35,9 @@ public class TextPresenter {
     }
     public void enterEvent(){
         System.out.println("Please enter the event ID for the event you want to sign up for: ");
+    }
+    public void enterCreatingEventID(){
+        System.out.println("Please enter an integer ID for the new event:");
     }
     public void enterEventCancel(){
         System.out.println("Please enter the event ID for the event you want to cancel: ");
@@ -263,13 +272,13 @@ public class TextPresenter {
         System.out.println("\t1. Create a new Speaker");
         System.out.println("\t2. Schedule a Speaker");
         System.out.println("\t3. Message");
-        System.out.println("\t4. Create/Delete event\n");
+        System.out.println("\t4. Create/Delete event");
+        System.out.println("\t5. Create Rooms\n");
         System.out.println("Regular Attendee Options:");
-        System.out.println("\t5. Add/Remove contact");
-        System.out.println("\t6. Join/Leave event");
-        System.out.println("\t7. See all Events");
-        System.out.println("\t8. See Scheduled Events");
-        System.out.println("\t9. Create Rooms");
+        System.out.println("\t6. Add/Remove contact");
+        System.out.println("\t7. Join/Leave event");
+        System.out.println("\t8. See all Events");
+        System.out.println("\t9. See Scheduled Events");
         System.out.println("\t10. LOGOUT");
         System.out.println("\t11. SHUTDOWN");
     }
@@ -322,7 +331,7 @@ public class TextPresenter {
     }
 
     public void invalidEventID(){
-        System.out.println("The event id you entered was invalid, please try again");
+        System.out.println("The event id you entered was invalid or is already in use, please try again");
     }
 
     public void joinEvent(){

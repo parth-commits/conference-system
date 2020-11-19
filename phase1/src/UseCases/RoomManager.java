@@ -81,4 +81,8 @@ public class RoomManager implements Serializable{
             return new RoomManager();
         }
     }
+
+    public ArrayList<String> getAllRoomLocs() {
+        return new ArrayList<>(tableOfRooms.keySet());
+    }
 }

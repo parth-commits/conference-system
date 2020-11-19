@@ -58,19 +58,19 @@ public class OrganizerSystem {
                 createDeleteEvent(userID);
             }
             else if (o.equals("5")){
-                addRemoveContact(userID);
+                createRoom();
             }
             else if (o.equals("6")){
-                joinLeaveEvent(userID);
+                addRemoveContact(userID);
             }
             else if (o.equals("7")){
-                eventSystem.checkAllEvents();
+                joinLeaveEvent(userID);
             }
             else if (o.equals("8")){
-                eventSystem.checkSignedUpEvent(userID);
+                eventSystem.checkAllEvents();
             }
             else if (o.equals("9")){
-                createRoom();
+                eventSystem.checkSignedUpEvent(userID);
             }
             else if (o.equals("10")){
                 return false;
@@ -237,15 +237,41 @@ public class OrganizerSystem {
                         ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1);
                         if (availableRooms.isEmpty()){
                             output.createNoRoomAvailable();                                 //MAKE SURE THIS STAYS FOR SOME TIME
+                            try {
+                                Thread.sleep(2000);
+                            }catch (Exception e){
+                                System.out.println("couldnt sleep");
+                            }
                         }
                         else{                                                               //there is a room available
                             output.createProvideEventTitle();
                             String eventTitle = input.getKeyboardInput();                   //gets title for event.
                             String locationSelected = availableRooms.get(0);
-                            int eventID = eventManager.addEvent(eventTitle, d1, locationSelected, userID);
+                            int eventID = -1;
+                            boolean validID = false;
+                            while (!validID){
+                                output.enterCreatingEventID();
+                                try {
+                                    eventID = Integer.parseInt(input.getKeyboardInput());
+                                }catch (Exception e){
+                                    eventID = -1;
+                                }
+                                if (eventID>=0&&!eventManager.getListOfEventIDs().contains(eventID)){
+                                    validID = true;
+                                }
+                                else {
+                                    output.invalidEventID();
+                                }
+                            }
+                            eventManager.addEvent(eventTitle, d1, locationSelected, userID, eventID);
                             roomManager.addEventToRoom(locationSelected, eventID, d1);
                             organizerManager.setAddEventCreated(userID, eventID);           //adds to the list of events this organizer has created
                             output.ActionDone();
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                System.out.println("couldnt sleep");
+                            }
                             validTime = true;
                             createDelete=true;
                         }

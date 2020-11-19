@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class Event implements Serializable {
 
-    public static int id_counter;
     private int id;
     private String title;
     private Date time;
@@ -17,9 +16,8 @@ public class Event implements Serializable {
     private String organizerID;
 
 
-    public Event(String title, Date time, String location, String organizerID) {
-        this.id = id_counter + 1;
-        id_counter++;
+    public Event(String title, Date time, String location, String organizerID, int id) {
+        this.id = id;
         this.title = title;
         this.time = time;
         this.location = location;
@@ -97,5 +95,10 @@ public class Event implements Serializable {
 
     public boolean noSpeaker(){
         return this.speakerID == null;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{ id=" + id + " | title='" + title +" | time=" + time + ", location='" + location + " | speakerID='" + speakerID + " | attendees=" + attendees + ", organizerID='" + organizerID +  '}';
     }
 }
