@@ -38,6 +38,7 @@ public class Event implements Serializable {
         this.location = location;
         this.organizerID = organizerID;
         this.attendees = new ArrayList<>();
+        this.speakerID = "";
     }
 
     /**

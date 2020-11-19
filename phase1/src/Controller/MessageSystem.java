@@ -1,4 +1,5 @@
 package Controller;
+
 import Entities.Chat;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
@@ -29,7 +30,7 @@ public class MessageSystem {
         this.input = new KeyboardInput();
     }
 
-    public Chat getChat(String id1, String id2){
+    public Chat getChat(String id1, String id2) {
         //get the chat between two users
         return chatManager.findChat(id1, id2);
     }
@@ -63,7 +64,7 @@ public class MessageSystem {
                 // prompt context
                 output.promptContext();
                 context = input.getKeyboardInput();
-                if (context.equals("0")){                                               //Check to make sure this works
+                if (context.equals("0")) {                                               //Check to make sure this works
                     return;
                 }
                 // add message
@@ -76,72 +77,28 @@ public class MessageSystem {
                     ids = attendeeManager.getUserIDs();
                 }
                 for (String id : ids) {
-                    if (sender.equals(id)){
+                    if (sender.equals(id)) {
                         continue;
                     }
                     if (!(chatManager.chatExists(sender, id))) {
                         chatManager.createChat(sender, id);
-                        // ** user built in add contact method
-                        organizerManager.addContact(sender, id);
-                        int usertype = userType(id);
-                        if (usertype == 1) {
-                            organizerManager.addContact(id, sender);
-                        } else if (usertype == 2) {
-                            attendeeManager.addContact(id, sender);
-                        } else {
-                            speakerManager.addContact(id, sender);
-                        }
-                        // **
+                        addContact(sender, id);
+                        addContact(id, sender);
+
                     }
                     chatManager.addMessageToChat(sender, id, context);
                 }
-                output.messageSentToEveryone();                                         //NEW!
+                output.messageSentToEveryone();
             }
             // send to one user in contact list
             else {
-                ArrayList<String> contactList = organizerManager.contactList(sender);
-                if (contactList.size() == 0) {
-                    output.youHaveNoContacts();
-                    return;
-                }
-                //shows user their contact list
-                output.promptRecipient(contactList, false);
-                //tells them to choose 1 contact
-                int personNumber;
-                try {
-                    personNumber = Integer.parseInt(input.getKeyboardInput());
-                } catch (NumberFormatException e) {
-                    personNumber = -1;
-                }
-                while (!(0 <= personNumber && personNumber <= contactList.size())) {
-                    output.promptRecipient(contactList, true);
-                    try {
-                        personNumber = Integer.parseInt(input.getKeyboardInput());
-                    } catch (NumberFormatException e) {
-                        personNumber = -1;
-                    }
-                }
-                if (personNumber == 0) {
-                    return;
-                }
-                String contactID = contactList.get(personNumber - 1);
-                Chat conversation = getChat(sender, contactID);
-                //prints the chat of the user
-                output.printChat(conversation);
-                //ask user to type a message
-                output.promptContext();
-                context = input.getKeyboardInput();
-                if (context.equals("0")) {
-                    return;
-                }
-                // add message
-                chatManager.addMessageToChat(sender, contactID, context);
-                output.messageSent();
+                singleUserMessageHelper(sender);
             }
         }
         // Attendee
         else if (role == 2) {
-            ArrayList<String> contactList = attendeeManager.contactList(sender);
+            singleUserMessageHelper(sender);
+            /*ArrayList<String> contactList = attendeeManager.contactList(sender);
             if (contactList.size() == 0) {
                 output.youHaveNoContacts();
                 return;
@@ -178,20 +135,19 @@ public class MessageSystem {
             }
             // add message
             chatManager.addMessageToChat(sender, contactID, context);
-            output.messageSent();
+            output.messageSent();*/
         }
         // Speaker
         else if (role == 3) {
             String in;
             boolean validInput1 = false;
-            while (!validInput1){
+            while (!validInput1) {
                 output.replyOrAutomessage();
                 in = input.getKeyboardInput();
 
-                if (in.equals("0")){
+                if (in.equals("0")) {
                     validInput1 = true;
-                }
-                else if (in.equals("1")){
+                } else if (in.equals("1")) {
                     // Select an event
                     ArrayList<ArrayList<String>> eventIDsandTitle = eventManager.getListofEventsBySpeaker(sender);
                     if (eventIDsandTitle.size() == 0) {
@@ -235,24 +191,15 @@ public class MessageSystem {
                     for (String id : attendeesOfEvent) {
                         if (!(chatManager.chatExists(sender, id))) {
                             chatManager.createChat(sender, id);
-                            // ** use built in add contact method
-                            speakerManager.addContact(sender, id);
-                            int usertype = userType(id);
-                            if (usertype == 1) {
-                                organizerManager.addContact(id, sender);
-                            } else if (usertype == 2) {
-                                attendeeManager.addContact(id, sender);
-                            } else {
-                                speakerManager.addContact(id, sender);
-                            }
-
+                            addContact(sender, id);
+                            addContact(id, sender);
                         }
                         chatManager.addMessageToChat(sender, id, context);
                     }
                     output.messageSentToEveryone();
-                }
-                else if (in.equals("2")){
-                    ArrayList<String> contactList = speakerManager.contactList(sender);
+                } else if (in.equals("2")) {
+                    singleUserMessageHelper(sender);
+                    /*ArrayList<String> contactList = speakerManager.contactList(sender);
                     if (contactList.size() == 0) {
                         output.youHaveNoContacts();
                         return;
@@ -289,15 +236,64 @@ public class MessageSystem {
                     }
                     // add message
                     chatManager.addMessageToChat(sender, contactID, context);
-                    output.messageSent();
-                }
-                else {
+                    output.messageSent();*///delete this if it works
+                } else {
                     output.invalidInputSelection();
                 }
             }
         }
         saveState();
     }
+
+    public void singleUserMessageHelper(String sender) {
+        int role = userType(sender);
+        ArrayList<String> contactList;
+        if (role == 1) {
+            contactList = organizerManager.contactList(sender);
+        } else if (role == 2) {
+            contactList = attendeeManager.contactList(sender);
+        } else {
+            contactList = speakerManager.contactList(sender);
+        }
+        if (contactList.size() == 0) {
+            output.youHaveNoContacts();
+            return;
+        }
+        //shows user their contact list
+        output.promptRecipient(contactList, false);
+        //tells them to choose 1 contact
+        int personNumber;
+        try {
+            personNumber = Integer.parseInt(input.getKeyboardInput());
+        } catch (NumberFormatException e) {
+            personNumber = -1;
+        }
+        while (!(0 <= personNumber && personNumber <= contactList.size())) {
+            output.promptRecipient(contactList, true);
+            try {
+                personNumber = Integer.parseInt(input.getKeyboardInput());
+            } catch (NumberFormatException e) {
+                personNumber = -1;
+            }
+        }
+        if (personNumber == 0) {
+            return;
+        }
+        String contactID = contactList.get(personNumber - 1);
+        Chat conversation = getChat(sender, contactID);
+        //prints the chat of the user
+        output.printChat(conversation);
+        //ask user to type a message
+        output.promptContext();
+        String context = input.getKeyboardInput();
+        if (context.equals("0")) {
+            return;
+        }
+        // add message
+        chatManager.addMessageToChat(sender, contactID, context);
+        output.messageSent();
+    }
+
 
     private void saveState() throws IOException {
         //save the state back in!!!
@@ -310,7 +306,7 @@ public class MessageSystem {
 
     }
 
-    public void viewContacts(String id){
+    public void viewContacts(String id) {
         //view all contacts of user
         chatManager.getContactsWithChat(id);
     }
@@ -334,64 +330,52 @@ public class MessageSystem {
         }
     }*/
 
-
-    // Do we need delete chat?
-    /*public boolean deleteChat(String id1, String id2){
-        return chatManager.deleteChat(id1, id2);
-    }*/
-
-    public int userType(String id){
+    public int userType(String id) {
         // check current user status
         // 1 for attendee, 2 for speaker, 3 for organizer
-        if (organizerManager.userExist(id)){
+        if (organizerManager.userExist(id)) {
             return 1;
-        }
-        else if(attendeeManager.userExist(id)){
+        } else if (attendeeManager.userExist(id)) {
             return 2;
-        }
-        else if (speakerManager.userExist(id)){
+        } else if (speakerManager.userExist(id)) {
             return 3;
-        }
-        else {
+        } else {
             System.out.println("Current User DNE Error");
             return -1;
         }
     }
 
-    public void addContact (String current, String id){
+    public void addContact(String current, String id) {
         int current_role = userType(current);
         int id_role = userType(id);
         boolean success = true;
         // adding contact based on their authority
         // organizer
-        if (current_role == 1){
+        if (current_role == 1) {
             // adding contacts that are attendee, organizer, or speaker
-            if (id_role == 1 || id_role == 2 || id_role == 3){
-                if (!organizerManager.contactExists(current, id)){
-                    organizerManager.addContact(current, id);
-                }
+            if (!organizerManager.contactExists(current, id)) {
+                organizerManager.addContact(current, id);
+            } else {
+                success = false;
             }
-            else{success = false;}
         }
         // attendee
-        else if (current_role == 2){
-            if (id_role == 2 || id_role == 3){
-                if (!attendeeManager.contactExists(current, id)){
-                    attendeeManager.addContact(current, id);
-                }
+        else if (current_role == 2) {
+            if (!attendeeManager.contactExists(current, id)) {
+                attendeeManager.addContact(current, id);
+            } else {
+                success = false;
             }
-            else{success = false;}
         }
         // speaker
         else if (current_role == 3) {
-            if (id_role == 2){
-                if (!speakerManager.contactExists(current, id)){
-                    speakerManager.addContact(current, id);
-                }
+            if (!speakerManager.contactExists(current, id)) {
+                speakerManager.addContact(current, id);
+            } else {
+                success = false;
             }
-            else{success = false;}
         }
-        if (!success){
+        if (!success) {
             output.addContactFailed();
         }
     }

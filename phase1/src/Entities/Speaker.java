@@ -29,7 +29,6 @@ public class Speaker extends User implements Serializable {
         super(user_id, name, passwords);
         this.assignEvents = new ArrayList<>();
         this.createdOrganizer = organizer_id;
-        this.addContact(organizer_id);//the speaker can send message to the Organizer who creates this account
     }
 
     /**

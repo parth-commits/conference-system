@@ -132,6 +132,9 @@ public class OrganizerSystem {
                             else {
                                 speakerManager.addSpeaker(inputID,inputPass,inputName, userID);
                                 organizerManager.setAddSpeakerCreated(userID,inputID);
+                                messageSystem.addContact(inputID, userID);
+                                messageSystem.addContact(userID, inputID);
+                                chatManager.createChat(userID, inputID);
                                 output.ActionDone();
                                 untilCorrectNew = false;
                                 untilCorrect = false;
@@ -169,7 +172,12 @@ public class OrganizerSystem {
                 }
                 output.scheduleSpeakerSelectEvent(listOfEvents);                    //Gives list of events without a speaker
                 String eventID = input.getKeyboardInput();
-                int eventIDint = Integer.parseInt(eventID);
+                int eventIDint = -1;
+                try {
+                    eventIDint = Integer.parseInt(eventID);
+                }catch (Exception e){
+                    eventIDint = -2;
+                }
                 if (eventIDint==0){                                                 //If the user wishes to return to the previous menu, they press 0. Exit loop.
                     loopVariable=false;
                 }
@@ -183,7 +191,7 @@ public class OrganizerSystem {
                         }
                         else if (speakerManager.userExist(speakerID)){                                   //if speaker exists
                             ArrayList<Integer> listOfEnrolledEventIDs = speakerManager.getSpeaker(speakerID).getAssignEvents(); //gets list of eventid's this speaker is talking at
-                            Date newEventDateTime = eventManager.getEvent(eventIDint).getTime();         //gets the time of this new event
+                            Date newEventDateTime = listOfEvents.get(eventIDint-1).getTime();         //gets the time of this new event
                             boolean speakerBusy = false;
                             for (Integer event: listOfEnrolledEventIDs){                                 // gets time of every event this speaker is talking at.
                                 Date existingEventTime= eventManager.getEvent(event).getTime();
@@ -232,7 +240,7 @@ public class OrganizerSystem {
                     output.createEnterTime();
                     String inputTime = input.getKeyboardInput();
                     if (verifyDateTimeEntered(inputTime)){                                //they entered a valid date time
-                        SimpleDateFormat formatter = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         Date d1 = formatter.parse(inputTime);
                         ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1);
                         if (availableRooms.isEmpty()){
@@ -299,7 +307,7 @@ public class OrganizerSystem {
                         String eventLocation = eventManager.getLocation(eventID);
                         Date eventTime = eventManager.getTime(eventID);
                         roomManager.removeEventFromRoom(eventLocation,eventID,eventTime);      //the room no longer holds this event at that time.
-                        eventManager.cancelEvent(eventID);                                     //removes from list of events
+
                         organizerManager.setDeleteEventCreated(userID,eventID);                //removes event from the list of events this organizer has created
                         ArrayList<String> listofAttendees = eventManager.getEventAttendees(eventID);
                         for (String attendeeID: listofAttendees){                                   //removes this event from all attendees list of attending events
@@ -314,6 +322,7 @@ public class OrganizerSystem {
                             String speakerID = eventManager.getSpeakerID(eventID);
                             speakerManager.removeEvent(eventID, speakerID);
                         }
+                        eventManager.cancelEvent(eventID);                                     //removes from list of events
                         output.ActionDone();
                         validEventSelected = true;
                         createDelete = true;
@@ -335,7 +344,65 @@ public class OrganizerSystem {
     //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't returns false,
     //and we get the user to re-enter the date.
     private boolean verifyDateTimeEntered(String date){
-        SimpleDateFormat formatter = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date currentDateTime = new Date();                  //current dateandtime
+        //checks if the string date provided fits the format and is after the current date. else, returns false. HOWCOME .BEFORE IS IGNORED?
+        Date d1;
+        try
+        {
+            d1 = formatter.parse(date);
+        }
+        catch (ParseException e) {
+            return false;
+        }
+
+        if (currentDateTime.after(d1)){
+            return false;
+        }
+        SimpleDateFormat formatter2 = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
+        String day1 = formatter2.format(d1).substring(0,1);
+        if (day1.equals("S")){
+            return false;
+        }
+        //if the month isn't between 01-12, return false
+        String month = date.substring(3,5);
+        if (!month.matches("01|02|03|04|05|06|07|08|09|10|11|12")){
+            return false;
+        }
+        //if the day is greater than 31 in months with at max 31 days, return false
+        String day = date.substring(0,2);
+        int dayInt = Integer.parseInt(day);
+        if (month.matches("01|03|05|07|08|10|12")){
+            if (0>dayInt || dayInt>31){
+                return false;
+            }
+        }
+        //if the month is feb, and date is greater than 28, return false
+        if (month.equals("02")){
+            if(0>dayInt || dayInt>28){
+                return false;
+            }
+        }
+        //if the month has at max 30 days, and they entered something more, return false.
+        if (month.matches("04|06|09|11")){
+            if (0>dayInt || dayInt>30){
+                return false;
+            }
+        }
+        //checks if hours is between 09-16
+        String hour = date.substring(11,13);
+        if (!hour.matches("09|10|11|12|13|14|15|16")){
+            return false;
+        }
+
+        //checks if minutes and seconds are both 00
+        String minutes = date.substring(14,16);
+        String seconds = date.substring(17,19);
+        if(!minutes.equals("00")||!seconds.equals("00")){
+            return false;
+        }
+        return true;
+        /*SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
         Date currentDateTime = new Date();                  //current dateandtime
         //checks if the string date provided fits the format and is after the current date. else, returns false. HOWCOME .BEFORE IS IGNORED?
         Date d1;
@@ -348,6 +415,11 @@ public class OrganizerSystem {
         }
 
         if (currentDateTime.after(d1)){
+            return false;
+        }
+        SimpleDateFormat formatter2 = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
+        String day1 = formatter2.format(d1).substring(0,1);
+        if (day1.equals("S")){
             return false;
         }
         //if the month isn't between 01-12, return false
@@ -391,7 +463,7 @@ public class OrganizerSystem {
         if (!dayoftheweek.matches("MON|TUE|WED|THU|FRI")){
             return false;
         }
-        return true;
+        return true;*/
     }
 
 

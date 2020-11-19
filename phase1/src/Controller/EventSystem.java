@@ -129,7 +129,13 @@ public class EventSystem {
             for (Event event :listOfEvents){
                 String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
                         + "Time: " + event.getTime() + "\n"
-                        + "Attendees: " + attendeeManager.getAttendee(event.getAttendees().toString());
+                        + "Attendees: ";
+                if (attendeeManager.getAttendee(event.getAttendees().toString()) != null){
+                    schedule += attendeeManager.getAttendee(event.getAttendees().toString());
+                }
+                else {
+                    schedule += "There are no attendees yet!";
+                }
                 listOfEventSchedule.add(schedule);
             }
             output.eventsSpeaker(listOfEventSchedule);

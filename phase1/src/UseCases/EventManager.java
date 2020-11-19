@@ -175,7 +175,12 @@ public class EventManager implements Serializable{
      * @return ArrayList </String> a list of all attendees
      */
     public ArrayList<String> getEventAttendees(int eventID){
-        return getEvent(eventID).getAttendees();
+        if (getEvent(eventID).getAttendees() != null){
+            return getEvent(eventID).getAttendees();
+        }
+        else {
+            return new ArrayList<>();
+        }
     }
 
     /**

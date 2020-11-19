@@ -228,10 +228,12 @@ public class TextPresenter {
     public void chatDNE(){ System.out.println("The chat doesn't exist."); }
 
     public void printChat(Chat chat){
-        ArrayList<Message> messages = chat.getMessages();
-        for (Message m:messages){
-            System.out.println(m);
-            //System.out.println(m.getSender()+": "+m.getContext());
+        if (chat.getMessages()!= null) {
+            ArrayList<Message> messages = chat.getMessages();
+            for (Message m : messages) {
+                System.out.println(m);
+                //System.out.println(m.getSender()+": "+m.getContext());
+            }
         }
     }
 
@@ -352,8 +354,7 @@ public class TextPresenter {
     public void joinDeleteEventSelector(ArrayList<Event> listOfEvents){
         System.out.println("Please select one of the following events\n");
         for (int i=1; i<listOfEvents.size()+1; i++){
-            String tempstr = Integer.toString(i);
-            System.out.println("\t" + tempstr + " " + listOfEvents.get(i).getTitle());
+            System.out.println("\t" + i + " " + listOfEvents.get(i-1).getTitle());
 
         }
         System.out.println("\nTo return to the previous menu please press 0");
