@@ -1,18 +1,27 @@
 package Entities;
 import java.io.Serializable;
 import java.util.ArrayList;
-public class Chat implements Serializable {
 
+/**
+ * The Chat program implements an application that simply records messages between two users.
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
+
+public class Chat implements Serializable {
     //id of one of the person
     private String id1;
-
-
     //id of the other person
     private String id2;
-
     //list of messages between the 2 people. In ascending order, meaning that the first message is the oldest one
     private ArrayList<Message> messages;
 
+    /**
+     * Constructor
+     * @param id1
+     * @param id2
+     */
     public Chat(String id1, String id2){
         this.id1 = id1;
         this.id2 = id2;

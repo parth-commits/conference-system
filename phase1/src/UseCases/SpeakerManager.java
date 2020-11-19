@@ -6,7 +6,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-/** The SpeakerManager program implements an application that records all speakers from Speaker and the contact list
+/**
+ * The SpeakerManager program implements an application that records all speakers from Speaker and the contact list
  * and verify LogIn. The users in the contact list can be added or removed.
  * @author Group_0112
  * @version 1.0
@@ -16,15 +17,16 @@ import java.util.Hashtable;
 public class SpeakerManager implements Serializable{
     private Hashtable<String, Speaker> tableOfSpeakers;
 
-    /** Constructor
+    /**
+     * Constructor
      * implements a empty Hashable for recording Speakers later on.
      */
     public SpeakerManager (){
         tableOfSpeakers = new Hashtable<>();
     }
 
-    /** Add a Speaker to this SpeakerManager by user_id, passwords, name, organizerID.
-     *
+    /**
+     * Add a Speaker to this SpeakerManager by user_id, passwords, name, organizerID.
      * @param user_id the user id of this user. User id is an unique integer for each user
      * @param passwords the registered passwords of this user
      * @param name the registered name of this user
@@ -35,8 +37,8 @@ public class SpeakerManager implements Serializable{
         tableOfSpeakers.put(newSpeaker.getUser_id(), newSpeaker);
     }
 
-    /**Verify if the LogIn is valid.
-     *
+    /**
+     * Verify if the LogIn is valid.
      * @param inputUserId the user_id that user enter to the keyboard
      * @param inputUserPassword the password that user enter to the keyboard
      * @return Boolean return true if LogIn successfully, otherwise returns false
@@ -49,8 +51,8 @@ public class SpeakerManager implements Serializable{
     }
 
 
-    /** Returns a list of contacts of the given user by it's user_id.
-     *
+    /**
+     * Returns a list of contacts of the given user by it's user_id.
      * @param userID the user id of this user
      * @return ArrayList returns a list of contacts of the given user
      */
@@ -58,24 +60,24 @@ public class SpeakerManager implements Serializable{
         return getSpeaker(userID).getContacts();
     }
 
-    /** Returns a list of user_ids of all Speakers in SpeakerManager.
-     *
+    /**
+     * Returns a list of user_ids of all Speakers in SpeakerManager.
      * @return ArrayList a list list of user_ids
      */
     public ArrayList<String> getUserIDs(){
         return new ArrayList<String>(tableOfSpeakers.keySet());
     }
 
-    /** Check if the speaker with its given user_id is in SpeakerManager.
-     *
+    /**
+     * Check if the speaker with its given user_id is in SpeakerManager.
      * @param userId the user id of this speaker
      * @return boolean return true if SpeakerManager contains this speaker
      */
     public boolean userExist(String userId){ return tableOfSpeakers.containsKey(userId);
     }
 
-    /** Returns a speaker refer to it's given user_id.
-     *
+    /**
+     * Returns a speaker refer to it's given user_id.
      * @param userId the user id of speaker
      * @return Speaker the speaker refer to the given user_id
      */
@@ -83,8 +85,8 @@ public class SpeakerManager implements Serializable{
         return tableOfSpeakers.get(userId);
     }
 
-    /** Assign an event to a speaker with its given user_id.
-     *
+    /**
+     * Assign an event to a speaker with its given user_id.
      * @param EventId the event id of the event which is assigned to speaker
      * @param userId the user id of this speaker
      */
@@ -93,8 +95,8 @@ public class SpeakerManager implements Serializable{
         getSpeaker(userId).setAssignEvent(EventId);
     }
 
-    /** Cancel the assigned event from a speaker with its given user_id.
-     *
+    /**
+     * Cancel the assigned event from a speaker with its given user_id.
      * @param EventId the event id of the event which is assigned to speaker
      * @param userId the user id of this speaker
      */
@@ -102,8 +104,8 @@ public class SpeakerManager implements Serializable{
         getSpeaker(userId).removeAssignEvent(EventId);
     }
 
-    /** Check if this speaker has the contact of another user with its given user_id.
-     *
+    /**
+     * Check if this speaker has the contact of another user with its given user_id.
      * @param userId the user id of this speaker
      * @param otherUserId the user id which needs to be checked
      * @return boolean returns true if otherUserId is in the ContactList of this speaker.
@@ -112,8 +114,8 @@ public class SpeakerManager implements Serializable{
         return getSpeaker(userId).checkContact(otherUserId);
     }
 
-    /** Add an user with its given user_id to this speaker's ContactList.
-     *
+    /**
+     * Add an user with its given user_id to this speaker's ContactList.
      * @param userId the user id of this speaker
      * @param otherUserId the user id which would be added
      */
@@ -122,8 +124,8 @@ public class SpeakerManager implements Serializable{
         getSpeaker(userId).addContact(otherUserId);
     }
 
-    /** Remove an user with its given user_id from this speaker's ContactList.
-     *
+    /**
+     * Remove an user with its given user_id from this speaker's ContactList.
      * @param userId the user id of this speaker
      * @param otherUserId the user id which would be removed
      */
@@ -132,8 +134,8 @@ public class SpeakerManager implements Serializable{
         getSpeaker(userId).removeContact(otherUserId);
     }
 
-    /** Returns an ArrayList of all AssignEvents.
-     *
+    /**
+     * Returns an ArrayList of all AssignEvents.
      * @param userId the user id of this speaker
      * @return ArrayList a list of AssignEvents
      */
@@ -141,8 +143,8 @@ public class SpeakerManager implements Serializable{
         return getSpeaker(userId).getAssignEvents();
     }
 
-    /** Save the current state in serialized files.
-     *
+    /**
+     * Save the current state in serialized files.
      * @throws IOException throw IOException to avoid the Errors might occur
      */
     public void saveState() throws IOException{
@@ -155,8 +157,8 @@ public class SpeakerManager implements Serializable{
         output.close();
     }
 
-    /** Import the state which saved in serialized files.
-     *
+    /**
+     * Import the state which saved in serialized files.
      * @return SpeakerManager returns an implement of this use case
      */
     public SpeakerManager importState(){
