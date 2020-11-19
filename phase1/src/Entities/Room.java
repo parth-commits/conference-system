@@ -65,4 +65,9 @@ public class Room implements Serializable {
         //otherwise return false, ie. the event wasnt deleted from the time
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Room{ capacity=" + capacity + " | roomLocation='" + roomLocation +  " \n\t\t| bookedTime=" + bookedTime + '}';
+    }
 }

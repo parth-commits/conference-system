@@ -31,4 +31,6 @@ public class Organizer extends Attendee implements Serializable {
     public boolean deleteEventCreated(Integer event_id){
         return this.eventsCreated.remove(event_id);
     }
+
+
 }

@@ -35,7 +35,7 @@ public class OrganizerManager implements Serializable{
         return tableOfOrganizers.containsKey(userId);
     }
 
-    private Organizer getOrganizer(String userId){
+    public Organizer getOrganizer(String userId){
         return tableOfOrganizers.get(userId);
     }
 
