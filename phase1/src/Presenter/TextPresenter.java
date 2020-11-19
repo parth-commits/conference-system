@@ -69,11 +69,38 @@ public class TextPresenter {
         System.out.println("Please enter 0 to return to the previous menu");
     }
 
-    public void Events(ArrayList<String> listOfEventsSchedule){
-    for (String event: listOfEventsSchedule){
-        System.out.println(event);
-        System.out.println();
+    public void eventsSpeaker(ArrayList<String> listOfEventsSchedule){
+        if (listOfEventsSchedule.isEmpty()){
+            System.out.println("You currently have no assigned talks. ");
+        }
+        else{
+            for (String event: listOfEventsSchedule){
+                System.out.println(event);
+                System.out.println();
+            }
+        }
     }
+    public void eventsAttendeeAndOrganizer(ArrayList<String> listOfEventsSchedule){
+        if (listOfEventsSchedule.isEmpty()){
+            System.out.println("You are currently not attending any events.");
+        }
+        else {
+            for (String event: listOfEventsSchedule){
+                System.out.println(event);
+                System.out.println();
+            }
+        }
+    }
+    public void eventsCheckAll(ArrayList<String> listOfEventsSchedule){
+        if (listOfEventsSchedule.isEmpty()){
+            System.out.println("There are currently no events being held in this conference.");
+        }
+        else {
+            for (String event: listOfEventsSchedule){
+                System.out.println(event);
+                System.out.println();
+            }
+        }
     }
 
     public static void main(String[] args){
