@@ -3,14 +3,26 @@ package Entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Organizer extends Attendee implements Serializable {
+/**
+ * Organizer entity implements an application that simply records users, the list
+ * of event organizer created.
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
 
+public class Organizer extends Attendee implements Serializable {
     //list of all speakers created
     private ArrayList<String> speakersCreated;
-
     //list of all events created by this Organzier
     private ArrayList<Integer> eventsCreated;
 
+    /**
+     * Constructor
+     * @param user_id
+     * @param name
+     * @param passwords
+     */
     public Organizer(String user_id, String name, String passwords) {
         super(user_id, name, passwords);
         this.speakersCreated = new ArrayList<>();
