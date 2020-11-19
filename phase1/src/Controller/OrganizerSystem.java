@@ -284,42 +284,42 @@ public class OrganizerSystem {
                     }
                 }
             }
-            else if (createDeleteInt==2){                                               //Deletes Event
-                boolean validEvent = false;
-                while(!validEvent){
-                    output.deleteGetEventId();
-                    String event = input.getKeyboardInput();
-
-                    int eventInt = Integer.parseInt(event);
-                    ArrayList<Integer> listOfExistingEventIds = eventManager.getListOfEventIDs();
-                    if (listOfExistingEventIds.contains(eventInt)){                             //if the event exists
-                        String eventLocation = eventManager.getLocation(eventInt);
-                        Date eventTime = eventManager.getTime(eventInt);
-                        roomManager.removeEventFromRoom(eventLocation,eventInt,eventTime);      //the room no longer holds this event at that time.
-                        eventManager.cancelEvent(eventInt);                                     //removes from list of events
-                        organizerManager.setDeleteEventCreated(userID,eventInt);                //removes event from the list of events this organizer has created
-                        ArrayList<String> listofAttendees = eventManager.getEventAttendees(eventInt);
+            else if (createDeleteInt==2){                                                   //Deletes Event
+                boolean validEventSelected=false;
+                while (!validEventSelected){
+                    ArrayList<Event> events = eventManager.getListOfEvents();
+                    output.joinDeleteEventSelector(events);
+                    String eventSelected = input.getKeyboardInput();
+                    int eventSelectedInt = Integer.parseInt(eventSelected);
+                    if(eventSelectedInt==0){
+                        validEventSelected = true;
+                    }
+                    else if(0<eventSelectedInt && eventSelectedInt<=events.size()){
+                        int eventID = events.get(eventSelectedInt-1).getID();
+                        String eventLocation = eventManager.getLocation(eventID);
+                        Date eventTime = eventManager.getTime(eventID);
+                        roomManager.removeEventFromRoom(eventLocation,eventID,eventTime);      //the room no longer holds this event at that time.
+                        eventManager.cancelEvent(eventID);                                     //removes from list of events
+                        organizerManager.setDeleteEventCreated(userID,eventID);                //removes event from the list of events this organizer has created
+                        ArrayList<String> listofAttendees = eventManager.getEventAttendees(eventID);
                         for (String attendeeID: listofAttendees){                                   //removes this event from all attendees list of attending events
                             if (organizerManager.userExist(attendeeID)){
-                                organizerManager.removeEvent(eventInt, attendeeID);
+                                organizerManager.removeEvent(eventID, attendeeID);
                             }
                             else if (attendeeManager.userExist(attendeeID)){
-                                attendeeManager.removeEvent(eventInt, attendeeID);
+                                attendeeManager.removeEvent(eventID, attendeeID);
                             }
                         }
-                        if (eventManager.hasSpeaker(eventInt)){                                 //if this event has a speaker, delete this event from that speakers list of assigned events.
-                            String speakerID = eventManager.getSpeakerID(eventInt);
-                            speakerManager.removeEvent(eventInt, speakerID);
+                        if (eventManager.hasSpeaker(eventID)){                                 //if this event has a speaker, delete this event from that speakers list of assigned events.
+                            String speakerID = eventManager.getSpeakerID(eventID);
+                            speakerManager.removeEvent(eventID, speakerID);
                         }
                         output.ActionDone();
-                        validEvent = true;
+                        validEventSelected = true;
                         createDelete = true;
                     }
-                    else if (eventInt==0){
-                        validEvent = true;
-                    }
-                    else{                                                                       //either event id does not exist, or they typed something random
-                        output.deleteInvalidEventId();
+                    else{
+                        output.invalidInputSelection();
                     }
                 }
             }
@@ -327,11 +327,9 @@ public class OrganizerSystem {
                 createDelete=true;
             }
             else{
-                output.msgOptionInvalid();          //MAKE SURE THIS MESSAGE STAYS ON FOR A COUPLE SECONDS
+                output.invalidInputSelection();         //MAKE SURE THIS MESSAGE STAYS ON FOR A COUPLE SECONDS
             }
-
         }
-
     }
 
     //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't returns false,
