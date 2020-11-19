@@ -5,21 +5,38 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/** The AttendeeManager class implements
+ * @author group0112
+ * @version 1.0
+ * @since November 16th, 2020
+ */
+
 public class  AttendeeManager implements Serializable{
 
-    //dictionary of all attendees
+    //this dictionary contains all attendees in the system
     private Hashtable<String, Attendee> tableOfAttendees;
 
-    //constructor
+    /** Constructor that initializes a hashtable to contains all attendees. */
     public AttendeeManager(){tableOfAttendees = new Hashtable<>();}
 
-    //adds an attendee
+    /** Adds an attendee to the hashtable of all attendees.
+     *
+     * @param user_id the id of user that we wished to add
+     * @param username the name of the user that we wished to add
+     * @param passwords the passwords of the user that we wished to add
+     */
     public void addAttendee(String user_id, String username, String passwords){
         Attendee newAttendee = new Attendee(user_id, username, passwords);
         tableOfAttendees.put(newAttendee.getUser_id(), newAttendee);
     }
 
-    //verifies the login given the inputted credentials. true if the login info is correct, false otherwise
+    /** Verifies attendee's login based on the inputted credentials. The user will be logged in if the
+     * inputted information is correct.
+     *
+     * @param inputUserId the user id entered by the user
+     * @param inputUserPassword the password entered by the user
+     * @return boolean return true when the inputted credential is correct, return false otherwise
+     */
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
             return tableOfAttendees.get(inputUserId).getPasswords().equals(inputUserPassword);
@@ -27,26 +44,52 @@ public class  AttendeeManager implements Serializable{
         return false;
     }
 
-    //gets the list of all userids
+
+    /** Gets the arraylist of all user ids.
+     *
+     * @return ArrayList </String> that contains all user ids.
+     */
     public ArrayList<String> getUserIDs(){
         return new ArrayList<String>(tableOfAttendees.keySet());
     }
 
-    //checks if the user exists
+    /** Checks if a particular user exists in the arrarylist of attendees.
+     *
+     * @param userId the id of user that we'd like to look into
+     * @return boolean return true if the user already registed in the system,
+     * return false otherwise
+     */
     public boolean userExist(String userId){
         return tableOfAttendees.containsKey(userId);
     }
 
-    //returns the attendee
+    /** Returns a particular attendee.
+     *
+     * @param userId the id of user that we'd like to return
+     * @return Attendee
+     * @see Attendee
+     */
     public Attendee getAttendee(String userId){
         return tableOfAttendees.get(userId);
     }
 
+    /** Adds an event to the an attendee's event list.
+     *
+     * @param EventId the id of event that we wished to add
+     * @param userId the id of user who wants to perform this task
+     */
     public void addEventToAttendee (Integer EventId, String userId){
         getAttendee(userId).addEvent(EventId);
 
     }
 
+    /** Checks if the user already signed up for an event.
+     *
+     * @param EventId the id of event that the user wants to sign up
+     * @param userId the id of user who wants to perform this task
+     * @return boolean return true if the user already signed up for this event,
+     * return false otherwise
+     */
     public boolean SignedUp(Integer EventId, String userId) {
         if(getAttendee(userId).getSignedUpEvents().contains(EventId)){
             return true;
@@ -54,34 +97,69 @@ public class  AttendeeManager implements Serializable{
         return false;
     }
 
+    /** Removes an user from the event.
+     *
+     * @param EventId the id of event that the user wants to remove
+     * @param userId the id of user who wants to perform this task
+     */
     public void removeEvent(Integer EventId, String userId) {
         getAttendee(userId).removeEvent(EventId);
     }
 
-    //check if the contact already exists
+    /** Checks if the contact already exists.
+     *
+     * @param userId the id of user who wants to perform this task
+     * @param otherUserId the id of contact that the user wants to look into
+     * @return boolean return true if the contact exists in the contact list,
+     * return false otherwise
+     */
     public boolean contactExists(String userId, String otherUserId){
         return getAttendee(userId).checkContact(otherUserId);
     }
 
+    /** Adds a contact to the user's contact list
+     *
+     * @param userId the id of user who wants to perform this task
+     * @param otherUserId the id of contact that the user wants to add
+     */
     public void addContact (String userId, String otherUserId){
         // assume both users exist (checked in controller) and userid is added to otherUserID's contacts in controller as well.
         getAttendee(userId).addContact(otherUserId);
         }
 
+    /** Removes a contact from the user's contact list
+     *
+     * @param userId the id of user who wants to perform this task
+     * @param otherUserId the id of contact that the user wants to remove
+     */
     public void removeContact (String userId, String otherUserId){
         //assume both users exist (checked in controller) and userid is removed from otherUserID's contacts in controller as well.
         getAttendee(userId).removeContact(otherUserId);
     }
 
+    /** Gets the signed-up event list of an user.
+     *
+     * @param userId the id of user who wants to perform this task
+     * @return ArrayList </Integer> of all event ids
+     */
     public ArrayList<Integer> getSignedUpEvents (String userId){
         return getAttendee(userId).getSignedUpEvents();
     }
 
-    //returns a list of contacts of the given user
+
+    /** Gets the contact list of an user.
+     *
+     * @param userID the id of user who wants to perform this task
+     * @return ArrayList </String> of all contact ids
+     */
     public ArrayList<String> contactList(String userID){
         return getAttendee(userID).getContacts();
     }
 
+    /**Save states of attendee manager
+     *
+     * @throws IOException if
+     */
     public void saveState() throws IOException {
         OutputStream file = new FileOutputStream("phase1/src/AttendeeManager.ser");
         OutputStream buffer = new BufferedOutputStream(file);
@@ -91,7 +169,10 @@ public class  AttendeeManager implements Serializable{
         output.close();
     }
 
-
+    /** Import ser files.
+     *
+     * @return AttendeeManager
+     */
     public AttendeeManager importState() {
         try {
             InputStream file = new FileInputStream("phase1/src/AttendeeManager.ser");
