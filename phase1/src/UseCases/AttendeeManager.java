@@ -5,7 +5,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-/** The AttendeeManager class implements
+/**
+ * The AttendeeManager class implements
  * @author group0112
  * @version 1.0
  * @since November 16th, 2020
@@ -16,11 +17,13 @@ public class  AttendeeManager implements Serializable{
     //this dictionary contains all attendees in the system
     private Hashtable<String, Attendee> tableOfAttendees;
 
-    /** Constructor that initializes a hashtable to contains all attendees. */
+    /**
+     * Constructor that initializes a hashtable to contains all attendees.
+     */
     public AttendeeManager(){tableOfAttendees = new Hashtable<>();}
 
-    /** Adds an attendee to the hashtable of all attendees.
-     *
+    /**
+     * Adds an attendee to the hashtable of all attendees.
      * @param user_id the id of user that we wished to add
      * @param username the name of the user that we wished to add
      * @param passwords the passwords of the user that we wished to add
@@ -30,9 +33,9 @@ public class  AttendeeManager implements Serializable{
         tableOfAttendees.put(newAttendee.getUser_id(), newAttendee);
     }
 
-    /** Verifies attendee's login based on the inputted credentials. The user will be logged in if the
+    /**
+     * Verifies attendee's login based on the inputted credentials. The user will be logged in if the
      * inputted information is correct.
-     *
      * @param inputUserId the user id entered by the user
      * @param inputUserPassword the password entered by the user
      * @return boolean return true when the inputted credential is correct, return false otherwise
@@ -45,16 +48,16 @@ public class  AttendeeManager implements Serializable{
     }
 
 
-    /** Gets the arraylist of all user ids.
-     *
+    /**
+     * Gets the arraylist of all user ids.
      * @return ArrayList </String> that contains all user ids.
      */
     public ArrayList<String> getUserIDs(){
         return new ArrayList<String>(tableOfAttendees.keySet());
     }
 
-    /** Checks if a particular user exists in the arrarylist of attendees.
-     *
+    /**
+     * Checks if a particular user exists in the arrarylist of attendees.
      * @param userId the id of user that we'd like to look into
      * @return boolean return true if the user already registed in the system,
      * return false otherwise
@@ -63,8 +66,8 @@ public class  AttendeeManager implements Serializable{
         return tableOfAttendees.containsKey(userId);
     }
 
-    /** Returns a particular attendee.
-     *
+    /**
+     * Returns a particular attendee.
      * @param userId the id of user that we'd like to return
      * @return Attendee
      * @see Attendee
@@ -73,8 +76,8 @@ public class  AttendeeManager implements Serializable{
         return tableOfAttendees.get(userId);
     }
 
-    /** Adds an event to the an attendee's event list.
-     *
+    /**
+     * Adds an event to the an attendee's event list.
      * @param EventId the id of event that we wished to add
      * @param userId the id of user who wants to perform this task
      */
@@ -83,8 +86,8 @@ public class  AttendeeManager implements Serializable{
 
     }
 
-    /** Checks if the user already signed up for an event.
-     *
+    /**
+     * Checks if the user already signed up for an event.
      * @param EventId the id of event that the user wants to sign up
      * @param userId the id of user who wants to perform this task
      * @return boolean return true if the user already signed up for this event,
@@ -97,8 +100,8 @@ public class  AttendeeManager implements Serializable{
         return false;
     }
 
-    /** Removes an user from the event.
-     *
+    /**
+     * Removes an user from the event.
      * @param EventId the id of event that the user wants to remove
      * @param userId the id of user who wants to perform this task
      */
@@ -106,8 +109,8 @@ public class  AttendeeManager implements Serializable{
         getAttendee(userId).removeEvent(EventId);
     }
 
-    /** Checks if the contact already exists.
-     *
+    /**
+     * Checks if the contact already exists.
      * @param userId the id of user who wants to perform this task
      * @param otherUserId the id of contact that the user wants to look into
      * @return boolean return true if the contact exists in the contact list,
@@ -117,8 +120,8 @@ public class  AttendeeManager implements Serializable{
         return getAttendee(userId).checkContact(otherUserId);
     }
 
-    /** Adds a contact to the user's contact list
-     *
+    /**
+     * Adds a contact to the user's contact list
      * @param userId the id of user who wants to perform this task
      * @param otherUserId the id of contact that the user wants to add
      */
@@ -127,8 +130,8 @@ public class  AttendeeManager implements Serializable{
         getAttendee(userId).addContact(otherUserId);
         }
 
-    /** Removes a contact from the user's contact list
-     *
+    /**
+     * Removes a contact from the user's contact list
      * @param userId the id of user who wants to perform this task
      * @param otherUserId the id of contact that the user wants to remove
      */
@@ -137,8 +140,8 @@ public class  AttendeeManager implements Serializable{
         getAttendee(userId).removeContact(otherUserId);
     }
 
-    /** Gets the signed-up event list of an user.
-     *
+    /**
+     * Gets the signed-up event list of an user.
      * @param userId the id of user who wants to perform this task
      * @return ArrayList </Integer> of all event ids
      */
@@ -147,8 +150,8 @@ public class  AttendeeManager implements Serializable{
     }
 
 
-    /** Gets the contact list of an user.
-     *
+    /**
+     * Gets the contact list of an user.
      * @param userID the id of user who wants to perform this task
      * @return ArrayList </String> of all contact ids
      */
@@ -156,8 +159,8 @@ public class  AttendeeManager implements Serializable{
         return getAttendee(userID).getContacts();
     }
 
-    /**Save states of attendee manager
-     *
+    /**
+     * Save states of attendee manager
      * @throws IOException if
      */
     public void saveState() throws IOException {
@@ -169,8 +172,8 @@ public class  AttendeeManager implements Serializable{
         output.close();
     }
 
-    /** Import ser files.
-     *
+    /**
+     * Import ser files.
      * @return AttendeeManager
      */
     public AttendeeManager importState() {
