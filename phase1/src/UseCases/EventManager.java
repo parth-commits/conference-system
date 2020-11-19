@@ -6,10 +6,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
-/** The EventManager class stores all events in an arraylist,
+/**
+ * The EventManager class stores all events in an arraylist,
  * and implements various of actions that are relevant to the Event object.
- * Actions including
-
+ * Actions includes
  * @author Group_0112
  * @version 1.0
  * @since November 19th, 2020

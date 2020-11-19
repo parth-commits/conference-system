@@ -276,7 +276,7 @@ public class TextPresenter {
         System.out.println("\t5. Create Rooms\n");
         System.out.println("Regular Attendee Options:");
         System.out.println("\t6. Add/Remove contact");
-        System.out.println("\t7. Join/Cancel event");
+        System.out.println("\t7. Join/Leave event");
         System.out.println("\t8. See all Events");
         System.out.println("\t9. See Scheduled Events");
         System.out.println("\t10. LOGOUT");
@@ -341,7 +341,7 @@ public class TextPresenter {
     public void joinOrLeave(){
         System.out.println("Would you like to join or cancel this event?");
         System.out.println("1. Join");
-        System.out.println("2. Cancel");
+        System.out.println("2. Leave");
         System.out.println("If you would like to go back to the previous menu, please press 0");
     }
 

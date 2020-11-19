@@ -9,7 +9,6 @@ import java.util.Hashtable;
  * The AttendeeManager class stores all attendees in an arraylist, and implements various actions that
  * can be done for an attendee, including verifying login/ if user exists/ event sign-up/ if contact exists,
  * adding/removing events, adding/ removing contacts, and getting a list of signed-up event and contacts.
- *
  * @author Group_0112
  * @version 1.0
  * @since November 19th, 2020
@@ -41,7 +40,8 @@ public class  AttendeeManager implements Serializable{
      * inputted information is correct.
      * @param inputUserId the user id entered by the user
      * @param inputUserPassword the password entered by the user
-     * @return boolean return true when the inputted credential is correct, return false otherwise
+     * @return boolean returns true when the inputted credential is correct,
+     * returns false otherwise
      */
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
@@ -61,8 +61,8 @@ public class  AttendeeManager implements Serializable{
     /**
      * Checks if a particular user exists in the arraylist of attendees.
      * @param userId the id of user that we'd like to look into
-     * @return boolean return true if the user already registered in the system,
-     * return false otherwise
+     * @return boolean returns true if the user already registered in the system,
+     * returns false otherwise
      */
     public boolean userExist(String userId){
         return tableOfAttendees.containsKey(userId);
@@ -92,8 +92,8 @@ public class  AttendeeManager implements Serializable{
      * Checks if the user already signed up for an event.
      * @param EventId the id of event that the user wants to sign up
      * @param userId the id of user who wants to perform this task
-     * @return boolean return true if the user already signed up for this event,
-     * return false otherwise
+     * @return boolean returns true if the user already signed up for this event,
+     * returns false otherwise
      */
     public boolean SignedUp(Integer EventId, String userId) {
         if(getAttendee(userId).getSignedUpEvents().contains(EventId)){
@@ -115,8 +115,8 @@ public class  AttendeeManager implements Serializable{
      * Checks if the contact already exists.
      * @param userId the id of user who wants to perform this task
      * @param otherUserId the id of contact that the user wants to look into
-     * @return boolean return true if the contact exists in the contact list,
-     * return false otherwise
+     * @return boolean returns true if the contact exists in the contact list,
+     * returns false otherwise
      */
     public boolean contactExists(String userId, String otherUserId){
         return getAttendee(userId).checkContact(otherUserId);

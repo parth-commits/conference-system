@@ -4,7 +4,8 @@ import Entities.Chat;
 import java.io.*;
 import java.util.ArrayList;
 
-/** The ChatManager class stores all chats in an arraylist,
+/**
+ * The ChatManager class stores all chats in an arraylist,
  * and implements various actions that are relevant to the chats.
  * Actions include adding message, creating chats, verifying chats,
  * finding chats, finding contacts, and deleting chats.
@@ -53,8 +54,8 @@ public class ChatManager implements Serializable{
      * Checks if the chat already exists in the system.
      * @param id1 the id of user1
      * @param id2 the id of user2
-     * @return boolean return true if the chat exists,
-     * return false otherwise
+     * @return boolean returns true if the chat exists,
+     * returns false otherwise
      */
     public boolean chatExists(String id1, String id2){
         for (Chat chat : chats) {
