@@ -366,7 +366,12 @@ public class TextPresenter {
     public void invalidInputSelection(){
         System.out.println("Your input was invalid. Please try again.");
     }
-
+    public void userAlreadyInYourContacts(){
+        System.out.println("This person is already in your contacts. You can add someone else or return.");
+    }
+    public void userNotInYourContacts(){
+        System.out.println("This person is not in your contacts. You can remove someone else or return.");
+    }
     public void replyOrAutomessage(){
         System.out.println("Would you like to reply to a specific user or send an automatic message?");
         System.out.println("\t1. Automatic message");

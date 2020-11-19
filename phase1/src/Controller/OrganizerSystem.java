@@ -388,19 +388,25 @@ public class OrganizerSystem {
                         if (user.equals("0")) {
                             validUserID = true;
                         } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            organizerManager.addContact(userID, user);
-                            if (organizerManager.userExist(user)) {
-                                organizerManager.addContact(user, userID);
-                            } else if (attendeeManager.userExist(user)) {
-                                attendeeManager.addContact(user, userID);
-                            } else {
-                                speakerManager.addContact(user, userID);
+                            if (!organizerManager.contactExists(userID, user)){
+                                organizerManager.addContact(userID, user);
+                                if (organizerManager.userExist(user)) {
+                                    organizerManager.addContact(user, userID);
+                                } else if (attendeeManager.userExist(user)) {
+                                    attendeeManager.addContact(user, userID);
+                                } else {
+                                    speakerManager.addContact(user, userID);
+                                }
+                                chatManager.createChat(user, userID);
+                                validUserID = true;
+                                validAddRemove = true;
+                                goBack = true;
                             }
-                            chatManager.createChat(user, userID);
-                            validUserID = true;
-                            validAddRemove = true;
-                            goBack = true;
-                        } else {
+                            else {
+                                output.userAlreadyInYourContacts();
+                            }
+                        }
+                        else {
                             output.enterContactUserid(true);
                         }
                     }
@@ -412,19 +418,25 @@ public class OrganizerSystem {
                         if (user.equals("0")) {
                             validUserID = true;
                         } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            organizerManager.removeContact(userID, user);
-                            if (organizerManager.userExist(user)) {
-                                organizerManager.removeContact(user, userID);
-                            } else if (attendeeManager.userExist(user)) {
-                                attendeeManager.removeContact(user, userID);
-                            } else {
-                                speakerManager.removeContact(user, userID);
+                            if (organizerManager.contactExists(userID,user)){
+                                organizerManager.removeContact(userID, user);
+                                if (organizerManager.userExist(user)) {
+                                    organizerManager.removeContact(user, userID);
+                                } else if (attendeeManager.userExist(user)) {
+                                    attendeeManager.removeContact(user, userID);
+                                } else {
+                                    speakerManager.removeContact(user, userID);
+                                }
+                                chatManager.deleteChat(user, userID);
+                                validUserID = true;
+                                validAddRemove = true;
+                                goBack = true;
                             }
-                            chatManager.deleteChat(user, userID);
-                            validUserID = true;
-                            validAddRemove = true;
-                            goBack = true;
-                        } else {
+                            else{
+                                output.userNotInYourContacts();
+                            }
+                        }
+                        else {
                             output.enterContactUserid(true);
                         }
                     }
