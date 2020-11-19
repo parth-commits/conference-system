@@ -232,7 +232,7 @@ public class OrganizerSystem {
                     output.createEnterTime();
                     String inputTime = input.getKeyboardInput();
                     if (verifyDateTimeEntered(inputTime)){                                //they entered a valid date time
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+                        SimpleDateFormat formatter = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
                         Date d1 = formatter.parse(inputTime);
                         ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1);
                         if (availableRooms.isEmpty()){
@@ -279,7 +279,7 @@ public class OrganizerSystem {
                     else if (inputTime.equals("0")){
                         validTime = true;
                     }
-                    else{                                                                  //they enetered an invalid date time
+                    else{                                                                  //they entered an invalid date time
                         output.createEnterTimeInvalidTime();
                     }
                 }
@@ -335,7 +335,7 @@ public class OrganizerSystem {
     //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't returns false,
     //and we get the user to re-enter the date.
     private boolean verifyDateTimeEntered(String date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
         Date currentDateTime = new Date();                  //current dateandtime
         //checks if the string date provided fits the format and is after the current date. else, returns false. HOWCOME .BEFORE IS IGNORED?
         Date d1;
@@ -351,12 +351,12 @@ public class OrganizerSystem {
             return false;
         }
         //if the month isn't between 01-12, return false
-        String month = date.substring(3,6);
+        String month = date.substring(7,10);
         if (!month.matches("JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC")){
             return false;
         }
         //if the day is greater than 31 in months with at max 31 days, return false
-        String day = date.substring(0,2);
+        String day = date.substring(4,6);
         int dayInt = Integer.parseInt(day);
         if (month.matches("JAN|MAR|MAY|JUL|AUG|OCT|DEC")){
             if (0>dayInt || dayInt>31){
@@ -376,15 +376,19 @@ public class OrganizerSystem {
             }
         }
         //checks if hours is between 09-16
-        String hour = date.substring(12,14);
+        String hour = date.substring(16,18);
         if (!hour.matches("09|10|11|12|13|14|15|16")){
             return false;
         }
 
         //checks if minutes and seconds are both 00
-        String minutes = date.substring(15,17);
-        String seconds = date.substring(18,20);
+        String minutes = date.substring(19,21);
+        String seconds = date.substring(20,24);
         if(!minutes.equals("00")||!seconds.equals("00")){
+            return false;
+        }
+        String dayoftheweek = date.substring(0,4);
+        if (!dayoftheweek.matches("MON|TUE|WED|THU|FRI")){
             return false;
         }
         return true;
