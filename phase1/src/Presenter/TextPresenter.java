@@ -28,7 +28,7 @@ public class TextPresenter {
         System.out.println("\t1. See Events");
         System.out.println("\t2. Sign Up or Cancel an Event Signed Up for");
         System.out.println("\t3. Check Schedule for an Signed Up Event");
-        System.out.println("\t4. Add or Remove Attendee in Contact");
+        System.out.println("\t4. Add or Remove Contact");
         System.out.println("\t5. Message Other Users");
         System.out.println("\t6. LOGOUT");
         System.out.println("\t7. SHUTDOWN");
@@ -218,7 +218,7 @@ public class TextPresenter {
         System.out.println("yes/no");
     }
     public void promptContext(){
-        System.out.println("Please enter the message, or enter 'return' to cancel: ");
+        System.out.println("Please enter the message, or type 0 to cancel: ");
     }
 
     public void promptContextEvent(String title){
@@ -368,8 +368,8 @@ public class TextPresenter {
 
     public void createEnterTime(){
         System.out.println("Please enter a date and time for this new event. \nPlease note it must follow the following format:" +
-                " dd-mm-yyyy hh:mm:ss. \nThe hours must be in the 24 hour format and must be between 09 and 16, inclusive. \nSince all events start on the hour, mm and ss must be 00." +
-                " \nThe time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M. you would type '20-12-2020 13:00:00.'");
+                " dd-MMM-yyyy hh:mm:ss. \nEnter the first three letters of the month in CAPITALS.\nThe hours must be in the 24 hour format and must be between 09 and 16, inclusive. \nSince all events start on the hour, mm and ss must be 00." +
+                " \nThe time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M. you would type '20-DEC-2020 13:00:00.'");
         System.out.println("Please press 0 to return to the previous menu");
     }
 
@@ -412,6 +412,19 @@ public class TextPresenter {
         System.out.println("\t2. Reply to a specific user");
         System.out.println("\nPress 0 to return to the previous menu");
     }
-
-
+    public void pressAnyKeyToContinue(){
+        System.out.println("Please press any key to continue.");
+    }
+    public void messageSentToEveryone(){
+        System.out.println("Message was sent to all specified recipients!");
+    }
+    public void messageSent(){
+        System.out.println("Message sent!");
+    }
+    public void noAssignedEvents(){
+        System.out.println("You have no assigned events as of now.");
+    }
+    public void noSignedUpEvents(){
+        System.out.println("You have not signed up for any events so far.");
+    }
 }

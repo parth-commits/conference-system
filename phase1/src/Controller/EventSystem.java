@@ -35,13 +35,21 @@ public class EventSystem {
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
         for (Event event :listOfEvents){
             String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + event.getTime() + "Event ID: " + event.getID();
+                    + "Time: " + event.getTime() + "\n" + "Event ID: " + event.getID();
             if (eventManager.hasSpeaker(event.getID())){
                 schedule +=  "\n" + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
             }
             listOfEventSchedule.add(schedule);
         }
         output.eventsCheckAll(listOfEventSchedule);
+        boolean rtn = false;
+        while(!rtn){
+            output.pressAnyKeyToContinue();
+            String in = input.getKeyboardInput();
+            if (!in.equals("")){
+                rtn = true;
+            }
+        }
     }
 
     private void saveState() throws IOException {
@@ -88,29 +96,56 @@ public class EventSystem {
         for(Integer i: listOfEventsId){
             listOfEvents.add(eventManager.getEvent(i));
         }
-        for (Event event :listOfEvents){
-            String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + event.getTime() + "\n"
-                    + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
-            listOfEventSchedule.add(schedule);
+        if (!listOfEventsId.isEmpty()){
+            for (Event event :listOfEvents){
+                String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
+                        + "Time: " + event.getTime() + "\n"
+                        + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+                listOfEventSchedule.add(schedule);
+            }
+            output.eventsAttendeeAndOrganizer(listOfEventSchedule);
         }
-        output.eventsAttendeeAndOrganizer(listOfEventSchedule);
+        else{
+            output.noSignedUpEvents();
+        }
+        boolean rtn = false;
+        while(!rtn){
+            output.pressAnyKeyToContinue();
+            String in = input.getKeyboardInput();
+            if (!in.equals("")){
+                rtn = true;
+            }
+        }
     }
 
     public void checkAssignedEvent(String UserId){
         ArrayList<Event> listOfEvents = new ArrayList<>();
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
         ArrayList<Integer> listOfEventsId = speakerManager.getAssignedEvent(UserId);
-        for(Integer i: listOfEventsId){
-            listOfEvents.add(eventManager.getEvent(i));
+        if(!listOfEventsId.isEmpty()){
+            for(Integer i: listOfEventsId){
+                listOfEvents.add(eventManager.getEvent(i));
+            }
+            for (Event event :listOfEvents){
+                String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
+                        + "Time: " + event.getTime() + "\n"
+                        + "Attendees: " + attendeeManager.getAttendee(event.getAttendees().toString());
+                listOfEventSchedule.add(schedule);
+            }
+            output.eventsSpeaker(listOfEventSchedule);
         }
-        for (Event event :listOfEvents){
-            String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + event.getTime() + "\n"
-                    + "Attendees: " + attendeeManager.getAttendee(event.getAttendees().toString());
-            listOfEventSchedule.add(schedule);
+        else{
+            output.noAssignedEvents();
         }
-        output.eventsSpeaker(listOfEventSchedule);
+
+        boolean rtn = false;
+        while(!rtn){
+            output.pressAnyKeyToContinue();
+            String in = input.getKeyboardInput();
+            if (!in.equals("")){
+                rtn = true;
+            }
+        }
     }
 
 

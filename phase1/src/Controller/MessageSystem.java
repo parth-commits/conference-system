@@ -63,6 +63,9 @@ public class MessageSystem {
                 // prompt context
                 output.promptContext();
                 context = input.getKeyboardInput();
+                if (context.equals("0")){                                               //Check to make sure this works
+                    return;
+                }
                 // add message
                 ArrayList<String> ids;
                 if (action.equals("1")) {
@@ -92,6 +95,7 @@ public class MessageSystem {
                     }
                     chatManager.addMessageToChat(sender, id, context);
                 }
+                output.messageSentToEveryone();                                         //NEW!
             }
             // send to one user in contact list
             else {
@@ -127,11 +131,12 @@ public class MessageSystem {
                 //ask user to type a message
                 output.promptContext();
                 context = input.getKeyboardInput();
-                if (context.equals("return")) {
+                if (context.equals("0")) {
                     return;
                 }
                 // add message
                 chatManager.addMessageToChat(sender, contactID, context);
+                output.messageSent();
             }
         }
         // Attendee
@@ -168,11 +173,12 @@ public class MessageSystem {
             //ask user to type a message
             output.promptContext();
             context = input.getKeyboardInput();
-            if (context.equals("return")) {
+            if (context.equals("0")) {
                 return;
             }
             // add message
             chatManager.addMessageToChat(sender, contactID, context);
+            output.messageSent();
         }
         // Speaker
         else if (role == 3) {
@@ -243,6 +249,7 @@ public class MessageSystem {
                         }
                         chatManager.addMessageToChat(sender, id, context);
                     }
+                    output.messageSentToEveryone();
                 }
                 else if (in.equals("2")){
                     ArrayList<String> contactList = speakerManager.contactList(sender);
@@ -277,11 +284,12 @@ public class MessageSystem {
                     //ask user to type a message
                     output.promptContext();
                     context = input.getKeyboardInput();
-                    if (context.equals("return")) {
+                    if (context.equals("0")) {
                         return;
                     }
                     // add message
                     chatManager.addMessageToChat(sender, contactID, context);
+                    output.messageSent();
                 }
                 else {
                     output.invalidInputSelection();

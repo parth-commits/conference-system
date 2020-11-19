@@ -232,7 +232,7 @@ public class OrganizerSystem {
                     output.createEnterTime();
                     String inputTime = input.getKeyboardInput();
                     if (verifyDateTimeEntered(inputTime)){                                //they entered a valid date time
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
                         Date d1 = formatter.parse(inputTime);
                         ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1);
                         if (availableRooms.isEmpty()){
@@ -335,7 +335,7 @@ public class OrganizerSystem {
     //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't returns false,
     //and we get the user to re-enter the date.
     private boolean verifyDateTimeEntered(String date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
         Date currentDateTime = new Date();                  //current dateandtime
         //checks if the string date provided fits the format and is after the current date. else, returns false. HOWCOME .BEFORE IS IGNORED?
         Date d1;
@@ -351,45 +351,44 @@ public class OrganizerSystem {
             return false;
         }
         //if the month isn't between 01-12, return false
-        String month = date.substring(3,5);
-        if (!month.matches("01|02|03|04|05|06|07|08|09|10|11|12")){
+        String month = date.substring(3,6);
+        if (!month.matches("JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC")){
             return false;
         }
         //if the day is greater than 31 in months with at max 31 days, return false
         String day = date.substring(0,2);
         int dayInt = Integer.parseInt(day);
-        if (month.matches("01|03|05|07|08|10|12")){
+        if (month.matches("JAN|MAR|MAY|JUL|AUG|OCT|DEC")){
             if (0>dayInt || dayInt>31){
                 return false;
             }
         }
         //if the month is feb, and date is greater than 28, return false
-        if (month.equals("02")){
+        if (month.equals("FEB")){
             if(0>dayInt || dayInt>28){
                 return false;
             }
         }
         //if the month has at max 30 days, and they entered something more, return false.
-        if (month.matches("04|06|09|11")){
+        if (month.matches("APR|JUN|SEPT|NOV")){
             if (0>dayInt || dayInt>30){
                 return false;
             }
         }
         //checks if hours is between 09-16
-        String hour = date.substring(11,13);
+        String hour = date.substring(12,14);
         if (!hour.matches("09|10|11|12|13|14|15|16")){
             return false;
         }
 
         //checks if minutes and seconds are both 00
-        String minutes = date.substring(14,16);
-        String seconds = date.substring(17,19);
+        String minutes = date.substring(15,17);
+        String seconds = date.substring(18,20);
         if(!minutes.equals("00")||!seconds.equals("00")){
             return false;
         }
         return true;
     }
-
 
 
 
