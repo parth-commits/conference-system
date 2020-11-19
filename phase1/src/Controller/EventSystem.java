@@ -41,7 +41,7 @@ public class EventSystem {
             }
             listOfEventSchedule.add(schedule);
         }
-        output.Events(listOfEventSchedule);
+        output.eventsCheckAll(listOfEventSchedule);
     }
 
     private void saveState() throws IOException {
@@ -94,7 +94,7 @@ public class EventSystem {
                     + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
             listOfEventSchedule.add(schedule);
         }
-        output.Events(listOfEventSchedule);
+        output.eventsAttendeeAndOrganizer(listOfEventSchedule);
     }
 
     public void checkAssignedEvent(String UserId){
@@ -110,9 +110,11 @@ public class EventSystem {
                     + "Attendees: " + attendeeManager.getAttendee(event.getAttendees().toString());
             listOfEventSchedule.add(schedule);
         }
-        output.Events(listOfEventSchedule);
+        output.eventsSpeaker(listOfEventSchedule);
     }
 
+
+    //IS THIS METHOD EVERY GOING TO BE USED?
     public void checkEventTitleIDs(){
         ArrayList<String> entireEventList = new ArrayList<>();
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
@@ -122,7 +124,7 @@ public class EventSystem {
             String schedule = s +". " + event.getTitle() + ".   EventID: " + event.getID();
             entireEventList.add(schedule);
         }
-        output.Events(entireEventList);
+        //output.Events(entireEventList);
     }
     }
 
