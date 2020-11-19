@@ -4,7 +4,7 @@ import Entities.Chat;
 import java.io.*;
 import java.util.ArrayList;
 
-/** The class ChatManager stores all chats in an arraylist,
+/** The ChatManager class stores all chats in an arraylist,
  * and implements various actions that are relevant to the chats.
  * Actions include adding message, creating chats, verifying chats,
  * finding chats, finding contacts, and deleting chats.

@@ -6,7 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
-/** The class EventManager stores all events in an arraylist,
+/** The EventManager class stores all events in an arraylist,
  * and implements various of actions that are relevant to the Event object.
  * Actions including
 
@@ -208,6 +208,22 @@ public class EventManager implements Serializable{
         this.listOfEvents.addAll(listOfEvents);
     }
 
+
+    /**
+     * Gets a list of events that do not have speakers.
+     * @return ArrayList </Event> a list that contains all Event objects
+     * @see Event
+     */
+    public ArrayList<Event> listOfEventsWithoutSpeaker(){
+        ArrayList<Event> newList = new ArrayList<>();
+        for(Event event: listOfEvents){
+            if (event.noSpeaker()){
+                newList.add(event);
+            }
+        }
+        return newList;
+    }
+
     /**
      * Saves states of event manager.
      * @throws IOException throw IOException to avoid errors that might occur
@@ -239,14 +255,4 @@ public class EventManager implements Serializable{
         }
     }
 
-    public ArrayList<Event> listOfEventsWithoutSpeaker(){       //gets a list of events that do not have speakers
-        ArrayList<Event> newList = new ArrayList<>();
-        for(Event event: listOfEvents){
-            if (event.noSpeaker()){
-                newList.add(event);
-            }
-        }
-        return newList;
     }
-
-}

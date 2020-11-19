@@ -7,19 +7,43 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * The OrganizerManager class stores all organizers in a hashtable,
+ * and implements various functions that can be done for an organizer.
+ * Functions include adding organizer, verifying login, getting organizer
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
 public class OrganizerManager implements Serializable{
 
     private Hashtable<String, Organizer> tableOfOrganizers;
 
+    /**
+     * Constructor
+     */
     public OrganizerManager (){
         tableOfOrganizers = new Hashtable<>();
     }
 
+    /**
+     * Adds an organizer to the existing table of organizer.
+     * @param user_id the id of user that we want to add
+     * @param username the name of the user that we want to add
+     * @param passwords the passwords of the user that we want to add
+     */
     public void addOrganizer(String user_id, String username, String passwords){
         Organizer newOrganizer = new Organizer(user_id, username, passwords);
         tableOfOrganizers.put(newOrganizer.getUser_id(), newOrganizer);
     }
 
+    /**
+     * Verifies organizer's login based on the inputted credential. The user will be
+     * logged in if the inputted information is correct.
+     * @param inputUserId the user id inputted by the user
+     * @param inputUserPassword the passwords inputted by the user
+     * @return boolean returns true if the
+     */
     public boolean verifyLogIn(String inputUserId, String inputUserPassword){
         if (userExist(inputUserId)) {
             return tableOfOrganizers.get(inputUserId).getPasswords().equals(inputUserPassword);
@@ -27,14 +51,28 @@ public class OrganizerManager implements Serializable{
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getUserIDs(){
         return new ArrayList<String>(tableOfOrganizers.keySet());
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     */
     public boolean userExist(String userId){
         return tableOfOrganizers.containsKey(userId);
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     */
     public Organizer getOrganizer(String userId){
         return tableOfOrganizers.get(userId);
     }
