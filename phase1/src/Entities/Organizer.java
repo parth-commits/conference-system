@@ -19,9 +19,9 @@ public class Organizer extends Attendee implements Serializable {
 
     /**
      * Constructor
-     * @param user_id
-     * @param name
-     * @param passwords
+     * @param user_id the user id of the organizer.
+     * @param name the registered name of the organizer
+     * @param passwords the registered passwords of the organizer
      */
     public Organizer(String user_id, String name, String passwords) {
         super(user_id, name, passwords);
@@ -29,17 +29,28 @@ public class Organizer extends Attendee implements Serializable {
         this.eventsCreated = new ArrayList<>();
     }
 
-    //adds a speaker that this organizer created
+    /**
+     * Adds a speaker that this organizer created
+     * @param user_id The user_id of the speaker created
+     */
     public void addSpeakerCreated(String user_id){
         this.speakersCreated.add(user_id);
     }
 
-    //adds an event created by this organizer. (Only adds id of event)
+    /**
+     * Adds an event created by this organizer by its given event_id
+     * @param event_id The id of the event
+     */
     public void addEventCreated(Integer event_id){
         this.eventsCreated.add(event_id);
     }
 
-    //deletes an event created by this organizer from the list eventsCreated.
+
+    /**
+     * Deletes an event created by this organizer from the list eventsCreated .
+     * @param event_id The id of the event
+     * @return boolean Returns true if the event is deleted, false otherwise
+     */
     public boolean deleteEventCreated(Integer event_id){
         return this.eventsCreated.remove(event_id);
     }

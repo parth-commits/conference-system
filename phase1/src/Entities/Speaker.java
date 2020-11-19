@@ -20,7 +20,7 @@ public class Speaker extends User implements Serializable {
 
     /**
      * Constructor
-     * @param user_id the user id of this user. User id is an unique integer for each user.
+     * @param user_id the user id of this user.
      * @param passwords the registered passwords of this user
      * @param name the registered name of this user
      * @param organizer_id the organizer who created this Speaker
