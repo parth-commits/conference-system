@@ -363,13 +363,11 @@ public class MessageSystem {
     }*/
 
     /**
-     * Check the type of user, such as attendee, organizer or speaker. Return -1 if the user cannot be defined.
+     * Check the type of user, such as 1.organizer 2.attendee, or 3.speaker. Return -1 if the user cannot be defined.
      * @param id The user_id of the user we are checking
      * @return int Integer that refer to different type of user
      */
     public int userType(String id) {
-        // check current user status
-        // 1 for attendee, 2 for speaker, 3 for organizer
         if (organizerManager.userExist(id)) {
             return 1;
         } else if (attendeeManager.userExist(id)) {

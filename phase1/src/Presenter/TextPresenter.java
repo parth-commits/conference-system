@@ -15,52 +15,33 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
+/** TextPresenter prints out the String from this program to the user interface.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
+ */
+
 public class TextPresenter {
+
+    /**
+     * Print: Please enter what action from the menu you would like to perform.
+     */
     public void PrintPrompt(){
         System.out.println("Please enter what action from the menu you would like to perform.");
     }
-    public void ActionDone(){
-        System.out.println("Action Done!");
-    }
-    public void ActionFailed(){ System.out.println("Action Failed."); }
 
-    //AttendeeSystem
-    public void AttendeeMenu(){
-        System.out.println("Menu:");
-        System.out.println("\t1. See Events");
-        System.out.println("\t2. Sign Up or Cancel an Event Signed Up for");
-        System.out.println("\t3. Check Schedule for an Signed Up Event");
-        System.out.println("\t4. Add or Remove Contact");
-        System.out.println("\t5. Message Other Users");
-        System.out.println("\t6. LOGOUT");
-        System.out.println("\t7. SHUTDOWN");
-    }
-    public void enterEvent(){
-        System.out.println("Please enter the event ID for the event you want to sign up for: ");
-    }
-    public void enterCreatingEventID(){
-        System.out.println("Please enter an integer ID for the new event:");
-    }
-    public void enterEventCancel(){
-        System.out.println("Please enter the event ID for the event you want to cancel: ");
-    }
-    public void enterUserID(){
-        System.out.println("Please enter the User ID that you want to add or remove from your contact list");
-    }
-
-    //SpeakerSystem
-    public void SpeakerMenu(){
-        System.out.println("Menu:");
-        System.out.println("\t1. See Events");
-        System.out.println("\t2. See Assigned Events");
-        System.out.println("\t3. Message");
-        System.out.println("\t4. LOGOUT");
-        System.out.println("\t5. SHUTDOWN");
-    }
-
+    /**
+     * Print: Please enter your name:
+     */
     public void enterName(){
         System.out.println("Please enter your name: ");
     }
+
+    /**
+     * Print Please enter your preferred ID: .
+     * If the UserID is taken. Print: That UserID is taken, please enter another UserID:
+     * @param checker Check if the UserId is taken
+     */
     public void enterID(boolean checker){
         if (checker){
             System.out.println("Please enter your preferred UserID: ");
@@ -69,6 +50,13 @@ public class TextPresenter {
             System.out.println("That UserID is taken, please enter another UserID:");
         }
     }
+
+    /**
+     * Print: A password must be 8-14 characters long. Please enter a password:
+     * If the password is invalid. Print: That is an invalid password. Please enter a valid password: .
+     * Print: Please enter 0 to return to the previous menu
+     * @param checker Check if the password is valid
+     */
     public void enterPassword(boolean checker){
         System.out.println("A password must be 8-14 characters long.");
         if (checker) {
@@ -80,6 +68,60 @@ public class TextPresenter {
         System.out.println("Please enter 0 to return to the previous menu");
     }
 
+    /**
+     * Print: Action Done!
+     */
+    public void ActionDone(){
+        System.out.println("Action Done!");
+    }
+
+    /**
+     * Print: Action Failed!
+     */
+    public void ActionFailed(){ System.out.println("Action Failed."); }
+
+    //AttendeeSystem
+
+    /**
+     * Print: Menu 1.See Events 2.Sign Up or Cancel an Event Signed Up for 3.Check Schedule for an Signed Up Event
+     * 4.Add or Remove Contact 5.Message Other Users 6.LOGOUT 7.SHUTDOWN
+     */
+    public void AttendeeMenu(){
+        System.out.println("Menu:");
+        System.out.println("\t1. See Events");
+        System.out.println("\t2. Sign Up or Cancel an Event Signed Up for");
+        System.out.println("\t3. Check Schedule for an Signed Up Event");
+        System.out.println("\t4. Add or Remove Contact");
+        System.out.println("\t5. Message Other Users");
+        System.out.println("\t6. LOGOUT");
+        System.out.println("\t7. SHUTDOWN");
+    }
+
+    /**
+     * Print: Please enter an integer ID for the new event:
+     */
+    public void enterCreatingEventID(){
+        System.out.println("Please enter an integer ID for the new event:");
+    }
+
+    //SpeakerSystem
+    /**
+     * Print: Menu 1.See Events 2.See Assigned Events 3.Message 4.LOGOUT 5.SHUTDOWN
+     */
+    public void SpeakerMenu(){
+        System.out.println("Menu:");
+        System.out.println("\t1. See Events");
+        System.out.println("\t2. See Assigned Events");
+        System.out.println("\t3. Message");
+        System.out.println("\t4. LOGOUT");
+        System.out.println("\t5. SHUTDOWN");
+    }
+
+    /**
+     * Prints the Events assigned to this speaker.
+     * If this speaker doesn't have assigned Events, print: You currently have no assigned talks.
+     * @param listOfEventsSchedule The list of events that assign to this speaker
+     */
     public void eventsSpeaker(ArrayList<String> listOfEventsSchedule){
         if (listOfEventsSchedule.isEmpty()){
             System.out.println("You currently have no assigned talks. ");
@@ -91,6 +133,12 @@ public class TextPresenter {
             }
         }
     }
+
+    /**
+     * Prints the SignedUpEvents of this user
+     * If there's no SignedUpEvents. Print: You are currently not attending any events.
+     * @param listOfEventsSchedule The list of Events that the user signed up
+     */
     public void eventsAttendeeAndOrganizer(ArrayList<String> listOfEventsSchedule){
         if (listOfEventsSchedule.isEmpty()){
             System.out.println("You are currently not attending any events.");
