@@ -286,7 +286,6 @@ public class MessageSystem {
             // adding contacts that are attendee, organizer, or speaker
             if (!organizerManager.contactExists(current, id)) {
                 organizerManager.addContact(current, id);
-                output.ActionDone();
             } else {
                 success = false;
             }
@@ -295,7 +294,6 @@ public class MessageSystem {
         else if (current_role == 2) {
             if (!attendeeManager.contactExists(current, id)) {
                 attendeeManager.addContact(current, id);
-                output.ActionDone();
             } else {
                 success = false;
             }
@@ -304,7 +302,6 @@ public class MessageSystem {
         else if (current_role == 3) {
             if (!speakerManager.contactExists(current, id)) {
                 speakerManager.addContact(current, id);
-                output.ActionDone();
             } else {
                 success = false;
             }

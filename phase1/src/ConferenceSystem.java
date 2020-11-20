@@ -117,7 +117,7 @@ public class ConferenceSystem {
         ArrayList<Integer> listofEventIDS = eventManager.getListOfEventIDs();   //gets list of all eventIDs in the system
         //checks every eventID, and if its in the past, then deletes everything related to that event
         for (Integer eventID: listofEventIDS) {
-            //if the event happened before right now, delete the event, and remove all attendees that are attendng that event, organizer, speaker and free up the room.
+            //if the event happened before right now, delete the event, and remove all attendees that are attending that event, organizer, speaker and free up the room.
             if (eventManager.getEvent(eventID).getTime().before(now)){
                 ArrayList<String> peopleAttending = eventManager.getEvent(eventID).getAttendees();  //list of userid of all people attending
 

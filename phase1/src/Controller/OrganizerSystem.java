@@ -489,6 +489,7 @@ public class OrganizerSystem {
                                     speakerManager.addContact(user, userID);
                                 }
                                 chatManager.createChat(user, userID);
+                                output.ActionDone();
                                 validUserID = true;
                                 validAddRemove = true;
                                 goBack = true;
@@ -519,6 +520,7 @@ public class OrganizerSystem {
                                     speakerManager.removeContact(user, userID);
                                 }
                                 chatManager.deleteChat(user, userID);
+                                output.ActionDone();
                                 validUserID = true;
                                 validAddRemove = true;
                                 goBack = true;
