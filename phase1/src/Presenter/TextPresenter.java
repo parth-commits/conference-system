@@ -51,7 +51,7 @@ public class TextPresenter {
     public void AttendeeMenu(){
         System.out.println("Menu:");
         System.out.println("\t1. See Events");
-        System.out.println("\t2. Sign Up or Cancel an Event Signed Up for");
+        System.out.println("\t2. Sign Up or Leave an Event Signed Up for");
         System.out.println("\t3. Check Schedule for an Signed Up Event");
         System.out.println("\t4. Add or Remove Contact");
         System.out.println("\t5. Message Other Users");
@@ -466,9 +466,9 @@ public class TextPresenter {
 
     public void createEnterTime(){
         System.out.println("Please enter a date and time for this new event. \nPlease note it must follow the following format:" +
-                " EEE-dd-MMM-yyyy hh:mm:ss. \nEnter the first three letters of the day of the week followed by a dash.\n" +
-                "Then enter the date, followed by the first three letters of the month in CAPITALS.\nThe hours must be in the 24 hour format and must be between 09 and 16, inclusive. \nSince all events start on the hour, mm and ss must be 00." +
-                " \nThe time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M. you would type 'WED-20-DEC-2020 13:00:00.'");
+                "dd-mm-yyyy hh:mm:ss." +
+                "\nEnter the day then the hours, which must be in the 24 hour format and must be between 09 and 16, inclusive. \n This time should be the EST time. \nSince all events start on the hour, mm and ss must be 00." +
+                " \nThe time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M. you would type '20-12-2020 13:00:00.'");
         System.out.println("Please press 0 to return to the previous menu");
     }
 

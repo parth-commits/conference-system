@@ -208,7 +208,7 @@ public class OrganizerSystem {
                 if (invalidEvent){
                     output.scheduleSpeakerInvalidEventID();                         //WE NEED TO COME UP WITH A WAY FOR THIS MESSAGE TO STAY FOR AT LEAST 5-10 SECONDS
                 }
-                output.scheduleSpeakerSelectEvent(listOfEvents);                    //Gives list of events without a speaker
+                output.joinDeleteEventSelector(listOfEvents);                    //Gives list of events without a speaker //joinDeleteEventSelector does the same as scheduleSpeakerSelectEvent.
                 String eventID = input.getKeyboardInput();
                 int eventIDint = -1;
                 try {
@@ -246,6 +246,7 @@ public class OrganizerSystem {
                                 Event event = listOfEvents.get(eventIDint-1);
                                 event.setSpeaker(speakerID);                                            //gets the event and sets the speaker.
                                 speakerManager.addEventToSpeaker(event.getID(), speakerID);             //gets the speaker and adds this new event to its list of assigned events.
+                                output.ActionDone();
                                 validSpeakerID=true;                                 //Now we want to exit both loops, since our job is done successfully.
                                 loopVariable=false;
                             }
@@ -556,12 +557,13 @@ public class OrganizerSystem {
                     ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
                     ArrayList<Integer> listOfCurrentlyAttendingEventIds = organizerManager.getSignedUpEvents(userID);    //gets list of all events this organizer is already attending
                     listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
+                    ArrayList<Integer> listOfAllEventsThatNeedToBeRemoved = new ArrayList<>();
                     for(Integer eventid: listOfAllEventIDs){                                                            //goes through every event this organizer is not attending (list of events he can possible join)
                         Date newEventTime = eventManager.getTime(eventid);                                              //finds its time
                         for(Integer currenteventid: listOfCurrentlyAttendingEventIds){
                             Date currentEventTime = eventManager.getTime(currenteventid);
                             if (newEventTime.equals(currentEventTime)){                                                 //if this time is the same as any event the organizer is already attending,
-                                listOfAllEventIDs.remove(eventid);                                                      //remove that event from the event from list of event he can possible join (listOfAllEventIDs)
+                                listOfAllEventsThatNeedToBeRemoved.add(eventid);                                                      //remove that event from the event from list of event he can possible join (listOfAllEventIDs)
                             }
                         }
                         //by now, listOfAllEventIDs contains the eventIDs of events that the organizer has not joined already and whose timings do not
@@ -571,9 +573,10 @@ public class OrganizerSystem {
                         int capacity = roomManager.getRoom(actualEvent.getLocation()).getCapacity();                    //gets the capacity of the room this event is held in
                         int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
                         if(capacity-numExistingAttendees==0){                                                           //if the number of attendees attending this event has reached the max capacity of the room,
-                            listOfAllEventIDs.remove(eventid);                                                          //the organizer cannot join this room. Remove it from the list.
+                            listOfAllEventsThatNeedToBeRemoved.add(eventid);                                                         //the organizer cannot join this room. Remove it from the list.
                         }
                     }
+                    listOfAllEventIDs.removeAll(listOfAllEventsThatNeedToBeRemoved);
                     ArrayList<Event> listOfJoinableEvents = new ArrayList<>();                                          //list of all events this organizer can join
                     for(Integer eventid: listOfAllEventIDs){
                         listOfJoinableEvents.add(eventManager.getEvent(eventid));
