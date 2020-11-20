@@ -6,6 +6,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * The ConferenceSystem class stores all controllers, import/save states,
+ * and it allows the entire program to work.
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
+
 public class ConferenceSystem {
 
     private SpeakerManager speakerManager;
@@ -22,7 +30,9 @@ public class ConferenceSystem {
     private AttendeeSystem attendeeSystem;
     private SpeakerSystem speakerSystem;
 
-    //constructor
+    /**
+     * Constructor
+     */
     public ConferenceSystem(){
         importState();// this function will bring back the managers and initialize them
         logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
@@ -33,8 +43,10 @@ public class ConferenceSystem {
         speakerSystem = new SpeakerSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem);
     }
 
+    /**
+     * Serialize all managers (use cases)
+     */
     private void importState() {
-        //this method will serialize the managers - the usecases
         SpeakerManager s = new SpeakerManager();
         this.speakerManager = s.importState();
 
@@ -56,6 +68,10 @@ public class ConferenceSystem {
 
     }
 
+    /**
+     * Saves all states of use cases.
+     * @throws IOException  throw IOException to avoid errors that might occur while running the program
+     */
     private void saveState() throws IOException {
         speakerManager.saveState();
         roomManager.saveState();
@@ -65,6 +81,12 @@ public class ConferenceSystem {
         attendeeManager.saveState();
 
     }
+
+    /**
+     * Runs the program
+     * @throws IOException throw IOException to avoid errors that might occur while running the program
+     * @throws ParseException throw ParseException to avoid errors that might occur while running the program
+     */
     public void run () throws IOException, ParseException {
         deletePastEvents();
         boolean shutdown = false;
@@ -87,7 +109,9 @@ public class ConferenceSystem {
         saveState();
     }
 
-    //before the program starts running, we want to delete past events, as we cant enroll in them, and it makes no sense to keep them!
+    /**
+     * Deletes past event before the program starts running.
+     */
     private void deletePastEvents() {
         Date now = new Date();  //gets the current date
         ArrayList<Integer> listofEventIDS = eventManager.getListOfEventIDs();   //gets list of all eventIDs in the system
@@ -120,6 +144,9 @@ public class ConferenceSystem {
         }
     }
 
+    /**
+     * Passes a list of ids for different objects.
+     */
     private void listofIDPass() {
         System.out.println("NOTE: this is a testing feature and must be removed during the final hand in!");
         System.out.println("All the organizers in the system:");
