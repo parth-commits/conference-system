@@ -32,15 +32,19 @@ public class LogInAndRegistrationSystem {
         public String start(){
             output.loginOrRegister();
             String in = input.getKeyboardInput();
-            while (!(in.equals("1") || in.equals("2"))) {
+            while (!(in.equals("1") || in.equals("2")||in.equals("3"))) {
+                output.invalidInput();
                 output.loginOrRegister();
                 in = input.getKeyboardInput();
             }
             if (in.equals("1")){
                 return registerUser();
             }
-            else{
+            else if (in.equals("2")){
                 return loginUser();
+            }
+            else {
+                return "SHUTDOWN";
             }
 
         }

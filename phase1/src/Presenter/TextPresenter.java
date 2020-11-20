@@ -5,6 +5,7 @@ import Entities.Event;
 import Entities.Message;
 
 import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import Entities.Chat;
 import Entities.Event;
@@ -12,6 +13,7 @@ import Entities.Message;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class TextPresenter {
     public void PrintPrompt(){
@@ -112,13 +114,6 @@ public class TextPresenter {
         }
     }
 
-    public static void main(String[] args){
-        System.out.println("Menu:");
-        System.out.println("Check All Events");
-        System.out.println("Sign Up for Events");
-        System.out.println("Cancel Events");
-    }
-
     public void verifySignUp(boolean checker){
         System.out.println("Are you sure you want to sign up for this event? ");
         if (checker){
@@ -169,6 +164,7 @@ public class TextPresenter {
         System.out.println("Please select the action you'd like to do.");
         System.out.println("1. Register");
         System.out.println("2. Login");
+        System.out.println("3. SHUTDOWN");
     }
 
     public void youHaveNoContacts(){
@@ -352,9 +348,11 @@ public class TextPresenter {
     }
 
     public void joinDeleteEventSelector(ArrayList<Event> listOfEvents){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         System.out.println("Please select one of the following events\n");
         for (int i=1; i<listOfEvents.size()+1; i++){
-            System.out.println("\t" + i + ". Name: " + listOfEvents.get(i-1).getTitle() +" | Time: " + listOfEvents.get(i-1).getTime() + " | Location: " + listOfEvents.get(i-1).getLocation());
+            System.out.println("\t" + i + ". Name: " + listOfEvents.get(i-1).getTitle() +" | Time: " + formatter.format(listOfEvents.get(i-1).getTime()) + " | Location: " + listOfEvents.get(i-1).getLocation());
 
         }
         System.out.println("\nTo return to the previous menu please press 0");
@@ -428,5 +426,9 @@ public class TextPresenter {
     }
     public void noSignedUpEvents(){
         System.out.println("You have not signed up for any events so far.");
+    }
+
+    public void invalidInput(){
+        System.out.println("Invalid input, please try again!");
     }
 }

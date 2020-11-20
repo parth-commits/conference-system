@@ -89,6 +89,8 @@ public class EventSystem {
     }
 
     public void checkSignedUpEvent(String UserId){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         ArrayList<Event> listOfEvents = new ArrayList<>();
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
         ArrayList<Integer> listOfEventsId = new ArrayList<>();
@@ -104,7 +106,7 @@ public class EventSystem {
         if (!listOfEventsId.isEmpty()){
             for (Event event :listOfEvents){
                 String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                        + "Time: " + event.getTime() + "\n"
+                        + "Time: " + formatter.format(event.getTime()) + "\n"
                         + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
                 listOfEventSchedule.add(schedule);
             }

@@ -404,68 +404,6 @@ public class OrganizerSystem {
             return false;
         }
         return true;
-        /*SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-        Date currentDateTime = new Date();                  //current dateandtime
-        //checks if the string date provided fits the format and is after the current date. else, returns false. HOWCOME .BEFORE IS IGNORED?
-        Date d1;
-        try
-    {
-        d1 = formatter.parse(date);
-    }
-        catch (ParseException e) {
-            return false;
-        }
-
-        if (currentDateTime.after(d1)){
-            return false;
-        }
-        SimpleDateFormat formatter2 = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
-        String day1 = formatter2.format(d1).substring(0,1);
-        if (day1.equals("S")){
-            return false;
-        }
-        //if the month isn't between 01-12, return false
-        String month = date.substring(7,10);
-        if (!month.matches("JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC")){
-            return false;
-        }
-        //if the day is greater than 31 in months with at max 31 days, return false
-        String day = date.substring(4,6);
-        int dayInt = Integer.parseInt(day);
-        if (month.matches("JAN|MAR|MAY|JUL|AUG|OCT|DEC")){
-            if (0>dayInt || dayInt>31){
-                return false;
-            }
-        }
-        //if the month is feb, and date is greater than 28, return false
-        if (month.equals("FEB")){
-            if(0>dayInt || dayInt>28){
-                return false;
-            }
-        }
-        //if the month has at max 30 days, and they entered something more, return false.
-        if (month.matches("APR|JUN|SEPT|NOV")){
-            if (0>dayInt || dayInt>30){
-                return false;
-            }
-        }
-        //checks if hours is between 09-16
-        String hour = date.substring(16,18);
-        if (!hour.matches("09|10|11|12|13|14|15|16")){
-            return false;
-        }
-
-        //checks if minutes and seconds are both 00
-        String minutes = date.substring(19,21);
-        String seconds = date.substring(20,24);
-        if(!minutes.equals("00")||!seconds.equals("00")){
-            return false;
-        }
-        String dayoftheweek = date.substring(0,4);
-        if (!dayoftheweek.matches("MON|TUE|WED|THU|FRI")){
-            return false;
-        }
-        return true;*/
     }
 
 
@@ -598,6 +536,12 @@ public class OrganizerSystem {
                         eventManager.addAttendee(listOfAllEventIDs.get(eventSelectedInt-1),userID);                     //add organizer to events list of attendees for this event.
                         validEventSelected = true;
                         validInput = true;
+                        output.ActionDone();
+                        try {
+                            Thread.sleep(2000);
+                        }catch (Exception e){
+                            System.out.println("couldnt sleep!");
+                        }
                     }
                     else {
                         output.joinLeaveInvalidResponse();
@@ -623,6 +567,12 @@ public class OrganizerSystem {
                         eventManager.removeAttendee(listOfAttendingEventIds.get(eventSelectedInt-1),userID);
                         validEventSelected=true;
                         validInput=true;
+                        output.ActionDone();
+                        try {
+                            Thread.sleep(2000);
+                        }catch (Exception e){
+                            System.out.println("couldnt sleep!");
+                        }
                     }
                     else{
                         output.joinLeaveInvalidResponse();

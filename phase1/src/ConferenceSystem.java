@@ -72,7 +72,10 @@ public class ConferenceSystem {
         listofIDPass();
         while (!shutdown) {
             String userID = logInAndRegistrationSystem.start();
-            if (organizerManager.userExist(userID)) {
+            if (userID.equals("SHUTDOWN")){
+                shutdown = true;
+            }
+            else if (organizerManager.userExist(userID)) {
                 shutdown = organizerSystem.start(userID);
             }
             else if (attendeeManager.userExist(userID)) {
@@ -81,7 +84,6 @@ public class ConferenceSystem {
             else {
                 shutdown = speakerSystem.start(userID);
             }
-
         }
         saveState();
     }
