@@ -226,6 +226,7 @@ public class AttendeeSystem {
                     } else if (1 <= eventSelectedInt && eventSelectedInt <= listOfJoinableEvents.size()) {
                         attendeeManager.addEventToAttendee(listOfAllEventIDs.get(eventSelectedInt - 1), userID);         //add eventid to the attendees list of events.
                         eventManager.addAttendee(listOfAllEventIDs.get(eventSelectedInt - 1), userID);                     //add attendee to events list of attendees for this event.
+                        output.ActionDone();
                         validEventSelected = true;
                         validInput = true;
                     } else {
@@ -233,10 +234,10 @@ public class AttendeeSystem {
                     }
                 }
             }
-            else if(joinLeaveInt==2){                                                                                   //we need to delete an event here
+            else if(joinLeaveInt==2){                                                                                   //we need to leave an event here
                 boolean validEventSelected = false;
                 while(!validEventSelected){
-                    ArrayList<Integer> listOfAttendingEventIds = organizerManager.getSignedUpEvents(userID);            //get the list of signed up eventids
+                    ArrayList<Integer> listOfAttendingEventIds = attendeeManager.getSignedUpEvents(userID);            //get the list of signed up eventids
                     ArrayList<Event> listofAttendingEvents = new ArrayList<>();
                     for(Integer eventid: listOfAttendingEventIds){                                                      //get the list of events
                         listofAttendingEvents.add(eventManager.getEvent(eventid));

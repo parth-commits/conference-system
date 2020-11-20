@@ -51,7 +51,7 @@ public class TextPresenter {
         System.out.println("Menu:");
         System.out.println("\t1. See Events");
         System.out.println("\t2. See Assigned Events");
-        System.out.println("\t3. Message Attendees");
+        System.out.println("\t3. Message");
         System.out.println("\t4. LOGOUT");
         System.out.println("\t5. SHUTDOWN");
     }
@@ -341,7 +341,7 @@ public class TextPresenter {
     }
 
     public void joinOrLeave(){
-        System.out.println("Would you like to join or cancel this event?");
+        System.out.println("Would you like to join or leave this event?");
         System.out.println("1. Join");
         System.out.println("2. Leave");
         System.out.println("If you would like to go back to the previous menu, please press 0");
@@ -354,7 +354,7 @@ public class TextPresenter {
     public void joinDeleteEventSelector(ArrayList<Event> listOfEvents){
         System.out.println("Please select one of the following events\n");
         for (int i=1; i<listOfEvents.size()+1; i++){
-            System.out.println("\t" + i + " " + listOfEvents.get(i-1).getTitle());
+            System.out.println("\t" + i + ". Name: " + listOfEvents.get(i-1).getTitle() +" | Time: " + listOfEvents.get(i-1).getTime() + " | Location: " + listOfEvents.get(i-1).getLocation());
 
         }
         System.out.println("\nTo return to the previous menu please press 0");
