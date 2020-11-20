@@ -48,8 +48,8 @@ public class SpeakerSystem {
     /**
      * Speaker is allowed to do the following options: 1.see all Events. 2.check Schedule for assigned-Events.
      * 3.message other Users. 4.logout the account. 5.shutdown the system
-     * @param userID The user_id of the attendee who logs in
-     * @return object Returns different types depend on the action system takes.
+     * @param userID The user_id of the speaker who is logged in
+     * @return object Returns true if user wants to shutdown system, or false if user wants to logout.
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     public boolean start(String userID) throws IOException {
@@ -83,14 +83,12 @@ public class SpeakerSystem {
     }
 
     /**
-     * Saves states of speaker system.
+     * Saves states of the system.
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     private void saveState() throws IOException {
-        //save the state back in!!!
         speakerManager.saveState();
         organizerManager.saveState();
-        //eventManager.saveState();
         chatManager.saveState();
         attendeeManager.saveState();
     }
@@ -110,15 +108,12 @@ public class SpeakerSystem {
      * @return boolean Returns true if the user already registered, false otherwise
      */
     private boolean userExists(String userid){
-        if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
-            return true;
-        }
-        return false;
+        return attendeeManager.userExist(userid) || organizerManager.userExist(userid) || speakerManager.userExist(userid);
     }
 
     /**
-     *Add a user to the contact or remove a user from the contact by given its user_id
-     * @param userID The user_id of the user we want to add/ remove
+     *Add a user to the contact or remove a user from the contact by getting its user_id
+     * @param userID The user_id of the user we want to add/ remove for. (logged in user)
      */
     private void addRemoveContact(String userID) {
         output.addRemoveContact();
@@ -165,10 +160,6 @@ public class SpeakerSystem {
             }
             chatManager.deleteChat(input,userID);
         }
-
     }
-
-
-
 }
 

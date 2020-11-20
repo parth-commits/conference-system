@@ -36,9 +36,10 @@ public class LogInAndRegistrationSystem {
 
 
     /**
-     * Attendee is allowed to do the following options: 1.register as a new user. 2.LogIn the user account
+     * You can do either of the following options: 1.register as a new user. 2.LogIn the user account
      * 3. shutdown the system
-     * @return object Returns different types depend on the action system takes.
+     * @return object Returns userID if they logged in or registered. If they choose to shutdown, then it returns "SHUTDOWN" -
+     * a keyword for the ConferenceSystem to know to shutdown automatically.
      */
     public String start() {
         String in;
@@ -61,8 +62,6 @@ public class LogInAndRegistrationSystem {
         }
 
     }
-
-    //register method
 
     /**
      * Register as a new user
@@ -126,57 +125,9 @@ public class LogInAndRegistrationSystem {
                             }
                         }
                     }
-            }
-            }
-        }
-
-
-
-        /*
-        output.enterType(true);
-        String inputType = input.getKeyboardInput();
-        while (!(inputType.equals("1") || inputType.equals("2")||inputType.equals("0"))) {
-            output.enterType(false);
-            inputType = input.getKeyboardInput();
-        }
-        if (inputType.equals("0")){
-            return "false";
-        }
-
-        output.enterName();
-        String inputName = input.getKeyboardInput();
-        boolean untilCorrect = true;
-        boolean correct = true;
-        String inputID = "";
-        while (untilCorrect) {
-            output.enterID(correct);
-            inputID = input.getKeyboardInput();
-            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
-                correct = false;
-            } else {
-                untilCorrect = false;
+                }
             }
         }
-        untilCorrect = true;
-        correct = true;
-        String inputPass = "";
-        while (untilCorrect) {
-            output.enterPassword(correct);
-            inputPass = input.getKeyboardInput();
-            if (inputPass.length() > 14 || inputPass.length() < 8) {
-                correct = false;
-            } else {
-                untilCorrect = false;
-            }
-        }
-        //now we have a valid name, id, and password
-        if (inputType.equals("1")) {
-            organizerManager.addOrganizer(inputID, inputName, inputPass);
-        } else {
-            attendeeManager.addAttendee(inputID, inputName, inputPass);
-        }
-        return inputID;
-        */
         return "false";
     }
 

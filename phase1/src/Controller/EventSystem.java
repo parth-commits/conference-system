@@ -13,6 +13,7 @@ import java.util.TimeZone;
 
 /** EventSystem controller implements various actions that can be done for the users, including
  *  see all Events, create/delete Events, Sign up for Events /cancel an event, check Schedule for Signed Up and Assigned Events.
+ *  This is all dependent on who is signed into the system.
  *  @author Group_0112
  *  @version 1.0
  *  @since November 19th, 2020
@@ -72,21 +73,6 @@ public class EventSystem {
                 rtn = true;
             }
         }
-    }
-
-    /**
-     * Saves states of Event system.
-     * @throws IOException Throw IOException to avoid errors that might occur
-     */
-    private void saveState() throws IOException {
-        //save the state back in!!!
-        speakerManager.saveState();
-        roomManager.saveState();
-        organizerManager.saveState();
-        eventManager.saveState();
-        //chatManager.saveState();
-        attendeeManager.saveState();
-
     }
 
     /**

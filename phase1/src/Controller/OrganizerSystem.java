@@ -74,38 +74,40 @@ public class OrganizerSystem {
             String o;
             output.organizationSystemStartOptions();
             o = input.getKeyboardInput();
-            if (o.equals("1")){
-                createSpeaker(userID);
-            }
-            else if (o.equals("2")){
-                scheduleASpeaker();
-            }
-            else if (o.equals("3")){
-                message(userID);
-            }
-            else if (o.equals("4")){
-                createDeleteEvent(userID);
-            }
-            else if (o.equals("5")){
-                createRoom();
-            }
-            else if (o.equals("6")){
-                addRemoveContact(userID);
-            }
-            else if (o.equals("7")){
-                joinLeaveEvent(userID);
-            }
-            else if (o.equals("8")){
-                eventSystem.checkAllEvents();
-            }
-            else if (o.equals("9")){
-                eventSystem.checkSignedUpEvent(userID);
-            }
-            else if (o.equals("10")){
-                return false;
-            }
-            else if (o.equals("11")){
-                return true;
+
+            switch (o) {
+
+                case "1":   //1. Create a speaker
+                    createSpeaker(userID);
+                    break;
+                case "2":   //2. Schedule a speaker
+                    scheduleASpeaker();
+                    break;
+                case "3":   //3. Message a speaker
+                    message(userID);
+                    break;
+                case "4":   //4. Create/Delete an Event
+                    createDeleteEvent(userID);
+                    break;
+                case "5":   //5. Create a room
+                    createRoom();
+                    break;
+                case "6":   //6. Add or remove a contact
+                    addRemoveContact(userID);
+                    break;
+                case "7":   //7. Join/Leave an Event
+                    joinLeaveEvent(userID);
+                    break;
+                case "8":   //8. Check all events
+                    eventSystem.checkAllEvents();
+                    break;
+                case "9":   //9. Check signed up events
+                    eventSystem.checkSignedUpEvent(userID);
+                    break;
+                case "10":  //10. LOGOUT
+                    return false;
+                case "11":  //11. SHUTDOWN
+                    return true;
             }
             saveState();
         }
@@ -113,11 +115,10 @@ public class OrganizerSystem {
     }
 
     /**
-     * Saves states of organizer system.
+     * Saves states of the entire system system.
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     private void saveState() throws IOException {
-        //save the state back in!!!
         speakerManager.saveState();
         roomManager.saveState();
         organizerManager.saveState();
@@ -264,7 +265,7 @@ public class OrganizerSystem {
     }
 
     /**
-     * Sends message to another user.
+     * Sends message to another user. Uses the help of the messageSystem to send the message
      * @param userID The user_id of the user that we send message to
      * @throws IOException Throw IOException to avoid errors that might occur
      */
@@ -274,7 +275,7 @@ public class OrganizerSystem {
 
     /**
      * Create an new Event or Delete an Event that already exists
-     * @param userID The user_id of the Organizer who creates/ delete the event.
+     * @param userID The user_id of the Organizer who is creating/ deleting the event.
      * @throws ParseException Throw ParseException to avoid errors that might occur
      */
     private void createDeleteEvent(String userID) throws ParseException {
@@ -391,7 +392,7 @@ public class OrganizerSystem {
         }
     }
 
-    //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't returns false,
+    //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't, then return false,
     //and we get the user to re-enter the date.
     private boolean verifyDateTimeEntered(String date){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -457,7 +458,7 @@ public class OrganizerSystem {
     }
 
     /**
-     *Add a user to the contact or remove a user from the contact by given its user_id
+     *Add a user to the contact or remove a user for the logged in organizer by getting its user_id
      * @param userID The user_id of the user we want to add/ remove
      */
     private void addRemoveContact(String userID) {
@@ -539,7 +540,7 @@ public class OrganizerSystem {
 
 
     /**
-     * Sign up for an event or Cancel an event from the Signup-events.
+     * Sign up for an event or Leave an event from the Signup-events.
      * @param userID The user_id of the organizer who wants to Sign up or cancel an event
      */
     private void joinLeaveEvent(String userID) {

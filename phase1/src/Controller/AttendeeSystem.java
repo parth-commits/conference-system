@@ -9,12 +9,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-/** AttendeeSystem controller implements various actions that can be done for an attendee, including
- *  see all Events, Sign up for Events /cancel an event, check Schedule for Signed Up Events,
- *  add or Remove Attendee in Contact, message other Users, logout the account, shutdown the system.
- *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+/**
+ * AttendeeSystem controller implements various actions that can be done for an attendee, including
+ * see all Events, Sign up for Events /cancel an event, check Schedule for Signed Up Events,
+ * add or Remove Attendee in Contact, message other Users, logout the account, shutdown the system.
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
  */
 
 public class AttendeeSystem {
@@ -31,14 +32,14 @@ public class AttendeeSystem {
 
     /**
      * Constructor
-     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * @param speakerManager   The speaker manager implements by SpeakerManager use case
      * @param organizerManager The organizer manager implements by OrganizerManager use case
-     * @param chatManager The chat manager implements by ChatManager use case
-     * @param attendeeManager The attendee manager implements by AttendeeManager use case
-     * @param messageSystem The message system implements by MessageSystem Controller
-     * @param eventSystem The event system implements by EventSystem Controller
-     * @param roomManager The room manager implements by RoomManager use case
-     * @param eventManager The event manager implements by EventManager use case
+     * @param chatManager      The chat manager implements by ChatManager use case
+     * @param attendeeManager  The attendee manager implements by AttendeeManager use case
+     * @param messageSystem    The message system implements by MessageSystem Controller
+     * @param eventSystem      The event system implements by EventSystem Controller
+     * @param roomManager      The room manager implements by RoomManager use case
+     * @param eventManager     The event manager implements by EventManager use case
      */
     public AttendeeSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, ChatManager chatManager,
                           AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem, RoomManager roomManager, EventManager eventManager) {
@@ -58,8 +59,8 @@ public class AttendeeSystem {
      * Attendee is allowed to do the following options: 1.see all Events. 2.Sign up for Events /cancel an event
      * 3.check Schedule for an Signed Up Event. 4.add or Remove Attendee in Contact. 5.message other Users
      * 6.log out the account. 7.shutdown the system
-     * @param userID The user_id of the attendee who logs in
-     * @return object Returns different types depend on the action system takes.
+     * @param userID The user_id of the attendee who is logged in
+     * @return object Returns true if user wants to shutdown, false if it wants to logout
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     public boolean start(String userID) throws IOException {
@@ -77,38 +78,37 @@ public class AttendeeSystem {
                 joinLeaveEvent(userID);
             }
             //3. Check Schedule for an Signed Up Event
-            else if (i.equals("3")){
+            else if (i.equals("3")) {
                 eventSystem.checkSignedUpEvent(userID);
             }
             //4. Add or Remove Attendee in Contact
-            else if (i.equals("4")){
+            else if (i.equals("4")) {
                 addRemoveContact(userID);
             }
             //5. Message Other Users
-            else if (i.equals("5")){
+            else if (i.equals("5")) {
                 messageSystem.sendMessage(userID);
             }
             //6. logout
-            else if (i.equals("6")){
+            else if (i.equals("6")) {
                 return false;
             }
             //7. shutdown
             else if (i.equals("7")) {
                 return true;
             }
+            saveState();
         }
     }
 
     /**
-     * Saves states of attendee system.
+     * Saves states of the entire system system.
+     *
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     private void saveState() throws IOException {
-        //save the state back in!!!
         speakerManager.saveState();
-        //roomManager.saveState();
         organizerManager.saveState();
-        //eventManager.saveState();
         chatManager.saveState();
         attendeeManager.saveState();
 
@@ -116,21 +116,20 @@ public class AttendeeSystem {
 
     /**
      * Check if the user already registered in this system or not
+     *
      * @param userid The user_id of the user we want to check
      * @return boolean Returns true if the user already registered, false otherwise
      */
-    private boolean userExists(String userid){
-        if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
-            return true;
-        }
-        return false;
+    private boolean userExists(String userid) {
+        return attendeeManager.userExist(userid) || organizerManager.userExist(userid) || speakerManager.userExist(userid);
     }
 
     /**
-     *Add a user to the contact or remove a user from the contact by given its user_id
+     * Add a user to the contact or remove a user from the contact by given its user_id
+     *
      * @param userID The user_id of the user we want to add/ remove
      */
-    private void addRemoveContact(String userID){
+    private void addRemoveContact(String userID) {
         boolean goBack = false;
         while (!goBack) {
             boolean validAddRemove = false;
@@ -140,17 +139,15 @@ public class AttendeeSystem {
                 if (option.equals("0")) {
                     validAddRemove = true;
                     goBack = true;
-                }
-                else if (option.equals("1")) {
+                } else if (option.equals("1")) {
                     boolean validUserID = false;
                     while (!validUserID) {
                         output.enterContactUserid(false);
                         String user = input.getKeyboardInput();
                         if (user.equals("0")) {
                             validUserID = true;
-                        }
-                        else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            if (!attendeeManager.contactExists(userID, user)){
+                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
+                            if (!attendeeManager.contactExists(userID, user)) {
                                 attendeeManager.addContact(userID, user);
                                 if (organizerManager.userExist(user)) {
                                     organizerManager.addContact(user, userID);
@@ -163,8 +160,7 @@ public class AttendeeSystem {
                                 validUserID = true;
                                 validAddRemove = true;
                                 goBack = true;
-                            }
-                            else{
+                            } else {
                                 output.userAlreadyInYourContacts();
                             }
                         } else {
@@ -179,7 +175,7 @@ public class AttendeeSystem {
                         if (user.equals("0")) {
                             validUserID = true;
                         } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            if (attendeeManager.contactExists(userID,user)){
+                            if (attendeeManager.contactExists(userID, user)) {
                                 attendeeManager.removeContact(userID, user);
                                 if (organizerManager.userExist(user)) {
                                     organizerManager.removeContact(user, userID);
@@ -192,8 +188,7 @@ public class AttendeeSystem {
                                 validUserID = true;
                                 validAddRemove = true;
                                 goBack = true;
-                            }
-                            else{
+                            } else {
                                 output.userNotInYourContacts();
                             }
                         } else {
@@ -209,18 +204,18 @@ public class AttendeeSystem {
 
     /**
      * Sign up for an event or Cancel an event from the Signup-events.
+     *
      * @param userID The user_id of the attendee who wants to Sign up or cancel an event
      */
-    private void joinLeaveEvent(String userID){
+    private void joinLeaveEvent(String userID) {
         boolean validInput = false;
         while (!validInput) {
             output.joinOrLeave();                                                     //checks whether attendee wants to join or leave an event, or wants to return back to menu
             String joinLeave = input.getKeyboardInput();
             int joinLeaveInt = Integer.parseInt(joinLeave);
             if (joinLeaveInt == 0) {                                                  //if attendee wants to return to menu, we exit this loop, having done nothing.
-               validInput = true;
-            }
-            else if (joinLeaveInt == 1) {                                           //in this case, org wants to join an event
+                validInput = true;
+            } else if (joinLeaveInt == 1) {                                           //in this case, org wants to join an event
                 boolean validEventSelected = false;
                 while (!validEventSelected) {
                     ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
@@ -265,43 +260,36 @@ public class AttendeeSystem {
                         output.joinLeaveInvalidResponse();
                     }
                 }
-            }
-            else if(joinLeaveInt==2){                                                                                   //we need to leave an event here
+            } else if (joinLeaveInt == 2) {                                                                                   //we need to leave an event here
                 boolean validEventSelected = false;
-                while(!validEventSelected){
+                while (!validEventSelected) {
                     ArrayList<Integer> listOfAttendingEventIds = attendeeManager.getSignedUpEvents(userID);            //get the list of signed up eventids
                     ArrayList<Event> listofAttendingEvents = new ArrayList<>();
-                    for(Integer eventid: listOfAttendingEventIds){                                                      //get the list of events
+                    for (Integer eventid : listOfAttendingEventIds) {                                                      //get the list of events
                         listofAttendingEvents.add(eventManager.getEvent(eventid));
                     }
-                    if (listofAttendingEvents.isEmpty()){
+                    if (listofAttendingEvents.isEmpty()) {
                         output.noSignedUpEvents();
                         validEventSelected = true;
                         validInput = true;
-                    }
-                    else{
+                    } else {
                         output.joinDeleteEventSelector(listofAttendingEvents);                                              //select which event they want to leave
                         String eventSelected = input.getKeyboardInput();
                         int eventSelectedInt = Integer.parseInt(eventSelected);
-                        if(eventSelectedInt==0){
+                        if (eventSelectedInt == 0) {
                             validEventSelected = true;
-                        }
-                        else if(1<=eventSelectedInt && eventSelectedInt<= listofAttendingEvents.size()){
-                            eventManager.removeAttendee(listOfAttendingEventIds.get(eventSelectedInt-1),userID);
-                            attendeeManager.removeEvent(listOfAttendingEventIds.get(eventSelectedInt-1),userID);
+                        } else if (1 <= eventSelectedInt && eventSelectedInt <= listofAttendingEvents.size()) {
+                            eventManager.removeAttendee(listOfAttendingEventIds.get(eventSelectedInt - 1), userID);
+                            attendeeManager.removeEvent(listOfAttendingEventIds.get(eventSelectedInt - 1), userID);
                             output.ActionDone();
-                            validEventSelected=true;
-                            validInput=true;
-                        }
-                        else{
+                            validEventSelected = true;
+                            validInput = true;
+                        } else {
                             output.joinLeaveInvalidResponse();
                         }
                     }
                 }
             }
         }
-
     }
-
-
 }

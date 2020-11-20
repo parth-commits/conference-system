@@ -51,27 +51,15 @@ public class MessageSystem {
      * @return Chat The chat history between user1 and user2
      */
     public Chat getChat(String id1, String id2) {
-        //get the chat between two users
         return chatManager.findChat(id1, id2);
     }
 
-    /*public void sendMessage(String sender, String recipient, String context){
-        int role = userType(sender);
-        output.sendMsgOptions(role);
-        if (role == 1){
-            // unfinished Ray
-        }
-        chatManager.addMessageToChat(sender, recipient, context);
-    }*/
-
     /**
-     * Sends message to other users, the options are different for different kind of user.
-     * @param sender The user_id of the user who send the message
+     * Sends message to other users, the options are different for different kinds of user.
+     * @param sender The user_id of the user who wants to send the message
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     public void sendMessage(String sender) throws IOException {
-        // simplify it by separating common methods?  send message
-        String recipient;
         String context;
         int role = userType(sender);
         // Organizer
@@ -89,10 +77,10 @@ public class MessageSystem {
                 // prompt context
                 output.promptContext();
                 context = input.getKeyboardInput();
-                if (context.equals("0")) {                                               //Check to make sure this works
+                if (context.equals("0")) {
                     return;
                 }
-                // add message
+                // add the message to everyone
                 ArrayList<String> ids;
                 if (action.equals("1")) {
                     ids = speakerManager.getUserIDs();
@@ -123,44 +111,6 @@ public class MessageSystem {
         // Attendee
         else if (role == 2) {
             singleUserMessageHelper(sender);
-            /*ArrayList<String> contactList = attendeeManager.contactList(sender);
-            if (contactList.size() == 0) {
-                output.youHaveNoContacts();
-                return;
-            }
-            //shows user their contact list
-            output.promptRecipient(contactList, false);
-            //tells them to choose 1 contact
-            int personNumber;
-            try {
-                personNumber = Integer.parseInt(input.getKeyboardInput());
-            } catch (NumberFormatException e) {
-                personNumber = -1;
-            }
-            while (!(0 <= personNumber && personNumber <= contactList.size())) {
-                output.promptRecipient(contactList, true);
-                try {
-                    personNumber = Integer.parseInt(input.getKeyboardInput());
-                } catch (NumberFormatException e) {
-                    personNumber = -1;
-                }
-            }
-            if (personNumber == 0) {
-                return;
-            }
-            String contactID = contactList.get(personNumber - 1);
-            Chat conversation = getChat(sender, contactID);
-            //prints the chat of the user
-            output.printChat(conversation);
-            //ask user to type a message
-            output.promptContext();
-            context = input.getKeyboardInput();
-            if (context.equals("0")) {
-                return;
-            }
-            // add message
-            chatManager.addMessageToChat(sender, contactID, context);
-            output.messageSent();*/
         }
         // Speaker
         else if (role == 3) {
@@ -224,44 +174,6 @@ public class MessageSystem {
                     output.messageSentToEveryone();
                 } else if (in.equals("2")) {
                     singleUserMessageHelper(sender);
-                    /*ArrayList<String> contactList = speakerManager.contactList(sender);
-                    if (contactList.size() == 0) {
-                        output.youHaveNoContacts();
-                        return;
-                    }
-                    //shows user their contact list
-                    output.promptRecipient(contactList, false);
-                    //tells them to choose 1 contact
-                    int personNumber;
-                    try {
-                        personNumber = Integer.parseInt(input.getKeyboardInput());
-                    } catch (NumberFormatException e) {
-                        personNumber = -1;
-                    }
-                    while (!(0 <= personNumber && personNumber <= contactList.size())) {
-                        output.promptRecipient(contactList, true);
-                        try {
-                            personNumber = Integer.parseInt(input.getKeyboardInput());
-                        } catch (NumberFormatException e) {
-                            personNumber = -1;
-                        }
-                    }
-                    if (personNumber == 0) {
-                        return;
-                    }
-                    String contactID = contactList.get(personNumber - 1);
-                    Chat conversation = getChat(sender, contactID);
-                    //prints the chat of the user
-                    output.printChat(conversation);
-                    //ask user to type a message
-                    output.promptContext();
-                    context = input.getKeyboardInput();
-                    if (context.equals("0")) {
-                        return;
-                    }
-                    // add message
-                    chatManager.addMessageToChat(sender, contactID, context);
-                    output.messageSent();*///delete this if it works
                 } else {
                     output.invalidInputSelection();
                 }
@@ -270,7 +182,7 @@ public class MessageSystem {
         saveState();
     }
 
-    public void singleUserMessageHelper(String sender) {
+    private void singleUserMessageHelper(String sender) {
         int role = userType(sender);
         ArrayList<String> contactList;
         if (role == 1) {
@@ -321,13 +233,11 @@ public class MessageSystem {
 
 
     /**
-     *Saves states of message system.
+     *Saves states of the entire system.
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     private void saveState() throws IOException {
-        //save the state back in!!!
         speakerManager.saveState();
-        //roomManager.saveState();
         organizerManager.saveState();
         eventManager.saveState();
         chatManager.saveState();
@@ -342,25 +252,6 @@ public class MessageSystem {
     public void viewContacts(String id) {
         chatManager.getContactsWithChat(id);
     }
-
-    /* pretty sure we dont need the following function, but its here if we do in the future.
-    public void viewChat(String id1){
-        String id2;
-        // prompt user for recipient
-        output.promptRecipient();
-        id2 = input.getKeyboardInput();
-        // check if chat exists
-        // if not -> break
-        if (chatManager.findChat(id1, id2) == null){
-            output.chatDNE();
-        }
-        // exists -> print
-        // print chat
-        else{
-            Chat conversation = getChat(id1, id2);
-            output.printChat(conversation);
-        }
-    }*/
 
     /**
      * Check the type of user, such as 1.organizer 2.attendee, or 3.speaker. Return -1 if the user cannot be defined.
