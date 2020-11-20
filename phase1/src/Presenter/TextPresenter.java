@@ -154,6 +154,12 @@ public class TextPresenter {
             }
         }
     }
+
+    /**
+     * Prints all the Events
+     * If there's no Events. Print: There are currently no events being held in this conference.
+     * @param listOfEventsSchedule
+     */
     public void eventsCheckAll(ArrayList<String> listOfEventsSchedule){
         if (listOfEventsSchedule.isEmpty()){
             System.out.println("There are currently no events being held in this conference.");
@@ -166,26 +172,15 @@ public class TextPresenter {
         }
     }
 
-    public void verifySignUp(boolean checker){
-        System.out.println("Are you sure you want to sign up for this event? ");
-        if (checker){
-            System.out.println("You've successfully signed up this event.");
-        }
-        else{
-            System.out.println("Something went wrong. You might already signed up for this event.");
-        }
-    }
-
-    public void verifyCancellation(boolean checker){
-        System.out.println("Are you sure you want to cancel this event? It will be removed from your schedule.");
-        if (checker){
-            System.out.println("You've successfully cancelled this event.");
-        }
-        else{
-            System.out.println("Something went wrong. Please try again later.");
-        }
-    }
-
+    /**
+     * Print: Are you an Organizer or an Attendee?
+     * If the input is invalid. Print: Invalid input. Are you an Organizer or an Attendee?
+     * Print: Please select one of the following:
+     * Print: 1. Organizer
+     * Print: 2. Attendee
+     * Print: Please type 0 to go back
+     * @param checker Check of the input is valid
+     */
     public void enterType(boolean checker) {
         if (checker) {
             System.out.println("Are you an Organizer or an Attendee?");
@@ -199,19 +194,32 @@ public class TextPresenter {
         System.out.println("Please type 0 to go back.");
     }
 
+    /**
+     * Print: Please enter your UserID.
+     * If the UserID is incorrect. Print: Your UserID is incorrect. If you currently do not have an acocunt please make one!
+     * @param checker Check if the userID is valid
+     */
     public void loginEnterID(boolean checker){
         if (checker){
             System.out.println("Please enter your UserID.");
         }
         else {
-            System.out.println("Your UserID and/or password are incorrect. If you currently do not have an acocunt please make one!");
+            System.out.println("Your UserID is incorrect. If you currently do not have an acocunt please make one!");
             System.out.println("You are being redirected to main menu where you can make an account.");
         }
     }
 
+    /**
+     * Print: Please enter your password.
+     * If the password is incorrect. Print: Your password is incorrect. If you currently do not have an acocunt please make one!
+     * @param checker Check if the password is valid
+     */
     public void loginPassword(boolean checker){
         if (checker){
             System.out.println("Please enter your password.");
+        }
+        else {
+            System.out.println("Your password is incorrect. If you currently do not have an acocunt please make one!");
         }
     }
     public void loginOrRegister(){
