@@ -111,6 +111,7 @@ public class LogInAndRegistrationSystem {
                     return inputID;
                 } else {
                     output.loginEnterID(false);
+
                 }
             }
         }
