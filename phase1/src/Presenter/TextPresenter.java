@@ -31,44 +31,6 @@ public class TextPresenter {
     }
 
     /**
-     * Print: Please enter your name:
-     */
-    public void enterName(){
-        System.out.println("Please enter your name: ");
-    }
-
-    /**
-     * Print Please enter your preferred ID: .
-     * If the UserID is taken. Print: That UserID is taken, please enter another UserID:
-     * @param checker Check if the UserId is taken
-     */
-    public void enterID(boolean checker){
-        if (checker){
-            System.out.println("Please enter your preferred UserID: ");
-        }
-        else{
-            System.out.println("That UserID is taken, please enter another UserID:");
-        }
-    }
-
-    /**
-     * Print: A password must be 8-14 characters long. Please enter a password:
-     * If the password is invalid. Print: That is an invalid password. Please enter a valid password: .
-     * Print: Please enter 0 to return to the previous menu
-     * @param checker Check if the password is valid
-     */
-    public void enterPassword(boolean checker){
-        System.out.println("A password must be 8-14 characters long.");
-        if (checker) {
-            System.out.println("Please enter a password: ");
-        }
-        else{
-            System.out.println("That is an invalid password. Please enter a valid password: ");
-        }
-        System.out.println("Please enter 0 to return to the previous menu");
-    }
-
-    /**
      * Print: Action Done!
      */
     public void ActionDone(){
@@ -121,6 +83,12 @@ public class TextPresenter {
         System.out.println("Please enter your name: ");
         System.out.println("Please type 0 to go back.");
     }
+
+    /**
+     * Print Please enter your preferred ID: .
+     * If the UserID is taken. Print: That UserID is taken, please enter another UserID:
+     * @param checker Check if the UserId is taken
+     */
     public void enterID(boolean checker){
         if (checker){
             System.out.println("Please enter your preferred UserID: ");
@@ -130,6 +98,13 @@ public class TextPresenter {
         }
         System.out.println("Please type 0 to go back.");
     }
+
+    /**
+     * Print: A password must be 8-14 characters long. Please enter a password:
+     * If the password is invalid. Print: That is an invalid password. Please enter a valid password: .
+     * Print: Please enter 0 to return to the previous menu
+     * @param checker Check if the password is valid
+     */
     public void enterPassword(boolean checker){
         System.out.println("A password must be 8-14 characters long.");
         if (checker) {
