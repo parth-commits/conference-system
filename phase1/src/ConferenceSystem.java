@@ -57,7 +57,6 @@ public class ConferenceSystem {
     }
 
     private void saveState() throws IOException {
-        //save the state back in!!!
         speakerManager.saveState();
         roomManager.saveState();
         organizerManager.saveState();
@@ -150,8 +149,6 @@ public class ConferenceSystem {
         }
         System.out.println("\n\n\n");
     }
-
-
 }
 
 
