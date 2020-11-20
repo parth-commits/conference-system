@@ -117,11 +117,30 @@ public class TextPresenter {
         System.out.println("\t5. SHUTDOWN");
     }
 
-    /**
-     * Prints the Events assigned to this speaker.
-     * If this speaker doesn't have assigned Events, print: You currently have no assigned talks.
-     * @param listOfEventsSchedule The list of events that assign to this speaker
-     */
+    public void enterName(){
+        System.out.println("Please enter your name: ");
+        System.out.println("Please type 0 to go back.");
+    }
+    public void enterID(boolean checker){
+        if (checker){
+            System.out.println("Please enter your preferred UserID: ");
+        }
+        else{
+            System.out.println("That UserID is taken, please enter another UserID:");
+        }
+        System.out.println("Please type 0 to go back.");
+    }
+    public void enterPassword(boolean checker){
+        System.out.println("A password must be 8-14 characters long.");
+        if (checker) {
+            System.out.println("Please enter a password: ");
+        }
+        else{
+            System.out.println("That is an invalid password. Please enter a valid password: ");
+        }
+        System.out.println("Please enter 0 to return to the previous menu");
+    }
+
     public void eventsSpeaker(ArrayList<String> listOfEventsSchedule){
         if (listOfEventsSchedule.isEmpty()){
             System.out.println("You currently have no assigned talks. ");
@@ -192,6 +211,7 @@ public class TextPresenter {
         System.out.println("Please select one of the following:");
         System.out.println("1. Organizer");
         System.out.println("2. Attendee");
+        System.out.println("Please type 0 to go back.");
     }
 
     public void loginEnterID(boolean checker){

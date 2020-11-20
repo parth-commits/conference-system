@@ -69,12 +69,80 @@ public class LogInAndRegistrationSystem {
      * @return String The user_id of this new user
      */
     public String registerUser() {
+        boolean selectType = false;
+        while (!selectType){
+            output.enterType(true);
+            String inputType = input.getKeyboardInput();
+            if (!(inputType.equals("1") || inputType.equals("2")||inputType.equals("0"))){
+                output.invalidInput();
+            }
+            else if (inputType.equals("0")){
+                return "false";
+            }
+            else{
+                boolean nameBack = false;
+                while (!nameBack){
+                    output.enterName();
+                    String inputName = input.getKeyboardInput();
+                    if (inputName.equals("0")){
+                        nameBack = true;
+                    }
+                    else{
+                        boolean untilCorrect = true;
+                        boolean correct = true;
+                        String inputID = "";
+                        while (untilCorrect) {
+                            output.enterID(correct);
+                            inputID = input.getKeyboardInput();
+                            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
+                                correct = false;
+                            }
+                            else if(inputID.equals("0")) {
+                                untilCorrect = false;
+                            }
+                            else{
+                                boolean untilCorrect1 = true;
+                                boolean correct1= true;
+                                String inputPass = "";
+                                while (untilCorrect1) {
+                                    output.enterPassword(correct1);
+                                    inputPass = input.getKeyboardInput();
+                                    if(inputPass.equals("0")) {
+                                        untilCorrect1 = false;
+                                    }
+                                    else if (inputPass.length() > 14 || inputPass.length() < 8) {
+                                        correct1 = false;
+                                    }
+                                    else{
+                                        if (inputType.equals("1")){
+                                            organizerManager.addOrganizer(inputID, inputName, inputPass);
+                                        }
+                                        else {
+                                            attendeeManager.addAttendee(inputID, inputName, inputPass);
+                                        }
+                                        return inputID;
+                                    }
+                                }
+                            }
+                        }
+                    }
+            }
+            }
+        }
+
+
+
+        /*
         output.enterType(true);
         String inputType = input.getKeyboardInput();
-        while (!(inputType.equals("1") || inputType.equals("2"))) {
+        while (!(inputType.equals("1") || inputType.equals("2")||inputType.equals("0"))) {
             output.enterType(false);
             inputType = input.getKeyboardInput();
         }
+        if (inputType.equals("0")){
+            return "false";
+        }
+
         output.enterName();
         String inputName = input.getKeyboardInput();
         boolean untilCorrect = true;
@@ -108,6 +176,8 @@ public class LogInAndRegistrationSystem {
             attendeeManager.addAttendee(inputID, inputName, inputPass);
         }
         return inputID;
+        */
+        return "false";
     }
 
     /**
