@@ -39,7 +39,6 @@ public class AttendeeSystem {
         this.eventManager = eventManager;
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
-
     }
     // Attendee is allowed to 1. see Events. 2. Sign up for Events
     // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Add or Remove Attendee in Contact

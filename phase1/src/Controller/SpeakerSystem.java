@@ -1,7 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;

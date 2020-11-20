@@ -59,20 +59,4 @@ public class Message implements Serializable {
         return "[" + formatter.format(getTime()) + "] " + sender + ": " + context;
     }
 
-
-    /* unused methods
-    //gets the sender of the message
-    public String getSender() {
-        return sender;
-    }
-    //gets the recipeint of the message
-    public String getRecipient() {
-        return recipient;
-    }
-    */
-
 }
-
-/*example of the toString method*/
-//[01/12/2020 23:59:45] parth: hi!
-//[01/12/2020 23:59:59] tanmay: hi again!

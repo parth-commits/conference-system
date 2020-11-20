@@ -1,6 +1,4 @@
 import Controller.*;
-import Entities.Event;
-import Entities.User;
 import UseCases.*;
 
 import java.io.IOException;
