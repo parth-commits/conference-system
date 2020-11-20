@@ -1,17 +1,18 @@
 package Controller;
 
-import Entities.Attendee;
-import Entities.Organizer;
-import Entities.User;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.AttendeeManager;
 import UseCases.OrganizerManager;
 import UseCases.SpeakerManager;
 
-import java.util.ArrayList;
+/** LoginAndRegistrationSystem controller implements multiple options that are useful when the user
+ * start the system. Such as verifying the user's login and registration for new users.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
+ */
 
-// We will combine LogInSystem and Registration System into one class with two methods (register user and login user)
 public class LogInAndRegistrationSystem {
     private TextPresenter output;
     private KeyboardInput input;
@@ -19,7 +20,12 @@ public class LogInAndRegistrationSystem {
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
 
-    //constructor
+    /**
+     * Constructor
+     * @param a The attendee manager implements by AttendeeManager use case
+     * @param b The organizer manager implements by OrganizerManager use case
+     * @param c The speaker manager implements by SpeakerManager use case
+     */
     public LogInAndRegistrationSystem(AttendeeManager a, OrganizerManager b, SpeakerManager c) {
         this.output = new TextPresenter();
         this.input = new KeyboardInput();
@@ -28,7 +34,12 @@ public class LogInAndRegistrationSystem {
         this.speakerManager = c;
     }
 
-    //start
+
+    /**
+     * Attendee is allowed to do the following options: 1.register as a new user. 2.LogIn the user account
+     * 3. shutdown the system
+     * @return object Returns different types depend on the action system takes.
+     */
     public String start() {
         String in;
         String userID = "false";
@@ -52,6 +63,11 @@ public class LogInAndRegistrationSystem {
     }
 
     //register method
+
+    /**
+     * Register as a new user
+     * @return String The user_id of this new user
+     */
     public String registerUser() {
         boolean selectType = false;
         while (!selectType){
@@ -164,9 +180,10 @@ public class LogInAndRegistrationSystem {
         return "false";
     }
 
-
-    //login method
-    //this method loops until a correct userid and password are provided. returns the userid if verified.
+    /**
+     * Log in the user account
+     * @return object Returns the String user_id if verified (LogIn successfully), false otherwise
+     */
     public String loginUser() {
         output.loginEnterID(true);
         String inputID = "";
