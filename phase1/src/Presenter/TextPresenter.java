@@ -79,14 +79,19 @@ public class TextPresenter {
         System.out.println("\t5. SHUTDOWN");
     }
 
+    /**
+     * Print: Please enter your name:
+     * Print: Please type 0 to go back.
+     */
     public void enterName(){
         System.out.println("Please enter your name: ");
         System.out.println("Please type 0 to go back.");
     }
 
     /**
-     * Print Please enter your preferred ID: .
+     * Print: Please enter your preferred ID: .
      * If the UserID is taken. Print: That UserID is taken, please enter another UserID:
+     * Print: Please type 0 to go back.
      * @param checker Check if the UserId is taken
      */
     public void enterID(boolean checker){
@@ -116,6 +121,11 @@ public class TextPresenter {
         System.out.println("Please enter 0 to return to the previous menu");
     }
 
+    /**
+     * Prints the AssignedEvents of this speaker
+     * If there's no AssignedEvents, Print: You currently have no assigned talks.
+     * @param listOfEventsSchedule The list of Events that assign to the speaker
+     */
     public void eventsSpeaker(ArrayList<String> listOfEventsSchedule){
         if (listOfEventsSchedule.isEmpty()){
             System.out.println("You currently have no assigned talks. ");
