@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-/** AttendeeSystem entity records basic information of a single message, including sender, recipient, text and date.
+/** AttendeeSystem controller implements various actions that can be done for an attendee, including
+ *  see all Events, Sign up for Events /cancel an event, check Schedule for Signed Up Events,
+ *  add or Remove Attendee in Contact, message other Users, logout the account, shutdown the system.
  *  @author Group_0112
  *  @version 1.0
  *  @since November 19th, 2020
@@ -27,6 +29,17 @@ public class AttendeeSystem {
     private RoomManager roomManager;
     private EventManager eventManager;
 
+    /**
+     * Constructor
+     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * @param organizerManager The organizer manager implements by OrganizerManager use case
+     * @param chatManager The chat manager implements by ChatManager use case
+     * @param attendeeManager The attendee manager implements by AttendeeManager use case
+     * @param messageSystem The message system implements by MessageSystem Controller
+     * @param eventSystem The event system implements by EventSystem Controller
+     * @param roomManager The room manager implements by RoomManager use case
+     * @param eventManager The event manager implements by EventManager use case
+     */
     public AttendeeSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, ChatManager chatManager,
                           AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem, RoomManager roomManager, EventManager eventManager) {
         this.speakerManager = speakerManager;
@@ -40,9 +53,15 @@ public class AttendeeSystem {
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
     }
-    // Attendee is allowed to 1. see Events. 2. Sign up for Events
-    // 3. Check Schedule for an Signed Up Event 4. Cancel an Event Signed Up for 5. Add or Remove Attendee in Contact
-    //6. Message Other Users
+
+    /**
+     * Attendee is allowed to do the following options: 1.see all Events. 2.Sign up for Events /cancel an event
+     * 3.check Schedule for an Signed Up Event. 4.add or Remove Attendee in Contact. 5.message other Users
+     * 6.log out the account. 7.shutdown the system
+     * @param userID The user_id of the attendee who logs in
+     * @return object Returns different types depend on the action system takes.
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     public boolean start(String userID) throws IOException {
         while (true) {
             String i;
@@ -80,7 +99,10 @@ public class AttendeeSystem {
         }
     }
 
-
+    /**
+     * Saves states of attendee system.
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     private void saveState() throws IOException {
         //save the state back in!!!
         speakerManager.saveState();
@@ -92,7 +114,11 @@ public class AttendeeSystem {
 
     }
 
-
+    /**
+     * Check if the user already registered in this system or not
+     * @param userid The user_id of the user we want to check
+     * @return boolean Returns true if the user already registered, false otherwise
+     */
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;
@@ -100,11 +126,10 @@ public class AttendeeSystem {
         return false;
     }
 
-
-
-
-
-
+    /**
+     *Add a user to the contact or remove a user from the contact by given its user_id
+     * @param userID The user_id of the user we want to add/ remove
+     */
     private void addRemoveContact(String userID){
         boolean goBack = false;
         while (!goBack) {
@@ -180,11 +205,12 @@ public class AttendeeSystem {
                 }
             }
         }
-        }
+    }
 
-
-
-
+    /**
+     * Sign up for an event or Cancel an event from the Signup-events.
+     * @param userID The user_id of the attendee who wants to Sign up or cancel an event
+     */
     private void joinLeaveEvent(String userID){
         boolean validInput = false;
         while (!validInput) {

@@ -6,6 +6,12 @@ import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
 
+/** SpeakerSystem controller implements various actions that can be done for a speaker, including
+ *  see all Events, check Schedule for assigned-Events, message other Users, logout the account, shutdown the system.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
+ */
 
 public class SpeakerSystem {
     private TextPresenter output;
@@ -16,6 +22,16 @@ public class SpeakerSystem {
     private ChatManager chatManager;
     private MessageSystem messageSystem;
     private EventSystem eventSystem;
+
+    /**
+     * Constructor
+     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * @param organizerManager The organizer manager implements by OrganizerManager use case
+     * @param chatManager The chat manager implements by ChatManager use case
+     * @param attendeeManager The attendee manager implements by AttendeeManager use case
+     * @param messageSystem The message system implements by MessageSystem Controller
+     * @param eventSystem The event system implements by EventSystem Controller
+     */
 
     public SpeakerSystem (SpeakerManager speakerManager, OrganizerManager organizerManager, ChatManager chatManager,
                           AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem){
@@ -29,9 +45,13 @@ public class SpeakerSystem {
         this.output = new TextPresenter();
     }
 
-
-    //We need a Speaker Menu in Text Presenter which allows Speakers to:
-    //1. see all Events. 2. see the Events they're assigned to. 3. Message Attendees
+    /**
+     * Speaker is allowed to do the following options: 1.see all Events. 2.check Schedule for assigned-Events.
+     * 3.message other Users. 4.logout the account. 5.shutdown the system
+     * @param userID The user_id of the attendee who logs in
+     * @return object Returns different types depend on the action system takes.
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     public boolean start(String userID) throws IOException {
         while (true) {
             String i;
@@ -62,7 +82,10 @@ public class SpeakerSystem {
         }
     }
 
-
+    /**
+     * Saves states of speaker system.
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     private void saveState() throws IOException {
         //save the state back in!!!
         speakerManager.saveState();
@@ -70,18 +93,22 @@ public class SpeakerSystem {
         //eventManager.saveState();
         chatManager.saveState();
         attendeeManager.saveState();
-
     }
 
-
+    /**
+     *Sends message to another user.
+     * @param userID The user_id of the user that we send message to
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     private void message(String userID) throws IOException {
         messageSystem.sendMessage(userID);
     }
 
-    private void joinLeaveEvent() {
-    }
-
-
+    /**
+     * Check if the user already registered in this system or not
+     * @param userid The user_id of the user we want to check
+     * @return boolean Returns true if the user already registered, false otherwise
+     */
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;
@@ -89,7 +116,10 @@ public class SpeakerSystem {
         return false;
     }
 
-
+    /**
+     *Add a user to the contact or remove a user from the contact by given its user_id
+     * @param userID The user_id of the user we want to add/ remove
+     */
     private void addRemoveContact(String userID) {
         output.addRemoveContact();
         String option = input.getKeyboardInput();

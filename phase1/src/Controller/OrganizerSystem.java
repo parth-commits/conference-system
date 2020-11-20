@@ -12,8 +12,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class OrganizerSystem {
+/** OrganizerSystem controller implements various actions that can be done for an organizer, including
+ *  create a new speaker, schedule a speaker, message other Users, create/delete Events, create Rooms,
+ *  add or Remove users in Contact, Sign up for Events /cancel an event, see all Events,
+ *  check Schedule for Signed Up Events, logout the account, shutdown the system.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
+ */
 
+public class OrganizerSystem {
     private TextPresenter output;
     private KeyboardInput input;
     private AttendeeManager attendeeManager;
@@ -25,6 +33,18 @@ public class OrganizerSystem {
     private MessageSystem messageSystem;
     private EventSystem eventSystem;
 
+
+    /**
+     * Constructor
+     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * @param roomManager The room manager implements by RoomManager use case
+     * @param organizerManager The organizer manager implements by OrganizerManager use case
+     * @param eventManager The event manager implements by EventManager use case
+     * @param chatManager The chat manager implements by ChatManager use case
+     * @param attendeeManager The attendee manager implements by AttendeeManager use case
+     * @param messageSystem The message system implements by MessageSystem Controller
+     * @param eventSystem The event system implements by EventSystem Controller
+     */
 
     public OrganizerSystem(SpeakerManager speakerManager, RoomManager roomManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem) {
         this.attendeeManager = attendeeManager;
@@ -39,6 +59,16 @@ public class OrganizerSystem {
         this.eventSystem = eventSystem;
     }
 
+    /**
+     * Organizer is allowed to do the following options: 1.create a new speaker.
+     * 2.schedule a speaker. 3.message other Users. 4.create/delete Events 5.create Rooms.
+     * 6.add or Remove users in Contact. 7.Sign up for Events /cancel an event. 8.see all Events.
+     * 9.check Schedule for Signed Up Events. 10.logout the account. 11.shutdown the system.
+     * @param userID The user_id of the attendee who logs in
+     * @return object Returns different types depend on the action system takes.
+     * @throws ParseException Throw ParseException to avoid errors that might occur
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     public boolean start(String userID) throws ParseException, IOException {
         while(true){
             String o;
@@ -82,6 +112,10 @@ public class OrganizerSystem {
 
     }
 
+    /**
+     * Saves states of organizer system.
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     private void saveState() throws IOException {
         //save the state back in!!!
         speakerManager.saveState();
@@ -93,9 +127,10 @@ public class OrganizerSystem {
 
     }
 
-
-
-    //creates a new speaker
+    /**
+     * Creates a new Speaker and add the Speaker into SpeakerManager.
+     * @param userID The user_id of the organizer who creates this Speaker
+     */
     private void createSpeaker(String userID) {
         boolean goBack = false;
         while (!goBack){
@@ -146,7 +181,7 @@ public class OrganizerSystem {
         }
 
         try {
-            Thread.sleep(1000);                             //Do we really need this anymore?
+            Thread.sleep(1000);
         }
         catch (Exception e){
             System.out.println("Was not able to sleep");
@@ -156,6 +191,10 @@ public class OrganizerSystem {
 
     //WE WANT THE ORGANIZER TO BE ABLE TO RETURN TO THE PREVIOUS STEP AT ANY TIME. TO DO THIS, EVERY TIME THE ORGANIZER HAS TO INPUT
     //SOMETHING, IF THEY INPUT 0, IT WILL BREAK OUT OF THE LOOP, AND THEREBY RETURN TO THE PREVIOUS STEP.
+
+    /**
+     * Schedules a Speaker to some specific Events.
+     */
     private void scheduleASpeaker() {
         ArrayList<Event> listOfEvents = eventManager.listOfEventsWithoutSpeaker();
 
@@ -223,10 +262,20 @@ public class OrganizerSystem {
         }
     }
 
+    /**
+     * Sends message to another user.
+     * @param userID The user_id of the user that we send message to
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     private void message(String userID) throws IOException {
         messageSystem.sendMessage(userID);
     }
-    //to do
+
+    /**
+     * Create an new Event or Delete an Event that already exists
+     * @param userID The user_id of the Organizer who creates/ delete the event.
+     * @throws ParseException Throw ParseException to avoid errors that might occur
+     */
     private void createDeleteEvent(String userID) throws ParseException {
         boolean createDelete = false;
         while (!createDelete){
@@ -406,9 +455,10 @@ public class OrganizerSystem {
         return true;
     }
 
-
-
-    //when you add a contact, a new empty chat object gets created with them. And it follows that when you remove a contact,the chat with them is deleted.
+    /**
+     *Add a user to the contact or remove a user from the contact by given its user_id
+     * @param userID The user_id of the user we want to add/ remove
+     */
     private void addRemoveContact(String userID) {
         boolean goBack = false;
         while (!goBack) {
@@ -487,7 +537,10 @@ public class OrganizerSystem {
     }
 
 
-    //to do
+    /**
+     * Sign up for an event or Cancel an event from the Signup-events.
+     * @param userID The user_id of the organizer who wants to Sign up or cancel an event
+     */
     private void joinLeaveEvent(String userID) {
         boolean validInput = false;
         while (!validInput) {
@@ -582,6 +635,9 @@ public class OrganizerSystem {
     }
     }
 
+    /**
+     * Create a new Room
+     */
     public void createRoom(){
         boolean validLocation = false;
         while (!validLocation){
@@ -601,14 +657,17 @@ public class OrganizerSystem {
         }
     }
 
-
-    //returns true if the given userid exists in any 3 people's managers
+    /**
+     * Check if the user already registered in this system or not
+     * @param userid The user_id of the user we want to check
+     * @return boolean Returns true if the user already registered, false otherwise
+     */
     private boolean userExists(String userid){
         if (attendeeManager.userExist(userid)||organizerManager.userExist(userid)||speakerManager.userExist(userid)){
             return true;
         }
         return false;
     }
-    }//randomcomment
+    }
 
 

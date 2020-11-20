@@ -33,7 +33,6 @@ public class Message implements Serializable {
         this.time = new Date();
     }
 
-    //gets the actual text of the message
     /** Returns a context of the message as a String
      * @return String of the message
      */
@@ -42,7 +41,6 @@ public class Message implements Serializable {
         return context;
     }
 
-    //gets the time of the message
     /** Returns time of the message as a Date object
      * @return Date The time of message (Date object)
      */
@@ -50,7 +48,6 @@ public class Message implements Serializable {
         return time;
     }
 
-    //converts the message to a string form
     /** Converts the message to a String, including information of sender, send time and context
      * @return String Message as a String
      */
