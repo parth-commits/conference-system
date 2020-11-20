@@ -45,7 +45,7 @@ public class Event implements Serializable {
 
     /**
      * Gets the id of the event
-     * @return id The id of the event
+     * @return int The id of the event
      */
     public int getID() {
         return this.id;
@@ -53,7 +53,7 @@ public class Event implements Serializable {
 
     /**
      * Gets the title of the event
-     * @return title The title of the event
+     * @return String The title of the event
      */
     public String getTitle() {
         return this.title;
@@ -61,13 +61,13 @@ public class Event implements Serializable {
 
     /**
      * Gets the starting time of the event
-     * @return time The starting time of the event
+     * @return Data The starting time of the event
      */
     public Date getTime() { return this.time; }
 
     /**
      * Gets the location of the event
-     * @return location The location of the event
+     * @return String The location of the event
      */
     public String getLocation() {
         return this.location;
@@ -75,7 +75,7 @@ public class Event implements Serializable {
 
     /**
      * Get the speaker of the event
-     * @return speakerID The user_id of the speaker of the event
+     * @return String The user_id of the speaker of the event
      */
     public String getSpeakerID() {
         return this.speakerID;
@@ -91,7 +91,7 @@ public class Event implements Serializable {
 
     /**
      * Gets the organizer who hosts the event
-     * @return organizerID The user_id of the organizer
+     * @return String The user_id of the organizer
      */
     public String getOrganizerID() {
         return this.organizerID;
@@ -164,7 +164,7 @@ public class Event implements Serializable {
 
     /**
      * Override the toString method for event
-     * @return "Event{id, title, time, location, speakerID, attendees, organizerID}
+     * @return String Event{id, title, time, location, speakerID, attendees, organizerID}
      */
     @Override
     public String toString() {

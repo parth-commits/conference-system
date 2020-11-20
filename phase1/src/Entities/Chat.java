@@ -30,7 +30,7 @@ public class Chat implements Serializable {
 
     /**
      * Gets the user_id of user1.
-     * @return id1 the user_id of user1
+     * @return String the user_id of user1
      */
     public String getId1() {
         return id1;
@@ -38,7 +38,7 @@ public class Chat implements Serializable {
 
     /**
      * Gets the user_id of user2
-     * @return id2 the user_id of user2
+     * @return String the user_id of user2
      */
     public String getId2() {
         return id2;
