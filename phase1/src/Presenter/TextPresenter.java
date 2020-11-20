@@ -156,8 +156,8 @@ public class TextPresenter {
     }
 
     /**
-     * Prints all the Events
      * If there's no Events. Print: There are currently no events being held in this conference.
+     * Otherwise, prints all the Events
      * @param listOfEventsSchedule
      */
     public void eventsCheckAll(ArrayList<String> listOfEventsSchedule){
@@ -196,7 +196,8 @@ public class TextPresenter {
 
     /**
      * Print: Please enter your UserID.
-     * If the UserID is incorrect. Print: Your UserID is incorrect. If you currently do not have an acocunt please make one!
+     * If the UserID is incorrect. Print: "Your UserID is incorrect. If you currently do not have an acocunt please make one!
+     * You are being redirected to main menu where you can make an account."
      * @param checker Check if the userID is valid
      */
     public void loginEnterID(boolean checker){
@@ -222,6 +223,13 @@ public class TextPresenter {
             System.out.println("Your password is incorrect. If you currently do not have an acocunt please make one!");
         }
     }
+
+    /**
+     * Print: Please select the action you'd like to do.
+     * Print: 1. Register
+     * Print: 2. Login
+     * Print: 3. SHUTDOWN
+     */
     public void loginOrRegister(){
         System.out.println("Please select the action you'd like to do.");
         System.out.println("1. Register");
@@ -229,10 +237,19 @@ public class TextPresenter {
         System.out.println("3. SHUTDOWN");
     }
 
+    /**
+     * Print: You have no contacts yet! Please add a contact before sending a message.
+     */
     public void youHaveNoContacts(){
         System.out.println("You have no contacts yet! Please add a contact before sending a message.");
     }
 
+    /**
+     * Print: Would you like to add or remove contact?
+     * Print: 1.Add contact
+     * Print: 2. Remove contact
+     * Print: Please type 0 to return to the previous menu
+     */
     public void addRemoveContact(){
         System.out.println("Would you like to add or remove contact?");
         System.out.println("\t1. Add contact");
@@ -240,6 +257,12 @@ public class TextPresenter {
         System.out.println("Please type 0 to return to the previous menu");
     }
 
+    /**
+     * If the userID entered is invalid. Print: Invalid userID. Enter a valid UserID of the contact:
+     * Print: Enter the userID of the contact:
+     * Print: Please type 0 to go back.
+     * @param invalid
+     */
     public void enterContactUserid(boolean invalid){
         if (invalid){
             System.out.println("Invalid userID. Enter a valid UserID of the contact:");
@@ -250,7 +273,14 @@ public class TextPresenter {
         System.out.println("Please type 0 to go back.");
     }
 
-    //Should One line outputs still be in presenter. answer by parth: yes!
+    /**
+     * If the input is invalid. Print: Invalid input, please try again:
+     * Otherwise, print: Please select a contact:
+     * Prints all the user_ids from the list of contact
+     * Print: Enter 0 if you would like to cancel.
+     * @param contactList The contact list we want to print
+     * @param invalid Check if the input is valid
+     */
     public void promptRecipient(ArrayList<String> contactList, boolean invalid){
         if (invalid){
             System.out.println("Invalid input, please try again:");
@@ -261,6 +291,15 @@ public class TextPresenter {
         }
         System.out.println("Enter 0 if you would like to cancel.");
     }
+
+    /**
+     * If the input is invalid. Print: Invalid input, please try again:
+     * Otherwise, print: Please select an event to send an automatic message to all attendees of that event:
+     * Prints all the events
+     * Print: Enter the event ID of your choice:
+     * @param eventList The event list we want to print
+     * @param invalid Check if the input is valid
+     */
     public void promptEvents(ArrayList<ArrayList<String>> eventList, boolean invalid){
         if (invalid){
             System.out.println("Invalid input, please try again:");
@@ -271,19 +310,21 @@ public class TextPresenter {
         }
         System.out.println("Enter the event ID of your choice:");
     }
-    public void confirmCreateChat(String id){
-        System.out.println("Please confirm create a chat with user" + id + ": ");
-        System.out.println("yes/no");
-    }
+
+    /**
+     * Print: Please enter the message, or type 0 to cancel:
+     */
     public void promptContext(){
         System.out.println("Please enter the message, or type 0 to cancel: ");
     }
 
+    /**
+     * Print: "Please enter the automated message for " + title + " event: "
+     * @param title The title of the event
+     */
     public void promptContextEvent(String title){
         System.out.println("Please enter the automated message for " + title + " event: ");
     }
-
-    public void chatDNE(){ System.out.println("The chat doesn't exist."); }
 
     public void printChat(Chat chat){
         if (chat.getMessages()!= null) {
@@ -394,10 +435,6 @@ public class TextPresenter {
         System.out.println("The event id you entered was invalid or is already in use, please try again");
     }
 
-    public void joinEvent(){
-        System.out.println("Please type the event id you wish to join.");
-    }
-
     public void joinOrLeave(){
         System.out.println("Would you like to join or leave this event?");
         System.out.println("1. Join");
@@ -444,10 +481,7 @@ public class TextPresenter {
     public void createProvideEventTitle(){
         System.out.println("Please provide the event title");
     }
-    public void deleteGetEventId(){
-        System.out.println("Please enter the event id that you would like to delete.");
-        System.out.println("Press 0 to return to the previous menu.");
-    }
+
     public void deleteInvalidEventId(){
         System.out.println("The event id you entered was invalid, please try again.");
     }
