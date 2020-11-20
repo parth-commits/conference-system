@@ -10,6 +10,13 @@ import UseCases.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/** MessageSystem controller implements various actions that can be done for the users, including
+ *  sent message, get chat history, view contact list, add contact.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
+ */
+
 public class MessageSystem {
     private TextPresenter output;
     private KeyboardInput input;
@@ -19,7 +26,14 @@ public class MessageSystem {
     private EventManager eventManager;
     private AttendeeManager attendeeManager;
 
-
+    /**
+     *Constructor
+     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * @param organizerManager The organizer manager implements by OrganizerManager use case
+     * @param eventManager The event manager implements by EventManager use case
+     * @param chatManager The chat manager implements by ChatManager use case
+     * @param attendeeManager The attendee manager implements by AttendeeManager use case
+     */
     public MessageSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager) {
         this.speakerManager = speakerManager;
         this.organizerManager = organizerManager;
@@ -30,6 +44,12 @@ public class MessageSystem {
         this.input = new KeyboardInput();
     }
 
+    /**
+     * Gets the chat between two users (user1 and user2)
+     * @param id1 The user_id of user1
+     * @param id2 The user_id of user2
+     * @return Chat The chat history between user1 and user2
+     */
     public Chat getChat(String id1, String id2) {
         //get the chat between two users
         return chatManager.findChat(id1, id2);
@@ -44,6 +64,11 @@ public class MessageSystem {
         chatManager.addMessageToChat(sender, recipient, context);
     }*/
 
+    /**
+     * Sends message to other users, the options are different for different kind of user.
+     * @param sender The user_id of the user who send the message
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     public void sendMessage(String sender) throws IOException {
         // simplify it by separating common methods?  send message
         String recipient;
@@ -295,6 +320,10 @@ public class MessageSystem {
     }
 
 
+    /**
+     *Saves states of message system.
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     private void saveState() throws IOException {
         //save the state back in!!!
         speakerManager.saveState();
@@ -306,8 +335,11 @@ public class MessageSystem {
 
     }
 
+    /**
+     * See all contacts of the user
+     * @param id The user_id of the user who wants to see its contacts
+     */
     public void viewContacts(String id) {
-        //view all contacts of user
         chatManager.getContactsWithChat(id);
     }
 
@@ -330,6 +362,11 @@ public class MessageSystem {
         }
     }*/
 
+    /**
+     * Check the type of user, such as attendee, organizer or speaker. Return -1 if the user cannot be defined.
+     * @param id The user_id of the user we are checking
+     * @return int Integer that refer to different type of user
+     */
     public int userType(String id) {
         // check current user status
         // 1 for attendee, 2 for speaker, 3 for organizer
@@ -345,6 +382,11 @@ public class MessageSystem {
         }
     }
 
+    /**
+     * Adds the user into the contact list
+     * @param current The type of user who is the own of this contact list
+     * @param id The user_id of the user we want to add
+     */
     public void addContact(String current, String id) {
         int current_role = userType(current);
         int id_role = userType(id);

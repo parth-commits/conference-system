@@ -1,8 +1,6 @@
 package Controller;
 
 import Entities.Event;
-import Entities.Speaker;
-import Entities.User;
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import UseCases.*;
@@ -13,6 +11,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
+/** EventSystem controller implements various actions that can be done for the users, including
+ *  see all Events, create/delete Events, Sign up for Events /cancel an event, check Schedule for Signed Up and Assigned Events.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
+ */
+
 public class EventSystem {
     private TextPresenter output;
     private KeyboardInput input;
@@ -22,6 +27,14 @@ public class EventSystem {
     private AttendeeManager attendeeManager;
     private RoomManager roomManager;
 
+    /**
+     * Constructor
+     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * @param roomManager The room manager implements by RoomManager use case
+     * @param organizerManager The organizer manager implements by OrganizerManager use case
+     * @param eventManager The event manager implements by EventManager use case
+     * @param attendeeManager The attendee manager implements by AttendeeManager use case
+     */
     public EventSystem(SpeakerManager speakerManager, RoomManager roomManager, OrganizerManager organizerManager,
                        EventManager eventManager, AttendeeManager attendeeManager) {
         this.attendeeManager = attendeeManager;
@@ -32,6 +45,10 @@ public class EventSystem {
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
     }
+
+    /**
+     * Show all the Events to the user with its title, location, time, event_id, and speaker
+     */
     public void checkAllEvents(){
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
@@ -57,6 +74,10 @@ public class EventSystem {
         }
     }
 
+    /**
+     * Saves states of Event system.
+     * @throws IOException Throw IOException to avoid errors that might occur
+     */
     private void saveState() throws IOException {
         //save the state back in!!!
         speakerManager.saveState();
@@ -68,6 +89,11 @@ public class EventSystem {
 
     }
 
+    /**
+     * Sign up for an event
+     * @param UserId The user_id of the user who wants to sign up the event
+     * @param EventId The event that the user wants to sign up to
+     */
     public void signUpEvent(String UserId, Integer EventId){
         if (attendeeManager.SignedUp(EventId, UserId)){
             output.ActionFailed();
@@ -79,6 +105,11 @@ public class EventSystem {
         }
     }
 
+    /**
+     * Cancel an event from the Signup-events of that user.
+     * @param UserId The user_id of the user who wants to cancel the event
+     * @param EventId The event that the user wants to cancel
+     */
     public void cancelSignedUpEvent(String UserId, Integer EventId) {
         if (attendeeManager.SignedUp(EventId, UserId)) {
             attendeeManager.removeEvent(EventId, UserId);
@@ -88,6 +119,10 @@ public class EventSystem {
         }
     }
 
+    /**
+     * Show all the Events that the user signed up to with the event's title, location, time, event_id, and speaker.
+     * @param UserId The user_id of the user who wants to check the signed up events
+     */
     public void checkSignedUpEvent(String UserId){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
@@ -125,6 +160,10 @@ public class EventSystem {
         }
     }
 
+    /**
+     * Show all the Events that the user is assigned to with the event's title, location, time, event_id, and attendees.
+     * @param UserId The user_id of the user who wants to check the assigned events
+     */
     public void checkAssignedEvent(String UserId){
         ArrayList<Event> listOfEvents = new ArrayList<>();
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
@@ -160,19 +199,5 @@ public class EventSystem {
             }
         }
     }
-
-
-    //IS THIS METHOD EVERY GOING TO BE USED?
-    public void checkEventTitleIDs(){
-        ArrayList<String> entireEventList = new ArrayList<>();
-        ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
-        int i = 0;
-        for (Event event :listOfEvents){
-            String s = String.valueOf(i);
-            String schedule = s +". " + event.getTitle() + ".   EventID: " + event.getID();
-            entireEventList.add(schedule);
-        }
-        //output.Events(entireEventList);
-    }
-    }
+}
 
