@@ -60,6 +60,7 @@ public class TextPresenter {
 
     public void enterName(){
         System.out.println("Please enter your name: ");
+        System.out.println("Please type 0 to go back.");
     }
     public void enterID(boolean checker){
         if (checker){
@@ -68,6 +69,7 @@ public class TextPresenter {
         else{
             System.out.println("That UserID is taken, please enter another UserID:");
         }
+        System.out.println("Please type 0 to go back.");
     }
     public void enterPassword(boolean checker){
         System.out.println("A password must be 8-14 characters long.");
@@ -144,6 +146,7 @@ public class TextPresenter {
         System.out.println("Please select one of the following:");
         System.out.println("1. Organizer");
         System.out.println("2. Attendee");
+        System.out.println("Please type 0 to go back.");
     }
 
     public void loginEnterID(boolean checker){
