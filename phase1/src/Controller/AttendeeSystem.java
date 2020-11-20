@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+/** AttendeeSystem entity records basic information of a single message, including sender, recipient, text and date.
+ *  @author Group_0112
+ *  @version 1.0
+ *  @since November 19th, 2020
+ */
 
 public class AttendeeSystem {
     private TextPresenter output;
