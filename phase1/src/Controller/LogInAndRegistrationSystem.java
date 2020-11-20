@@ -13,107 +13,107 @@ import java.util.ArrayList;
 
 // We will combine LogInSystem and Registration System into one class with two methods (register user and login user)
 public class LogInAndRegistrationSystem {
-        private TextPresenter output;
-        private KeyboardInput input;
-        private AttendeeManager attendeeManager;
-        private OrganizerManager organizerManager;
-        private SpeakerManager speakerManager;
+    private TextPresenter output;
+    private KeyboardInput input;
+    private AttendeeManager attendeeManager;
+    private OrganizerManager organizerManager;
+    private SpeakerManager speakerManager;
 
-        //constructor
-        public LogInAndRegistrationSystem(AttendeeManager a, OrganizerManager b, SpeakerManager c) {
-            this.output = new TextPresenter();
-            this.input = new KeyboardInput();
-            this.attendeeManager = a;
-            this.organizerManager = b;
-            this.speakerManager = c;
-        }
+    //constructor
+    public LogInAndRegistrationSystem(AttendeeManager a, OrganizerManager b, SpeakerManager c) {
+        this.output = new TextPresenter();
+        this.input = new KeyboardInput();
+        this.attendeeManager = a;
+        this.organizerManager = b;
+        this.speakerManager = c;
+    }
 
-        //start
-        public String start(){
+    //start
+    public String start() {
+        String in;
+        String userID = "false";
+        while (true) {
             output.loginOrRegister();
-            String in = input.getKeyboardInput();
-            while (!(in.equals("1") || in.equals("2")||in.equals("3"))) {
-                output.invalidInput();
-                output.loginOrRegister();
-                in = input.getKeyboardInput();
-            }
-            if (in.equals("1")){
-                return registerUser();
-            }
-            else if (in.equals("2")){
-                return loginUser();
-            }
-            else {
+            in = input.getKeyboardInput();
+            if (in.equals("1")) {
+                userID = registerUser();
+            } else if (in.equals("2")) {
+                userID = loginUser();
+            } else if (in.equals("3")) {
                 return "SHUTDOWN";
-            }
-
-        }
-
-        //register method
-        public String registerUser() {
-            output.enterType(true);
-            String inputType = input.getKeyboardInput();
-            while (!(inputType.equals("1") || inputType.equals("2"))) {
-                output.enterType(false);
-                inputType = input.getKeyboardInput();
-            }
-            output.enterName();
-            String inputName = input.getKeyboardInput();
-            boolean untilCorrect = true;
-            boolean correct = true;
-            String inputID = "";
-            while (untilCorrect) {
-                output.enterID(correct);
-                inputID = input.getKeyboardInput();
-                if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
-                    correct = false;
-                } else {
-                    untilCorrect = false;
-                }
-            }
-            untilCorrect = true;
-            correct = true;
-            String inputPass = "";
-            while (untilCorrect) {
-                output.enterPassword(correct);
-                inputPass = input.getKeyboardInput();
-                if (inputPass.length() > 14 || inputPass.length() < 8) {
-                    correct = false;
-                } else {
-                    untilCorrect = false;
-                }
-            }
-            //now we have a valid name, id, and password
-            if (inputType.equals("1")) {
-                organizerManager.addOrganizer(inputID, inputName, inputPass);
             } else {
-                attendeeManager.addAttendee(inputID, inputName, inputPass);
+                output.invalidInput();
             }
+            if (!userID.equals("false")){
+                return userID;
+            }
+        }
+
+    }
+
+    //register method
+    public String registerUser() {
+        output.enterType(true);
+        String inputType = input.getKeyboardInput();
+        while (!(inputType.equals("1") || inputType.equals("2"))) {
+            output.enterType(false);
+            inputType = input.getKeyboardInput();
+        }
+        output.enterName();
+        String inputName = input.getKeyboardInput();
+        boolean untilCorrect = true;
+        boolean correct = true;
+        String inputID = "";
+        while (untilCorrect) {
+            output.enterID(correct);
+            inputID = input.getKeyboardInput();
+            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
+                correct = false;
+            } else {
+                untilCorrect = false;
+            }
+        }
+        untilCorrect = true;
+        correct = true;
+        String inputPass = "";
+        while (untilCorrect) {
+            output.enterPassword(correct);
+            inputPass = input.getKeyboardInput();
+            if (inputPass.length() > 14 || inputPass.length() < 8) {
+                correct = false;
+            } else {
+                untilCorrect = false;
+            }
+        }
+        //now we have a valid name, id, and password
+        if (inputType.equals("1")) {
+            organizerManager.addOrganizer(inputID, inputName, inputPass);
+        } else {
+            attendeeManager.addAttendee(inputID, inputName, inputPass);
+        }
+        return inputID;
+    }
+
+
+    //login method
+    //this method loops until a correct userid and password are provided. returns the userid if verified.
+    public String loginUser() {
+        output.loginEnterID(true);
+        String inputID = "";
+        inputID = input.getKeyboardInput();
+        output.loginPassword(true);
+        String inputPassword = "";
+        inputPassword = input.getKeyboardInput();
+        if (attendeeManager.verifyLogIn(inputID, inputPassword)) {
             return inputID;
+        } else if (organizerManager.verifyLogIn(inputID, inputPassword)) {
+            return inputID;
+        } else if (speakerManager.verifyLogIn(inputID, inputPassword)) {
+            return inputID;
+        } else {
+            output.loginEnterID(false);
+            return "false";
         }
-
-
-        //login method
-        //this method loops until a correct userid and password are provided. returns the userid if verified.
-        public String loginUser() {
-            while (true) {
-                output.loginEnterID(true);
-                String inputID = "";
-                inputID = input.getKeyboardInput();
-                output.loginPassword(true);
-                String inputPassword = "";
-                inputPassword = input.getKeyboardInput();
-                if (attendeeManager.verifyLogIn(inputID, inputPassword)) {
-                    return inputID;
-                } else if (organizerManager.verifyLogIn(inputID, inputPassword)) {
-                    return inputID;
-                } else if (speakerManager.verifyLogIn(inputID, inputPassword)) {
-                    return inputID;
-                } else {
-                    output.loginEnterID(false);
-
-                }
-            }
-        }
+    }
 }
 

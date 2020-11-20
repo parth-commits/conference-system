@@ -151,7 +151,8 @@ public class TextPresenter {
             System.out.println("Please enter your UserID.");
         }
         else {
-            System.out.println("Your UserID and/or password are incorrect. Please try again.");
+            System.out.println("Your UserID and/or password are incorrect. If you currently do not have an acocunt please make one!");
+            System.out.println("You are being redirected to main menu where you can make an account.");
         }
     }
 
