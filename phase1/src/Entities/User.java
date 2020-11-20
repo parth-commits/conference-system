@@ -3,6 +3,13 @@ package Entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * User is an Abstract class of Attendee, Organizer, Speaker
+ * @author Group_0112
+ * @version 1.0
+ * @since November 16th, 2020
+ */
+
 public abstract class User implements Serializable {
 
     /* this is an abstract class as all types of people are users, and have the following basic properties*/

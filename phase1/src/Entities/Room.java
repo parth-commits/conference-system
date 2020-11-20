@@ -7,46 +7,69 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.TimeZone;
 
-public class Room implements Serializable {
+/**
+ * Room entity records basic information of an room, including location, capacity, bookedTime.,
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
 
+public class Room implements Serializable {
     //capacity of the room
     private Integer capacity = 2;
-
     //location of the room
     private String roomLocation;
-
     //the key is the  time, and the value is the eventid
     private Hashtable<Date, Integer> bookedTime;
 
-
-    //the constructor
+    /**
+     * Constructor
+     * @param roomLoc The location of the room
+     */
     public Room(String roomLoc){
         this.roomLocation = roomLoc;
         this.bookedTime = new Hashtable<>();
     }
 
-
-    //get the room location
+    /**
+     * Gets the Location of the room
+     * @return String The room's location
+     */
     public String getRoomLocation() {
         return roomLocation;
     }
 
-    //gets the capacity of the room
+    /**
+     * Gets the capacity of the room
+     * @return Integer The capacity of the room
+     */
     public Integer getCapacity(){
         return this.capacity;
     }
 
-    //gets the dictionary of the date - event booked
+    /**
+     * Gets the dictionary of the date of events booked
+     * @return Hashtable The dictionary of the date of events booked
+     */
     public Hashtable<Date, Integer> getBookedTime(){
         return this.bookedTime;
     }
 
-    //checks if the room is booked at a given date/time
+    /**
+     * Checks if the room is booked at a given date/time
+     * @param date
+     * @return boolean Returns true if the room is booked, false otherwise
+     */
     public boolean isBooked(Date date){
         return bookedTime.containsKey(date);
     }
 
-    //adds an event to the given time in our dictionary
+    /**
+     * Adds an event to the given time in our dictionary
+     * @param date The date of the event
+     * @param EventId The event_id of the event
+     * @return boolean Returns ture if the room is booked successfully
+     */
     public boolean addBookedTime(Date date, Integer EventId){
         //if the room is already booked, you cant add a new event!
         if (bookedTime.containsKey(date)){
@@ -57,7 +80,12 @@ public class Room implements Serializable {
         return true;
     }
 
-    //removes event at given time from our dictionary
+    /**
+     * Removes event at given time from our dictionary
+     * @param date The date of the event
+     * @param EventId The event_id of the event
+     * @return boolean Returns ture if the room is removed from booking list successfully
+     */
     public boolean removeBookedTime(Date date, Integer EventId){
         //if the event exists at the time inour dictionary, then delete the event
         if (bookedTime.containsKey(date) && bookedTime.get(date).equals(EventId)){
@@ -68,6 +96,10 @@ public class Room implements Serializable {
         return false;
     }
 
+    /**
+     * Present the String of Room in the following form: Room{capacity, roomLocation, bookedTime}
+     * @return String The String of the Room
+     */
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
