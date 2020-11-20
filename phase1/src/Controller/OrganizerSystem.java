@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class OrganizerSystem {
 
@@ -241,6 +242,7 @@ public class OrganizerSystem {
                     String inputTime = input.getKeyboardInput();
                     if (verifyDateTimeEntered(inputTime)){                                //they entered a valid date time
                         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
                         Date d1 = formatter.parse(inputTime);
                         ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1);
                         if (availableRooms.isEmpty()){
@@ -345,6 +347,7 @@ public class OrganizerSystem {
     //and we get the user to re-enter the date.
     private boolean verifyDateTimeEntered(String date){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         Date currentDateTime = new Date();                  //current dateandtime
         //checks if the string date provided fits the format and is after the current date. else, returns false. HOWCOME .BEFORE IS IGNORED?
         Date d1;
@@ -360,6 +363,7 @@ public class OrganizerSystem {
             return false;
         }
         SimpleDateFormat formatter2 = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
+        formatter2.setTimeZone(TimeZone.getTimeZone("EST"));
         String day1 = formatter2.format(d1).substring(0,1);
         if (day1.equals("S")){
             return false;

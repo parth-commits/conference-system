@@ -1,8 +1,10 @@
 package Entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Event entity records basic information of an event, including event ids, title, time, location,
@@ -157,7 +159,7 @@ public class Event implements Serializable {
      * @return boolean Returns true if there's a Speaker for the event, false otherwise
      */
     public boolean noSpeaker(){
-        return this.speakerID == null;
+        return this.speakerID.equals("");
     }
 
     /**
@@ -166,6 +168,8 @@ public class Event implements Serializable {
      */
     @Override
     public String toString() {
-        return "Event{ id=" + id + " | title='" + title +" | time=" + time + ", location='" + location + " | speakerID='" + speakerID + " | attendees=" + attendees + ", organizerID='" + organizerID +  '}';
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
+        return "Event{ id=" + id + " | title='" + title +" | time=" + formatter.format(time) + ", location='" + location + " | speakerID='" + speakerID + " | attendees=" + attendees + ", organizerID='" + organizerID +  '}';
     }
 }

@@ -1,9 +1,11 @@
 package Entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.TimeZone;
 
 public class Room implements Serializable {
 
@@ -68,6 +70,8 @@ public class Room implements Serializable {
 
     @Override
     public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         return "Room{ capacity=" + capacity + " | roomLocation='" + roomLocation +  " \n\t\t| bookedTime=" + bookedTime + '}';
     }
 }

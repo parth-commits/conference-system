@@ -9,7 +9,9 @@ import UseCases.*;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class EventSystem {
     private TextPresenter output;
@@ -33,12 +35,15 @@ public class EventSystem {
     public void checkAllEvents(){
         ArrayList<String> listOfEventSchedule = new ArrayList<>();
         ArrayList<Event> listOfEvents = eventManager.getListOfEvents();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         for (Event event :listOfEvents){
             String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + event.getTime() + "\n" + "Event ID: " + event.getID();
+                    + "Time: " + formatter.format(event.getTime()) + "\n" + "Event ID: " + event.getID();
             if (eventManager.hasSpeaker(event.getID())){
-                schedule +=  "\n" + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+                schedule +=  "\n" + "Speaker: " + event.getSpeakerID();
             }
+
             listOfEventSchedule.add(schedule);
         }
         output.eventsCheckAll(listOfEventSchedule);
