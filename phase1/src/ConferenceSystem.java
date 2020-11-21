@@ -144,12 +144,9 @@ public class ConferenceSystem {
         }
     }
 
-    /**
-     * Passes a list of ids for different objects.
-     */
     private void listofIDPass() {
-        System.out.println("\n\n\nNOTE: this is a debug feature to assist our TA. Here is the current state of the system!");
-        System.out.println("All the organizers in the system:");
+        System.out.println("\n\n\nNOTE: this is a debug feature to assist our TA. Here is the current state of the system:");
+        System.out.println("\n\nAll the organizers in the system:");
         ArrayList<String> organizersList = organizerManager.getUserIDs();
         for (String organizer: organizersList){
             System.out.println(organizerManager.getOrganizer(organizer).toString());
@@ -174,7 +171,7 @@ public class ConferenceSystem {
         for (String room: roomLOCS){
             System.out.println(roomManager.getRoom(room).toString());
         }
-        System.out.println("\n\n\n");
+        System.out.println("\n\n");
     }
 }
 

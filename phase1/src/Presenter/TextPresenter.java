@@ -51,11 +51,11 @@ public class TextPresenter {
      */
     public void AttendeeMenu(){
         System.out.println("Menu:");
-        System.out.println("\t1. See Events");
-        System.out.println("\t2. Sign Up or Leave an Event Signed Up for");
-        System.out.println("\t3. Check Schedule for an Signed Up Event");
-        System.out.println("\t4. Add or Remove Contact");
-        System.out.println("\t5. Message Other Users");
+        System.out.println("\t1. See All Events");
+        System.out.println("\t2. Join/Leave Event");
+        System.out.println("\t3. See Scheduled Events");
+        System.out.println("\t4. Add/Remove Contact");
+        System.out.println("\t5. Message");
         System.out.println("\t6. LOGOUT");
         System.out.println("\t7. SHUTDOWN");
     }
@@ -73,7 +73,7 @@ public class TextPresenter {
      */
     public void SpeakerMenu(){
         System.out.println("Menu:");
-        System.out.println("\t1. See Events");
+        System.out.println("\t1. See All Events");
         System.out.println("\t2. See Assigned Events");
         System.out.println("\t3. Message");
         System.out.println("\t4. LOGOUT");
