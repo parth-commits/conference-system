@@ -104,6 +104,13 @@ public class Room implements Serializable {
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
-        return "Room{ capacity=" + capacity + " | roomLocation='" + roomLocation +  " \n\t\t| bookedTime=" + bookedTime + '}';
+        StringBuilder ret = new StringBuilder("Room Location = " + roomLocation + " | Capacity = " + capacity + " | booked Time: \n");
+        ArrayList<Date> dateKeys = new ArrayList<Date>(bookedTime.keySet());
+        for (Date d:dateKeys) {
+            ret.append("\tTime: ");
+            ret.append(formatter.format(d));
+            ret.append(" | Event ID: ").append(bookedTime.get(d)).append("\n");
+        }
+        return ret.toString();
     }
 }
