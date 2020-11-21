@@ -1,3 +1,11 @@
+Phase1 | Group number: group_0112
+
+How to begin the system:
+You can start the system up by opening C
+
+
+
+
 Run file ConferenceDemo.java
 Every page/ would show lists of actions where the user would select by inputting the number of the choice in the terminal.
 Login/Register menu is shown upon starting the program.
