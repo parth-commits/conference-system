@@ -212,10 +212,17 @@ public class AttendeeSystem {
         while (!validInput) {
             output.joinOrLeave();                                                     //checks whether attendee wants to join or leave an event, or wants to return back to menu
             String joinLeave = input.getKeyboardInput();
-            int joinLeaveInt = Integer.parseInt(joinLeave);
+            int joinLeaveInt;
+            try {
+                joinLeaveInt = Integer.parseInt(joinLeave);
+            }
+            catch (Exception e){
+                joinLeaveInt = -1;
+            }
             if (joinLeaveInt == 0) {                                                  //if attendee wants to return to menu, we exit this loop, having done nothing.
                 validInput = true;
-            } else if (joinLeaveInt == 1) {                                           //in this case, org wants to join an event
+            }
+            else if (joinLeaveInt == 1) {                                           //in this case, org wants to join an event
                 boolean validEventSelected = false;
                 while (!validEventSelected) {
                     ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
@@ -241,24 +248,43 @@ public class AttendeeSystem {
                         }
                     }
                     listOfAllEventIDs.removeAll(listOfEventsThatNeedToBeRemoved);
-                    ArrayList<Event> listOfJoinableEvents = new ArrayList<>();                                          //list of all events this Attendee can join
-                    for (Integer eventid : listOfAllEventIDs) {
-                        listOfJoinableEvents.add(eventManager.getEvent(eventid));
+                    if (listOfAllEventIDs.isEmpty()){
+                        output.noEventAvailableToJoin();
+                        validEventSelected=true;
+
                     }
-                    output.joinDeleteEventSelector(listOfJoinableEvents);
-                    String eventSelected = input.getKeyboardInput();
-                    int eventSelectedInt = Integer.parseInt(eventSelected);
-                    if (eventSelectedInt == 0) {
-                        validEventSelected = true;
-                    } else if (1 <= eventSelectedInt && eventSelectedInt <= listOfJoinableEvents.size()) {
-                        attendeeManager.addEventToAttendee(listOfAllEventIDs.get(eventSelectedInt - 1), userID);         //add eventid to the attendees list of events.
-                        eventManager.addAttendee(listOfAllEventIDs.get(eventSelectedInt - 1), userID);                     //add attendee to events list of attendees for this event.
-                        output.ActionDone();
-                        validEventSelected = true;
-                        validInput = true;
-                    } else {
-                        output.joinLeaveInvalidResponse();
+                    else{
+                        ArrayList<Event> listOfJoinableEvents = new ArrayList<>();                                          //list of all events this Attendee can join
+                        for (Integer eventid : listOfAllEventIDs) {
+                            listOfJoinableEvents.add(eventManager.getEvent(eventid));
+                        }
+                        output.joinDeleteEventSelector(listOfJoinableEvents);
+                        String eventSelected = input.getKeyboardInput();
+                        int eventSelectedInt;
+                        try {
+                            eventSelectedInt = Integer.parseInt(eventSelected);
+                        }
+                        catch (Exception e){
+                            eventSelectedInt = -1;
+                        }
+                        if (eventSelectedInt == 0) {
+                            validEventSelected = true;
+                        } else if (1 <= eventSelectedInt && eventSelectedInt <= listOfJoinableEvents.size()) {
+                            attendeeManager.addEventToAttendee(listOfAllEventIDs.get(eventSelectedInt - 1), userID);         //add eventid to the attendees list of events.
+                            eventManager.addAttendee(listOfAllEventIDs.get(eventSelectedInt - 1), userID);                     //add attendee to events list of attendees for this event.
+                            output.ActionDone();
+                            validEventSelected = true;
+                            validInput = true;
+                        } else {
+                            output.joinLeaveInvalidResponse();
+                        }
                     }
+                }
+                try {
+                    Thread.sleep(1000);
+                }
+                catch (Exception e){
+                    System.out.println("Could not sleep");
                 }
             } else if (joinLeaveInt == 2) {                                                                                   //we need to leave an event here
                 boolean validEventSelected = false;
@@ -275,7 +301,14 @@ public class AttendeeSystem {
                     } else {
                         output.joinDeleteEventSelector(listofAttendingEvents);                                              //select which event they want to leave
                         String eventSelected = input.getKeyboardInput();
-                        int eventSelectedInt = Integer.parseInt(eventSelected);
+                        int eventSelectedInt;
+                        try {
+                            eventSelectedInt = Integer.parseInt(eventSelected);
+                        }
+                        catch (Exception e){
+                            eventSelectedInt = -1;
+                        }
+
                         if (eventSelectedInt == 0) {
                             validEventSelected = true;
                         } else if (1 <= eventSelectedInt && eventSelectedInt <= listofAttendingEvents.size()) {
@@ -289,6 +322,14 @@ public class AttendeeSystem {
                         }
                     }
                 }
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    System.out.println("couldnt sleep!");
+                }
+            }
+            else{
+                output.invalidInput();
             }
         }
     }

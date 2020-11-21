@@ -148,7 +148,7 @@ public class ConferenceSystem {
      * Passes a list of ids for different objects.
      */
     private void listofIDPass() {
-        System.out.println("NOTE: this is a testing feature and must be removed during the final hand in!");
+        System.out.println("\n\n\nNOTE: this is a debug feature to assist our TA. Here is the current state of the system!");
         System.out.println("All the organizers in the system:");
         ArrayList<String> organizersList = organizerManager.getUserIDs();
         for (String organizer: organizersList){

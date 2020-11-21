@@ -135,7 +135,6 @@ public class MessageSystem {
                         return;
                     }
                     output.promptEvents(eventIDsandTitle, false);
-                    //String getInput = input.getKeyboardInput();
 
                     String getInput = input.getKeyboardInput();
                     boolean validInput = false;

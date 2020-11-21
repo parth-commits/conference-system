@@ -307,7 +307,7 @@ public class TextPresenter {
         }
         System.out.println("Please select an event to send an automatic message to all attendees of that event:");
         for (int i = 0; i < eventList.size(); i++) {
-            System.out.println((i+1)+". ID: "+ eventList.get(i).get(0) + " Name: " + eventList.get(i).get(0));
+            System.out.println((i+1)+". ID: "+ eventList.get(i).get(0) + " Name: " + eventList.get(i).get(1));
         }
         System.out.println("Enter the event ID of your choice:");
     }
@@ -579,7 +579,7 @@ public class TextPresenter {
     public void createEnterTime(){
         System.out.println("Please enter a date and time for this new event. \nPlease note it must follow the following format:" +
                 "dd-mm-yyyy hh:mm:ss." +
-                "\nEnter the day then the hours, which must be in the 24 hour format and must be between 09 and 16, inclusive. \n This time should be the EST time. \nSince all events start on the hour, mm and ss must be 00." +
+                "\nThe hour must be in 24 hour format. Events can be start between 09 and 16 EST time, inclusive.\nSince all events start on the hour, mm and ss must be 00." +
                 " \nThe time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M., you would type '20-12-2020 13:00:00.'");
         System.out.println("Please press 0 to return to the previous menu.");
     }
@@ -701,5 +701,9 @@ public class TextPresenter {
      */
     public void invalidInput(){
         System.out.println("Invalid input, please try again!");
+    }
+    public void noEventAvailableToJoin(){
+        System.out.println("There are currently no events that you can join, for one or more of the following reasons: \nThere are no events in the system, or you are already attending all of them\n"+
+                "Or there are no new events that have no time conflict with the events you are already attending.\nOr there are no events that have space.");
     }
 }

@@ -127,8 +127,10 @@ public class EventSystem {
         if (!listOfEventsId.isEmpty()){
             for (Event event :listOfEvents){
                 String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                        + "Time: " + formatter.format(event.getTime()) + "\n"
-                        + "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+                        + "Time: " + formatter.format(event.getTime()) + "\n";
+                if (eventManager.hasSpeaker(event.getID())){
+                    schedule +=  "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+                }
                 listOfEventSchedule.add(schedule);
             }
             output.eventsAttendeeAndOrganizer(listOfEventSchedule);
@@ -162,12 +164,19 @@ public class EventSystem {
                 String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
                         + "Time: " + event.getTime() + "\n"
                         + "Attendees: ";
+                if(event.getAttendees().isEmpty()){
+                    schedule += "There are no attendees yet!";
+                }
+                else{
+                    schedule += eventManager.getEventAttendees(event.getID());
+                }
+                /*
                 if (attendeeManager.getAttendee(event.getAttendees().toString()) != null){
                     schedule += attendeeManager.getAttendee(event.getAttendees().toString());
                 }
                 else {
                     schedule += "There are no attendees yet!";
-                }
+                }*/
                 listOfEventSchedule.add(schedule);
             }
             output.eventsSpeaker(listOfEventSchedule);

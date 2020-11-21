@@ -147,7 +147,7 @@ public class EventManager implements Serializable{
      * @param eventID the id of event that we want to check
      * @return String the id of speaker
      */
-    public String getSpeakerID(int eventID){
+    public String getSpeakerID(Integer eventID){
         for (Event event: listOfEvents){
             if (event.getID()==eventID){
                 return event.getSpeakerID();

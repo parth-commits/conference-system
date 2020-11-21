@@ -51,7 +51,7 @@ public class Speaker extends User implements Serializable {
      * Removes an event by event id from the list of assigned events of the speaker.
      * @param event_id  the id of an event that is wished to be removed
      */
-    public void removeAssignEvent(int event_id){assignEvents.remove(event_id);}
+    public void removeAssignEvent(Integer event_id){assignEvents.remove(event_id);}
 
     /**
      * Returns the organizer who creates this speaker.
