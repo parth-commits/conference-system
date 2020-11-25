@@ -1,4 +1,5 @@
 import Controller.*;
+import Gateway.Serialization;
 import UseCases.*;
 
 import java.io.IOException;
@@ -47,25 +48,13 @@ public class ConferenceSystem {
      * Serialize all managers (use cases)
      */
     private void importState() {
-        SpeakerManager s = new SpeakerManager();
-        this.speakerManager = s.importState();
-
-        RoomManager r = new RoomManager();
-        this.roomManager = r.importState();
-
-        OrganizerManager o = new OrganizerManager();
-        this.organizerManager = o.importState();
-
-        EventManager e = new EventManager();
-        this.eventManager = e.importState();
-
-        ChatManager c = new ChatManager();
-        this.chatManager = c.importState();
-
-        AttendeeManager a = new AttendeeManager();
-        this.attendeeManager = a.importState();
-
-
+        Serialization io = new Serialization();
+        this.speakerManager = io.importStateSpeakerManager();
+        this.roomManager =io.importStateRoomManager();
+        this.organizerManager = io.importStateOrganizerManager();
+        this.eventManager = io.importStateEventManager();
+        this.chatManager = io.importStateChatManager();
+        this.attendeeManager = io.importStateAttendeeManager();
     }
 
     /**
@@ -73,12 +62,13 @@ public class ConferenceSystem {
      * @throws IOException  throw IOException to avoid errors that might occur while running the program
      */
     private void saveState() throws IOException {
-        speakerManager.saveState();
-        roomManager.saveState();
-        organizerManager.saveState();
-        eventManager.saveState();
-        chatManager.saveState();
-        attendeeManager.saveState();
+        Serialization io = new Serialization();
+        io.saveStateSpeakerManager(speakerManager);
+        io.saveStateRoomManager(roomManager);
+        io.saveStateOrganizerManager(organizerManager);
+        io.saveStateEventManager(eventManager);
+        io.saveStateChatManager(chatManager);
+        io.saveStateAttendeeManager(attendeeManager);
 
     }
 

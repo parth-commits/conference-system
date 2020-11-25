@@ -228,36 +228,4 @@ public class EventManager implements Serializable{
         }
         return newList;
     }
-
-    /**
-     * Saves states of event manager.
-     * @throws IOException throw IOException to avoid errors that might occur
-     */
-    public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("phase1/src/EventManager.ser");
-        OutputStream buffer = new BufferedOutputStream(file);
-        ObjectOutput output = new ObjectOutputStream(buffer);
-
-        output.writeObject(this);
-        output.close();
-    }
-
-    /**
-     * Imports ser files.
-     * @return EventManager an implement of this use case
-     */
-    public EventManager importState() {
-        try {
-            InputStream file = new FileInputStream("phase1/src/EventManager.ser");
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            EventManager eventManager = (EventManager) input.readObject();
-            input.close();
-            return eventManager;
-
-        } catch (ClassNotFoundException | IOException e) {
-            return new EventManager();
-        }
-    }
-
-    }
+}

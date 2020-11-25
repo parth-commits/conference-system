@@ -3,6 +3,7 @@ package Controller;
 import java.io.IOException;
 
 import Gateway.KeyboardInput;
+import Gateway.Serialization;
 import Presenter.TextPresenter;
 import UseCases.*;
 
@@ -87,10 +88,11 @@ public class SpeakerSystem {
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     private void saveState() throws IOException {
-        speakerManager.saveState();
-        organizerManager.saveState();
-        chatManager.saveState();
-        attendeeManager.saveState();
+        Serialization io = new Serialization();
+        io.saveStateSpeakerManager(speakerManager);
+        io.saveStateOrganizerManager(organizerManager);
+        io.saveStateChatManager(chatManager);
+        io.saveStateAttendeeManager(attendeeManager);
     }
 
     /**

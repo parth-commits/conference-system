@@ -161,35 +161,4 @@ public class  AttendeeManager implements Serializable{
         return getAttendee(userID).getContacts();
     }
 
-    /**
-     * Saves states of attendee manager.
-     * @throws IOException throw IOException to avoid errors that might occur
-     */
-    public void saveState() throws IOException {
-        OutputStream file = new FileOutputStream("phase1/src/AttendeeManager.ser");
-        OutputStream buffer = new BufferedOutputStream(file);
-        ObjectOutput output = new ObjectOutputStream(buffer);
-
-        output.writeObject(this);
-        output.close();
-    }
-
-    /**
-     * Imports ser files.
-     * @return AttendeeManager returns an implement of this use case
-     */
-    public AttendeeManager importState() {
-        try {
-            InputStream file = new FileInputStream("phase1/src/AttendeeManager.ser");
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            AttendeeManager attendeeManager = (AttendeeManager) input.readObject();
-            input.close();
-            return attendeeManager;
-
-        } catch (ClassNotFoundException | IOException e) {
-            return new AttendeeManager();
-        }
-    }
-
 }

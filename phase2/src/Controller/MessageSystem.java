@@ -2,6 +2,7 @@ package Controller;
 
 import Entities.Chat;
 import Gateway.KeyboardInput;
+import Gateway.Serialization;
 import Presenter.TextPresenter;
 import UseCases.ChatManager;
 
@@ -236,11 +237,12 @@ public class MessageSystem {
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     private void saveState() throws IOException {
-        speakerManager.saveState();
-        organizerManager.saveState();
-        eventManager.saveState();
-        chatManager.saveState();
-        attendeeManager.saveState();
+        Serialization io = new Serialization();
+        io.saveStateSpeakerManager(speakerManager);
+        io.saveStateOrganizerManager(organizerManager);
+        io.saveStateEventManager(eventManager);
+        io.saveStateChatManager(chatManager);
+        io.saveStateAttendeeManager(attendeeManager);
 
     }
 

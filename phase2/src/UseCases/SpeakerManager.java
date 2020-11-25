@@ -143,35 +143,4 @@ public class SpeakerManager implements Serializable{
         return getSpeaker(userId).getAssignEvents();
     }
 
-    /**
-     * Saves states for speaker manager.
-     * @throws IOException throw IOException to avoid the Errors might occur
-     */
-    public void saveState() throws IOException{
-        OutputStream file = new FileOutputStream("phase1/src/SpeakerManager.ser");
-        OutputStream buffer = new BufferedOutputStream(file);
-        ObjectOutput output = new ObjectOutputStream(buffer);
-
-        // serialize the Map
-        output.writeObject(this); //students);
-        output.close();
-    }
-
-    /**
-     * Imports ser files.
-     * @return SpeakerManager returns an implement of this use case
-     */
-    public SpeakerManager importState(){
-        try {
-            InputStream file = new FileInputStream("phase1/src/SpeakerManager.ser");
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            SpeakerManager speakerManager = (SpeakerManager) input.readObject();
-            input.close();
-            return speakerManager;
-
-        } catch (ClassNotFoundException | IOException e) {
-            return new SpeakerManager();
-        }
-    }
 }

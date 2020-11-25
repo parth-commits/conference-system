@@ -99,41 +99,5 @@ public class RoomManager implements Serializable{
         return new ArrayList<>(tableOfRooms.keySet());
     }
 
-    /**
-     * Saves states of room manager.
-     * @throws IOException throw IOException to avoid errors that might occur
-     */
-    public void saveState() throws IOException{
-        OutputStream file = new FileOutputStream("phase1/src/RoomManager.ser");
-        OutputStream buffer = new BufferedOutputStream(file);
-        ObjectOutput output = new ObjectOutputStream(buffer);
 
-        output.writeObject(this);
-        output.close();
-    }
-
-    /**
-     * Imports ser files.
-     * @return RoomManager returns an implement of this use case
-     */
-    public RoomManager importState() {
-        try {
-            InputStream file = new FileInputStream("phase1/src/RoomManager.ser");
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
-            RoomManager roomManager = (RoomManager) input.readObject();
-            input.close();
-            return roomManager;
-
-        } catch (ClassNotFoundException | IOException e) {
-            return new RoomManager();
-        }
-    }
 }
-
-
-//unused method
-//    public int getSpots(String roomloc){
-//        Room r = getRoom(roomloc);
-//        return r.getCapacity();
-//    }
