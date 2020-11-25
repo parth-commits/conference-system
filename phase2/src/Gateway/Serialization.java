@@ -15,7 +15,7 @@ public class Serialization {
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveStateAttendeeManager(AttendeeManager attendeeManager) throws IOException {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "AttendeeManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "AttendeeManager.ser";
         OutputStream file = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
@@ -29,7 +29,7 @@ public class Serialization {
      * @return AttendeeManager returns an implement of this use case
      */
     public AttendeeManager importStateAttendeeManager() {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "AttendeeManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "AttendeeManager.ser";
         try {
             InputStream file = new FileInputStream(fileName);
             InputStream buffer = new BufferedInputStream(file);
@@ -48,7 +48,7 @@ public class Serialization {
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveStateChatManager(ChatManager chatManager) throws IOException {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "ChatManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "ChatManager.ser";
         OutputStream file = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
@@ -62,7 +62,7 @@ public class Serialization {
      * @return ChatManager returns an implement of this use case
      */
     public ChatManager importStateChatManager() {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "ChatManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "ChatManager.ser";
         try {
             InputStream file = new FileInputStream(fileName);
             InputStream buffer = new BufferedInputStream(file);
@@ -81,7 +81,7 @@ public class Serialization {
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveStateEventManager(EventManager eventManager) throws IOException {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "EventManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "EventManager.ser";
         OutputStream file = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
@@ -95,7 +95,7 @@ public class Serialization {
      * @return EventManager an implement of this use case
      */
     public EventManager importStateEventManager() {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "EventManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "EventManager.ser";
         try {
             InputStream file = new FileInputStream(fileName);
             InputStream buffer = new BufferedInputStream(file);
@@ -114,7 +114,7 @@ public class Serialization {
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveStateOrganizerManager(OrganizerManager organizerManager) throws IOException {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "OrganizerManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "OrganizerManager.ser";
         OutputStream file = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
@@ -128,7 +128,7 @@ public class Serialization {
      * @return OrganizerManager returns an implement of this use case
      */
     public OrganizerManager importStateOrganizerManager() {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "OrganizerManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "OrganizerManager.ser";
         try {
             InputStream file = new FileInputStream(fileName);
             InputStream buffer = new BufferedInputStream(file);
@@ -147,7 +147,7 @@ public class Serialization {
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveStateRoomManager(RoomManager roomManager) throws IOException{
-        String fileName = "phase1" + File.separator + "src" + File.separator + "RoomManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "RoomManager.ser";
         OutputStream file = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
@@ -161,7 +161,7 @@ public class Serialization {
      * @return RoomManager returns an implement of this use case
      */
     public RoomManager importStateRoomManager() {
-        String fileName = "phase1" + File.separator + "src" + File.separator + "RoomManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "RoomManager.ser";
         try {
             InputStream file = new FileInputStream(fileName);
             InputStream buffer = new BufferedInputStream(file);
@@ -180,7 +180,7 @@ public class Serialization {
      * @throws IOException throw IOException to avoid the Errors might occur
      */
     public void saveStateSpeakerManager(SpeakerManager speakerManager) throws IOException{
-        String fileName = "phase1" + File.separator + "src" + File.separator + "SpeakerManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "SpeakerManager.ser";
         OutputStream file = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
@@ -195,7 +195,7 @@ public class Serialization {
      * @return SpeakerManager returns an implement of this use case
      */
     public SpeakerManager importStateSpeakerManager(){
-        String fileName = "phase1" + File.separator + "src" + File.separator + "SpeakerManager.ser";
+        String fileName = "phase2" + File.separator + "src" + File.separator + "SpeakerManager.ser";
         try {
             InputStream file = new FileInputStream(fileName);
             InputStream buffer = new BufferedInputStream(file);

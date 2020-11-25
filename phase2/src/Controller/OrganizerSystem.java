@@ -342,8 +342,14 @@ public class OrganizerSystem {
                 boolean validEventSelected = false;
                 while (!validEventSelected) {
                     ArrayList<Event> events = eventManager.getListOfEvents();
+                    if (events.isEmpty()){
+                        output.noEventsToDelete();
+                        validEventSelected = true;
+                        break;
+                    }
                     output.joinDeleteEventSelector(events);
                     String eventSelected = input.getKeyboardInput();
+
                     int eventSelectedInt = Integer.parseInt(eventSelected);
                     if (eventSelectedInt == 0) {
                         validEventSelected = true;
