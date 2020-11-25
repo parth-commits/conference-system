@@ -126,6 +126,15 @@ public class ChatManager implements Serializable{
         }
     }
 
-
-
+    public String chatToString(String id1, String id2){
+        for (Chat chat : chats) {
+            if ((chat.getId1().equals(id1)) && (chat.getId2().equals(id2))) {
+                return chat.toString();
+            }
+            else if ((chat.getId1().equals(id2)) && (chat.getId2().equals(id1))){
+                return chat.toString();
+            }
+        }
+        return null;
+    }
 }

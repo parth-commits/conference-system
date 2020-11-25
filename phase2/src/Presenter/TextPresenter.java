@@ -331,13 +331,8 @@ public class TextPresenter {
      * Prints: content of the message
      * @param chat chat object
      */
-    public void printChat(Chat chat){
-        if (chat.getMessages()!= null) {
-            ArrayList<Message> messages = chat.getMessages();
-            for (Message m : messages) {
-                System.out.println(m);
-            }
-        }
+    public void printChat(String chat){
+        System.out.println(chat);
     }
 
     //MessageSystem

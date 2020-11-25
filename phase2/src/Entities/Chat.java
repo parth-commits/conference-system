@@ -62,4 +62,13 @@ public class Chat implements Serializable {
         Message newMessage = new Message(sender, recipient, context);
         messages.add(newMessage);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Message message: messages){
+            s.append(message).append("\n");
+        }
+        return s.toString();
+    }
 }
