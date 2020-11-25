@@ -20,7 +20,7 @@ public class Event implements Serializable {
     private String title;
     private Date time;
     private String location;
-    private String speakerID;
+    private ArrayList<String> speakerID;
     private ArrayList<String> attendees;
     private String organizerID;
 
@@ -40,7 +40,7 @@ public class Event implements Serializable {
         this.location = location;
         this.organizerID = organizerID;
         this.attendees = new ArrayList<>();
-        this.speakerID = "";
+        this.speakerID = new ArrayList<>();
     }
 
     /**
@@ -77,7 +77,7 @@ public class Event implements Serializable {
      * Get the speaker of the event
      * @return String The user_id of the speaker of the event
      */
-    public String getSpeakerID() {
+    public ArrayList<String> getSpeakerID() {
         return this.speakerID;
     }
 
@@ -126,7 +126,7 @@ public class Event implements Serializable {
      * @param speaker The user_id of the speaker
      */
     public void setSpeaker(String speaker) {
-        this.speakerID = speaker;
+        this.speakerID.add(speaker);
     }
 
     /**
@@ -159,7 +159,7 @@ public class Event implements Serializable {
      * @return boolean Returns true if there's a Speaker for the event, false otherwise
      */
     public boolean noSpeaker(){
-        return this.speakerID.equals("");
+        return this.speakerID.isEmpty();
     }
 
     /**
@@ -170,6 +170,6 @@ public class Event implements Serializable {
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
-        return "Event{ id=" + id + " | title='" + title +" | time=" + formatter.format(time) + ", location='" + location + " | speakerID='" + speakerID + " | attendees=" + attendees + ", organizerID='" + organizerID +  '}';
+        return "Event{ id=" + id + " | title='" + title +" | time=" + formatter.format(time) + ", location='" + location + " | speakerID(s)='" + speakerID + " | attendees=" + attendees + ", organizerID='" + organizerID +  '}';
     }
 }

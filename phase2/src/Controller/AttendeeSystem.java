@@ -316,8 +316,9 @@ public class AttendeeSystem {
                         if (eventSelectedInt == 0) {
                             validEventSelected = true;
                         } else if (1 <= eventSelectedInt && eventSelectedInt <= listofAttendingEvents.size()) {
-                            eventManager.removeAttendee(listOfAttendingEventIds.get(eventSelectedInt - 1), userID);
-                            attendeeManager.removeEvent(listOfAttendingEventIds.get(eventSelectedInt - 1), userID);
+                            int eventid = listOfAttendingEventIds.get(eventSelectedInt - 1);
+                            eventManager.removeAttendee(eventid, userID);
+                            attendeeManager.removeEvent(eventid, userID);
                             output.ActionDone();
                             validEventSelected = true;
                             validInput = true;

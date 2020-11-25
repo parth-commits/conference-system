@@ -369,8 +369,12 @@ public class OrganizerSystem {
                             }
                         }
                         if (eventManager.hasSpeaker(eventID)) {                                 //if this event has a speaker, delete this event from that speakers list of assigned events.
-                            String speakerID = eventManager.getSpeakerID(eventID);
-                            speakerManager.removeEvent(eventID, speakerID);
+                            ArrayList<String> speakers = eventManager.getSpeakerID(eventID);
+                            for (String speaker:speakers) {
+                                speakerManager.removeEvent(eventID, speaker);
+                            }
+                            //String speakerID = eventManager.getSpeakerID(eventID);
+                            //speakerManager.removeEvent(eventID, speakerID);
                         }
                         eventManager.cancelEvent(eventID);                                     //removes from list of events
                         output.ActionDone();
@@ -637,8 +641,11 @@ public class OrganizerSystem {
                         if (eventSelectedInt == 0) {
                             validEventSelected = true;
                         } else if (1 <= eventSelectedInt && eventSelectedInt <= listofAttendingEvents.size()) {
-                            organizerManager.removeEvent(listOfAttendingEventIds.get(eventSelectedInt - 1), userID);
-                            eventManager.removeAttendee(listOfAttendingEventIds.get(eventSelectedInt - 1), userID);
+                            System.out.println(organizerManager.getOrganizer(userID).getSignedUpEvents());
+                            System.out.println(listOfAttendingEventIds.size());
+                            int eventid = listOfAttendingEventIds.get(eventSelectedInt - 1);
+                            organizerManager.removeEvent(eventid, userID);
+                            eventManager.removeAttendee(eventid, userID);
                             validEventSelected = true;
                             validInput = true;
                             output.ActionDone();
