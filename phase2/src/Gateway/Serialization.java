@@ -48,6 +48,7 @@ public class Serialization {
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveStateChatManager(ChatManager chatManager) throws IOException {
+        String filen = "phase2/src/ChatManager.ser";
         String fileName = "phase2" + File.separator + "src" + File.separator + "ChatManager.ser";
         OutputStream file = new FileOutputStream(fileName);
         OutputStream buffer = new BufferedOutputStream(file);

@@ -641,8 +641,8 @@ public class OrganizerSystem {
                         if (eventSelectedInt == 0) {
                             validEventSelected = true;
                         } else if (1 <= eventSelectedInt && eventSelectedInt <= listofAttendingEvents.size()) {
-                            System.out.println(organizerManager.getOrganizer(userID).getSignedUpEvents());
-                            System.out.println(listOfAttendingEventIds.size());
+                            //System.out.println(organizerManager.getOrganizer(userID).getSignedUpEvents());
+                            //System.out.println(listOfAttendingEventIds.size());
                             int eventid = listOfAttendingEventIds.get(eventSelectedInt - 1);
                             organizerManager.removeEvent(eventid, userID);
                             eventManager.removeAttendee(eventid, userID);
