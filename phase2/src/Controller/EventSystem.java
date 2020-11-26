@@ -56,10 +56,16 @@ public class EventSystem {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         for (Event event :listOfEvents){
-            String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                    + "Time: " + formatter.format(event.getTime()) + "\n" + "Event ID: " + event.getID();
+            String schedule = "Title: " + event.getTitle() + eventType(event.getSpeakerID().size()) + "\nLocation: " +
+                    event.getLocation() + "\nTime: " + formatter.format(event.getTime()) + "\nEvent ID: " + event.getID();
             if (eventManager.hasSpeaker(event.getID())){
-                schedule +=  "\n" + "Speaker: " + event.getSpeakerID();
+                schedule +=  "\nSpeaker: ";
+                ArrayList<String> speakerNames = new ArrayList<>();
+                for (String speaker: event.getSpeakerID()) {
+                    speakerNames.add(speakerManager.getSpeaker(speaker).getName());
+                }
+                schedule += speakerNames;
+
             }
 
             listOfEventSchedule.add(schedule);
@@ -126,12 +132,18 @@ public class EventSystem {
         }
         if (!listOfEventsId.isEmpty()){
             for (Event event :listOfEvents){
-                String schedule = event.getTitle() + "\n" + "Location: " + event.getLocation() + "\n"
-                        + "Time: " + formatter.format(event.getTime()) + "\n";
+                StringBuilder schedule = new StringBuilder("Title: " + event.getTitle() +
+                        eventType(event.getSpeakerID().size()) + "\nLocation: " + event.getLocation() + "\n"
+                        + "Time: " + formatter.format(event.getTime()) + "\n");
                 if (eventManager.hasSpeaker(event.getID())){
-                    schedule +=  "Speaker: " + speakerManager.getSpeaker(event.getSpeakerID()).getName();
+                    schedule.append("Speaker: ");
+                    ArrayList<String> speakerNames = new ArrayList<>();
+                    for (String speaker: event.getSpeakerID()) {
+                        speakerNames.add(speakerManager.getSpeaker(speaker).getName());
+                    }
+                    schedule.append(speakerNames);
                 }
-                listOfEventSchedule.add(schedule);
+                listOfEventSchedule.add(schedule.toString());
             }
             output.eventsAttendeeAndOrganizer(listOfEventSchedule);
         }
@@ -192,6 +204,18 @@ public class EventSystem {
             if (!in.equals("")){
                 rtn = true;
             }
+        }
+    }
+
+    public String eventType( int speakerSize){
+        if (speakerSize == 0){
+            return "\nEvent type: Party";
+        }
+        else if (speakerSize == 1){
+            return "\nEvent type: Talk";
+        }
+        else {
+            return "\nEvent type: Panel discussion";
         }
     }
 }

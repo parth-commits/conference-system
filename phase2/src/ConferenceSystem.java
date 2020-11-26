@@ -124,7 +124,11 @@ public class ConferenceSystem {
                     }
                 }
                 //NOTE: THIS WORKS RIGHT NOW BECAUSE WE ONLY HAVE 1 SPEAKER, IN PHASE 2 WE WILL HAVE MULTIPLE SPEAKERS
-                speakerManager.getSpeaker(eventManager.getEvent(eventID).getSpeakerID()).removeAssignEvent(eventID);
+                ArrayList<String> speakers = eventManager.getEvent(eventID).getSpeakerID();
+                for (String speaker:speakers) {
+                    speakerManager.getSpeaker(speaker).removeAssignEvent(eventID);
+                }
+
                 String organizerOfThisEvent = eventManager.getEvent(eventID).getOrganizerID();  //gets the userid of the organizer of this event
                 //in the organizer's list of events that he/she created, this event is removed.
                 organizerManager.removeEvent(eventID, organizerOfThisEvent);
