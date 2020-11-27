@@ -566,6 +566,7 @@ public class OrganizerSystem {
         if (currentDateTime.after(d1)) {
             return false;
         }
+
         SimpleDateFormat formatter2 = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
         formatter2.setTimeZone(TimeZone.getTimeZone("EST"));
         String day1 = formatter2.format(d1).substring(0, 1);

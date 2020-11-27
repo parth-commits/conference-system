@@ -36,6 +36,10 @@ public class ConferenceSystem {
      */
     public ConferenceSystem(){
         importState();// this function will bring back the managers and initialize them
+        initializeControllers();// this function will initialize the controllers
+    }
+
+    private void initializeControllers() {
         logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
         messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
         eventSystem = new EventSystem(speakerManager, roomManager, organizerManager, eventManager, attendeeManager);

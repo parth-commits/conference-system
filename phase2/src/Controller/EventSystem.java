@@ -56,8 +56,9 @@ public class EventSystem {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         for (Event event :listOfEvents){
-            String schedule = "Title: " + event.getTitle() + eventType(event.getSpeakerID().size()) + "\nLocation: " +
-                    event.getLocation() + "\nTime: " + formatter.format(event.getTime()) + "\nEvent ID: " + event.getID();
+            String schedule = "Title: " + event.getTitle() + "\nEvent type: " + eventType(event.getSpeakerID().size())
+                    + "\nLocation: " + event.getLocation() + "\nTime: " + formatter.format(event.getTime()) +
+                    "\nEvent ID: " + event.getID();
             if (eventManager.hasSpeaker(event.getID())){
                 schedule +=  "\nSpeaker: ";
                 ArrayList<String> speakerNames = new ArrayList<>();
@@ -132,8 +133,8 @@ public class EventSystem {
         }
         if (!listOfEventsId.isEmpty()){
             for (Event event :listOfEvents){
-                StringBuilder schedule = new StringBuilder("Title: " + event.getTitle() +
-                        eventType(event.getSpeakerID().size()) + "\nLocation: " + event.getLocation() + "\n"
+                StringBuilder schedule = new StringBuilder("Title: " + event.getTitle() + "\nEvent type: "+
+                eventType(event.getSpeakerID().size()) + "\nLocation: " + event.getLocation() + "\n"
                         + "Time: " + formatter.format(event.getTime()) + "\n");
                 if (eventManager.hasSpeaker(event.getID())){
                     schedule.append("Speaker: ");
@@ -209,13 +210,13 @@ public class EventSystem {
 
     public String eventType( int speakerSize){
         if (speakerSize == 0){
-            return "\nEvent type: Party";
+            return "Party";
         }
         else if (speakerSize == 1){
-            return "\nEvent type: Talk";
+            return "Talk";
         }
         else {
-            return "\nEvent type: Panel discussion";
+            return "Panel discussion";
         }
     }
 }
