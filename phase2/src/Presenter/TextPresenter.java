@@ -412,7 +412,7 @@ public class TextPresenter {
         System.out.println("\t1. Create Accounts");
         System.out.println("\t2. Schedule a Speaker");
         System.out.println("\t3. Message");
-        System.out.println("\t4. Create/Delete event");
+        System.out.println("\t4. Create/Delete/Modify event");
         System.out.println("\t5. Create Rooms\n");
         System.out.println("Regular Attendee Options:");
         System.out.println("\t6. Add/Remove contact");
@@ -562,6 +562,7 @@ public class TextPresenter {
         System.out.println("Would you like to create or delete an event?");
         System.out.println("1. Create");
         System.out.println("2. Delete");
+        System.out.println("3. Modify event");
         System.out.println("If you want to return to the previous menu, please press 0.");
     }
 
@@ -713,5 +714,36 @@ public class TextPresenter {
         System.out.println("2. Attendee");
         System.out.println("3. Speaker");
         System.out.println("\nEnter your choice or press 0 to go back");
+    }
+
+    public void giveCapacityforEvent() {
+        System.out.println("Max capacity is the maximum people that can attend this event.");
+        System.out.println("Please provide the max capacity of the event:");
+    }
+
+    public void modifyEventOptions() {
+        System.out.println("What would you like to do?");
+        System.out.println("\t1. Edit event name");
+        System.out.println("\t2. Increase max capacity");
+        System.out.println("\nEnter 0 to go back.");
+    }
+
+    public void noEventsToChangeName() {
+        System.out.println("There are no events to change name for!");
+    }
+
+    public void selectNewName() {
+        System.out.println("What would you like to rename this event to?");
+        System.out.println("\nEnter 0 to return to previous menu");
+    }
+
+    public void noEventstoIncreaseCapacity() {
+        System.out.println("There are no events to increase capacity. Please create an event first!");
+    }
+
+    public void addCapacity(int eventCapacity) {
+        System.out.println("The capacity of this event is currently: " + eventCapacity);
+        System.out.println("How many more spots do you want to add to this event?");
+        System.out.println("Enter 0 to return to previous menu");
     }
 }

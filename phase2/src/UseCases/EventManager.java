@@ -106,11 +106,15 @@ public class EventManager implements Serializable{
      * @param id the id of the event
      * @return int the id of the added event
      */
-    public int addEvent(String title, Date time, String location, String organizerID, int id) {
+    public int addEvent(String title, Date time, String location, String organizerID, int id, int maxCapacity) {
         // check time (speaker??? room???)
-        Event event = new Event(title, time, location, organizerID, id);
+        Event event = new Event(title, time, location, organizerID, id, maxCapacity);
         listOfEvents.add(event);
         return event.getID();
+    }
+
+    public int eventCapacity(int id){
+        return getEvent(id).getMaxCapacity();
     }
 
     /**
@@ -222,4 +226,13 @@ public class EventManager implements Serializable{
     public ArrayList<Event> listOfEventsWithoutSpeaker(){
         return listOfEvents;
     }
+
+    public void renameEvent(int eventID, String newTitle){
+        for (Event event:listOfEvents){
+            if (event.getID()==eventID){
+                event.setTitle(newTitle);
+            }
+        }
+    }
+
 }

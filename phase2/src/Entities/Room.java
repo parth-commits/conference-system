@@ -16,7 +16,7 @@ import java.util.TimeZone;
 
 public class Room implements Serializable {
     //capacity of the room
-    private Integer capacity = 2;
+    private Integer capacity = 500;
     //location of the room
     private String roomLocation;
     //the key is the  time, and the value is the eventid

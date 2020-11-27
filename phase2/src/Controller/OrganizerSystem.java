@@ -315,8 +315,7 @@ public class OrganizerSystem {
         while (!createDelete) {
             output.createDeleteEvent();
             String createDeleteInput = input.getKeyboardInput();
-            int createDeleteInt = Integer.parseInt(createDeleteInput);
-            if (createDeleteInt == 1) {                                                    //Create event
+            if (createDeleteInput.equals("1")) {                                                    //Create event
                 boolean validTime = false;
                 while (!validTime) {
                     output.createEnterTime();
@@ -352,7 +351,20 @@ public class OrganizerSystem {
                                     output.invalidEventID();
                                 }
                             }
-                            eventManager.addEvent(eventTitle, d1, locationSelected, userID, eventID);
+                            int capacity;
+                            while (true){
+                                try {
+                                    output.giveCapacityforEvent();
+                                    capacity = Integer.parseInt(input.getKeyboardInput());
+                                    break;
+                                }catch (Exception e){
+                                    output.invalidInput();
+                                }
+                            }
+                            if (capacity == 0){
+                                continue;
+                            }
+                            eventManager.addEvent(eventTitle, d1, locationSelected, userID, eventID,capacity);
                             roomManager.addEventToRoom(locationSelected, eventID, d1);
                             organizerManager.setAddEventCreated(userID, eventID);           //adds to the list of events this organizer has created
                             output.ActionDone();
@@ -370,7 +382,8 @@ public class OrganizerSystem {
                         output.createEnterTimeInvalidTime();
                     }
                 }
-            } else if (createDeleteInt == 2) {                                                   //Deletes Event
+            }
+            else if (createDeleteInput.equals("2")) {                                                   //Deletes Event
                 boolean validEventSelected = false;
                 while (!validEventSelected) {
                     ArrayList<Event> events = eventManager.getListOfEvents();
@@ -381,11 +394,16 @@ public class OrganizerSystem {
                     }
                     output.joinDeleteEventSelector(events);
                     String eventSelected = input.getKeyboardInput();
-
-                    int eventSelectedInt = Integer.parseInt(eventSelected);
+                    int eventSelectedInt;
+                    try {
+                        eventSelectedInt = Integer.parseInt(eventSelected);
+                    }catch (Exception e){
+                        eventSelectedInt = -1;
+                    }
                     if (eventSelectedInt == 0) {
                         validEventSelected = true;
-                    } else if (0 < eventSelectedInt && eventSelectedInt <= events.size()) {
+                    }
+                    else if (0 < eventSelectedInt && eventSelectedInt <= events.size()) {
                         int eventID = events.get(eventSelectedInt - 1).getID();
                         String eventLocation = eventManager.getLocation(eventID);
                         Date eventTime = eventManager.getTime(eventID);
@@ -412,16 +430,123 @@ public class OrganizerSystem {
                         output.ActionDone();
                         validEventSelected = true;
                         createDelete = true;
-                    } else {
+                    }
+                    else {
                         output.invalidInputSelection();
                     }
                 }
-            } else if (createDeleteInt == 0) {
+            }
+            else if (createDeleteInput.equals("3")){            //modify an event
+                String in;
+                boolean goback = false;
+                while (!goback){
+                    output.modifyEventOptions();
+                    in = input.getKeyboardInput();
+
+                    if (in.equals("1")){ // edit name
+                        boolean goback1 = false;
+                        while (!goback1) {
+                            int selected = eventSelector();
+                            if (selected == -2) {
+                                output.noEventsToChangeName();
+                                goback1 = true;
+                            }
+                            else if (selected == 0){
+                                goback1 = true;
+                            }
+                            else if (selected != -1) {
+                                int eventID = eventManager.getListOfEvents().get(selected - 1).getID();
+                                output.selectNewName();
+                                String newTitle = input.getKeyboardInput();
+                                if (!newTitle.equals("0")){
+                                    eventManager.renameEvent(eventID,newTitle);
+                                    output.ActionDone();
+                                    goback1 = true;
+                                }
+                            }
+                            else {
+                                output.invalidInput();
+                            }
+                        }
+                    }
+                    else if (in.equals("2")){ // increase max capacity
+                        boolean goback1 = false;
+                        while (!goback1) {
+                            int selected = eventSelector();
+                            if (selected == -2) {
+                                output.noEventstoIncreaseCapacity();
+                                goback1 = true;
+                            }
+                            else if (selected == 0){
+                                goback1 = true;
+                            }
+                            else if (selected != -1) {
+                                int eventID = eventManager.getListOfEvents().get(selected - 1).getID();
+                                int eventCapacity = eventManager.getListOfEvents().get(selected - 1).getMaxCapacity();
+
+                                int newToAdd;
+                                boolean goback2 = false;
+                                while (!goback2){
+                                    output.addCapacity(eventCapacity);
+                                    try {
+                                        newToAdd = Integer.parseInt(input.getKeyboardInput());
+                                    }
+                                    catch (Exception e){
+                                        newToAdd = -1;
+                                    }
+                                    if (newToAdd>0){
+                                        eventManager.getEvent(eventID).setMaxCapacity(eventCapacity+newToAdd);
+                                        output.ActionDone();
+                                        goback2 = true;
+                                    }
+                                    else if (newToAdd == 0){
+                                        goback2 = true;
+                                    }
+                                    else {
+                                        output.invalidInput();
+                                    }
+                                }
+                            }
+                            else {
+                                output.invalidInput();
+                            }
+
+                        }
+                    }
+                    else if (in.equals("0")){
+                        goback = true;
+                    }
+                    else {
+                        output.invalidInput();
+                    }
+                }
+
+            }
+            else if (createDeleteInput.equals("0")) {
                 createDelete = true;
             } else {
                 output.invalidInputSelection();         //MAKE SURE THIS MESSAGE STAYS ON FOR A COUPLE SECONDS
             }
         }
+    }
+
+    private int eventSelector(){
+        ArrayList<Event> events = eventManager.getListOfEvents();
+        if (events.isEmpty()){
+            return -2;              // -2 is for a empty list
+        }
+        output.joinDeleteEventSelector(events);
+        String eventSelected = input.getKeyboardInput();
+        int eventSelectedInt;
+        try {
+            eventSelectedInt = Integer.parseInt(eventSelected);
+        }catch (Exception e){
+            eventSelectedInt = -1; // -1 is for an invalid input
+        }
+        if (eventSelectedInt > events.size()|| eventSelectedInt<0){ // if its not a valid index, then its invalid!
+            eventSelectedInt = -1;
+        }
+        return eventSelectedInt;
     }
 
     //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't, then return false,
@@ -606,7 +731,7 @@ public class OrganizerSystem {
                         //overlap/interfere with events he/she is already going to! Now from these events, we want to remove those that do not have
                         //room (sufficient capacity) to support one more attendee.
                         Event actualEvent = eventManager.getEvent(eventid);
-                        int capacity = roomManager.getRoom(actualEvent.getLocation()).getCapacity();                    //gets the capacity of the room this event is held in
+                        int capacity = eventManager.eventCapacity(eventid);                 //gets the capacity of the event
                         int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
                         if (capacity - numExistingAttendees == 0) {                                                           //if the number of attendees attending this event has reached the max capacity of the room,
                             listOfAllEventsThatNeedToBeRemoved.add(eventid);                                                         //the organizer cannot join this room. Remove it from the list.

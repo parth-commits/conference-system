@@ -23,6 +23,7 @@ public class Event implements Serializable {
     private ArrayList<String> speakerID;
     private ArrayList<String> attendees;
     private String organizerID;
+    private int maxCapacity;
 
 
     /**
@@ -33,7 +34,7 @@ public class Event implements Serializable {
      * @param organizerID the user_id of organizer who hosts this event
      */
 
-    public Event(String title, Date time, String location, String organizerID, int id) {
+    public Event(String title, Date time, String location, String organizerID, int id, int maxCapacity) {
         this.id = id;
         this.title = title;
         this.time = time;
@@ -41,6 +42,7 @@ public class Event implements Serializable {
         this.organizerID = organizerID;
         this.attendees = new ArrayList<>();
         this.speakerID = new ArrayList<>();
+        this.maxCapacity = maxCapacity;
     }
 
     /**
@@ -170,6 +172,14 @@ public class Event implements Serializable {
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
-        return "Event{ id=" + id + " | title='" + title +" | time=" + formatter.format(time) + ", location='" + location + " | speakerID(s)='" + speakerID + " | attendees=" + attendees + ", organizerID='" + organizerID +  '}';
+        return "Event{ id = "  + id + " | title = " + title +" | time = " + formatter.format(time) + " | location = " + location + " | speakerID(s) = " + speakerID + " | attendees = " + attendees + " | organizerID='" + organizerID + " | Max Capacity = " + maxCapacity +  '}';
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
     }
 }

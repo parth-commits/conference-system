@@ -245,7 +245,7 @@ public class AttendeeSystem {
                         //overlap/interfere with events he/she is already going to! Now from these events, we want to remove those that do not have
                         //room (sufficient capacity) to support one more attendee.
                         Event actualEvent = eventManager.getEvent(eventid);
-                        int capacity = roomManager.getRoom(actualEvent.getLocation()).getCapacity();                    //gets the capacity of the room this event is held in
+                        int capacity = eventManager.eventCapacity(eventid);                                       //gets the capacity of the  event
                         int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
                         if (capacity - numExistingAttendees == 0) {                                                           //if the number of attendees attending this event has reached the max capacity of the room,
                             listOfEventsThatNeedToBeRemoved.add(eventid);                                                     //the organizer cannot join this room. Remove it from the list.
