@@ -4,6 +4,7 @@ import Entities.Chat;
 import Entities.Event;
 import Entities.Message;
 
+import java.net.Socket;
 import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -408,7 +409,7 @@ public class TextPresenter {
     public void organizationSystemStartOptions(){
         System.out.println("What would you like to do:\n");
         System.out.println("Organizer Specific Options:");
-        System.out.println("\t1. Create a new Speaker");
+        System.out.println("\t1. Create Accounts");
         System.out.println("\t2. Schedule a Speaker");
         System.out.println("\t3. Message");
         System.out.println("\t4. Create/Delete event");
@@ -426,8 +427,8 @@ public class TextPresenter {
      * Prints: Please enter the name of the speaker you wish to create:
      *         Please press 0 to return to the previous menu.
      */
-    public void enterSpeakerName(){
-        System.out.println("Please enter the name of the speaker you wish to create: ");
+    public void enterUsersName(){
+        System.out.println("Please enter the name of the user you wish to create: ");
         System.out.println("Please press 0 to return to the previous menu.");
     }
 
@@ -437,9 +438,9 @@ public class TextPresenter {
      * Prints: Please type 0 to return to the previous menu.
      * @param checker the boolean condition we'd like to check
      */
-    public void enterSpeakerID(boolean checker){
+    public void enterUsersID(boolean checker){
         if (checker){
-            System.out.println("Please enter the userid for the speaker: ");
+            System.out.println("Please enter the userid for the user you are trying to create: ");
         }
         else{
             System.out.println("That userid is taken, please enter another UserID:");
@@ -704,5 +705,13 @@ public class TextPresenter {
 
     public void noEventsToDelete(){
         System.out.println("\n\nThere are no events to delete!\n\n");
+    }
+
+    public void whoDoYouWantToCreate() {
+        System.out.println("What type of account would you like to create?");
+        System.out.println("1. Organizer");
+        System.out.println("2. Attendee");
+        System.out.println("3. Speaker");
+        System.out.println("\nEnter your choice or press 0 to go back");
     }
 }

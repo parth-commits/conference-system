@@ -83,7 +83,7 @@ public class OrganizerSystem {
             switch (o) {
 
                 case "1":   //1. Create a speaker
-                    createSpeaker(userID);
+                    createAccounts(userID);
                     break;
                 case "2":   //2. Schedule a speaker
                     scheduleASpeaker();
@@ -119,6 +119,7 @@ public class OrganizerSystem {
 
     }
 
+
     /**
      * Saves states of the entire system system.
      *
@@ -135,24 +136,47 @@ public class OrganizerSystem {
 
     }
 
+    private void createAccounts(String userID) {
+        boolean goBack = false;
+        while (!goBack) {
+            output.whoDoYouWantToCreate();
+            String in = input.getKeyboardInput();
+            if (in.equals("0")){
+                goBack = true;
+            }
+            else if (in.equals("1")){
+                createUser(userID, 1);
+            }
+            else if (in.equals("2")){
+                createUser(userID, 2);
+            }
+            else if(in.equals("3")){
+                createUser(userID, 3);
+            }
+            else {
+                output.invalidInput();
+            }
+        }
+    }
+
     /**
      * Creates a new Speaker and add the Speaker into SpeakerManager.
      *
      * @param userID The user_id of the organizer who creates this Speaker
      */
-    private void createSpeaker(String userID) {
+    private void createUser(String userID, int usertype) {
         boolean goBack = false;
         while (!goBack) {
-            output.enterSpeakerName();
-            String inputName = input.getKeyboardInput();
+            output.enterUsersName();
+            String inputName = input.getKeyboardInput(); // gets the user being created's name
             if (inputName.equals("0")) {
                 goBack = true;
             } else {
                 boolean untilCorrect = true;
                 boolean correct = true;
                 while (untilCorrect) {
-                    output.enterSpeakerID(correct);
-                    String inputID = input.getKeyboardInput();
+                    output.enterUsersID(correct);
+                    String inputID = input.getKeyboardInput(); // gets the ID of the user trying to be created
                     if (inputID.equals("0")) {
                         untilCorrect = false;
                     } else if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
@@ -162,15 +186,23 @@ public class OrganizerSystem {
                         boolean correctNew = true;
                         while (untilCorrectNew) {
                             output.enterPassword(correctNew);
-                            String inputPass = input.getKeyboardInput();
+                            String inputPass = input.getKeyboardInput(); // gets the password of the user trying to be created
                             if (inputPass.equals("0")) {
                                 untilCorrectNew = false;
                             }
                             if (inputPass.length() > 14 || inputPass.length() < 8) {
                                 correctNew = false;
                             } else {
-                                speakerManager.addSpeaker(inputID, inputPass, inputName, userID);
-                                organizerManager.setAddSpeakerCreated(userID, inputID);
+                                if (usertype == 3){  //we are creating a speaker
+                                    speakerManager.addSpeaker(inputID, inputPass, inputName, userID);
+                                    organizerManager.setAddSpeakerCreated(userID, inputID);
+                                }
+                                else if (usertype == 2){ //we are creating a attendee
+                                    attendeeManager.addAttendee(inputID, inputName, inputPass);
+                                }
+                                else {  //else we are creating an organizer
+                                    organizerManager.addOrganizer(inputID, inputName, inputPass);
+                                }
                                 messageSystem.addContact(inputID, userID);
                                 messageSystem.addContact(userID, inputID);
                                 chatManager.createChat(userID, inputID);
@@ -685,6 +717,7 @@ public class OrganizerSystem {
             }
         }
     }
+
 
     /**
      * Check if the user already registered in this system or not

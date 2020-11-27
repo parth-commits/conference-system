@@ -27,11 +27,11 @@ public class  AttendeeManager implements Serializable{
     /**
      * Adds an attendee to the hashtable of all attendees.
      * @param user_id the id of user that we wish to add
-     * @param username the name of the user that we wish to add
+     * @param name the name of the user that we wish to add
      * @param passwords the passwords of the user that we wish to add
      */
-    public void addAttendee(String user_id, String username, String passwords){
-        Attendee newAttendee = new Attendee(user_id, username, passwords);
+    public void addAttendee(String user_id, String name, String passwords){
+        Attendee newAttendee = new Attendee(user_id, name, passwords);
         tableOfAttendees.put(newAttendee.getUser_id(), newAttendee);
     }
 

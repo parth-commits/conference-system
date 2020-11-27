@@ -30,11 +30,11 @@ public class OrganizerManager implements Serializable{
     /**
      * Adds an organizer to the existing table of organizer.
      * @param user_id the id of user that we want to add
-     * @param username the name of the user that we want to add
+     * @param name the name of the user that we want to add
      * @param passwords the passwords of the user that we want to add
      */
-    public void addOrganizer(String user_id, String username, String passwords){
-        Organizer newOrganizer = new Organizer(user_id, username, passwords);
+    public void addOrganizer(String user_id, String name, String passwords){
+        Organizer newOrganizer = new Organizer(user_id, name, passwords);
         tableOfOrganizers.put(newOrganizer.getUser_id(), newOrganizer);
     }
 
