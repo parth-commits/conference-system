@@ -35,12 +35,12 @@ public class OrganizerSystem {
     private ChatManager chatManager;
     private MessageSystem messageSystem;
     private EventSystem eventSystem;
+    private RequestSystem requestSystem;
 
 
     /**
      * Constructor
-     *
-     * @param speakerManager   The speaker manager implements by SpeakerManager use case
+     *  @param speakerManager   The speaker manager implements by SpeakerManager use case
      * @param roomManager      The room manager implements by RoomManager use case
      * @param organizerManager The organizer manager implements by OrganizerManager use case
      * @param eventManager     The event manager implements by EventManager use case
@@ -48,9 +48,12 @@ public class OrganizerSystem {
      * @param attendeeManager  The attendee manager implements by AttendeeManager use case
      * @param messageSystem    The message system implements by MessageSystem Controller
      * @param eventSystem      The event system implements by EventSystem Controller
+     * @param requestSystem
      */
 
-    public OrganizerSystem(SpeakerManager speakerManager, RoomManager roomManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem) {
+    public OrganizerSystem(SpeakerManager speakerManager, RoomManager roomManager, OrganizerManager organizerManager,
+                           EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager,
+                           MessageSystem messageSystem, EventSystem eventSystem, RequestSystem requestSystem) {
         this.attendeeManager = attendeeManager;
         this.roomManager = roomManager;
         this.organizerManager = organizerManager;
@@ -61,6 +64,7 @@ public class OrganizerSystem {
         this.output = new TextPresenter();
         this.messageSystem = messageSystem;
         this.eventSystem = eventSystem;
+        this.requestSystem = requestSystem;
     }
 
     /**
@@ -81,7 +85,9 @@ public class OrganizerSystem {
             o = input.getKeyboardInput();
 
             switch (o) {
-
+                case "5":   //5. manage requests
+                    requestSystem.organizerOptions();
+                    break;
                 case "1":   //1. Create a speaker
                     createAccounts(userID);
                     break;
@@ -94,24 +100,24 @@ public class OrganizerSystem {
                 case "4":   //4. Create/Delete an Event
                     createDeleteEvent(userID);
                     break;
-                case "5":   //5. Create a room
+                case "6":   //6. Create a room
                     createRoom();
                     break;
-                case "6":   //6. Add or remove a contact
+                case "7":   //7. Add or remove a contact
                     addRemoveContact(userID);
                     break;
-                case "7":   //7. Join/Leave an Event
+                case "8":   //8. Join/Leave an Event
                     joinLeaveEvent(userID);
                     break;
-                case "8":   //8. Check all events
+                case "9":   //9. Check all events
                     eventSystem.checkAllEvents();
                     break;
-                case "9":   //9. Check signed up events
+                case "10":   //10. Check signed up events
                     eventSystem.checkSignedUpEvent(userID);
                     break;
-                case "10":  //10. LOGOUT
+                case "11":  //11. LOGOUT
                     return false;
-                case "11":  //11. SHUTDOWN
+                case "12":  //12. SHUTDOWN
                     return true;
             }
             saveState();
@@ -127,13 +133,12 @@ public class OrganizerSystem {
      */
     private void saveState() throws IOException {
         Serialization io = new Serialization();
-        io.saveStateSpeakerManager(speakerManager);
-        io.saveStateRoomManager(roomManager);
-        io.saveStateOrganizerManager(organizerManager);
-        io.saveStateEventManager(eventManager);
-        io.saveStateChatManager(chatManager);
-        io.saveStateAttendeeManager(attendeeManager);
-
+        io.saveState(speakerManager, "SpeakerManager");
+        io.saveState(roomManager, "RoomManager");
+        io.saveState(organizerManager, "OrganizerManager");
+        io.saveState(chatManager, "ChatManager");
+        io.saveState(attendeeManager, "AttendeeManager");
+        io.saveState(eventManager, "EventManager");
     }
 
     private void createAccounts(String userID) {

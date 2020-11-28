@@ -22,7 +22,6 @@ public class EventManager implements Serializable{
      */
     public EventManager(){
         listOfEvents = new ArrayList<>();
-
     }
 
     /**

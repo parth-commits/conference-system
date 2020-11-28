@@ -89,10 +89,10 @@ public class SpeakerSystem {
      */
     private void saveState() throws IOException {
         Serialization io = new Serialization();
-        io.saveStateSpeakerManager(speakerManager);
-        io.saveStateOrganizerManager(organizerManager);
-        io.saveStateChatManager(chatManager);
-        io.saveStateAttendeeManager(attendeeManager);
+        io.saveState(speakerManager, "SpeakerManager");
+        io.saveState(organizerManager, "OrganizerManager");
+        io.saveState(chatManager, "ChatManager");
+        io.saveState(attendeeManager, "AttendeeManager");
     }
 
     /**

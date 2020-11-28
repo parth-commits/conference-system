@@ -1,4 +1,5 @@
 import Entities.Attendee;
+import Presenter.TextPresenter;
 import UseCases.*;
 
 import java.util.ArrayList;
@@ -6,7 +7,7 @@ import java.util.ArrayList;
 public class Debugger {
     public Debugger(){}
 
-    public void printStateofSystem(OrganizerManager organizerManager, SpeakerManager speakerManager, AttendeeManager attendeeManager, EventManager eventManager, RoomManager roomManager){
+    public void printStateofSystem(OrganizerManager organizerManager, SpeakerManager speakerManager, AttendeeManager attendeeManager, EventManager eventManager, RoomManager roomManager, RequestManager requestManager){
         System.out.println("\n\n\nNOTE: this is a debug feature to assist our TA. Here is the current state of the system:");
         System.out.println("\n\nAll the organizers in the system:");
         ArrayList<String> organizersList = organizerManager.getUserIDs();
@@ -33,6 +34,9 @@ public class Debugger {
         for (String room: roomLOCS){
             System.out.println(roomManager.getRoom(room).toString());
         }
-        System.out.println("\n\n");
+        System.out.println("\n\nAll the requests in the system and their status");
+        TextPresenter output = new TextPresenter();
+        output.requestList(requestManager.getListOfRequests());
+        System.out.println("\n\n\n");
     }
 }

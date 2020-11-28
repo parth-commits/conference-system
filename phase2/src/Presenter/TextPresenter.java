@@ -1,8 +1,6 @@
 package Presenter;
 
-import Entities.Chat;
-import Entities.Event;
-import Entities.Message;
+import Entities.*;
 
 import java.net.Socket;
 import java.sql.SQLOutput;
@@ -57,8 +55,9 @@ public class TextPresenter {
         System.out.println("\t3. See Scheduled Events");
         System.out.println("\t4. Add/Remove Contact");
         System.out.println("\t5. Message");
-        System.out.println("\t6. LOGOUT");
-        System.out.println("\t7. SHUTDOWN");
+        System.out.println("\t6. Your Special Requests");
+        System.out.println("\t7. LOGOUT");
+        System.out.println("\t8. SHUTDOWN");
     }
 
     /**
@@ -413,14 +412,15 @@ public class TextPresenter {
         System.out.println("\t2. Schedule a Speaker");
         System.out.println("\t3. Message");
         System.out.println("\t4. Create/Delete/Modify event");
-        System.out.println("\t5. Create Rooms\n");
+        System.out.println("\t5. Manage Attendee Requests");
+        System.out.println("\t6. Create Rooms\n");
         System.out.println("Regular Attendee Options:");
-        System.out.println("\t6. Add/Remove contact");
-        System.out.println("\t7. Join/Leave event");
-        System.out.println("\t8. See all Events");
-        System.out.println("\t9. See Scheduled Events");
-        System.out.println("\t10. LOGOUT");
-        System.out.println("\t11. SHUTDOWN");
+        System.out.println("\t7. Add/Remove contact");
+        System.out.println("\t8. Join/Leave event");
+        System.out.println("\t9. See all Events");
+        System.out.println("\t10. See Scheduled Events");
+        System.out.println("\t11. LOGOUT");
+        System.out.println("\t12. SHUTDOWN");
     }
 
     /**
@@ -745,5 +745,52 @@ public class TextPresenter {
         System.out.println("The capacity of this event is currently: " + eventCapacity);
         System.out.println("How many more spots do you want to add to this event?");
         System.out.println("Enter 0 to return to previous menu");
+    }
+
+    public void requestList(ArrayList<Request> listOfRequests) {
+        for (int i = 1; i <= listOfRequests.size(); i++){
+            System.out.println("\t" + i + " " + listOfRequests.get(i-1).toString());
+        }
+    }
+
+    public void changeStatus() {
+        System.out.println("What would you like to change the status of this event to?");
+        System.out.println("\t1. Addressed");
+        System.out.println("\t2. Pending");
+        System.out.println("\nEnter 0 to return to previous menu");
+    }
+
+    public void attendeeRequestOptions() {
+        System.out.println("What would you like to do?");
+        System.out.println("\t1. View your requests");
+        System.out.println("\t2. Create a new request");
+        System.out.println("\nEnter 0 to return to previous menu");
+    }
+
+    public void createUniqueIDforReq() {
+        System.out.println("Please create a unique ID for this Request. This must be a positive integer.");
+        System.out.println("\nEnter 0 to return to previous menu");
+    }
+
+    public void invalidReqID() {
+        System.out.println("That ID wont work! It is either taken or doesnt match the requirements for an id! Please try again.");
+    }
+
+    public void thereAreNoRequests() {
+        System.out.println("There are no requests to view! You are being redirected to previous screen.");
+    }
+
+    public void writeYourRequest() {
+        System.out.println("Please write your request: ");
+        System.out.println("\nEnter 0 to return to previous menu");
+
+    }
+
+    public void enterZeroToContinue() {
+        System.out.println("\nEnter 0 to return to previous menu");
+    }
+
+    public void chooseRequest() {
+        System.out.println("Please choose a request: ");
     }
 }

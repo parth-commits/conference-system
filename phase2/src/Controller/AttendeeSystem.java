@@ -30,6 +30,7 @@ public class AttendeeSystem {
     private EventSystem eventSystem;
     private RoomManager roomManager;
     private EventManager eventManager;
+    private RequestSystem requestSystem;
 
     /**
      * Constructor
@@ -41,9 +42,10 @@ public class AttendeeSystem {
      * @param eventSystem      The event system implements by EventSystem Controller
      * @param roomManager      The room manager implements by RoomManager use case
      * @param eventManager     The event manager implements by EventManager use case
+     * @param requestSystem    The system to use to send requests or see your requests
      */
     public AttendeeSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, ChatManager chatManager,
-                          AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem, RoomManager roomManager, EventManager eventManager) {
+                          AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem, RoomManager roomManager, EventManager eventManager, RequestSystem requestSystem) {
         this.speakerManager = speakerManager;
         this.organizerManager = organizerManager;
         this.attendeeManager = attendeeManager;
@@ -54,6 +56,7 @@ public class AttendeeSystem {
         this.eventManager = eventManager;
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
+        this.requestSystem = requestSystem;
     }
 
     /**
@@ -90,12 +93,16 @@ public class AttendeeSystem {
             else if (i.equals("5")) {
                 messageSystem.sendMessage(userID);
             }
-            //6. logout
+            //6. requests
             else if (i.equals("6")) {
+                requestSystem.attendeeOptions(userID);
+            }
+            //7. logout
+            else if (i.equals("7")) {
                 return false;
             }
-            //7. shutdown
-            else if (i.equals("7")) {
+            //8. shutdown
+            else if (i.equals("8")) {
                 return true;
             }
             saveState();
@@ -109,12 +116,12 @@ public class AttendeeSystem {
      */
     private void saveState() throws IOException {
         Serialization io = new Serialization();
-        io.saveStateSpeakerManager(speakerManager);
-        io.saveStateRoomManager(roomManager);
-        io.saveStateOrganizerManager(organizerManager);
-        io.saveStateEventManager(eventManager);
-        io.saveStateChatManager(chatManager);
-        io.saveStateAttendeeManager(attendeeManager);
+        io.saveState(speakerManager, "SpeakerManager");
+        io.saveState(eventManager, "EventManager");
+        io.saveState(roomManager, "RoomManager");
+        io.saveState(organizerManager, "OrganizerManager");
+        io.saveState(chatManager, "ChatManager");
+        io.saveState(attendeeManager, "AttendeeManager");
 
     }
 

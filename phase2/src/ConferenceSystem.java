@@ -23,6 +23,7 @@ public class ConferenceSystem {
     private EventManager eventManager;
     private ChatManager chatManager;
     private AttendeeManager attendeeManager;
+    private RequestManager requestManager;
 
     private OrganizerSystem organizerSystem;
     private MessageSystem messageSystem;
@@ -30,6 +31,7 @@ public class ConferenceSystem {
     private EventSystem eventSystem;
     private AttendeeSystem attendeeSystem;
     private SpeakerSystem speakerSystem;
+    private RequestSystem requestSystem;
 
     /**
      * Constructor
@@ -41,10 +43,11 @@ public class ConferenceSystem {
 
     private void initializeControllers() {
         logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
+        requestSystem = new RequestSystem(requestManager, attendeeManager, organizerManager);
         messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
         eventSystem = new EventSystem(speakerManager, roomManager, organizerManager, eventManager, attendeeManager);
-        organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem);
-        attendeeSystem = new AttendeeSystem(speakerManager, organizerManager, chatManager,attendeeManager, messageSystem, eventSystem, roomManager, eventManager);
+        organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem, requestSystem);
+        attendeeSystem = new AttendeeSystem(speakerManager, organizerManager, chatManager,attendeeManager, messageSystem, eventSystem, roomManager, eventManager, requestSystem);
         speakerSystem = new SpeakerSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem);
     }
 
@@ -53,12 +56,14 @@ public class ConferenceSystem {
      */
     private void importState() {
         Serialization io = new Serialization();
-        this.speakerManager = io.importStateSpeakerManager();
-        this.roomManager =io.importStateRoomManager();
-        this.organizerManager = io.importStateOrganizerManager();
-        this.eventManager = io.importStateEventManager();
-        this.chatManager = io.importStateChatManager();
-        this.attendeeManager = io.importStateAttendeeManager();
+        this.speakerManager = (SpeakerManager) io.importState("SpeakerManager");
+        this.roomManager = (RoomManager) io.importState("RoomManager");
+        this.organizerManager = (OrganizerManager) io.importState("OrganizerManager");
+        this.eventManager = (EventManager) io.importState("EventManager");
+        this.chatManager = (ChatManager) io.importState("ChatManager");
+        this.attendeeManager = (AttendeeManager) io.importState("AttendeeManager");
+        this.requestManager = (RequestManager) io.importState("RequestManager");
+
     }
 
     /**
@@ -67,13 +72,13 @@ public class ConferenceSystem {
      */
     private void saveState() throws IOException {
         Serialization io = new Serialization();
-        io.saveStateSpeakerManager(speakerManager);
-        io.saveStateRoomManager(roomManager);
-        io.saveStateOrganizerManager(organizerManager);
-        io.saveStateEventManager(eventManager);
-        io.saveStateChatManager(chatManager);
-        io.saveStateAttendeeManager(attendeeManager);
-
+        io.saveState(speakerManager, "SpeakerManager");
+        io.saveState(roomManager, "RoomManager");
+        io.saveState(organizerManager, "OrganizerManager");
+        io.saveState(eventManager, "EventManager");
+        io.saveState(chatManager, "ChatManager");
+        io.saveState(attendeeManager, "AttendeeManager");
+        io.saveState(requestManager, "RequestManager");
     }
 
     /**
@@ -85,7 +90,7 @@ public class ConferenceSystem {
         deletePastEvents();
         boolean shutdown = false;
         Debugger debugger = new Debugger();
-        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager);
+        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager, requestManager);
         while (!shutdown) {
             String userID = logInAndRegistrationSystem.start();
             if (userID.equals("SHUTDOWN")){
