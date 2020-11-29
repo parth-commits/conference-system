@@ -86,7 +86,7 @@ public class Room implements Serializable {
      * @param EventId The event_id of the event
      * @return boolean Returns ture if the room is removed from booking list successfully
      */
-    public boolean removeBookedTime(Date date, Integer EventId){
+    public boolean removeBookedTime(Date date, int EventId){
         //if the event exists at the time inour dictionary, then delete the event
         if (bookedTime.containsKey(date) && bookedTime.get(date).equals(EventId)){
             bookedTime.remove(date, EventId);

@@ -24,6 +24,7 @@ public class Event implements Serializable {
     private ArrayList<String> attendees;
     private String organizerID;
     private int maxCapacity;
+    private String length;
 
 
     /**
@@ -34,7 +35,7 @@ public class Event implements Serializable {
      * @param organizerID the user_id of organizer who hosts this event
      */
 
-    public Event(String title, Date time, String location, String organizerID, int id, int maxCapacity) {
+    public Event(String title, Date time, String location, String organizerID, int id, int maxCapacity, String length) {
         this.id = id;
         this.title = title;
         this.time = time;
@@ -43,6 +44,7 @@ public class Event implements Serializable {
         this.attendees = new ArrayList<>();
         this.speakerID = new ArrayList<>();
         this.maxCapacity = maxCapacity;
+        this.length = length;
     }
 
     /**
@@ -181,5 +183,9 @@ public class Event implements Serializable {
 
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
+    }
+
+    public String getLength() {
+        return length;
     }
 }

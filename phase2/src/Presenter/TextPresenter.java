@@ -546,7 +546,7 @@ public class TextPresenter {
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         System.out.println("Please select one of the following events\n");
         for (int i=1; i<listOfEvents.size()+1; i++){
-            System.out.println("\t" + i + ". Name: " + listOfEvents.get(i-1).getTitle() +" | Time: " + formatter.format(listOfEvents.get(i-1).getTime()) + " | Location: " + listOfEvents.get(i-1).getLocation());
+            System.out.println("\t" + i + ". Name: " + listOfEvents.get(i-1).getTitle() +" | Time: " + formatter.format(listOfEvents.get(i-1).getTime()) + " | Location: " + listOfEvents.get(i-1).getLocation() + " | Event Length (In Hours) " + listOfEvents.get(i-1).getLength());
 
         }
         System.out.println("\nTo return to the previous menu please press 0");
@@ -792,5 +792,10 @@ public class TextPresenter {
 
     public void chooseRequest() {
         System.out.println("Please choose a request: ");
+    }
+
+    public void validLength(){
+        System.out.println("Please enter the length of this event in hours. Note, the length must be at least 1 hour and at max 8." +
+                "\nPlease press 0 to go back.");
     }
 }

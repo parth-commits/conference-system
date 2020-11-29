@@ -267,14 +267,16 @@ public class OrganizerSystem {
                             validSpeakerID = true;
                         } else if (speakerManager.userExist(speakerID)) {                                   //if speaker exists
                             ArrayList<Integer> listOfEnrolledEventIDs = speakerManager.getSpeaker(speakerID).getAssignEvents(); //gets list of eventid's this speaker is talking at
-                            Date newEventDateTime = listOfEvents.get(eventIDint - 1).getTime();         //gets the time of this new event
+                            ArrayList<Date> newEventDateTimes = eventManager.getAllTimesForEvent(eventManager.getID(listOfEvents.get(eventIDint - 1)));      //gets the time(s) of this new event
                             boolean speakerBusy = false;
-                            for (Integer event : listOfEnrolledEventIDs) {                                 // gets time of every event this speaker is talking at.
-                                Date existingEventTime = eventManager.getEvent(event).getTime();
-                                if (existingEventTime.equals(newEventDateTime)) {                          //if the speaker is talking at the same time at another existing event,
-                                    output.scheduleSpeakerSpeakerBusy();
-                                    speakerBusy = true;                                                  // then speakerBusy = true
-                                    break;
+                            for (Integer event : listOfEnrolledEventIDs) {                                 // gets time(s) of every event this speaker is talking at.
+                                ArrayList<Date> existingTalkTimes = eventManager.getAllTimesForEvent(event);
+                                for (Date existingTime: existingTalkTimes){                                     //if a speaker is already talking at another event during the time of this new event, speaker is busy
+                                    if (newEventDateTimes.contains(existingTime)){
+                                        output.scheduleSpeakerSpeakerBusy();
+                                        speakerBusy=true;
+                                        break;
+                                    }
                                 }
                             }
                             if (speakerBusy) {                                       //if the speaker is busy, then we want the organizer to be able to select a different event
@@ -321,70 +323,91 @@ public class OrganizerSystem {
             output.createDeleteEvent();
             String createDeleteInput = input.getKeyboardInput();
             if (createDeleteInput.equals("1")) {                                                    //Create event
-                boolean validTime = false;
-                while (!validTime) {
-                    output.createEnterTime();
-                    String inputTime = input.getKeyboardInput();
-                    if (verifyDateTimeEntered(inputTime)) {                                //they entered a valid date time
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
-                        Date d1 = formatter.parse(inputTime);
-                        ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1);
-                        if (availableRooms.isEmpty()) {
-                            output.createNoRoomAvailable();                                 //MAKE SURE THIS STAYS FOR SOME TIME
-                            try {
-                                Thread.sleep(2000);
-                            } catch (Exception e) {
-                                System.out.println("couldnt sleep");
-                            }
-                        } else {                                                               //there is a room available
-                            output.createProvideEventTitle();
-                            String eventTitle = input.getKeyboardInput();                   //gets title for event.
-                            String locationSelected = availableRooms.get(0);
-                            int eventID = -1;
-                            boolean validID = false;
-                            while (!validID) {
-                                output.enterCreatingEventID();
-                                try {
-                                    eventID = Integer.parseInt(input.getKeyboardInput());
-                                } catch (Exception e) {
-                                    eventID = -1;
+                boolean validLength = false;
+                while (!validLength){
+                    output.validLength();
+                    String inputLength = input.getKeyboardInput();
+                    if (inputLength.equals("0")){
+                        validLength=true;
+                    }
+                    else if (inputLength.matches("1|2|3|4|5|6|7|8")){
+                        boolean validTime = false;
+                        while (!validTime) {
+                            output.createEnterTime();
+                            String inputTime = input.getKeyboardInput();
+                            if (verifyDateTimeEntered(inputTime)) {                                //they entered a valid date time
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                formatter.setTimeZone(TimeZone.getTimeZone("EST"));
+                                Date d1 = formatter.parse(inputTime);
+                                ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1, Integer.parseInt(inputLength));
+                                if (availableRooms.isEmpty()) {
+                                    output.createNoRoomAvailable();                                 //MAKE SURE THIS STAYS FOR SOME TIME
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (Exception e) {
+                                        System.out.println("couldnt sleep");
+                                    }
+                                } else {                                                               //there is a room available
+                                    output.createProvideEventTitle();
+                                    String eventTitle = input.getKeyboardInput();                   //gets title for event.
+                                    String locationSelected = availableRooms.get(0);
+                                    int eventID = -1;
+                                    boolean validID = false;
+                                    while (!validID) {
+                                        output.enterCreatingEventID();
+                                        try {
+                                            eventID = Integer.parseInt(input.getKeyboardInput());
+                                        } catch (Exception e) {
+                                            eventID = -1;
+                                        }
+                                        if (eventID >= 0 && !eventManager.getListOfEventIDs().contains(eventID)) {
+                                            boolean validCapacity = false;
+                                            int capacityInt = -1;
+                                            while(!validCapacity){
+                                                try{
+                                                    output.giveCapacityforEvent();
+                                                    capacityInt = Integer.parseInt(input.getKeyboardInput());
+                                                }
+                                                catch (Exception e){
+                                                    output.invalidInput();
+                                                }
+                                                if (capacityInt==0){
+                                                    validCapacity=true;
+                                                }
+                                                else if (capacityInt>0 && capacityInt<501){
+                                                    eventManager.addEvent(eventTitle, d1, locationSelected, userID, eventID,capacityInt, inputLength);
+                                                    roomManager.addEventToRoom(locationSelected, eventID, d1, Integer.parseInt(inputLength));
+                                                    organizerManager.setAddEventCreated(userID, eventID);           //adds to the list of events this organizer has created
+                                                    output.ActionDone();
+                                                    try {
+                                                        Thread.sleep(2000);
+                                                    } catch (InterruptedException e) {
+                                                        System.out.println("couldnt sleep");
+                                                    }
+                                                    validCapacity=true;
+                                                    validID= true;
+                                                    validTime = true;
+                                                    validLength = true;
+                                                    createDelete = true;
+                                                }
+                                                else{
+                                                    output.invalidInput();
+                                                }
+                                            }
+                                        } else {
+                                            output.invalidEventID();
+                                        }
+                                    }
                                 }
-                                if (eventID >= 0 && !eventManager.getListOfEventIDs().contains(eventID)) {
-                                    validID = true;
-                                } else {
-                                    output.invalidEventID();
-                                }
+                            } else if (inputTime.equals("0")) {
+                                validTime = true;
+                            } else {                                                                  //they entered an invalid date time
+                                output.createEnterTimeInvalidTime();
                             }
-                            int capacity;
-                            while (true){
-                                try {
-                                    output.giveCapacityforEvent();
-                                    capacity = Integer.parseInt(input.getKeyboardInput());
-                                    break;
-                                }catch (Exception e){
-                                    output.invalidInput();
-                                }
-                            }
-                            if (capacity == 0){
-                                continue;
-                            }
-                            eventManager.addEvent(eventTitle, d1, locationSelected, userID, eventID,capacity);
-                            roomManager.addEventToRoom(locationSelected, eventID, d1);
-                            organizerManager.setAddEventCreated(userID, eventID);           //adds to the list of events this organizer has created
-                            output.ActionDone();
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                System.out.println("couldnt sleep");
-                            }
-                            validTime = true;
-                            createDelete = true;
                         }
-                    } else if (inputTime.equals("0")) {
-                        validTime = true;
-                    } else {                                                                  //they entered an invalid date time
-                        output.createEnterTimeInvalidTime();
+                    }
+                    else{
+                        output.invalidInput();                                                          //Length entered is invalid
                     }
                 }
             }
@@ -412,7 +435,8 @@ public class OrganizerSystem {
                         int eventID = events.get(eventSelectedInt - 1).getID();
                         String eventLocation = eventManager.getLocation(eventID);
                         Date eventTime = eventManager.getTime(eventID);
-                        roomManager.removeEventFromRoom(eventLocation, eventID, eventTime);      //the room no longer holds this event at that time.
+                        Event eventItself = eventManager.getEvent(eventID);
+                        roomManager.removeEventFromRoom(eventLocation, eventItself, eventTime);      //the room no longer holds this event at that time.
 
                         organizerManager.setDeleteEventCreated(userID, eventID);                //removes event from the list of events this organizer has created
                         ArrayList<String> listofAttendees = eventManager.getEventAttendees(eventID);
@@ -724,18 +748,19 @@ public class OrganizerSystem {
                     ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
                     ArrayList<Integer> listOfCurrentlyAttendingEventIds = organizerManager.getSignedUpEvents(userID);    //gets list of all events this organizer is already attending
                     listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
-                    ArrayList<Integer> listOfAllEventsThatNeedToBeRemoved = new ArrayList<>();
+                    ArrayList<Integer> listOfAllEventsThatNeedToBeRemoved = new ArrayList<>();                          //This list will contain all the event ids that the person cannot join.
                     for (Integer eventid : listOfAllEventIDs) {                                                            //goes through every event this organizer is not attending (list of events he can possible join)
-                        Date newEventTime = eventManager.getTime(eventid);                                              //finds its time
-                        for (Integer currenteventid : listOfCurrentlyAttendingEventIds) {
-                            Date currentEventTime = eventManager.getTime(currenteventid);
-                            if (newEventTime.equals(currentEventTime)) {                                                 //if this time is the same as any event the organizer is already attending,
-                                listOfAllEventsThatNeedToBeRemoved.add(eventid);                                                      //remove that event from the event from list of event he can possible join (listOfAllEventIDs)
+                        ArrayList<Date> newEventTimes = eventManager.getAllTimesForEvent(eventid);                        //finds the times
+                        for (Integer currenteventid : listOfCurrentlyAttendingEventIds) {                               //goes through attending events
+                            ArrayList<Date> currentEventTimes = eventManager.getAllTimesForEvent(currenteventid);       //finds the times
+                            for (Date newTime: newEventTimes){                                                          //if a (new) event overlaps with any of the times of an existing event, reject.
+                                if (currentEventTimes.contains(newTime)){
+                                    listOfAllEventsThatNeedToBeRemoved.add(eventid);
+                                }
                             }
                         }
-                        //by now, listOfAllEventIDs contains the eventIDs of events that the organizer has not joined already and whose timings do not
-                        //overlap/interfere with events he/she is already going to! Now from these events, we want to remove those that do not have
-                        //room (sufficient capacity) to support one more attendee.
+                        //by now, listOfAllEventIDs contains the eventIDs of events that the organizer has not joined already and listOfAllEventsThatNeedToBeRemoved contain events whose timings
+                        //overlap/interfere with events he/she is already going to! We want to remove events those that do not have room (sufficient capacity) to support one more attendee.
                         Event actualEvent = eventManager.getEvent(eventid);
                         int capacity = eventManager.eventCapacity(eventid);                 //gets the capacity of the event
                         int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
@@ -779,7 +804,7 @@ public class OrganizerSystem {
                 } catch (Exception e) {
                     System.out.println("couldnt sleep!");
                 }
-            } else if (joinLeaveInt == 2) {                                                                                   //we need to delete an event here
+            } else if (joinLeaveInt == 2) {                                                                                   //we need to leave an event here
                 boolean validEventSelected = false;
                 while (!validEventSelected) {
                     ArrayList<Integer> listOfAttendingEventIds = organizerManager.getSignedUpEvents(userID);            //get the list of signed up eventids

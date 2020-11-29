@@ -4,6 +4,7 @@ import Entities.Event;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -78,6 +79,7 @@ public class EventManager implements Serializable{
         return getEvent(eventID).getTime();
     }
 
+    public Integer getID(Event event){return event.getID();}
     /**
      * Gets an arraylist of events, given the infomration of speaker id.
      * @param speakerID the id of speaker who are involved in the events
@@ -105,9 +107,9 @@ public class EventManager implements Serializable{
      * @param id the id of the event
      * @return int the id of the added event
      */
-    public int addEvent(String title, Date time, String location, String organizerID, int id, int maxCapacity) {
+    public int addEvent(String title, Date time, String location, String organizerID, int id, int maxCapacity, String length) {
         // check time (speaker??? room???)
-        Event event = new Event(title, time, location, organizerID, id, maxCapacity);
+        Event event = new Event(title, time, location, organizerID, id, maxCapacity, length);
         listOfEvents.add(event);
         return event.getID();
     }
@@ -233,5 +235,20 @@ public class EventManager implements Serializable{
             }
         }
     }
+    public ArrayList<Date> getAllTimesForEvent(int eventId) {
+        ArrayList<Date> returnList = new ArrayList<>();
+        Event eventItself = getEvent(eventId);
+        String eventLength = eventItself.getLength();
+        Date eventDate = eventItself.getTime();
+        int eventLengthInt = Integer.parseInt(eventLength);
+        Calendar c = Calendar.getInstance();
+        for (int i = 0; i < eventLengthInt; i++) {
+            c.setTime(eventDate);
+            c.add(Calendar.HOUR, i);
+            returnList.add(c.getTime());
+        }
+        return returnList;
+    }
 
+    public String getEventLength(int eventID){return getEvent(eventID).getLength();}
 }

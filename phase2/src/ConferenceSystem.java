@@ -142,7 +142,7 @@ public class ConferenceSystem {
                 //in the organizer's list of events that he/she created, this event is removed.
                 organizerManager.removeEvent(eventID, organizerOfThisEvent);
                 //removes the event from the room. NOTE THIS IS NOT NECESSARY AS YOU WILL NEVER BE ABLE TO ASSIGN A ROOM IN THE PAST, BUT JUST AS A SAFETY MEASURE.
-                roomManager.removeEventFromRoom(eventManager.getEvent(eventID).getLocation(), eventID, eventManager.getTime(eventID));
+                roomManager.removeEventFromRoom(eventManager.getEvent(eventID).getLocation(), eventManager.getEvent(eventID), eventManager.getTime(eventID));
                 // and finally removes the event object itself from the event manager.
                 eventManager.removeEvent(eventID);
             }

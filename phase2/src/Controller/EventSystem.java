@@ -58,7 +58,8 @@ public class EventSystem {
         for (Event event :listOfEvents){
             String schedule = "Title: " + event.getTitle() + "\nEvent type: " + eventType(event.getSpeakerID().size())
                     + "\nLocation: " + event.getLocation() + "\nTime: " + formatter.format(event.getTime()) +
-                    "\nEvent ID: " + event.getID();
+                    "\nEvent ID: " + event.getID() + "\nEvent Capacity: " + event.getMaxCapacity() + "\nEvent Length: "
+                    + event.getLength();
             if (eventManager.hasSpeaker(event.getID())){
                 schedule +=  "\nSpeaker: ";
                 ArrayList<String> speakerNames = new ArrayList<>();
@@ -135,7 +136,7 @@ public class EventSystem {
             for (Event event :listOfEvents){
                 StringBuilder schedule = new StringBuilder("Title: " + event.getTitle() + "\nEvent type: "+
                 eventType(event.getSpeakerID().size()) + "\nLocation: " + event.getLocation() + "\n"
-                        + "Time: " + formatter.format(event.getTime()) + "\n");
+                        + "Time: " + formatter.format(event.getTime()) + "\n" + "Event Length (In Hours): " + event.getLength());
                 if (eventManager.hasSpeaker(event.getID())){
                     schedule.append("Speaker: ");
                     ArrayList<String> speakerNames = new ArrayList<>();

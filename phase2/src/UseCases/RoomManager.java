@@ -4,6 +4,7 @@ import Entities.Room;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 
@@ -45,10 +46,22 @@ public class RoomManager implements Serializable{
         return !tableOfRooms.containsKey(location);
     }
     //room manager should be able to pull up a list of rooms that are free at a given time
-    public ArrayList<String> getAvailableRooms(Date date){
+
+    public ArrayList<String> getAvailableRooms(Date date, int length){
         ArrayList<String> availableRooms = new ArrayList<String>();
+        Calendar c = Calendar.getInstance();
         for (Room roomValue: tableOfRooms.values()){
-            if (!roomValue.isBooked(date)){
+            boolean avail = true;
+            for (int i = 0; i<length;i++){
+                c.setTime(date);
+                c.add(Calendar.HOUR, i);
+                if (roomValue.isBooked(c.getTime())){
+                    avail = false;
+                }
+            //if (!roomValue.isBooked(date)){
+            //    availableRooms.add(roomValue.getRoomLocation());
+            }
+            if (avail){
                 availableRooms.add(roomValue.getRoomLocation());
             }
         }
@@ -61,19 +74,32 @@ public class RoomManager implements Serializable{
      * @param eventID the id of the selected event
      * @param date the date of the selected event
      */
-    public void addEventToRoom(String roomLocation, Integer eventID, Date date){
-        tableOfRooms.get(roomLocation).addBookedTime(date, eventID);
+    public void addEventToRoom(String roomLocation, Integer eventID, Date date, int length) {
+        Calendar c = Calendar.getInstance();
+        for (int i = 0; i < length; i++) {
+            c.setTime(date);
+            c.add(Calendar.HOUR, i);
+            tableOfRooms.get(roomLocation).addBookedTime(c.getTime(), eventID);
+
+        }
     }
 
 
     /**
      * Removes an event from the room at a given time.
      * @param roomLocation the location of the room
-     * @param eventID the id of the selected event
+     * @param event the id of the selected event
      * @param date the date of the selected event
      */
-    public void removeEventFromRoom(String roomLocation, Integer eventID, Date date){
-        tableOfRooms.get(roomLocation).removeBookedTime(date, eventID);
+    public void removeEventFromRoom(String roomLocation, Event event, Date date){
+        String length = event.getLength();
+        int lengthInt = Integer.parseInt(length);
+        Calendar c = Calendar.getInstance();
+        for (int i=0; i<lengthInt;i++){
+            c.setTime(date);
+            c.add(Calendar.HOUR, i);
+            tableOfRooms.get(roomLocation).removeBookedTime(c.getTime(), event.getID());
+        }
     }
 
     /**
