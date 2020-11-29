@@ -706,4 +706,5 @@ public class TextPresenter {
         System.out.println("There are currently no events that you can join, for one or more of the following reasons: \nThere are no events in the system, or you are already attending all of them\n"+
                 "Or there are no new events that have no time conflict with the events you are already attending.\nOr there are no events that have space.");
     }
+
 }

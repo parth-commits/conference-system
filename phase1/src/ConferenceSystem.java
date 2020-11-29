@@ -22,13 +22,14 @@ public class ConferenceSystem {
     private EventManager eventManager;
     private ChatManager chatManager;
     private AttendeeManager attendeeManager;
-
+    private AdminManager adminManager;
     private OrganizerSystem organizerSystem;
     private MessageSystem messageSystem;
     private LogInAndRegistrationSystem logInAndRegistrationSystem;
     private EventSystem eventSystem;
     private AttendeeSystem attendeeSystem;
     private SpeakerSystem speakerSystem;
+    private AdminSystem adminSystem;
 
     /**
      * Constructor
@@ -41,6 +42,7 @@ public class ConferenceSystem {
         organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem);
         attendeeSystem = new AttendeeSystem(speakerManager, organizerManager, chatManager,attendeeManager, messageSystem, eventSystem, roomManager, eventManager);
         speakerSystem = new SpeakerSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem);
+        adminSystem = new AdminSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem, eventManager, roomManager, adminManager);
     }
 
     /**
@@ -102,8 +104,11 @@ public class ConferenceSystem {
             else if (attendeeManager.userExist(userID)) {
                 shutdown = attendeeSystem.start(userID);
             }
-            else {
+            else if (speakerManager.userExist(userID)){
                 shutdown = speakerSystem.start(userID);
+            }
+            else if (adminManager.userExist(userID)){
+                //shutdown = adminSystem.start(userID);
             }
         }
         saveState();
