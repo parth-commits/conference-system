@@ -32,6 +32,11 @@ public class Serialization {
             output.writeObject(chatManager);
             output.close();
         }
+        else if (type.equals("AdminManager")){
+            AdminManager adminManager = (AdminManager) obj;
+            output.writeObject(adminManager);
+            output.close();
+        }
         else if (type.equals("EventManager")){
             EventManager eventManager = (EventManager) obj;
             output.writeObject(eventManager);
@@ -117,6 +122,11 @@ public class Serialization {
                 input.close();
                 return chatManager;
             }
+            else if (type.equals("AdminManager")){
+                AdminManager adminManager = (AdminManager) input.readObject();
+                input.close();
+                return adminManager;
+            }
             else if (type.equals("EventManager")){
                 EventManager eventManager = (EventManager) input.readObject();
                 input.close();
@@ -188,6 +198,9 @@ public class Serialization {
             }
             else if (type.equals("ChatManager")){
                 return new ChatManager();
+            }
+            else if (type.equals("AdminManager")){
+                return new AdminManager();
             }
             else if (type.equals("EventManager")){
                 return new EventManager();

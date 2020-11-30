@@ -23,6 +23,7 @@ public class ConferenceSystem {
     private EventManager eventManager;
     private ChatManager chatManager;
     private AttendeeManager attendeeManager;
+    private AdminManager adminManager;
     private RequestManager requestManager;
 
     private OrganizerSystem organizerSystem;
@@ -32,6 +33,7 @@ public class ConferenceSystem {
     private AttendeeSystem attendeeSystem;
     private SpeakerSystem speakerSystem;
     private RequestSystem requestSystem;
+    private AdminSystem adminSystem;
 
     /**
      * Constructor
@@ -49,6 +51,8 @@ public class ConferenceSystem {
         organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem, requestSystem);
         attendeeSystem = new AttendeeSystem(speakerManager, organizerManager, chatManager,attendeeManager, messageSystem, eventSystem, roomManager, eventManager, requestSystem);
         speakerSystem = new SpeakerSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem);
+        adminSystem = new AdminSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem, eventManager, roomManager, adminManager);
+
     }
 
     /**
@@ -56,6 +60,7 @@ public class ConferenceSystem {
      */
     private void importState() {
         Serialization io = new Serialization();
+        this.adminManager = (AdminManager) io.importState("AdminManager");
         this.speakerManager = (SpeakerManager) io.importState("SpeakerManager");
         this.roomManager = (RoomManager) io.importState("RoomManager");
         this.organizerManager = (OrganizerManager) io.importState("OrganizerManager");
@@ -101,6 +106,9 @@ public class ConferenceSystem {
             }
             else if (attendeeManager.userExist(userID)) {
                 shutdown = attendeeSystem.start(userID);
+            }
+            else if (adminManager.userExist(userID)){
+                //shutdown = adminSystem.start(userID);
             }
             else {
                 shutdown = speakerSystem.start(userID);
