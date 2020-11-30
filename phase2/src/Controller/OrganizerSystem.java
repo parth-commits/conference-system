@@ -263,16 +263,24 @@ public class OrganizerSystem {
                     boolean validSpeakerID = false;
                     while (!validSpeakerID) {                                         //loop repeats until user inputs a valid speakerID
                         output.scheduleSpeaker();
-                        ArrayList<String> listOfSpeakerID = speakerManager.getUserIDs();    //Want to show the list of speaker to organizer
+                        ArrayList<String> listOfSpeakerID = speakerManager.getUserIDs();    //make a list to show the list of speaker to organizer
                         ArrayList<Speaker> listOfSpeaker = new ArrayList<>();
                         for (int i=0; i < listOfSpeakerID.size(); i++) {
                             listOfSpeaker.add(speakerManager.getSpeaker(listOfSpeakerID.get(i)));
                         }
-                        output.showSpeakers(listOfSpeaker);
-                        String speakerID = input.getKeyboardInput();                                     // gets speakerid
-                        if (speakerID.equals("0")) {                                                      // if organizer wants to select a different event, they press 0. Exit loop.
+                        output.showSpeakers(listOfSpeaker); //show the list of speaker to organizer
+                        String speakerSelected = input.getKeyboardInput();
+                        int speakerSelectedInt;            //this is the number of speaker selected
+                        try {
+                            speakerSelectedInt = Integer.parseInt(speakerSelected);
+                        }
+                        catch (Exception e){
+                            speakerSelectedInt = -1;
+                        }
+                        if (speakerSelectedInt == 0) {                                                      // if organizer wants to select a different event, they press 0. Exit loop.
                             validSpeakerID = true;
-                        } else if (speakerManager.userExist(speakerID)) {                                   //if speaker exists
+                        } else if (1 <= speakerSelectedInt && speakerSelectedInt <= listOfSpeakerID.size()) {                                   //if speaker exists
+                            String speakerID = listOfSpeakerID.get(speakerSelectedInt-1);
                             ArrayList<Integer> listOfEnrolledEventIDs = speakerManager.getSpeaker(speakerID).getAssignEvents(); //gets list of eventid's this speaker is talking at
                             ArrayList<Date> newEventDateTimes = eventManager.getAllTimesForEvent(eventManager.getID(listOfEvents.get(eventIDint - 1)));      //gets the time(s) of this new event
                             boolean speakerBusy = false;
