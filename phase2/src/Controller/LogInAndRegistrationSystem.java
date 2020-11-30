@@ -2,6 +2,7 @@ package Controller;
 
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
+import UseCases.AdminManager;
 import UseCases.AttendeeManager;
 import UseCases.OrganizerManager;
 import UseCases.SpeakerManager;
@@ -19,6 +20,7 @@ public class LogInAndRegistrationSystem {
     private AttendeeManager attendeeManager;
     private OrganizerManager organizerManager;
     private SpeakerManager speakerManager;
+    private AdminManager adminManager;
 
     /**
      * Constructor
@@ -26,12 +28,13 @@ public class LogInAndRegistrationSystem {
      * @param b The organizer manager implements by OrganizerManager use case
      * @param c The speaker manager implements by SpeakerManager use case
      */
-    public LogInAndRegistrationSystem(AttendeeManager a, OrganizerManager b, SpeakerManager c) {
+    public LogInAndRegistrationSystem(AttendeeManager a, OrganizerManager b, SpeakerManager c, AdminManager d) {
         this.output = new TextPresenter();
         this.input = new KeyboardInput();
         this.attendeeManager = a;
         this.organizerManager = b;
         this.speakerManager = c;
+        this.adminManager = d;
     }
 
 
@@ -72,7 +75,7 @@ public class LogInAndRegistrationSystem {
         while (!selectType){
             output.enterType(true);
             String inputType = input.getKeyboardInput();
-            if (!(inputType.equals("1") || inputType.equals("2")||inputType.equals("0"))){
+            if (!(inputType.equals("1") || inputType.equals("2")||inputType.equals("0")||inputType.equals("3"))){
                 output.invalidInput();
             }
             else if (inputType.equals("0")){
@@ -93,7 +96,7 @@ public class LogInAndRegistrationSystem {
                         while (untilCorrect) {
                             output.enterID(correct);
                             inputID = input.getKeyboardInput();
-                            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)) {
+                            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)||adminManager.userExist(inputID)) {
                                 correct = false;
                             }
                             else if(inputID.equals("0")) {
@@ -116,8 +119,11 @@ public class LogInAndRegistrationSystem {
                                         if (inputType.equals("1")){
                                             organizerManager.addOrganizer(inputID, inputName, inputPass);
                                         }
-                                        else {
+                                        else if (inputType.equals("2")){
                                             attendeeManager.addAttendee(inputID, inputName, inputPass);
+                                        }
+                                        else {
+                                            adminManager.addAdmin(inputID,inputName,inputPass);
                                         }
                                         return inputID;
                                     }
@@ -147,6 +153,8 @@ public class LogInAndRegistrationSystem {
         } else if (organizerManager.verifyLogIn(inputID, inputPassword)) {
             return inputID;
         } else if (speakerManager.verifyLogIn(inputID, inputPassword)) {
+            return inputID;
+        }else if (adminManager.verifyLogIn(inputID, inputPassword)) {
             return inputID;
         } else {
             output.loginEnterID(false);

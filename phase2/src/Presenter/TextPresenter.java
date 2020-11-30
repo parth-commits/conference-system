@@ -192,6 +192,7 @@ public class TextPresenter {
         System.out.println("Please select one of the following:");
         System.out.println("1. Organizer");
         System.out.println("2. Attendee");
+        System.out.println("3. Admin");
         System.out.println("Please type 0 to go back.");
     }
 

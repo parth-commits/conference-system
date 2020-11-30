@@ -45,7 +45,7 @@ public class ConferenceSystem {
     }
 
     private void initializeControllers() {
-        logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
+        logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager, adminManager);
         requestSystem = new RequestSystem(requestManager, attendeeManager, organizerManager);
         messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
         eventSystem = new EventSystem(speakerManager, roomManager, organizerManager, eventManager, attendeeManager);
