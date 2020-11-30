@@ -461,7 +461,7 @@ public class TextPresenter {
      *
      */
     public void scheduleSpeaker(){
-        System.out.println("Please enter the userid of the speaker you wish to schedule.");
+        System.out.println("Please enter the userid of the speaker you want to schedule.");
         System.out.println("If you would like to go back and select a different event id, please press 0.");
     }
 
