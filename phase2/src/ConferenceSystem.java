@@ -110,7 +110,7 @@ public class ConferenceSystem {
                 shutdown = attendeeSystem.start(userID);
             }
             else if (adminManager.userExist(userID)){
-                //shutdown = adminSystem.start(userID);
+                shutdown = adminSystem.start(userID);
             }
             else {
                 shutdown = speakerSystem.start(userID);

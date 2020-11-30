@@ -64,4 +64,8 @@ public class AdminSystem {
 
     }
 
+    public boolean start(String userID) {
+        //create  a start method like the other start methods!!!
+        return false; //will "logout the admin
+    }
 }
