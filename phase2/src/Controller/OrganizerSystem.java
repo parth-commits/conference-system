@@ -335,7 +335,7 @@ public class OrganizerSystem {
                         while (!validTime) {
                             output.createEnterTime();
                             String inputTime = input.getKeyboardInput();
-                            if (verifyDateTimeEntered(inputTime)) {                                //they entered a valid date time
+                            if (verifyDateTimeEntered(inputTime, inputLength)) {                                //they entered a valid date time
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                                 formatter.setTimeZone(TimeZone.getTimeZone("EST"));
                                 Date d1 = formatter.parse(inputTime);
@@ -580,7 +580,7 @@ public class OrganizerSystem {
 
     //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't, then return false,
     //and we get the user to re-enter the date.
-    private boolean verifyDateTimeEntered(String date) {
+    private boolean verifyDateTimeEntered(String date, String length) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         Date currentDateTime = new Date();                  //current dateandtime
@@ -639,6 +639,12 @@ public class OrganizerSystem {
         if (!minutes.equals("00") || !seconds.equals("00")) {
             return false;
         }
+        int desiredLength = Integer.parseInt(length);
+        int startHour = Integer.parseInt(hour);
+        if (startHour+desiredLength>17){
+            return false;
+        }
+
         return true;
     }
 

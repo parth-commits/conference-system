@@ -576,7 +576,7 @@ public class TextPresenter {
     public void createEnterTime(){
         System.out.println("Please enter a date and time for this new event. \nPlease note it must follow the following format:" +
                 "dd-mm-yyyy hh:mm:ss." +
-                "\nThe hour must be in 24 hour format. Events can be start between 09 and 16 EST time, inclusive.\nSince all events start on the hour, mm and ss must be 00." +
+                "\nThe hour must be in 24 hour format. Events can be help between hours 09 and 17, inclusive.\nSince all events start on the hour, mm and ss must be 00." +
                 " \nThe time you enter cannot be in the past. For example, to enter the date and time December 20th 2020 1P.M., you would type '20-12-2020 13:00:00.'");
         System.out.println("Please press 0 to return to the previous menu.");
     }
@@ -585,7 +585,8 @@ public class TextPresenter {
      * Prints: The time you entered did not fit the formatting requirements. Please try again.
      */
     public void createEnterTimeInvalidTime(){
-        System.out.println("The time you entered did not fit the formatting requirements. Please try again.");
+        System.out.println("Either the time you entered did not fit the formatting requirements, or your event end time is past the conference's end time. " +
+                " Please try again.");
     }
 
     /**
