@@ -79,6 +79,7 @@ public class ConferenceSystem {
         Serialization io = new Serialization();
         io.saveState(speakerManager, "SpeakerManager");
         io.saveState(roomManager, "RoomManager");
+        io.saveState(adminManager, "AdminManager");
         io.saveState(organizerManager, "OrganizerManager");
         io.saveState(eventManager, "EventManager");
         io.saveState(chatManager, "ChatManager");
