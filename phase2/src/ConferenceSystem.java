@@ -97,7 +97,7 @@ public class ConferenceSystem {
         deletePastEvents();
         boolean shutdown = false;
         Debugger debugger = new Debugger();
-        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager, requestManager);
+        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager, requestManager, adminManager);
         while (!shutdown) {
             String userID = logInAndRegistrationSystem.start();
             if (userID.equals("SHUTDOWN")){
