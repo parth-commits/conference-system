@@ -1,6 +1,7 @@
 package Controller;
 
 import Entities.Event;
+import Entities.Speaker;
 import Gateway.KeyboardInput;
 import Gateway.Serialization;
 import Presenter.TextPresenter;
@@ -267,7 +268,7 @@ public class OrganizerSystem {
                         for (int i=0; i < listOfSpeakerID.size(); i++) {
                             listOfSpeaker.add(speakerManager.getSpeaker(listOfSpeakerID.get(i)));
                         }
-                        output.showSpeaker(listOfSpeaker);
+                        output.showSpeakers(listOfSpeaker);
                         String speakerID = input.getKeyboardInput();                                     // gets speakerid
                         if (speakerID.equals("0")) {                                                      // if organizer wants to select a different event, they press 0. Exit loop.
                             validSpeakerID = true;
