@@ -461,7 +461,7 @@ public class TextPresenter {
      *
      */
     public void scheduleSpeaker(){
-        System.out.println("Please enter the userid of the speaker you wish to schedule.");
+        System.out.println("Please enter the userid of the speaker you want to schedule.");
         System.out.println("If you would like to go back and select a different event id, please press 0.");
     }
 
@@ -550,6 +550,12 @@ public class TextPresenter {
 
         }
         System.out.println("\nTo return to the previous menu please press 0");
+    }
+
+    public void showSpeakers(ArrayList<Speaker> listOfSpeaker){
+        for (int i=1; i<listOfSpeaker.size()+1; i++){
+            System.out.println("\t" + i + ". Name: " + listOfSpeaker.get(i-1).getName() + ". | User_ID: " + listOfSpeaker.get(i-1).getUser_id());
+        }
     }
 
     /**
