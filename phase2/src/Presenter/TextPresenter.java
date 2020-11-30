@@ -552,6 +552,12 @@ public class TextPresenter {
         System.out.println("\nTo return to the previous menu please press 0");
     }
 
+    public void showSpeakers(ArrayList<Speaker> listOfSpeaker){
+        for (int i=1; i<listOfSpeaker.size()+1; i++){
+            System.out.println("\t" + i + ". Name: " + listOfSpeaker.get(i-1).getName() + ". | User_ID: " + listOfSpeaker.get(i-1).getUser_id());
+        }
+    }
+
     /**
      * Prints: Would you like to create or delete an event?
      *         1. Create

@@ -262,6 +262,12 @@ public class OrganizerSystem {
                     boolean validSpeakerID = false;
                     while (!validSpeakerID) {                                         //loop repeats until user inputs a valid speakerID
                         output.scheduleSpeaker();
+                        ArrayList<String> listOfSpeakerID = speakerManager.getUserIDs();    //Want to show the list of speaker to organizer
+                        ArrayList<Speaker> listOfSpeaker = new ArrayList<>();
+                        for (int i=0; i < listOfSpeakerID.size(); i++) {
+                            listOfSpeaker.add(speakerManager.getSpeaker(listOfSpeakerID.get(i)));
+                        }
+                        output.showSpeaker(listOfSpeaker);
                         String speakerID = input.getKeyboardInput();                                     // gets speakerid
                         if (speakerID.equals("0")) {                                                      // if organizer wants to select a different event, they press 0. Exit loop.
                             validSpeakerID = true;
