@@ -109,7 +109,7 @@ public class ConferenceSystem {
             else if (attendeeManager.userExist(userID)) {
                 shutdown = attendeeSystem.start(userID);
             }
-            else if (adminManager.userExist(userID)){
+            else if (adminManager.adminExist(userID)){
                 shutdown = adminSystem.start();
             }
             else {
