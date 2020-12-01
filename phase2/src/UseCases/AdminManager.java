@@ -8,16 +8,16 @@ import Entities.Admin;
 
 /**
  * The AdminManager class stores all admins in an arraylist, and implements various actions that
- * can be done for an attendee, including verifying login/ if admin exists/ , and getting a list of signed-up event and contacts.
+ * can be done for an admin, including verifying login/ if admin exists/ adding an admin
  * @author Group_0112
  * @version 1.0
  * @since November 19th, 2020
  */
 public class AdminManager implements Serializable {
 
-    private Hashtable<String, Admin> tableOfAdmin;
+    private final Hashtable<String, Admin> tableOfAdmin;
     /**
-     * Constructor that initializes a hashtable to contains all attendees.
+     * Constructor that initializes a hashtable to contains all admins.
      */
     public AdminManager(){tableOfAdmin = new Hashtable<>();}
 
@@ -35,24 +35,16 @@ public class AdminManager implements Serializable {
     /**
      * Verifies admin's login based on the inputted credentials. The user will be logged in if the
      * inputted information is correct.
-     * @param inputUserId the user id entered by the user
-     * @param inputUserPassword the password entered by the user
+     * @param inputAdminId the user id entered by the admin
+     * @param inputUserPassword the password entered by the admin
      * @return boolean returns true when the inputted credential is correct,
      * returns false otherwise
      */
-    public boolean verifyLogIn(String inputUserId, String inputUserPassword){
-        if (userExist(inputUserId)) {
-            return tableOfAdmin.get(inputUserId).getPasswords().equals(inputUserPassword);
+    public boolean verifyLogIn(String inputAdminId, String inputUserPassword){
+        if (adminExist(inputAdminId)) {
+            return tableOfAdmin.get(inputAdminId).getPasswords().equals(inputUserPassword);
         }
         return false;
-    }
-
-    /**
-     * Gets the arraylist of all admin ids.
-     * @return ArrayList </String> that contains all admins ids.
-     */
-    public List<String> getAdminIDs(){
-        return new ArrayList<String>(tableOfAdmin.keySet());
     }
 
     /**
@@ -66,16 +58,18 @@ public class AdminManager implements Serializable {
     }
 
     /**
+     * Gets the arraylist of all admin ids.
+     * @return ArrayList </String> that contains all admins ids.
+     */
+    public List<String> getAdminIDs(){ return new ArrayList<String>(tableOfAdmin.keySet()); }
+
+    /**
      * Returns a particular admin.
-     * @param userId the id of user that we'd like to return
+     * @param userId the id of admin that we'd like to return
      * @return Admin
      * @see Admin
      */
     public Admin getAdmin(String userId){
         return tableOfAdmin.get(userId);
     }
-
-    public void deleteEvent(int eventId);
-
-    public void deleteChat(String userId);
 }
