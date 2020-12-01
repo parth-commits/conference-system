@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import Entities.Admin;
 
 /**
  * The AdminManager class stores all admins in an arraylist, and implements various actions that
