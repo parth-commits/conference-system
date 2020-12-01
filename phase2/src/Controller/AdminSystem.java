@@ -2,6 +2,7 @@ package Controller;
 
 import Entities.Event;
 import Gateway.KeyboardInput;
+import Gateway.Serialization;
 import Presenter.TextPresenter;
 import UseCases.*;
 
@@ -14,45 +15,26 @@ public class AdminSystem {
 
     private TextPresenter output;
     private KeyboardInput input;
-    private AttendeeManager attendeeManager;
-    private OrganizerManager organizerManager;
-    private SpeakerManager speakerManager;
     private ChatManager chatManager;
-    private MessageSystem messageSystem;
-    private EventSystem eventSystem;
-    private RoomManager roomManager;
     private EventManager eventManager;
-    private AdminManager adminManager;
+
 
     /**
      * Constructor
-     * @param speakerManager   The speaker manager implements by SpeakerManager use case
-     * @param organizerManager The organizer manager implements by OrganizerManager use case
      * @param chatManager      The chat manager implements by ChatManager use case
-     * @param attendeeManager  The attendee manager implements by AttendeeManager use case
-     * @param messageSystem    The message system implements by MessageSystem Controller
-     * @param eventSystem      The event system implements by EventSystem Controller
-     * @param roomManager      The room manager implements by RoomManager use case
      * @param eventManager     The event manager implements by EventManager use case
      */
 
 
-    public AdminSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, ChatManager chatManager, AttendeeManager attendeeManager, MessageSystem messageSystem, EventSystem eventSystem, EventManager eventManager, RoomManager roomManager, AdminManager adminManager) {
-        this.speakerManager = speakerManager;
-        this.organizerManager = organizerManager;
-        this.attendeeManager = attendeeManager;
+    public AdminSystem( ChatManager chatManager,  EventManager eventManager) {
         this.chatManager = chatManager;
-        this.messageSystem = messageSystem;
-        this.eventSystem = eventSystem;
-        this.roomManager = roomManager;
         this.eventManager = eventManager;
-        this.adminManager = adminManager;
         this.input = new KeyboardInput();
         this.output = new TextPresenter();
     }
 
-    private ArrayList GetNoAttendeeEvent(){
-        ArrayList<Integer> NoAttendee = new ArrayList<Integer>();
+    private ArrayList<Integer> GetNoAttendeeEvent(){
+        ArrayList<Integer> NoAttendee = new ArrayList<>();
         for(Event event : eventManager.getListOfEvents()){
             if(event.getAttendees().size() == 0){
                 NoAttendee.add(event.getID());
@@ -63,33 +45,59 @@ public class AdminSystem {
 
 
     public void RemoveEmptyEvent(){
+        for(Integer id: GetNoAttendeeEvent()){
+            eventManager.removeEvent(id);
+        }
     }
 
-    public boolean start(String userID) throws IOException {
+    public boolean RemoveChat(String userId1, String userId2){
+        if(chatManager.chatExists(userId1, userId2)){
+            chatManager.deleteChat(userId1, userId2);
+            return true;
+        }
+        else{
+            return false;
+        }
+        }
+
+
+
+    public boolean start() throws IOException {
             while (true) {
                 String i;
                 boolean validInput = false;
                 output.AdminMenu();
                 i = input.getKeyboardInput();
                 //1. Delete Empty Event
-                if (i.equals("1")) {
-                    adminManager.deleteEvent(eventid);
-                }
-                //2. Delete Chat
-                else if (i.equals("2")) {
-                    adminManager.deleteChat(userId);
-                }
-                //3. logout
-                else if (i.equals("3")) {
-                    return false;
-                }
-                //4. shutdown
-                else if (i.equals("4")) {
-                    return true;
+                switch (i) {
+                    case "1":
+                        RemoveEmptyEvent();
+                        output.RemoveEmptyEvent();
+                        break;
+                    //2. Delete Chat
+                    case "2":
+                        output.deleteChat(true);
+                        String Prompt1 = input.getKeyboardInput();
+                        String Prompt2 = input.getKeyboardInput();
+                        boolean removeChat = RemoveChat(Prompt1, Prompt2);
+                        output.deleteChat(removeChat);
+                        break;
+                    //3. logout
+                    case "3":
+                        return false;
+
+                    //4. shutdown
+                    case "4":
+                        return true;
                 }
                 saveState();
             }
         }
 
+    private void saveState() throws IOException {
+        Serialization io = new Serialization();
+        io.saveState(eventManager, "EventManager");
+        io.saveState(chatManager, "ChatManager");
     }
+
 }

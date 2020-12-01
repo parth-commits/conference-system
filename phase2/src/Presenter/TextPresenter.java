@@ -847,9 +847,10 @@ public class TextPresenter {
         if (invalid) {
             System.out.println("Invalid input, please try again.");
         } else {
-            System.out.println("Please select the chat you want to delete by its number. ");
+            System.out.println("Please enter the two user ids of owners of the chat that you want to delete (press enter after type in one user id then type in another)");
         }
         System.out.println("Please type 0 to go back to the previous menu.");
     }
+
 }
 
