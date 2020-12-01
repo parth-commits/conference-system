@@ -3,6 +3,12 @@ package Entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ *  The Admin program implements an application that simply records admins.
+ *  * @author Group_0112
+ *  * @version 1.0
+ *  * @since November 16th, 2020
+ */
 public class Admin extends User implements Serializable{
 
     /**
@@ -14,4 +20,6 @@ public class Admin extends User implements Serializable{
     public Admin(String user_id, String name, String passwords){
         super(user_id, name, passwords);
     }
+
 }
+
