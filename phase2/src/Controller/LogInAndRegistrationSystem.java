@@ -96,7 +96,7 @@ public class LogInAndRegistrationSystem {
                         while (untilCorrect) {
                             output.enterID(correct);
                             inputID = input.getKeyboardInput();
-                            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)||adminManager.userExist(inputID)) {
+                            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)||adminManager.adminExist(inputID)) {
                                 correct = false;
                             }
                             else if(inputID.equals("0")) {
