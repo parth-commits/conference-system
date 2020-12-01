@@ -64,4 +64,9 @@ public class AdminSystem {
 
     }
 
+    public boolean start(String userID) {
+        System.out.println("remove this line, and add a proper start method here for admin!! logging the admin out for now!!");
+        //create  a start method like the other start methods!!!
+        return false; //will "logout the admin
+    }
 }

@@ -1,6 +1,7 @@
 import Controller.*;
 import Gateway.Serialization;
 import UseCases.*;
+import UseCases.AdminManager;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -44,7 +45,7 @@ public class ConferenceSystem {
     }
 
     private void initializeControllers() {
-        logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager);
+        logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager, adminManager);
         requestSystem = new RequestSystem(requestManager, attendeeManager, organizerManager);
         messageSystem = new MessageSystem(speakerManager,organizerManager, eventManager, chatManager, attendeeManager);
         eventSystem = new EventSystem(speakerManager, roomManager, organizerManager, eventManager, attendeeManager);
@@ -96,7 +97,7 @@ public class ConferenceSystem {
         deletePastEvents();
         boolean shutdown = false;
         Debugger debugger = new Debugger();
-        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager, requestManager);
+        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager, requestManager, adminManager);
         while (!shutdown) {
             String userID = logInAndRegistrationSystem.start();
             if (userID.equals("SHUTDOWN")){
@@ -109,7 +110,7 @@ public class ConferenceSystem {
                 shutdown = attendeeSystem.start(userID);
             }
             else if (adminManager.userExist(userID)){
-                //shutdown = adminSystem.start(userID);
+                shutdown = adminSystem.start(userID);
             }
             else {
                 shutdown = speakerSystem.start(userID);

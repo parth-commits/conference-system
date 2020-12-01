@@ -1,6 +1,7 @@
 package Controller;
 
 import Entities.Event;
+import Entities.Speaker;
 import Gateway.KeyboardInput;
 import Gateway.Serialization;
 import Presenter.TextPresenter;
@@ -262,10 +263,24 @@ public class OrganizerSystem {
                     boolean validSpeakerID = false;
                     while (!validSpeakerID) {                                         //loop repeats until user inputs a valid speakerID
                         output.scheduleSpeaker();
-                        String speakerID = input.getKeyboardInput();                                     // gets speakerid
-                        if (speakerID.equals("0")) {                                                      // if organizer wants to select a different event, they press 0. Exit loop.
+                        ArrayList<String> listOfSpeakerID = speakerManager.getUserIDs();    //make a list to show the list of speaker to organizer
+                        ArrayList<Speaker> listOfSpeaker = new ArrayList<>();
+                        for (int i=0; i < listOfSpeakerID.size(); i++) {
+                            listOfSpeaker.add(speakerManager.getSpeaker(listOfSpeakerID.get(i)));
+                        }
+                        output.showSpeakers(listOfSpeaker); //show the list of speaker to organizer
+                        String speakerSelected = input.getKeyboardInput();
+                        int speakerSelectedInt;            //this is the number of speaker selected
+                        try {
+                            speakerSelectedInt = Integer.parseInt(speakerSelected);
+                        }
+                        catch (Exception e){
+                            speakerSelectedInt = -1;
+                        }
+                        if (speakerSelectedInt == 0) {                                                      // if organizer wants to select a different event, they press 0. Exit loop.
                             validSpeakerID = true;
-                        } else if (speakerManager.userExist(speakerID)) {                                   //if speaker exists
+                        } else if (1 <= speakerSelectedInt && speakerSelectedInt <= listOfSpeakerID.size()) {                                   //if speaker exists
+                            String speakerID = listOfSpeakerID.get(speakerSelectedInt-1);
                             ArrayList<Integer> listOfEnrolledEventIDs = speakerManager.getSpeaker(speakerID).getAssignEvents(); //gets list of eventid's this speaker is talking at
                             ArrayList<Date> newEventDateTimes = eventManager.getAllTimesForEvent(eventManager.getID(listOfEvents.get(eventIDint - 1)));      //gets the time(s) of this new event
                             boolean speakerBusy = false;
@@ -335,7 +350,7 @@ public class OrganizerSystem {
                         while (!validTime) {
                             output.createEnterTime();
                             String inputTime = input.getKeyboardInput();
-                            if (verifyDateTimeEntered(inputTime)) {                                //they entered a valid date time
+                            if (verifyDateTimeEntered(inputTime, inputLength)) {                                //they entered a valid date time
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                                 formatter.setTimeZone(TimeZone.getTimeZone("EST"));
                                 Date d1 = formatter.parse(inputTime);
@@ -580,7 +595,7 @@ public class OrganizerSystem {
 
     //This helper method checks if the date entered by the user follows the appropriate format. If it doesn't, then return false,
     //and we get the user to re-enter the date.
-    private boolean verifyDateTimeEntered(String date) {
+    private boolean verifyDateTimeEntered(String date, String length) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
         Date currentDateTime = new Date();                  //current dateandtime
@@ -639,6 +654,12 @@ public class OrganizerSystem {
         if (!minutes.equals("00") || !seconds.equals("00")) {
             return false;
         }
+        int desiredLength = Integer.parseInt(length);
+        int startHour = Integer.parseInt(hour);
+        if (startHour+desiredLength>17){
+            return false;
+        }
+
         return true;
     }
 

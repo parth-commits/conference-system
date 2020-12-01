@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Debugger {
     public Debugger(){}
 
-    public void printStateofSystem(OrganizerManager organizerManager, SpeakerManager speakerManager, AttendeeManager attendeeManager, EventManager eventManager, RoomManager roomManager, RequestManager requestManager){
+    public void printStateofSystem(OrganizerManager organizerManager, SpeakerManager speakerManager, AttendeeManager attendeeManager, EventManager eventManager, RoomManager roomManager, RequestManager requestManager, AdminManager adminManager){
         System.out.println("\n\n\nNOTE: this is a debug feature to assist our TA. Here is the current state of the system:");
         System.out.println("\n\nAll the organizers in the system:");
         ArrayList<String> organizersList = organizerManager.getUserIDs();
@@ -23,6 +23,11 @@ public class Debugger {
         ArrayList<String> attendees = attendeeManager.getUserIDs();
         for (String attendee: attendees){
             System.out.println(attendeeManager.getAttendee(attendee).toString());
+        }
+        System.out.println("\n\nAll the admins in the system:");
+        ArrayList<String> admins = (ArrayList<String>) adminManager.getUserIDs();
+        for (String admin: admins){
+            System.out.println(adminManager.getAdmin(admin).toString());
         }
         System.out.println("\n\nAll the events in the system:");
         ArrayList<Integer> eventIDS = eventManager.getListOfEventIDs();
