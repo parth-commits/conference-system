@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * Actions include adding message, creating chats, verifying chats,
  * finding chats, finding contacts, and deleting chats.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class ChatManager implements Serializable{

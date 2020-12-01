@@ -5,8 +5,8 @@ import java.util.Date;
 
 /** Message entity records basic information of a single message, including sender, recipient, text and date.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class Message implements Serializable {

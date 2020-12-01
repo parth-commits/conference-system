@@ -11,12 +11,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
-/** EventSystem controller implements various actions that can be done for the users, including
+/**
+ * EventSystem controller implements various actions that can be done for the users, including
  *  see all Events, create/delete Events, Sign up for Events /cancel an event, check Schedule for Signed Up and Assigned Events.
  *  This is all dependent on who is signed into the system.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class EventSystem {

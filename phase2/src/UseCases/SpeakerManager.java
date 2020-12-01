@@ -10,8 +10,8 @@ import java.util.Hashtable;
  * The SpeakerManager program implements an application that records all speakers from Speaker and the contact list
  * and verify LogIn. The users in the contact list can be added or removed.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class SpeakerManager implements Serializable{

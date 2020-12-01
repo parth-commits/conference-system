@@ -6,8 +6,8 @@ import java.util.ArrayList;
 /**
  * User is an Abstract class of Attendee, Organizer, Speaker
  * @author Group_0112
- * @version 1.0
- * @since November 16th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public abstract class User implements Serializable {

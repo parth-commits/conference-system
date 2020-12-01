@@ -30,7 +30,7 @@ public class RequestSystem {
 
     /**
      * Saves all states of use cases.
-     * @throws IOException  throw IOException to avoid errors that might occur while running the program
+     * @throws IOException throws IOException to avoid errors that might occur while running the program
      */
     private void saveState() throws IOException {
         Serialization io = new Serialization();

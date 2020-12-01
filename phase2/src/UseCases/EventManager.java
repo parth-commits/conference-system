@@ -12,8 +12,8 @@ import java.util.Date;
  * and implements various of actions that are relevant to the Event object.
  * Actions includes
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 public class EventManager implements Serializable{
     private ArrayList<Event> listOfEvents;

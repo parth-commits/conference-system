@@ -1,6 +1,5 @@
 package Controller;
 
-import Entities.Chat;
 import Gateway.KeyboardInput;
 import Gateway.Serialization;
 import Presenter.TextPresenter;
@@ -14,8 +13,8 @@ import java.util.ArrayList;
 /** MessageSystem controller implements various actions that can be done for the users, including
  *  sent message, get chat history, view contact list, add contact.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class MessageSystem {

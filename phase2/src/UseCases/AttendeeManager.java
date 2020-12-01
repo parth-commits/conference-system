@@ -10,8 +10,8 @@ import java.util.Hashtable;
  * can be done for an attendee, including verifying login/ if user exists/ event sign-up/ if contact exists,
  * adding/removing events, adding/ removing contacts, and getting a list of signed-up event and contacts.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class  AttendeeManager implements Serializable{

@@ -13,8 +13,8 @@ import java.util.Hashtable;
  * Major functions include creating room, adding/removing event to room,
  * verifying available location, getting room/location, etc.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 public class RoomManager implements Serializable{
     //dictionary of all rooms (key is the roomlocation)
