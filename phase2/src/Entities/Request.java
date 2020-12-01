@@ -22,7 +22,7 @@ public class Request implements Serializable {
      * Constructor
      * @param id the id of the request
      * @param user_id the userid of the attendee who made the request
-     * @param req the req string
+     * @param req the request string
      */
     public Request( int id, String user_id, String req){
         this.id = id;

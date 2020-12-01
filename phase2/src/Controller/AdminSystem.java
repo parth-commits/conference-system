@@ -11,6 +11,13 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * (CAN SOMEONE DO THIS????????????????????????????????????????????????)
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
+
 public class AdminSystem {
 
     private TextPresenter output;
@@ -24,8 +31,6 @@ public class AdminSystem {
      * @param chatManager      The chat manager implements by ChatManager use case
      * @param eventManager     The event manager implements by EventManager use case
      */
-
-
     public AdminSystem( ChatManager chatManager,  EventManager eventManager) {
         this.chatManager = chatManager;
         this.eventManager = eventManager;
@@ -43,13 +48,21 @@ public class AdminSystem {
         return NoAttendee;
     }
 
-
+    /**
+     * Removes the events that do not have any attendee attend
+     */
     public void RemoveEmptyEvent(){
         for(Integer id: GetNoAttendeeEvent()){
             eventManager.removeEvent(id);
         }
     }
 
+    /**
+     * Remove the chat between 2 users
+     * @param userId1 one of those 2 users
+     * @param userId2 one of those 2 users
+     * @return boolean Returns true if the chat is deleted, false otherwise
+     */
     public boolean RemoveChat(String userId1, String userId2){
         if(chatManager.chatExists(userId1, userId2)){
             chatManager.deleteChat(userId1, userId2);
@@ -60,8 +73,11 @@ public class AdminSystem {
         }
         }
 
-
-
+    /**
+     * The start method of AdminSystem which can: 1.Delete Empty Event. 2.Delete Chat. 3.logout. 4.SHUTDOWN
+     * @return object Returns different types based on the action taken
+     * @throws IOException
+     */
     public boolean start() throws IOException {
             while (true) {
                 String i;
