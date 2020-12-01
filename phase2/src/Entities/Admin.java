@@ -4,18 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- *  The Admin program implements an application that simply records admins.
+ *  Admin class implements an application that simply records an admin.
  *  * @author Group_0112
- *  * @version 1.0
- *  * @since November 16th, 2020
+ *  * @version 2.0
+ *  * @since December 1st, 2020
  */
 public class Admin extends User implements Serializable{
 
     /**
      * Constructor
-     * @param user_id the user id of this user. User id is an unique integer for each user.
-     * @param name    the registered name of this user.
-     * @param passwords the registered passwords of this user.
+     * @param user_id the user id of this admin. User id is an unique integer for each user.
+     * @param name    the registered name of this admin.
+     * @param passwords the registered passwords of this admin.
      */
     public Admin(String user_id, String name, String passwords){
         super(user_id, name, passwords);

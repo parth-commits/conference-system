@@ -12,10 +12,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- * (CAN SOMEONE DO THIS????????????????????????????????????????????????)
+ * AdminSystem controller implements 2 major functions that can be done by an admin,
+ * which are delete empty events, and delete selected chat.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class AdminSystem {
@@ -24,7 +25,6 @@ public class AdminSystem {
     private KeyboardInput input;
     private ChatManager chatManager;
     private EventManager eventManager;
-
 
     /**
      * Constructor
@@ -38,6 +38,10 @@ public class AdminSystem {
         this.output = new TextPresenter();
     }
 
+    /**
+     * Returns an arraylist of events that are empty (without any attendee).
+     * @return ArrayList </Integer> list that contains all ids of empty events
+     */
     private ArrayList<Integer> GetNoAttendeeEvent(){
         ArrayList<Integer> NoAttendee = new ArrayList<>();
         for(Event event : eventManager.getListOfEvents()){
@@ -49,7 +53,7 @@ public class AdminSystem {
     }
 
     /**
-     * Removes the events that do not have any attendee attend
+     * Removes the events that do not have any attendee.
      */
     public void RemoveEmptyEvent(){
         for(Integer id: GetNoAttendeeEvent()){
@@ -58,7 +62,7 @@ public class AdminSystem {
     }
 
     /**
-     * Remove the chat between 2 users
+     * Removes the chat between 2 users
      * @param userId1 one of those 2 users
      * @param userId2 one of those 2 users
      * @return boolean Returns true if the chat is deleted, false otherwise
@@ -76,7 +80,7 @@ public class AdminSystem {
     /**
      * The start method of AdminSystem which can: 1.Delete Empty Event. 2.Delete Chat. 3.logout. 4.SHUTDOWN
      * @return object Returns different types based on the action taken
-     * @throws IOException
+     * @throws IOException any errors that may occur while running
      */
     public boolean start() throws IOException {
             while (true) {
@@ -110,6 +114,10 @@ public class AdminSystem {
             }
         }
 
+    /**
+     * Saves state for the system.
+     * @throws IOException any errors that may occur while running
+     */
     private void saveState() throws IOException {
         Serialization io = new Serialization();
         io.saveState(eventManager, "EventManager");

@@ -10,8 +10,8 @@ import Entities.Admin;
  * The AdminManager class stores all admins in an arraylist, and implements various actions that
  * can be done for an admin, including verifying login/ if admin exists/ adding an admin
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 public class AdminManager implements Serializable {
 
@@ -56,12 +56,6 @@ public class AdminManager implements Serializable {
     public boolean adminExist(String userId){
         return tableOfAdmin.containsKey(userId);
     }
-
-    /**
-     * Gets the arraylist of all admin ids.
-     * @return ArrayList </String> that contains all admins ids.
-     */
-    public List<String> getAdminIDs(){ return new ArrayList<String>(tableOfAdmin.keySet()); }
 
     /**
      * Returns a particular admin.
