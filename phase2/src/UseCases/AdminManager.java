@@ -15,7 +15,7 @@ import Entities.Admin;
  */
 public class AdminManager implements Serializable {
 
-    private final Hashtable<String, Admin> tableOfAdmin;
+    private Hashtable<String, Admin> tableOfAdmin;
     /**
      * Constructor that initializes a hashtable to contains all admins.
      */
