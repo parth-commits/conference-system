@@ -52,7 +52,7 @@ public class ConferenceSystem {
         organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem, requestSystem);
         attendeeSystem = new AttendeeSystem(speakerManager, organizerManager, chatManager,attendeeManager, messageSystem, eventSystem, roomManager, eventManager, requestSystem);
         speakerSystem = new SpeakerSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem);
-        adminSystem = new AdminSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem, eventManager, roomManager, adminManager);
+        adminSystem = new AdminSystem(chatManager, eventManager);
 
     }
 
@@ -109,8 +109,8 @@ public class ConferenceSystem {
             else if (attendeeManager.userExist(userID)) {
                 shutdown = attendeeSystem.start(userID);
             }
-            else if (adminManager.userExist(userID)){
-                shutdown = adminSystem.start(userID);
+            else if (adminManager.adminExist(userID)){
+                shutdown = adminSystem.start();
             }
             else {
                 shutdown = speakerSystem.start(userID);
