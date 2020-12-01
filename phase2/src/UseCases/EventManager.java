@@ -12,8 +12,8 @@ import java.util.Date;
  * and implements various of actions that are relevant to the Event object.
  * Actions includes
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 public class EventManager implements Serializable{
     private ArrayList<Event> listOfEvents;
@@ -235,6 +235,12 @@ public class EventManager implements Serializable{
             }
         }
     }
+
+    /**
+     * Gets the time of the event from the start to the end
+     * @param eventId the event we want to check
+     * @return ArrayList<Date> The time of the event in hours
+     */
     public ArrayList<Date> getAllTimesForEvent(int eventId) {
         ArrayList<Date> returnList = new ArrayList<>();
         Event eventItself = getEvent(eventId);
@@ -250,5 +256,10 @@ public class EventManager implements Serializable{
         return returnList;
     }
 
+    /**
+     * Gets the length of an event
+     * @param eventID the event we want to check
+     * @return String The length of the event
+     */
     public String getEventLength(int eventID){return getEvent(eventID).getLength();}
 }

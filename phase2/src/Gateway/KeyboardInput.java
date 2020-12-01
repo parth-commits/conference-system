@@ -2,10 +2,10 @@ package Gateway;
 import java.util.Scanner;
 
 /**
- * KeyboardInput receives the input that users enter.
+ * KeyboardInput receives the input that users' end.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class KeyboardInput {

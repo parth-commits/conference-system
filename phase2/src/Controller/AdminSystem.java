@@ -6,10 +6,16 @@ import Gateway.Serialization;
 import Presenter.TextPresenter;
 import UseCases.*;
 
-import java.awt.*;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+/**
+ * AdminSystem controller implements 2 major functions that can be done by an admin,
+ * which are delete empty events, and delete selected chat.
+ * @author Group_0112
+ * @version 2.0
+ * @since December 1st, 2020
+ */
 
 public class AdminSystem {
 
@@ -18,14 +24,11 @@ public class AdminSystem {
     private ChatManager chatManager;
     private EventManager eventManager;
 
-
     /**
      * Constructor
      * @param chatManager      The chat manager implements by ChatManager use case
      * @param eventManager     The event manager implements by EventManager use case
      */
-
-
     public AdminSystem( ChatManager chatManager,  EventManager eventManager) {
         this.chatManager = chatManager;
         this.eventManager = eventManager;
@@ -33,6 +36,10 @@ public class AdminSystem {
         this.output = new TextPresenter();
     }
 
+    /**
+     * Returns an arraylist of events that are empty (without any attendee).
+     * @return ArrayList </Integer> list that contains all ids of empty events
+     */
     private ArrayList<Integer> GetNoAttendeeEvent(){
         ArrayList<Integer> NoAttendee = new ArrayList<>();
         for(Event event : eventManager.getListOfEvents()){
@@ -43,13 +50,21 @@ public class AdminSystem {
         return NoAttendee;
     }
 
-
+    /**
+     * Removes the events that do not have any attendee.
+     */
     public void RemoveEmptyEvent(){
         for(Integer id: GetNoAttendeeEvent()){
             eventManager.removeEvent(id);
         }
     }
 
+    /**
+     * Removes the chat between 2 users
+     * @param userId1 one of those 2 users
+     * @param userId2 one of those 2 users
+     * @return boolean Returns true if the chat is deleted, false otherwise
+     */
     public boolean RemoveChat(String userId1, String userId2){
         if(chatManager.chatExists(userId1, userId2)){
             chatManager.deleteChat(userId1, userId2);
@@ -60,8 +75,11 @@ public class AdminSystem {
         }
         }
 
-
-
+    /**
+     * The start method of AdminSystem which can: 1.Delete Empty Event. 2.Delete Chat. 3.logout. 4.SHUTDOWN
+     * @return object Returns different types based on the action taken
+     * @throws IOException any errors that may occur while running
+     */
     public boolean start() throws IOException {
             while (true) {
                 String i;
@@ -100,6 +118,10 @@ public class AdminSystem {
 
 
 
+    /**
+     * Saves state for the system.
+     * @throws IOException any errors that may occur while running
+     */
     private void saveState() throws IOException {
         Serialization io = new Serialization();
         io.saveState(eventManager, "EventManager");

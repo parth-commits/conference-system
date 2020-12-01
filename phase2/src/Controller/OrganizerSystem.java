@@ -21,8 +21,8 @@ import java.util.TimeZone;
  * check Schedule for Signed Up Events, logout the account, shutdown the system.
  *
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class OrganizerSystem {

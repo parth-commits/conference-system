@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * Actions include adding message, creating chats, verifying chats,
  * finding chats, finding contacts, and deleting chats.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class ChatManager implements Serializable{
@@ -126,6 +126,12 @@ public class ChatManager implements Serializable{
         }
     }
 
+    /**
+     * Returns the chat between 2 users in the String form
+     * @param id1 the id of user1
+     * @param id2 the id of user2
+     * @return String the chat between 2 users
+     */
     public String chatToString(String id1, String id2){
         for (Chat chat : chats) {
             if ((chat.getId1().equals(id1)) && (chat.getId2().equals(id2))) {

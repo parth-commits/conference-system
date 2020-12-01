@@ -7,11 +7,12 @@ import Gateway.Serialization;
 import Presenter.TextPresenter;
 import UseCases.*;
 
-/** SpeakerSystem controller implements various actions that can be done for a speaker, including
+/**
+ * SpeakerSystem controller implements various actions that can be done for a speaker, including
  *  see all Events, check Schedule for assigned-Events, message other Users, logout the account, shutdown the system.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class SpeakerSystem {

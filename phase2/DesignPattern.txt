@@ -1,0 +1,9 @@
+This text file documents all design patterns that can be observed in this program.
+
+1) Factory Design Pattern
+   This design pattern can be seen in both log in & controller systems.
+   When a person is trying to create an account and logging in,
+   we take in an input from the user, and make appropriate user type (organizer, attendee, or an admin)
+   according to their needs.
+
+2)

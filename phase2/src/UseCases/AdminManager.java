@@ -1,17 +1,15 @@
 package UseCases;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import Entities.Admin;
 
 /**
  * The AdminManager class stores all admins in an arraylist, and implements various actions that
  * can be done for an admin, including verifying login/ if admin exists/ adding an admin
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 public class AdminManager implements Serializable {
 
@@ -33,7 +31,7 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Verifies admin's login based on the inputted credentials. The user will be logged in if the
+     * Verifies an admin's login based on the inputted credentials. The user will be logged in if the
      * inputted information is correct.
      * @param inputAdminId the user id entered by the admin
      * @param inputUserPassword the password entered by the admin
@@ -56,12 +54,6 @@ public class AdminManager implements Serializable {
     public boolean adminExist(String userId){
         return tableOfAdmin.containsKey(userId);
     }
-
-    /**
-     * Gets the arraylist of all admin ids.
-     * @return ArrayList </String> that contains all admins ids.
-     */
-    public List<String> getAdminIDs(){ return new ArrayList<String>(tableOfAdmin.keySet()); }
 
     /**
      * Returns a particular admin.

@@ -13,10 +13,10 @@ import java.util.Date;
 /**
  * AttendeeSystem controller implements various actions that can be done for an attendee, including
  * see all Events, Sign up for Events /cancel an event, check Schedule for Signed Up Events,
- * add or Remove Attendee in Contact, message other Users, logout the account, shutdown the system.
+ * add or remove Attendee in Contact, message other Users, logout the account, shutdown the system.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class AttendeeSystem {

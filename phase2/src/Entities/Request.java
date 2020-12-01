@@ -6,8 +6,8 @@ import java.io.Serializable;
 /**
  * Request Entities simply records the id of request, the attendee who made the request, the request context and the status.
  * @author Group_0112
- * @version 1.0
- * @since November 16th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class Request implements Serializable {
@@ -22,7 +22,7 @@ public class Request implements Serializable {
      * Constructor
      * @param id the id of the request
      * @param user_id the userid of the attendee who made the request
-     * @param req the req string
+     * @param req the request string
      */
     public Request( int id, String user_id, String req){
         this.id = id;

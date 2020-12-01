@@ -7,8 +7,8 @@ import java.util.ArrayList;
  * Speaker entity implements an application that simply records users, their list
  * of assigned-event and the organizer who creates this speaker. Events can be added or removed.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class Speaker extends User implements Serializable {

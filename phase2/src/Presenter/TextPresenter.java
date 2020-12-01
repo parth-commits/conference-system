@@ -17,8 +17,8 @@ import java.util.TimeZone;
 /**
  *  TextPresenter prints out the String from this program to the user interface.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class TextPresenter {
@@ -562,6 +562,10 @@ public class TextPresenter {
         System.out.println("\nTo return to the previous menu please press 0");
     }
 
+    /**
+     * Prints a list of Speakers
+     * @param listOfSpeaker  the list of speakers the organizer can choose from
+     */
     public void showSpeakers(ArrayList<Speaker> listOfSpeaker) {
         for (int i = 1; i < listOfSpeaker.size() + 1; i++) {
             System.out.println("\t" + i + ". Name: " + listOfSpeaker.get(i - 1).getName() + ". | User_ID: " + listOfSpeaker.get(i - 1).getUser_id());
@@ -723,10 +727,20 @@ public class TextPresenter {
                 "Or there are no new events that have no time conflict with the events you are already attending.\nOr there are no events that have space.");
     }
 
+    /**
+     * Prints "There are no events to delete!"
+     */
     public void noEventsToDelete() {
         System.out.println("\n\nThere are no events to delete!\n\n");
     }
 
+    /**
+     * Prints "What type of account would you like to create?"
+     * "1. Organizer"
+     * "2. Attendee"
+     * "3. Speaker"
+     * "Enter your choice or press 0 to go back"
+     */
     public void whoDoYouWantToCreate() {
         System.out.println("What type of account would you like to create?");
         System.out.println("1. Organizer");
@@ -735,11 +749,21 @@ public class TextPresenter {
         System.out.println("\nEnter your choice or press 0 to go back");
     }
 
+    /**
+     * Prints "Max capacity is the maximum people that can attend this event."
+     * "Please provide the max capacity of the event:"
+     */
     public void giveCapacityforEvent() {
         System.out.println("Max capacity is the maximum people that can attend this event.");
         System.out.println("Please provide the max capacity of the event:");
     }
 
+    /**
+     * Prints "What would you like to do?"
+     * "1. Edit event name"
+     * "2. Increase max capacity"
+     * "Enter 0 to go back."
+     */
     public void modifyEventOptions() {
         System.out.println("What would you like to do?");
         System.out.println("\t1. Edit event name");
@@ -747,31 +771,56 @@ public class TextPresenter {
         System.out.println("\nEnter 0 to go back.");
     }
 
+    /**
+     * Prints "There are no events to change name for!"
+     */
     public void noEventsToChangeName() {
         System.out.println("There are no events to change name for!");
     }
 
+    /**
+     * Prints "What would you like to rename this event to?"
+     * "Enter 0 to return to previous menu"
+     */
     public void selectNewName() {
         System.out.println("What would you like to rename this event to?");
         System.out.println("\nEnter 0 to return to previous menu");
     }
 
+    /**
+     * Prints "There are no events to increase capacity. Please create an event first!"
+     */
     public void noEventstoIncreaseCapacity() {
         System.out.println("There are no events to increase capacity. Please create an event first!");
     }
 
+    /**
+     * Prints "The capacity of this event is currently: "
+     * "How many more spots do you want to add to this event?"
+     * "Enter 0 to return to previous menu"
+     */
     public void addCapacity(int eventCapacity) {
         System.out.println("The capacity of this event is currently: " + eventCapacity);
         System.out.println("How many more spots do you want to add to this event?");
         System.out.println("Enter 0 to return to previous menu");
     }
 
+    /**
+     * Prints a list of requests
+     * @param listOfRequests the list of requests we want to print
+     */
     public void requestList(ArrayList<Request> listOfRequests) {
         for (int i = 1; i <= listOfRequests.size(); i++) {
             System.out.println("\t" + i + " " + listOfRequests.get(i - 1).toString());
         }
     }
 
+    /**
+     * Prints "What would you like to change the status of this event to?"
+     * "1. Addressed"
+     * "2. Pending"
+     * "Enter 0 to return to previous menu"
+     */
     public void changeStatus() {
         System.out.println("What would you like to change the status of this event to?");
         System.out.println("\t1. Addressed");
@@ -779,6 +828,12 @@ public class TextPresenter {
         System.out.println("\nEnter 0 to return to previous menu");
     }
 
+    /**
+     * Prints "What would you like to do?"
+     * "1. View your requests"
+     * "2. Create a new request"
+     * "Enter 0 to return to previous menu"
+     */
     public void attendeeRequestOptions() {
         System.out.println("What would you like to do?");
         System.out.println("\t1. View your requests");
@@ -786,40 +841,63 @@ public class TextPresenter {
         System.out.println("\nEnter 0 to return to previous menu");
     }
 
+    /**
+     * Prints "Please create a unique ID for this Request. This must be a positive integer."
+     * "Enter 0 to return to previous menu"
+     */
     public void createUniqueIDforReq() {
         System.out.println("Please create a unique ID for this Request. This must be a positive integer.");
         System.out.println("\nEnter 0 to return to previous menu");
     }
 
+    /**
+     * Prints "That ID wont work! It is either taken or doesnt match the requirements for an id! Please try again."
+     */
     public void invalidReqID() {
         System.out.println("That ID wont work! It is either taken or doesnt match the requirements for an id! Please try again.");
     }
 
+    /**
+     * Prints "There are no requests to view! You are being redirected to previous screen."
+     */
     public void thereAreNoRequests() {
         System.out.println("There are no requests to view! You are being redirected to previous screen.");
     }
 
+    /**
+     * Prints "Please write your request: "
+     * "Enter 0 to return to previous menu"
+     */
     public void writeYourRequest() {
         System.out.println("Please write your request: ");
         System.out.println("\nEnter 0 to return to previous menu");
 
     }
 
+    /**
+     * Prints "Enter 0 to return to previous menu"
+     */
     public void enterZeroToContinue() {
         System.out.println("\nEnter 0 to return to previous menu");
     }
 
+    /**
+     * Prints "Please choose a request: "
+     */
     public void chooseRequest() {
         System.out.println("Please choose a request: ");
     }
 
+    /**
+     * Prints "Please enter the length of this event in hours. Note, the length must be at least 1 hour and at max 8."
+     * "Please press 0 to go back."
+     */
     public void validLength() {
         System.out.println("Please enter the length of this event in hours. Note, the length must be at least 1 hour and at max 8." +
                 "\nPlease press 0 to go back.");
     }
 
-    //admin system
-
+    //AdminSystem
     /**
      * Prints: Menu 1. Delete Empty Event  2. Delete Chat 3. LOGOUT 4. Shutdown
      */
@@ -831,6 +909,10 @@ public class TextPresenter {
         System.out.println("\t4. SHUTDOWN");
     }
 
+    /**
+     * Prints "The empty events are now removed from the list of all events."
+     * "Please type 0 to go back to the previous menu."
+     */
     public void RemoveEmptyEvent() {
         System.out.println("The empty events are now removed from the list of all events.");
         System.out.println("Please type 0 to go back to the previous menu.");

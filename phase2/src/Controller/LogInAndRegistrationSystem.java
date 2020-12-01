@@ -10,8 +10,8 @@ import UseCases.SpeakerManager;
 /** LoginAndRegistrationSystem controller implements multiple options that are useful when the user
  * start the system. Such as verifying the user's login and registration for new users.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class LogInAndRegistrationSystem {
@@ -96,7 +96,7 @@ public class LogInAndRegistrationSystem {
                         while (untilCorrect) {
                             output.enterID(correct);
                             inputID = input.getKeyboardInput();
-                            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)||adminManager.userExist(inputID)) {
+                            if (attendeeManager.userExist(inputID) || organizerManager.userExist(inputID) || speakerManager.userExist(inputID)||adminManager.adminExist(inputID)) {
                                 correct = false;
                             }
                             else if(inputID.equals("0")) {

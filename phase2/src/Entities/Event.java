@@ -10,8 +10,8 @@ import java.util.TimeZone;
  * Event entity records basic information of an event, including event ids, title, time, location,
  * speakerID, attendees, organizerID.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class Event implements Serializable {

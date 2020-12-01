@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * The Chat program implements an application that simply records messages between two users.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class Chat implements Serializable {
@@ -63,6 +63,10 @@ public class Chat implements Serializable {
         messages.add(newMessage);
     }
 
+    /**
+     * Override the toString method for Chat
+     * @return String Each line is the string of one message
+     */
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
