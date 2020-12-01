@@ -17,8 +17,8 @@ import java.util.TimeZone;
 /**
  *  TextPresenter prints out the String from this program to the user interface.
  *  @author Group_0112
- *  @version 1.0
- *  @since November 19th, 2020
+ *  @version 2.0
+ *  @since December 1st, 2020
  */
 
 public class TextPresenter {
@@ -897,7 +897,7 @@ public class TextPresenter {
                 "\nPlease press 0 to go back.");
     }
 
-    //admin system
+    //AdminSystem
     /**
      * Prints: Menu 1. Delete Empty Event  2. Delete Chat 3. LOGOUT 4. Shutdown
      */

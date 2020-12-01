@@ -1,6 +1,5 @@
 package UseCases;
 
-import Entities.Attendee;
 import Entities.Organizer;
 
 import java.io.*;
@@ -13,8 +12,8 @@ import java.util.Hashtable;
  * Functions include getting/ adding organizer, verifying login, adding/removing contacts,
  * setting events, etc.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 public class OrganizerManager implements Serializable{
 

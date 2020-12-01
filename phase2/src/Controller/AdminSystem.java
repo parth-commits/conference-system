@@ -6,9 +6,7 @@ import Gateway.Serialization;
 import Presenter.TextPresenter;
 import UseCases.*;
 
-import java.awt.*;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

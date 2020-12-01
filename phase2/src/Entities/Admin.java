@@ -1,7 +1,6 @@
 package Entities;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.io.*;
 
 /**
  *  Admin class implements an application that simply records an admin.

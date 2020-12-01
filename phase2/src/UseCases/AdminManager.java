@@ -1,9 +1,7 @@
 package UseCases;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import Entities.Admin;
 
 /**
@@ -33,7 +31,7 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Verifies admin's login based on the inputted credentials. The user will be logged in if the
+     * Verifies an admin's login based on the inputted credentials. The user will be logged in if the
      * inputted information is correct.
      * @param inputAdminId the user id entered by the admin
      * @param inputUserPassword the password entered by the admin
