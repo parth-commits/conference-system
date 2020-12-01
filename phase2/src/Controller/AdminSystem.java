@@ -89,7 +89,14 @@ public class AdminSystem {
                 }
                 saveState();
             }
-        }
+    }
+
+
+    public void deleteChat() {
+        boolean
+
+
 
     }
+
 }
