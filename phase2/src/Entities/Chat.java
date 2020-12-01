@@ -63,6 +63,10 @@ public class Chat implements Serializable {
         messages.add(newMessage);
     }
 
+    /**
+     * Override the toString method for Chat
+     * @return String Each line is the string of one message
+     */
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
