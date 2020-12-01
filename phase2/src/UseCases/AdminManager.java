@@ -73,4 +73,8 @@ public class AdminManager implements Serializable {
     public Admin getAdmin(String userId){
         return tableOfAdmin.get(userId);
     }
+
+    public void deleteEvent(int eventId);
+
+    public void deleteChat(String userId);
 }

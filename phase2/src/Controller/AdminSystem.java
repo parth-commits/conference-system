@@ -6,6 +6,7 @@ import Presenter.TextPresenter;
 import UseCases.*;
 
 import java.awt.*;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -60,13 +61,35 @@ public class AdminSystem {
         return NoAttendee;
     }
 
-    public void RemoveEmptyEvent(){
 
+    public void RemoveEmptyEvent(){
     }
 
-    public boolean start(String userID) {
-        System.out.println("remove this line, and add a proper start method here for admin!! logging the admin out for now!!");
-        //create  a start method like the other start methods!!!
-        return false; //will "logout the admin
+    public boolean start(String userID) throws IOException {
+            while (true) {
+                String i;
+                boolean validInput = false;
+                output.AdminMenu();
+                i = input.getKeyboardInput();
+                //1. Delete Empty Event
+                if (i.equals("1")) {
+                    adminManager.deleteEvent(eventid);
+                }
+                //2. Delete Chat
+                else if (i.equals("2")) {
+                    adminManager.deleteChat(userId);
+                }
+                //3. logout
+                else if (i.equals("3")) {
+                    return false;
+                }
+                //4. shutdown
+                else if (i.equals("4")) {
+                    return true;
+                }
+                saveState();
+            }
+        }
+
     }
 }

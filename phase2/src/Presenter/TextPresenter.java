@@ -806,4 +806,17 @@ public class TextPresenter {
         System.out.println("Please enter the length of this event in hours. Note, the length must be at least 1 hour and at max 8." +
                 "\nPlease press 0 to go back.");
     }
+
+    //admin system
+
+    /**
+     * Prints: Menu 1. Delete Events that w/o attendees 2. Delete Chat 3. Logout 4. Shutdown
+     */
+    public void AdminMenu(){
+        System.out.println("Menu:");
+        System.out.println("\t1. Delete Empty Event");
+        System.out.println("\t2. Delete Chat");
+        System.out.println("\t7. LOGOUT");
+        System.out.println("\t8. SHUTDOWN");
+    }
 }
