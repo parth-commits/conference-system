@@ -1,0 +1,1 @@
+This text file documents all design patterns that can be observed in this program.
