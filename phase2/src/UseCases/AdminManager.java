@@ -1,13 +1,17 @@
 package UseCases;
 
-import Entities.Admin;
-import Entities.Attendee;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+/**
+ * The AdminManager class stores all admins in an arraylist, and implements various actions that
+ * can be done for an attendee, including verifying login/ if admin exists/ , and getting a list of signed-up event and contacts.
+ * @author Group_0112
+ * @version 1.0
+ * @since November 19th, 2020
+ */
 public class AdminManager implements Serializable {
 
     private Hashtable<String, Admin> tableOfAdmin;
@@ -43,20 +47,20 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Gets the arraylist of all user ids.
-     * @return ArrayList </String> that contains all user ids.
+     * Gets the arraylist of all admin ids.
+     * @return ArrayList </String> that contains all admins ids.
      */
-    public List<String> getUserIDs(){
+    public List<String> getAdminIDs(){
         return new ArrayList<String>(tableOfAdmin.keySet());
     }
 
     /**
-     * Checks if a particular user exists in the arraylist of attendees.
-     * @param userId the id of user that we'd like to look into
-     * @return boolean returns true if the user already registered in the system,
+     * Checks if a particular admin exists in the arraylist of admin.
+     * @param userId the id of admin that we'd like to look into
+     * @return boolean returns true if the admin already registered in the system,
      * returns false otherwise
      */
-    public boolean userExist(String userId){
+    public boolean adminExist(String userId){
         return tableOfAdmin.containsKey(userId);
     }
 
