@@ -4,6 +4,13 @@ import UseCases.*;
 
 import java.util.ArrayList;
 
+/**
+ * The Debugger class contains a method that can print state of the system,
+ * which is designed to help our TA to understand our program.
+ * @author Group_0112
+ * @version 2.0
+ * @since December 1st, 2020
+ */
 public class Debugger {
     public Debugger(){}
 

@@ -12,8 +12,8 @@ import java.util.Date;
  * The ConferenceSystem class stores all controllers, import/save states,
  * and it allows the entire program to work.
  * @author Group_0112
- * @version 1.0
- * @since November 19th, 2020
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class ConferenceSystem {
@@ -44,6 +44,9 @@ public class ConferenceSystem {
         initializeControllers();// this function will initialize the controllers
     }
 
+    /**
+     * Initializes all controllers
+     */
     private void initializeControllers() {
         logInAndRegistrationSystem = new LogInAndRegistrationSystem(attendeeManager, organizerManager, speakerManager, adminManager);
         requestSystem = new RequestSystem(requestManager, attendeeManager, organizerManager);
@@ -57,7 +60,7 @@ public class ConferenceSystem {
     }
 
     /**
-     * Serialize all managers (use cases)
+     * Serializes all managers (use cases)
      */
     private void importState() {
         Serialization io = new Serialization();
