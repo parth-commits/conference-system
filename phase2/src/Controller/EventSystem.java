@@ -209,6 +209,11 @@ public class EventSystem {
         }
     }
 
+    /**
+     * Returns the type of the event
+     * @param speakerSize The number of speakers in the event
+     * @return String Returns "Party", "Talk", or "Panel discussion"
+     */
     public String eventType( int speakerSize){
         if (speakerSize == 0){
             return "Party";
