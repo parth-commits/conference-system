@@ -934,9 +934,10 @@ public class TextPresenter {
         System.out.println("Please type 0 to go back to the previous menu.");
     }
 
-    public void showContacts(User user){
+    public void showContacts(Attendee user){
         for (int i=1; i<user.getContacts().size()+1; i++){
             System.out.println("\t" + i + "User_ID: " + user.getContacts().get(i-1));
+
         }
     }
 
