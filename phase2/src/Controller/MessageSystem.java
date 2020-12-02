@@ -1,5 +1,6 @@
 package Controller;
 
+import Entities.Chat;
 import Gateway.KeyboardInput;
 import Gateway.Serialization;
 import Presenter.TextPresenter;
@@ -50,8 +51,8 @@ public class MessageSystem {
      * @param id2 The user_id of user2
      * @return Chat The chat history between user1 and user2
      */
-    public String getChat(String id1, String id2) {
-        return chatManager.chatToString(id1, id2);
+    public Chat getChat(String id1, String id2) {
+        return chatManager.findChat(id1, id2);
     }
 
     /**

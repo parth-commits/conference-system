@@ -1,3 +1,4 @@
+import Entities.Admin;
 import Entities.Attendee;
 import Presenter.TextPresenter;
 import UseCases.*;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class Debugger {
     public Debugger(){}
 
-    public void printStateofSystem(OrganizerManager organizerManager, SpeakerManager speakerManager, AttendeeManager attendeeManager, EventManager eventManager, RoomManager roomManager, RequestManager requestManager, AdminManager adminManager){
+    public void printStateofSystem(OrganizerManager organizerManager, SpeakerManager speakerManager, AttendeeManager attendeeManager, EventManager eventManager, RoomManager roomManager, RequestManager requestManager, AdminManager adminManager, ChatManager chatManager){
         System.out.println("\n\n\nNOTE: this is a debug feature to assist our TA. Here is the current state of the system:");
         System.out.println("\n\nAll the organizers in the system:");
         ArrayList<String> organizersList = organizerManager.getUserIDs();
@@ -32,7 +33,7 @@ public class Debugger {
             System.out.println(attendeeManager.getAttendee(attendee).toString());
         }
         System.out.println("\n\nAll the admins in the system:");
-        ArrayList<String> admins = (ArrayList<String>) adminManager.getUserIDs();
+        ArrayList<String> admins = adminManager.getAllAdmins();
         for (String admin: admins){
             System.out.println(adminManager.getAdmin(admin).toString());
         }
@@ -49,6 +50,12 @@ public class Debugger {
         System.out.println("\n\nAll the requests in the system and their status");
         TextPresenter output = new TextPresenter();
         output.requestList(requestManager.getListOfRequests());
+
+        System.out.println("\n\nAll the chats in the system:");
+        ArrayList<String> chattitles = chatManager.chatTitle();
+        for (String chattitle: chattitles){
+            System.out.println(chattitle);
+        }
         System.out.println("\n\n\n");
     }
 }

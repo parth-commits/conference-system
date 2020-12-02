@@ -1,6 +1,7 @@
 package UseCases;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import Entities.Admin;
 
@@ -63,5 +64,9 @@ public class AdminManager implements Serializable {
      */
     public Admin getAdmin(String userId){
         return tableOfAdmin.get(userId);
+    }
+
+    public ArrayList<String> getAllAdmins() {
+        return new ArrayList<String>(tableOfAdmin.keySet());
     }
 }
