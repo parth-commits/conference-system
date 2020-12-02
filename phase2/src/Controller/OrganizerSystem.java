@@ -682,6 +682,8 @@ public class OrganizerSystem {
                     boolean validUserID = false;
                     while (!validUserID) {
                         output.enterContactUserid(false);
+                        ArrayList<String> listOfContactsID = organizerManager.contactList(userID); // new
+                        output.showContacts(listOfContactsID); // new
                         String user = input.getKeyboardInput();
                         if (user.equals("0")) {
                             validUserID = true;

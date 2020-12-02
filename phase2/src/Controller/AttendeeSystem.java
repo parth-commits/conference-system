@@ -154,6 +154,8 @@ public class AttendeeSystem {
                     boolean validUserID = false;
                     while (!validUserID) {
                         output.enterContactUserid(false);
+                        ArrayList<String> listOfContactsID = attendeeManager.contactList(userID); // new
+                        output.showContacts(listOfContactsID); // new
                         String user = input.getKeyboardInput();
                         if (user.equals("0")) {
                             validUserID = true;
