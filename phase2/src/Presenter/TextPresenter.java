@@ -339,8 +339,8 @@ public class TextPresenter {
      *
      * @param chat chat object
      */
-    public void printChat(Chat chat) {
-            System.out.println(chat);
+    public void printChat(String chat) {
+        System.out.println(chat);
     }
 
     //MessageSystem
@@ -469,7 +469,8 @@ public class TextPresenter {
      * If you would like to go back and select a different event id, please press 0.
      */
     public void scheduleSpeaker() {
-        System.out.println("Which speaker do you want to schedule.");
+        System.out.println("Please enter the userid of the speaker you want to schedule.");
+        System.out.println("If you would like to go back and select a different event id, please press 0.");
     }
 
     /**
@@ -569,7 +570,6 @@ public class TextPresenter {
         for (int i = 1; i < listOfSpeaker.size() + 1; i++) {
             System.out.println("\t" + i + ". Name: " + listOfSpeaker.get(i - 1).getName() + ". | User_ID: " + listOfSpeaker.get(i - 1).getUser_id());
         }
-        System.out.println("\nIf you want to return to the previous menu, please press 0.");
     }
 
     /**
@@ -904,7 +904,7 @@ public class TextPresenter {
     public void AdminMenu() {
         System.out.println("Menu:");
         System.out.println("\t1. Delete Empty Event");
-        System.out.println("\t2. Delete Messages");
+        System.out.println("\t2. Delete Chat");
         System.out.println("\t3. LOGOUT");
         System.out.println("\t4. SHUTDOWN");
     }
@@ -934,46 +934,11 @@ public class TextPresenter {
         System.out.println("Please type 0 to go back to the previous menu.");
     }
 
-    public void thatEventHasBeenDeleted() {
-        System.out.println("That event has been successfully deleted!");
-    }
-
-    public void chooseNoAttendeeEvent(ArrayList<Event> noAttendeeEvents) {
-        System.out.println("Choose a Event with no attendees to delete:");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        formatter.setTimeZone(TimeZone.getTimeZone("EST"));
-        for (int i = 0; i < noAttendeeEvents.size(); i ++){
-            Event event = noAttendeeEvents.get(i);
-            System.out.println(i+1 + ". Title: " + event.getTitle() + " | Time: " + formatter.format(event.getTime()) + " | ID: " + event.getID());
+    public void showContacts(ArrayList<String> listOfContacts){
+        for (int i=1; i<listOfContacts.size()+1; i++){
+            System.out.println("\t" + i + "User_ID: " + listOfContacts.get(i-1));
         }
-        System.out.println("Please enter 0 to go back to the previous menu.");
     }
 
-    public void allEventsHaveAttendees() {
-        System.out.println("All events have attendees. You are being redirected to the main menu.");
-    }
-
-    public void chattitles(ArrayList<String> chatTitles) {
-        System.out.println("Choose which chat you want to delete a message from:");
-        for (String s: chatTitles) {
-            System.out.println(s);
-        }
-        System.out.println("Please enter 0 to go back to the previous menu.");
-    }
-
-    public void thereAreNoChats() {
-        System.out.println("There are no chats!");
-    }
-
-    public void thereAreNoMessagesBetweenThese2() {
-        System.out.println("There are no messages between these 2 users!");
-    }
-
-    public void chooseMessage(ArrayList<Message> messages) {
-        System.out.println("Choose a message to delete:");
-        for (int i = 0; i < messages.size(); i++) {
-            System.out.println(i+1 + messages.get(i).toString());
-        }
-        System.out.println("Please enter 0 to go back to the previous menu.");
-    }
 }
+
