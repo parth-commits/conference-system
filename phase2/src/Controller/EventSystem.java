@@ -60,7 +60,7 @@ public class EventSystem {
             String schedule = "Title: " + event.getTitle() + "\nEvent type: " + eventType(event.getSpeakerID().size())
                     + "\nLocation: " + event.getLocation() + "\nTime: " + formatter.format(event.getTime()) +
                     "\nEvent ID: " + event.getID() + "\nEvent Capacity: " + event.getMaxCapacity() + "\nEvent Length: "
-                    + event.getLength();
+                    + event.getLength() + " Hours";
             if (eventManager.hasSpeaker(event.getID())){
                 schedule +=  "\nSpeaker: ";
                 ArrayList<String> speakerNames = new ArrayList<>();

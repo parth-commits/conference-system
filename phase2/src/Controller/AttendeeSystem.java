@@ -105,6 +105,9 @@ public class AttendeeSystem {
             else if (i.equals("8")) {
                 return true;
             }
+            else {
+                output.invalidInput();
+            }
             saveState();
         }
     }

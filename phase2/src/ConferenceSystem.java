@@ -55,7 +55,7 @@ public class ConferenceSystem {
         organizerSystem = new OrganizerSystem(speakerManager, roomManager,organizerManager, eventManager, chatManager, attendeeManager, messageSystem, eventSystem, requestSystem);
         attendeeSystem = new AttendeeSystem(speakerManager, organizerManager, chatManager,attendeeManager, messageSystem, eventSystem, roomManager, eventManager, requestSystem);
         speakerSystem = new SpeakerSystem(speakerManager, organizerManager, chatManager, attendeeManager, messageSystem, eventSystem);
-        adminSystem = new AdminSystem(chatManager, eventManager);
+        adminSystem = new AdminSystem(chatManager, eventManager, speakerManager, organizerManager, roomManager);
 
     }
 
@@ -100,7 +100,7 @@ public class ConferenceSystem {
         deletePastEvents();
         boolean shutdown = false;
         Debugger debugger = new Debugger();
-        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager, requestManager, adminManager);
+        debugger.printStateofSystem(organizerManager,speakerManager,attendeeManager,eventManager,roomManager, requestManager, adminManager, chatManager);
         while (!shutdown) {
             String userID = logInAndRegistrationSystem.start();
             if (userID.equals("SHUTDOWN")){

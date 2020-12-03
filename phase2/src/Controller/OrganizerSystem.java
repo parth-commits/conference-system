@@ -120,6 +120,8 @@ public class OrganizerSystem {
                     return false;
                 case "12":  //12. SHUTDOWN
                     return true;
+                default:
+                    output.invalidInput();
             }
             saveState();
         }
@@ -306,7 +308,7 @@ public class OrganizerSystem {
                                 loopVariable = false;
                             }
                         } else {                                                        //if speakerid does not exist.
-                            output.scheduleSpeakerInvalidSpeakerID();                // validSpeakerID stays false, hence this inner loop will repeat and ask for a speakerID again
+                            output.invalidInput();                          // validSpeakerID stays false, hence this inner loop will repeat and ask for a speakerID again
                         }
                     }
                 } else {                                                                //if the event id (int) they inputted was not valid, we loop back

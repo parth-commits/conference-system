@@ -80,6 +80,9 @@ public class SpeakerSystem {
             else if (i.equals("5")){
                 return true;
             }
+            else {
+                output.invalidInput();
+            }
             saveState();
         }
     }

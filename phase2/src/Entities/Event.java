@@ -174,7 +174,7 @@ public class Event implements Serializable {
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         formatter.setTimeZone(TimeZone.getTimeZone("EST"));
-        return "Event{ id = "  + id + " | title = " + title +" | time = " + formatter.format(time) + " | location = " + location + " | speakerID(s) = " + speakerID + " | attendees = " + attendees + " | organizerID='" + organizerID + " | Max Capacity = " + maxCapacity +  '}';
+        return "Event ->  Id = "  + id + " | Title = " + title +" | Time = " + formatter.format(time) + " | Location = " + location + " | SpeakerID(s) = " + speakerID + " | Attendees = " + attendees + " | OrganizerID = " + organizerID + " | Max Capacity = " + maxCapacity + " | Length: " + length + " hours";
     }
 
     public int getMaxCapacity() {

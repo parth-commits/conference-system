@@ -127,6 +127,7 @@ public class EventManager implements Serializable{
         for (int i = 0; i < listOfEvents.size(); i++){
             if (listOfEvents.get(i).getID() == id){
                 index = i;
+                break;
             }
         }
         listOfEvents.remove(index);

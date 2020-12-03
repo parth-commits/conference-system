@@ -143,4 +143,23 @@ public class ChatManager implements Serializable{
         }
         return null;
     }
+
+
+    /**
+     *
+     * @return a list of chat titles. A chat title is the people who the chat is between.
+     * Ex. if the chat is between bob123 and dora123, then their chat title is: "1. Chat between bob123 and dora123"
+     */
+    public ArrayList<String> chatTitle(){
+        ArrayList<String> chatString = new ArrayList<>();
+        for (int i = 0; i < chats.size(); i++){
+            String s = i+1 + ". Chat between " + chats.get(i).getId1() + " and " + chats.get(i).getId2();
+            chatString.add(s);
+        }
+        return chatString;
+    }
+
+    public Chat getChatAtIndex(int i) {
+        return chats.get(i);
+    }
 }
