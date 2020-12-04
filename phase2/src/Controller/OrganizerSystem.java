@@ -49,7 +49,7 @@ public class OrganizerSystem {
      * @param attendeeManager  The attendee manager implements by AttendeeManager use case
      * @param messageSystem    The message system implements by MessageSystem Controller
      * @param eventSystem      The event system implements by EventSystem Controller
-     * @param requestSystem
+     * @param requestSystem     The request system implemented by requestSystem Controller
      */
 
     public OrganizerSystem(SpeakerManager speakerManager, RoomManager roomManager, OrganizerManager organizerManager,
@@ -96,7 +96,7 @@ public class OrganizerSystem {
                     scheduleASpeaker();
                     break;
                 case "3":   //3. Message a speaker
-                    message(userID);
+                    messageSystem.sendMessage(userID);
                     break;
                 case "4":   //4. Create/Delete an Event
                     createDeleteEvent(userID);
@@ -105,10 +105,10 @@ public class OrganizerSystem {
                     createRoom();
                     break;
                 case "7":   //7. Add or remove a contact
-                    addRemoveContact(userID);
+                    messageSystem.addRemoveContact(userID);
                     break;
                 case "8":   //8. Join/Leave an Event
-                    joinLeaveEvent(userID);
+                    eventSystem.joinLeaveEvent(userID);
                     break;
                 case "9":   //9. Check all events
                     eventSystem.checkAllEvents();
@@ -233,8 +233,6 @@ public class OrganizerSystem {
 
     }
 
-    //WE WANT THE ORGANIZER TO BE ABLE TO RETURN TO THE PREVIOUS STEP AT ANY TIME. TO DO THIS, EVERY TIME THE ORGANIZER HAS TO INPUT
-    //SOMETHING, IF THEY INPUT 0, IT WILL BREAK OUT OF THE LOOP, AND THEREBY RETURN TO THE PREVIOUS STEP.
 
     /**
      * Schedules a Speaker to some specific Events.
@@ -316,16 +314,6 @@ public class OrganizerSystem {
                 }
             }
         }
-    }
-
-    /**
-     * Sends message to another user. Uses the help of the messageSystem to send the message
-     *
-     * @param userID The user_id of the user that we send message to
-     * @throws IOException Throw IOException to avoid errors that might occur
-     */
-    private void message(String userID) throws IOException {
-        messageSystem.sendMessage(userID);
     }
 
     /**
@@ -665,219 +653,6 @@ public class OrganizerSystem {
         return true;
     }
 
-    /**
-     * Add a user to the contact or remove a user for the logged in organizer by getting its user_id
-     *
-     * @param userID The user_id of the user we want to add/ remove
-     */
-    private void addRemoveContact(String userID) {
-        boolean goBack = false;
-        while (!goBack) {
-            boolean validAddRemove = false;
-            while (!validAddRemove) {
-                output.addRemoveContact();
-                String option = input.getKeyboardInput();
-                if (option.equals("0")) {
-                    validAddRemove = true;
-                    goBack = true;
-                } else if (option.equals("1")) {
-                    boolean validUserID = false;
-                    while (!validUserID) {
-                        output.enterContactUserid(false);
-                        ArrayList<String> listOfContactsID = organizerManager.contactList(userID); // new
-                        output.showContacts(listOfContactsID); // new
-                        String user = input.getKeyboardInput();
-                        if (user.equals("0")) {
-                            validUserID = true;
-                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            if (!organizerManager.contactExists(userID, user)) {
-                                organizerManager.addContact(userID, user);
-                                if (organizerManager.userExist(user)) {
-                                    organizerManager.addContact(user, userID);
-                                } else if (attendeeManager.userExist(user)) {
-                                    attendeeManager.addContact(user, userID);
-                                } else {
-                                    speakerManager.addContact(user, userID);
-                                }
-                                chatManager.createChat(user, userID);
-                                output.ActionDone();
-                                validUserID = true;
-                                validAddRemove = true;
-                                goBack = true;
-                            } else {
-                                output.userAlreadyInYourContacts();
-                            }
-                        } else {
-                            output.enterContactUserid(true);
-                        }
-                    }
-                } else if (option.equals("2")) {
-                    boolean validUserID = false;
-                    while (!validUserID) {
-                        output.enterContactUserid(false);
-                        String user = input.getKeyboardInput();
-                        if (user.equals("0")) {
-                            validUserID = true;
-                        } else if ((organizerManager.userExist(user) || attendeeManager.userExist(user) || speakerManager.userExist(user))) {
-                            if (organizerManager.contactExists(userID, user)) {
-                                organizerManager.removeContact(userID, user);
-                                if (organizerManager.userExist(user)) {
-                                    organizerManager.removeContact(user, userID);
-                                } else if (attendeeManager.userExist(user)) {
-                                    attendeeManager.removeContact(user, userID);
-                                } else {
-                                    speakerManager.removeContact(user, userID);
-                                }
-                                chatManager.deleteChat(user, userID);
-                                output.ActionDone();
-                                validUserID = true;
-                                validAddRemove = true;
-                                goBack = true;
-                            } else {
-                                output.userNotInYourContacts();
-                            }
-                        } else {
-                            output.enterContactUserid(true);
-                        }
-                    }
-                } else {
-                    output.invalidInputSelection();
-                }
-            }
-        }
-    }
-
-
-    /**
-     * Sign up for an event or Leave an event from the Signup-events.
-     *
-     * @param userID The user_id of the organizer who wants to Sign up or cancel an event
-     */
-    private void joinLeaveEvent(String userID) {
-        boolean validInput = false;
-        while (!validInput) {
-            output.joinOrLeave();                                                     //checks whether org wants to join or leave an event, or wants to return back to menu
-            String joinLeave = input.getKeyboardInput();
-            int joinLeaveInt;
-            try {
-                joinLeaveInt = Integer.parseInt(joinLeave);
-            }
-            catch (Exception e){
-                joinLeaveInt = -1;
-            }
-            if (joinLeaveInt == 0) {                                                  //if org wants to return to menu, we exit this loop, having done nothing.
-                validInput = true;
-            } else if (joinLeaveInt == 1) {                                           //in this case, org wants to join an event
-                boolean validEventSelected = false;
-                while (!validEventSelected) {
-                    ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
-                    ArrayList<Integer> listOfCurrentlyAttendingEventIds = organizerManager.getSignedUpEvents(userID);    //gets list of all events this organizer is already attending
-                    listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
-                    ArrayList<Integer> listOfAllEventsThatNeedToBeRemoved = new ArrayList<>();                          //This list will contain all the event ids that the person cannot join.
-                    for (Integer eventid : listOfAllEventIDs) {                                                            //goes through every event this organizer is not attending (list of events he can possible join)
-                        ArrayList<Date> newEventTimes = eventManager.getAllTimesForEvent(eventid);                        //finds the times
-                        for (Integer currenteventid : listOfCurrentlyAttendingEventIds) {                               //goes through attending events
-                            ArrayList<Date> currentEventTimes = eventManager.getAllTimesForEvent(currenteventid);       //finds the times
-                            for (Date newTime: newEventTimes){                                                          //if a (new) event overlaps with any of the times of an existing event, reject.
-                                if (currentEventTimes.contains(newTime)){
-                                    listOfAllEventsThatNeedToBeRemoved.add(eventid);
-                                }
-                            }
-                        }
-                        //by now, listOfAllEventIDs contains the eventIDs of events that the organizer has not joined already and listOfAllEventsThatNeedToBeRemoved contain events whose timings
-                        //overlap/interfere with events he/she is already going to! We want to remove events those that do not have room (sufficient capacity) to support one more attendee.
-                        Event actualEvent = eventManager.getEvent(eventid);
-                        int capacity = eventManager.eventCapacity(eventid);                 //gets the capacity of the event
-                        int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
-                        if (capacity - numExistingAttendees == 0) {                                                           //if the number of attendees attending this event has reached the max capacity of the room,
-                            listOfAllEventsThatNeedToBeRemoved.add(eventid);                                                         //the organizer cannot join this room. Remove it from the list.
-                        }
-                    }
-                    listOfAllEventIDs.removeAll(listOfAllEventsThatNeedToBeRemoved);
-                    if (listOfAllEventIDs.isEmpty()) {
-                        output.noEventAvailableToJoin();
-                        validEventSelected=true;
-                    } else {
-                        ArrayList<Event> listOfJoinableEvents = new ArrayList<>();                                          //list of all events this organizer can join
-                        for (Integer eventid : listOfAllEventIDs) {
-                            listOfJoinableEvents.add(eventManager.getEvent(eventid));
-                        }
-                        output.joinDeleteEventSelector(listOfJoinableEvents);
-                        String eventSelected = input.getKeyboardInput();
-                        int eventSelectedInt;
-                        try {
-                            eventSelectedInt = Integer.parseInt(eventSelected);
-                        }
-                        catch (Exception e){
-                            eventSelectedInt = -1;
-                        }
-                        if (eventSelectedInt == 0) {
-                            validEventSelected = true;
-                        } else if (1 <= eventSelectedInt && eventSelectedInt <= listOfJoinableEvents.size()) {
-                            organizerManager.addEventToOrganizer(listOfAllEventIDs.get(eventSelectedInt - 1), userID);         //add eventid to the organizers list of events.
-                            eventManager.addAttendee(listOfAllEventIDs.get(eventSelectedInt - 1), userID);                     //add organizer to events list of attendees for this event.
-                            validEventSelected = true;
-                            validInput = true;
-                            output.ActionDone();
-                        } else {
-                            output.joinLeaveInvalidResponse();
-                        }
-                    }
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    System.out.println("couldnt sleep!");
-                }
-            } else if (joinLeaveInt == 2) {                                                                                   //we need to leave an event here
-                boolean validEventSelected = false;
-                while (!validEventSelected) {
-                    ArrayList<Integer> listOfAttendingEventIds = organizerManager.getSignedUpEvents(userID);            //get the list of signed up eventids
-                    ArrayList<Event> listofAttendingEvents = new ArrayList<>();
-                    for (Integer eventid : listOfAttendingEventIds) {                                                      //get the list of events
-                        listofAttendingEvents.add(eventManager.getEvent(eventid));
-                    }
-                    if (listofAttendingEvents.isEmpty()) {
-                        output.noSignedUpEvents();
-                        validEventSelected = true;
-                        validInput = true;
-                    } else {
-                        output.joinDeleteEventSelector(listofAttendingEvents);                                              //select which event they want to leave
-                        String eventSelected = input.getKeyboardInput();
-                        int eventSelectedInt;
-                        try {
-                            eventSelectedInt = Integer.parseInt(eventSelected);
-                        } catch (Exception e) {
-                            eventSelectedInt = -1;
-                        }
-
-                        if (eventSelectedInt == 0) {
-                            validEventSelected = true;
-                        } else if (1 <= eventSelectedInt && eventSelectedInt <= listofAttendingEvents.size()) {
-                            //System.out.println(organizerManager.getOrganizer(userID).getSignedUpEvents());
-                            //System.out.println(listOfAttendingEventIds.size());
-                            int eventid = listOfAttendingEventIds.get(eventSelectedInt - 1);
-                            organizerManager.removeEvent(eventid, userID);
-                            eventManager.removeAttendee(eventid, userID);
-                            validEventSelected = true;
-                            validInput = true;
-                            output.ActionDone();
-                        } else {
-                            output.joinLeaveInvalidResponse();
-                        }
-                    }
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    System.out.println("couldnt sleep!");
-                }
-            }
-            else{
-                output.invalidInput();
-            }
-        }
-    }
 
     /**
      * Create a new Room
@@ -913,5 +688,3 @@ public class OrganizerSystem {
         return false;
     }
 }
-
-

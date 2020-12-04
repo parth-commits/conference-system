@@ -1,6 +1,5 @@
 package Controller;
 
-import Entities.Chat;
 import Gateway.KeyboardInput;
 import Gateway.Serialization;
 import Presenter.TextPresenter;
@@ -51,8 +50,8 @@ public class MessageSystem {
      * @param id2 The user_id of user2
      * @return Chat The chat history between user1 and user2
      */
-    public Chat getChat(String id1, String id2) {
-        return chatManager.findChat(id1, id2);
+    public String getChat(String id1, String id2) {
+        return chatManager.chatToString(id1, id2);
     }
 
     /**
@@ -131,7 +130,7 @@ public class MessageSystem {
                         try {
                             Thread.sleep(1000);
                         } catch (Exception e) {
-                            System.out.println("couldnt not sleep thread");
+                            output.couldntSleep();
                         }
                         return;
                     }
@@ -311,4 +310,150 @@ public class MessageSystem {
         }
     }
 
+
+    /**
+     * Add a user to the contact or remove a user for the logged in organizer by getting its user_id
+     *
+     * @param userID The user_id of the user we want to add/ remove
+     */
+    public void addRemoveContact(String userID) {
+        boolean goBack = false;
+        while (!goBack) {
+            boolean validAddRemove = false;
+            while (!validAddRemove) {
+                output.addRemoveContact();
+                String option = input.getKeyboardInput();
+                if (option.equals("0")) {
+                    validAddRemove = true;
+                    goBack = true;
+                }
+                else if (option.equals("1")) {
+                    boolean validUserID = false;
+                    while (!validUserID) {
+
+                        ArrayList<String> listOfContactsID = findAllUsersThatArentContacts(userID);
+                        if (listOfContactsID.isEmpty()){
+                            output.allUsersAreYourContact();
+                            validUserID = true;
+                            continue;
+                        }
+                        output.enterContactUserid(false);
+                        output.showContacts(listOfContactsID); // new
+                        int userIndex;
+                        try {
+                            userIndex = Integer.parseInt(input.getKeyboardInput());
+                        }
+                        catch (Exception e){
+                            userIndex = -1;
+                        }
+                        if (userIndex == 0){
+                            validUserID = true;
+                        }
+                        else if (1<=userIndex && userIndex <= listOfContactsID.size()){
+                            String user = listOfContactsID.get(userIndex-1);
+                            if (organizerManager.userExist(userID) && !organizerManager.contactExists(userID, user)) {
+                                organizerManager.addContact(userID, user);
+                                addContact(user, userID);
+                                chatManager.createChat(user, userID);
+                                output.ActionDone();
+                                validUserID = true;
+                                validAddRemove = true;
+                                goBack = true;
+                            }
+                            else if (attendeeManager.userExist(userID) && !attendeeManager.contactExists(userID, user)){
+                                attendeeManager.addContact(userID, user);
+                                addContact(user, userID);
+                                chatManager.createChat(user, userID);
+                                output.ActionDone();
+                                validUserID = true;
+                                validAddRemove = true;
+                                goBack = true;
+                            }
+                            else {
+                                output.userAlreadyInYourContacts();
+                            }
+                        }
+                        else {
+                            output.enterContactUserid(true);
+                        }
+                    }
+                }
+                else if (option.equals("2")) {
+                    boolean validUserID = false;
+                    while (!validUserID) {
+                        ArrayList<String> contactList;
+                        if (organizerManager.userExist(userID)){
+                            contactList = organizerManager.contactList(userID);
+                        }
+                        else {
+                            contactList = attendeeManager.contactList(userID);
+                        }
+                        if (contactList.isEmpty()){
+                            output.youHaveNoContactstoRemove();
+                            validUserID = true;
+                            continue;
+                        }
+                        output.enterContactUseridtoRemove();
+                        output.showContacts(contactList);
+                        int userIndex;
+                        try {
+                            userIndex = Integer.parseInt(input.getKeyboardInput());
+                        }
+                        catch (Exception e){
+                            userIndex = -1;
+                        }
+                        if (userIndex == 0){
+                            validUserID = true;
+                        }
+                        else if (1<=userIndex && userIndex <= contactList.size()){
+                            String user = contactList.get(userIndex-1);
+                            if (organizerManager.userExist(userID) && organizerManager.contactExists(userID, user)) {
+                                organizerManager.removeContact(userID, user);
+
+                            }
+                            else if (attendeeManager.userExist(userID) && attendeeManager.contactExists(userID, user)){
+                                attendeeManager.removeContact(userID, user);
+                            }
+                            if (organizerManager.userExist(user)) {
+                                organizerManager.removeContact(user, userID);
+                            } else if (attendeeManager.userExist(user)) {
+                                attendeeManager.removeContact(user, userID);
+                            } else {
+                                speakerManager.removeContact(user, userID);
+                            }
+                            chatManager.deleteChat(user, userID);
+                            output.ActionDone();
+                            validUserID = true;
+                            validAddRemove = true;
+                            goBack = true;
+                        }
+                        else {
+                            output.invalidInput();
+                        }
+                    }
+                }
+                else {
+                    output.invalidInputSelection();
+                }
+            }
+        }
+    }
+
+    private ArrayList<String> findAllUsersThatArentContacts(String userID){
+        ArrayList<String> listOfContactsID;
+        ArrayList<String> listofAllIDs = new ArrayList<>();
+        listofAllIDs.addAll(organizerManager.getUserIDs());
+        listofAllIDs.addAll(speakerManager.getUserIDs());
+        listofAllIDs.addAll(attendeeManager.getUserIDs());
+
+        if (organizerManager.userExist(userID)){
+            listOfContactsID = organizerManager.contactList(userID); // new
+        }
+        else {
+            listOfContactsID = attendeeManager.contactList(userID);
+        }
+        listofAllIDs.removeAll(listOfContactsID);
+        listofAllIDs.remove(userID);
+        return listofAllIDs;
+    }
 }

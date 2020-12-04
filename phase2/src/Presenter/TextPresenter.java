@@ -271,11 +271,10 @@ public class TextPresenter {
      */
     public void enterContactUserid(boolean invalid) {
         if (invalid) {
-            System.out.println("Invalid userID. Enter a valid UserID of the contact:");
+            System.out.println("Invalid input. Enter a valid number:");
         } else {
-            System.out.println("Enter the userID of the contact:");
+            System.out.println("Who do you want to add?");
         }
-        System.out.println("Please type 0 to go back.");
     }
 
     /**
@@ -339,7 +338,7 @@ public class TextPresenter {
      *
      * @param chat chat object
      */
-    public void printChat(Chat chat) {
+    public void printChat(String chat) {
             System.out.println(chat);
     }
 
@@ -979,12 +978,26 @@ public class TextPresenter {
 
     public void showContacts(ArrayList<String> listOfContacts){
         for (int i=1; i<listOfContacts.size()+1; i++){
-            System.out.println("\t" + i + "User_ID: " + listOfContacts.get(i-1));
+            System.out.println("\t" + i + ". User ID: " + listOfContacts.get(i-1));
         }
         System.out.println("\nIf you want to return to the previous menu, please press 0.");
     }
 
 
+    public void couldntSleep(){
+        System.out.println("Couldn't sleep!");
+    }
 
+    public void allUsersAreYourContact() {
+        System.out.println("No user available to add!");
+    }
+
+    public void enterContactUseridtoRemove() {
+        System.out.println("Enter the user you want to remove from your contact list:");
+    }
+
+    public void youHaveNoContactstoRemove() {
+        System.out.println("You have no contacts to remove!");
+    }
 }
 

@@ -57,7 +57,6 @@ public class SpeakerSystem {
     public boolean start(String userID) throws IOException {
         while (true) {
             String i;
-            boolean validInput = false;
             output.SpeakerMenu();
             i = input.getKeyboardInput();
             //1. see all Events.
@@ -100,72 +99,12 @@ public class SpeakerSystem {
     }
 
     /**
-     *Sends message to another user.
-     * @param userID The user_id of the user that we send message to
-     * @throws IOException Throw IOException to avoid errors that might occur
-     */
-    private void message(String userID) throws IOException {
-        messageSystem.sendMessage(userID);
-    }
-
-    /**
      * Check if the user already registered in this system or not
      * @param userid The user_id of the user we want to check
      * @return boolean Returns true if the user already registered, false otherwise
      */
     private boolean userExists(String userid){
         return attendeeManager.userExist(userid) || organizerManager.userExist(userid) || speakerManager.userExist(userid);
-    }
-
-    /**
-     *Add a user to the contact or remove a user from the contact by getting its user_id
-     * @param userID The user_id of the user we want to add/ remove for. (logged in user)
-     */
-    private void addRemoveContact(String userID) {
-        output.addRemoveContact();
-        String option = input.getKeyboardInput();
-        while (!(option.equals("1")||option.equals("2"))){
-            output.addRemoveContact();
-            option = input.getKeyboardInput();
-        }
-        if (option.equals("1")){
-            output.enterContactUserid(false);
-            String input = this.input.getKeyboardInput();
-            while (!(organizerManager.userExist(input)||attendeeManager.userExist(input)||speakerManager.userExist(input))){
-                output.enterContactUserid(true);
-                input = this.input.getKeyboardInput();
-            }
-            organizerManager.addContact(userID, input);
-            if (organizerManager.userExist(input)){
-                organizerManager.addContact(input, userID);
-            }
-            else if (attendeeManager.userExist(input)){
-                attendeeManager.addContact(input, userID);
-            }
-            else{
-                speakerManager.addContact(input, userID);
-            }
-            chatManager.createChat(input, userID);
-        }
-        else {
-            output.enterContactUserid(false);
-            String input = this.input.getKeyboardInput();
-            while (!(organizerManager.userExist(input)||attendeeManager.userExist(input)||speakerManager.userExist(input))){
-                output.enterContactUserid(true);
-                input = this.input.getKeyboardInput();
-            }
-            organizerManager.removeContact(userID, input);
-            if (organizerManager.userExist(input)){
-                organizerManager.removeContact(input, userID);
-            }
-            else if (attendeeManager.userExist(input)){
-                attendeeManager.removeContact(input, userID);
-            }
-            else{
-                speakerManager.removeContact(input, userID);
-            }
-            chatManager.deleteChat(input,userID);
-        }
     }
 }
 
