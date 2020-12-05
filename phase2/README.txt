@@ -1,71 +1,60 @@
 Phase2 | Group number: group_0112
+========================================================================================================================
+Please consider reading the Phase 1 README if you need any clarifications on how to start and run the system or our Phase
+1 implementation.
+========================================================================================================================
 
-How To Begin The System:
-You can start the system up by opening ConferenceDemo.java and running the main method.
-First you will see the current state of the system, that is the data that is currently stored.
-THIS IS A DEBUG FEATURE ONLY, MEANT TO ASSIST THE TA
-IN KEEPING TRACK OF CHANGES MADE TO THE SYSTEM.
-You will then be prompted to chose whether you want to
-    1. Register
-    2. Login
-    3. SHUTDOWN
-If you chose SHUTDOWN, the state of the system will be saved.
-If you chose register, you will have the option to register as an organizer, attendee, or an admin.
-If you accidentally press register, you can press 0 to go back to the menu and login.
-If you chose login, you will be asked for your credentials. Only after both username and password have been inputted,
-will the system verify the credentials. If you have inputted the wrong credentials, a message will appear saying
-"incorrect username or password" and you will be sent back to the main page. Hence, if you accidentally click login,
-type a random invalid userid and password and you will be redirected to the main menu.
+Here we will focus on our Phase 2 implementation and instructions.
 
-If you input the correct userid and password, you will be directed to the options menu for your user type.
-Here you can access your account specific tasks, or LOGOUT or SHUTDOWN. If you chose LOGOUT, you will be logged out
-and be sent back to the main page, where you can either Login/Register/SHUTDOWN.
+Mandatory Extensions and How They Work:
+    1) We have three types of events: party, talk, and panel discussion. All events start as party's, if you add one
+    speaker it becomes a talk, and if you add numerous (2+) speakers, it becomes a panel discussion. You cannot
+    un-schedule a speaker hence, once an event becomes a panel, it cannot revert to being a talk or party, and similarly
+    a talk cannot become a party. Our design allows for easy extension to change the type of event by un-scheduling
+    speakers, however, we decided not to implement that as it was not required.
 
-Things To Note:
-1) If you want to delete everything and start with a fresh empty system, delete all 7 of the following ser files:
-    AdminManager.ser
-    AttendeeManager.ser
-    ChatManager.ser
-    EventManager.ser
-    OrganizerManager.ser
-    RoomManager.ser
-    SpeakerManager.ser
-    These files must be deleted all at once. IF YOU FAIL TO DELETE ALL 6 TOGETHER, THE SYSTEM WILL NOT WORK!!!
+    2) Each event has to start on the hour, but can last as many HOURS as the organizer wants provided it's within the
+    9-5 range.
 
-2) Once the time for an event has passed, our program will automatically delete it from the system, and all attendees
-   will be derolled from that event, and that event will be removed from the speakers assigned events. This is so that
-   users cannot enroll in an event that has already passed. THIS IS ONE OF OUR OPTIONAL EXTENSIONS FOR PHASE 2.
+    3) Events can be cancelled by any organizer. Once signed in as an organizer, select option 4,
+    "Create/Delete/Modify Event" and select the "Delete" option. Then chose which event you want to delete.
 
-Important Facts to Know About The System:
-1) DO NOT abruptly stop the program, this will cause issues. Please use the dedicated SHUTDOWN option, as this will
-   save the state of the program.
-2) When an organizer creates an event, he/she does not need to select the room. This is done automatically by the
-   program!
-3) When an organizer or speaker sends an automatic message, every recipient of that message will be automatically
-   added to the organizer/speakers contact list if they are not already in it, and they will be able to privately
-   message them.
-4) A speaker can only send an automatic message to the attendees of the selected event that they are speaking at. A
-   speaker can only reply to messages of people who are in their contact list. A speaker cannot add individual contacts.
-5) When an organizer tries to schedule a speaker, they will only be shown the events that currently do not have a
-   speaker.
-6) When a user tries to join an event, they can only see a list of events that they are applicable to join. This mean
-   an event that they are already enrolled for, will not appear on this list. Any events whose time conflicts with
-   an event they are already attending, will not be shown on this list. Any event that does not have the capacity to
-   enroll one more attendee will also not be shown on this list.
-7) When an organizer creates an event, they will be asked for a time. This event will only be created if there is a room
-   that is not occupied at that given time.
-8) When an organizer deletes an event, that event will be removed from the list of attending events for all attendees
-   attending that event.
-9) When a organizer or attendee wants to send an private message to someone, they will be presented with their contact
-   list. Hence to message someone, the user first has to add them to their contact list.
-10)When an organizer creates a speaker, they will both be added to each others contact lists.
-11)When an admin deletes an empty event, that event will be removed from a list of events, and other users will no
-   longer see it appears on the list.
-12)When an admin deletes a chat, that chat will be removed from the chat history and the two users involved
-   in that chat will not be able to find the chat.
+    4) Now we have the admin user who can delete single messages between any two users, or delete a selected event with
+    no attendees.
+
+    5) Organizers can also create Speaker accounts, Attendee accounts, and Organizer accounts. We have chosen not to
+    allow organizers to create admin accounts. Although this is easily implementable, we thought it was a security flaw.
+
+    6) When an organizer creates an event, they can set their desired capacity for the event, provided its less than
+    500. This capacity can be changed later. Whenever an attendee wants to join an event, they are presented with a list
+    of events they can join. If an event has reached it's max capacity, then it won't show up on this list, and
+    therefore will prevent the event from going over its capacity.
+
+
+Optional Extensions (Approved by Prof)
+    1) Whenever the system is started, all the events that have already occurred (are in the past) are deleted from the
+    system. This prevents anyone from enrolling for that event. Also, this event will be removed from its participants'
+    list of scheduled events, from the speakers' list of assigned events and its organizer's list of created events.
+
+    2) The system shows a list of items when the user wants to do certain tasks. This is like a dropdown menu. The
+    reason for this was to provide the user with a visual list of options rather than having them manually enter
+    userids/eventids/speakerids which make's it inconvenient for the user. A list of contacts is presented when the user
+    wants to add/remove a contact or send a message to one. A list of events is displayed for the user to chose when
+    they want to signup or leave one. A list of speakers is shown when an organizer wants to schedule one. It's in
+    numerous other places in the program.
+
+    3) The system allows additional user requests, like dietary restrictions, accessibility requirements etc. Attendees
+    can make requests and view the status of their request(s). The organizers can change the status of these request(s)
+    to either "Pending" or "Addressed".
+
+    4) When an organizer creates an event, they don't need to worry about choosing the room. This is done automatically
+    by our program. The event will only be created if there is a room that exists that has space at the desired time and
+    for the given length.
+
+    5) Throughout our program, the user can always decide to "go back" to the previous menu without completing the task
+    at hand. This is handy in case they accidentally click a button or decide they want to change a previous input.
+
+    6) (Small Extension) Any organizer can change the name of any event.
+
 
 IF YOU FACE ANY UNEXPECTED ERRORS AND REQUIRE CLARIFICATION, PLEASE EMAIL US.
-
-
-
-
