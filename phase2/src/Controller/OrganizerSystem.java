@@ -595,7 +595,7 @@ public class OrganizerSystem {
                     catch (Exception e){
                         newToAdd = -1;
                     }
-                    if (newToAdd>0){
+                    if (newToAdd>0 && newToAdd+eventCapacity <= 500){
                         eventManager.getEvent(eventID).setMaxCapacity(eventCapacity+newToAdd);
                         output.ActionDone();
                         return 1;
