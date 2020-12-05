@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.io.*;
 
 /**
- * The Attendee program implements an application that simply records users
- * and their list of signed-event. Events can be added or removed.
+ * The Attendee is a  user. It has its list of signed up events.
  * @author Group_0112
  * @version 2.0
  * @since December 1st, 2020

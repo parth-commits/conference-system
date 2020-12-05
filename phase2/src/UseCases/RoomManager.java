@@ -45,7 +45,6 @@ public class RoomManager implements Serializable{
     public boolean locationIDAvailable(String location){
         return !tableOfRooms.containsKey(location);
     }
-    //room manager should be able to pull up a list of rooms that are free at a given time
 
     public ArrayList<String> getAvailableRooms(Date date, int length){
         ArrayList<String> availableRooms = new ArrayList<String>();
@@ -58,8 +57,6 @@ public class RoomManager implements Serializable{
                 if (roomValue.isBooked(c.getTime())){
                     avail = false;
                 }
-            //if (!roomValue.isBooked(date)){
-            //    availableRooms.add(roomValue.getRoomLocation());
             }
             if (avail){
                 availableRooms.add(roomValue.getRoomLocation());
@@ -83,7 +80,6 @@ public class RoomManager implements Serializable{
 
         }
     }
-
 
     /**
      * Removes an event from the room at a given time.
@@ -124,6 +120,4 @@ public class RoomManager implements Serializable{
     public ArrayList<String> getAllRoomLocs() {
         return new ArrayList<>(tableOfRooms.keySet());
     }
-
-
 }

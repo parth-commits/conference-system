@@ -89,20 +89,6 @@ public class  AttendeeManager implements Serializable{
     }
 
     /**
-     * Checks if the user already signed up for an event.
-     * @param EventId the id of event that the user wants to sign up
-     * @param userId the id of user who wants to perform this task
-     * @return boolean returns true if the user already signed up for this event,
-     * returns false otherwise
-     */
-    public boolean SignedUp(Integer EventId, String userId) {
-        if(getAttendee(userId).getSignedUpEvents().contains(EventId)){
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Removes an user from the event.
      * @param EventId the id of event that the user wants to remove
      * @param userId the id of user who wants to perform this task

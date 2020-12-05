@@ -145,7 +145,6 @@ public class ConferenceSystem {
                         attendeeManager.removeEvent(eventID,attendeeID);
                     }
                 }
-                //NOTE: THIS WORKS RIGHT NOW BECAUSE WE ONLY HAVE 1 SPEAKER, IN PHASE 2 WE WILL HAVE MULTIPLE SPEAKERS
                 ArrayList<String> speakers = eventManager.getEvent(eventID).getSpeakerID();
                 for (String speaker:speakers) {
                     speakerManager.getSpeaker(speaker).removeAssignEvent(eventID);
@@ -162,5 +161,3 @@ public class ConferenceSystem {
         }
     }
 }
-
-

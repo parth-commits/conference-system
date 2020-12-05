@@ -256,11 +256,4 @@ public class EventManager implements Serializable{
         }
         return returnList;
     }
-
-    /**
-     * Gets the length of an event
-     * @param eventID the event we want to check
-     * @return String The length of the event
-     */
-    public String getEventLength(int eventID){return getEvent(eventID).getLength();}
 }

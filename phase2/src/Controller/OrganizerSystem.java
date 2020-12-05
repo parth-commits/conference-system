@@ -224,7 +224,6 @@ public class OrganizerSystem {
                 }
             }
         }
-
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
@@ -316,255 +315,6 @@ public class OrganizerSystem {
         }
     }
 
-    /**
-     * Create an new Event or Delete an Event that already exists
-     *
-     * @param userID The user_id of the Organizer who is creating/ deleting the event.
-     * @throws ParseException Throw ParseException to avoid errors that might occur
-     */
-    private void createDeleteEvent(String userID) throws ParseException {
-        boolean createDelete = false;
-        while (!createDelete) {
-            output.createDeleteEvent();
-            String createDeleteInput = input.getKeyboardInput();
-            if (createDeleteInput.equals("1")) {                                                    //Create event
-                boolean validLength = false;
-                while (!validLength){
-                    output.validLength();
-                    String inputLength = input.getKeyboardInput();
-                    if (inputLength.equals("0")){
-                        validLength=true;
-                    }
-                    else if (inputLength.matches("1|2|3|4|5|6|7|8")){
-                        boolean validTime = false;
-                        while (!validTime) {
-                            output.createEnterTime();
-                            String inputTime = input.getKeyboardInput();
-                            if (verifyDateTimeEntered(inputTime, inputLength)) {                                //they entered a valid date time
-                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                                formatter.setTimeZone(TimeZone.getTimeZone("EST"));
-                                Date d1 = formatter.parse(inputTime);
-                                ArrayList<String> availableRooms = roomManager.getAvailableRooms(d1, Integer.parseInt(inputLength));
-                                if (availableRooms.isEmpty()) {
-                                    output.createNoRoomAvailable();                                 //MAKE SURE THIS STAYS FOR SOME TIME
-                                    try {
-                                        Thread.sleep(2000);
-                                    } catch (Exception e) {
-                                        System.out.println("couldnt sleep");
-                                    }
-                                } else {                                                               //there is a room available
-                                    output.createProvideEventTitle();
-                                    String eventTitle = input.getKeyboardInput();                   //gets title for event.
-                                    String locationSelected = availableRooms.get(0);
-                                    int eventID = -1;
-                                    boolean validID = false;
-                                    while (!validID) {
-                                        output.enterCreatingEventID();
-                                        try {
-                                            eventID = Integer.parseInt(input.getKeyboardInput());
-                                        } catch (Exception e) {
-                                            eventID = -1;
-                                        }
-                                        if (eventID >= 0 && !eventManager.getListOfEventIDs().contains(eventID)) {
-                                            boolean validCapacity = false;
-                                            int capacityInt = -1;
-                                            while(!validCapacity){
-                                                try{
-                                                    output.giveCapacityforEvent();
-                                                    capacityInt = Integer.parseInt(input.getKeyboardInput());
-                                                }
-                                                catch (Exception e){
-                                                    output.invalidInput();
-                                                }
-                                                if (capacityInt==0){
-                                                    validCapacity=true;
-                                                }
-                                                else if (capacityInt>0 && capacityInt<501){
-                                                    eventManager.addEvent(eventTitle, d1, locationSelected, userID, eventID,capacityInt, inputLength);
-                                                    roomManager.addEventToRoom(locationSelected, eventID, d1, Integer.parseInt(inputLength));
-                                                    organizerManager.setAddEventCreated(userID, eventID);           //adds to the list of events this organizer has created
-                                                    output.ActionDone();
-                                                    try {
-                                                        Thread.sleep(2000);
-                                                    } catch (InterruptedException e) {
-                                                        System.out.println("couldnt sleep");
-                                                    }
-                                                    validCapacity=true;
-                                                    validID= true;
-                                                    validTime = true;
-                                                    validLength = true;
-                                                    createDelete = true;
-                                                }
-                                                else{
-                                                    output.invalidInput();
-                                                }
-                                            }
-                                        } else {
-                                            output.invalidEventID();
-                                        }
-                                    }
-                                }
-                            } else if (inputTime.equals("0")) {
-                                validTime = true;
-                            } else {                                                                  //they entered an invalid date time
-                                output.createEnterTimeInvalidTime();
-                            }
-                        }
-                    }
-                    else{
-                        output.invalidInput();                                                          //Length entered is invalid
-                    }
-                }
-            }
-            else if (createDeleteInput.equals("2")) {                                                   //Deletes Event
-                boolean validEventSelected = false;
-                while (!validEventSelected) {
-                    ArrayList<Event> events = eventManager.getListOfEvents();
-                    if (events.isEmpty()){
-                        output.noEventsToDelete();
-                        validEventSelected = true;
-                        break;
-                    }
-                    output.joinDeleteEventSelector(events);
-                    String eventSelected = input.getKeyboardInput();
-                    int eventSelectedInt;
-                    try {
-                        eventSelectedInt = Integer.parseInt(eventSelected);
-                    }catch (Exception e){
-                        eventSelectedInt = -1;
-                    }
-                    if (eventSelectedInt == 0) {
-                        validEventSelected = true;
-                    }
-                    else if (0 < eventSelectedInt && eventSelectedInt <= events.size()) {
-                        int eventID = events.get(eventSelectedInt - 1).getID();
-                        String eventLocation = eventManager.getLocation(eventID);
-                        Date eventTime = eventManager.getTime(eventID);
-                        Event eventItself = eventManager.getEvent(eventID);
-                        roomManager.removeEventFromRoom(eventLocation, eventItself, eventTime);      //the room no longer holds this event at that time.
-
-                        organizerManager.setDeleteEventCreated(userID, eventID);                //removes event from the list of events this organizer has created
-                        ArrayList<String> listofAttendees = eventManager.getEventAttendees(eventID);
-                        for (String attendeeID : listofAttendees) {                                   //removes this event from all attendees list of attending events
-                            if (organizerManager.userExist(attendeeID)) {
-                                organizerManager.removeEvent(eventID, attendeeID);
-                            } else if (attendeeManager.userExist(attendeeID)) {
-                                attendeeManager.removeEvent(eventID, attendeeID);
-                            }
-                        }
-                        if (eventManager.hasSpeaker(eventID)) {                                 //if this event has a speaker, delete this event from that speakers list of assigned events.
-                            ArrayList<String> speakers = eventManager.getSpeakerID(eventID);
-                            for (String speaker:speakers) {
-                                speakerManager.removeEvent(eventID, speaker);
-                            }
-                            //String speakerID = eventManager.getSpeakerID(eventID);
-                            //speakerManager.removeEvent(eventID, speakerID);
-                        }
-                        eventManager.cancelEvent(eventID);                                     //removes from list of events
-                        output.ActionDone();
-                        validEventSelected = true;
-                        createDelete = true;
-                    }
-                    else {
-                        output.invalidInputSelection();
-                    }
-                }
-            }
-            else if (createDeleteInput.equals("3")){            //modify an event
-                String in;
-                boolean goback = false;
-                while (!goback){
-                    output.modifyEventOptions();
-                    in = input.getKeyboardInput();
-
-                    if (in.equals("1")){ // edit name
-                        boolean goback1 = false;
-                        while (!goback1) {
-                            int selected = eventSelector();
-                            if (selected == -2) {
-                                output.noEventsToChangeName();
-                                goback1 = true;
-                            }
-                            else if (selected == 0){
-                                goback1 = true;
-                            }
-                            else if (selected != -1) {
-                                int eventID = eventManager.getListOfEvents().get(selected - 1).getID();
-                                output.selectNewName();
-                                String newTitle = input.getKeyboardInput();
-                                if (!newTitle.equals("0")){
-                                    eventManager.renameEvent(eventID,newTitle);
-                                    output.ActionDone();
-                                    goback1 = true;
-                                }
-                            }
-                            else {
-                                output.invalidInput();
-                            }
-                        }
-                    }
-                    else if (in.equals("2")){ // increase max capacity
-                        boolean goback1 = false;
-                        while (!goback1) {
-                            int selected = eventSelector();
-                            if (selected == -2) {
-                                output.noEventstoIncreaseCapacity();
-                                goback1 = true;
-                            }
-                            else if (selected == 0){
-                                goback1 = true;
-                            }
-                            else if (selected != -1) {
-                                int eventID = eventManager.getListOfEvents().get(selected - 1).getID();
-                                int eventCapacity = eventManager.getListOfEvents().get(selected - 1).getMaxCapacity();
-
-                                int newToAdd;
-                                boolean goback2 = false;
-                                while (!goback2){
-                                    output.addCapacity(eventCapacity);
-                                    try {
-                                        newToAdd = Integer.parseInt(input.getKeyboardInput());
-                                    }
-                                    catch (Exception e){
-                                        newToAdd = -1;
-                                    }
-                                    if (newToAdd>0){
-                                        eventManager.getEvent(eventID).setMaxCapacity(eventCapacity+newToAdd);
-                                        output.ActionDone();
-                                        goback2 = true;
-                                    }
-                                    else if (newToAdd == 0){
-                                        goback2 = true;
-                                    }
-                                    else {
-                                        output.invalidInput();
-                                    }
-                                }
-                            }
-                            else {
-                                output.invalidInput();
-                            }
-
-                        }
-                    }
-                    else if (in.equals("0")){
-                        goback = true;
-                    }
-                    else {
-                        output.invalidInput();
-                    }
-                }
-
-            }
-            else if (createDeleteInput.equals("0")) {
-                createDelete = true;
-            } else {
-                output.invalidInputSelection();         //MAKE SURE THIS MESSAGE STAYS ON FOR A COUPLE SECONDS
-            }
-        }
-    }
-
-
     private void newCreateDeleteModify(String userid) throws IOException, ParseException {                                  //The NEW function for Create/Delete Event
         boolean createDelete = false;
         while (!createDelete){                                                          //Until user successfully creates/delete/modifies event OR decides to go back, this loop will iterate
@@ -600,8 +350,7 @@ public class OrganizerSystem {
     }
 
     private int helperCreateEvent(String userid) throws ParseException {                                       //This helper method should return 1 if an event is successfully created, or 0 if the user wants to go back to create/delete/modify (previous) menu.
-        boolean validLength = false;                                                    //CAN WE GET RID OF THIS AND MAKE IT JUST WHILE (TRUE) SINCE WE KNOW IT HAS TO LOOP UNTIL A RETURN IS ACHIEVED.
-        while  (!validLength){
+        while (true){
             output.validLength();
             String inputLength = input.getKeyboardInput();
             if (inputLength.equals("0")){                                               //User wants to go back to previous menu
@@ -616,7 +365,6 @@ public class OrganizerSystem {
                 output.invalidInput();                                                  //User entered an invalid length. Loop will repeat.
             }
         }
-        return 0;                                                                       //This is really pointless. Should be gone if we make while loop infinite.
     }
 
     private int helperCreateEventTime(String userid, String inputLength) throws ParseException {
@@ -660,7 +408,7 @@ public class OrganizerSystem {
                 return 0;
             }
             else{
-                if (helperCreateGetID(userid, inputLength, inputTime, locationSelected,eventTitle)==1){           //We may need to have an if checking if that helper method returns 0, in which case we should continue;
+                if (helperCreateGetID(userid, inputLength, inputTime, locationSelected,eventTitle)==1){
                     return 1;
                 }
             }
@@ -721,14 +469,6 @@ public class OrganizerSystem {
         }
     }
 
-    //Things to check for above: does the back feature work? If not, always check if (helperfunctioncall)  == 0, in which case
-    // continue. Right now, it's only checking if the function is 1,
-    //Check if all inputs to manager methods in line 699-701 are of the correct type.
-    // Add parse exception.
-    //Check all initial outputs, and outputs when input is invalid.
-    //Do the same thing with delete event and modify event.
-
-
     private int helperDeleteEvent(String userid){
         while (true){
             ArrayList<Event> events = eventManager.getListOfEvents();
@@ -768,8 +508,6 @@ public class OrganizerSystem {
                     for (String speaker:speakers) {
                         speakerManager.removeEvent(eventID, speaker);
                     }
-                    //String speakerID = eventManager.getSpeakerID(eventID);
-                    //speakerManager.removeEvent(eventID, speakerID);
                 }
                 eventManager.cancelEvent(eventID);                                     //removes from list of events
                 output.ActionDone();
@@ -823,7 +561,7 @@ public class OrganizerSystem {
                     output.ActionDone();
                     return 1;
                 }
-                else if (newTitle.equals("0")){
+                else {
                     return 0;
                 }
             }
@@ -876,19 +614,6 @@ public class OrganizerSystem {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     private int eventSelector(){
         ArrayList<Event> events = eventManager.getListOfEvents();
         if (events.isEmpty()){
@@ -921,11 +646,9 @@ public class OrganizerSystem {
         } catch (ParseException e) {
             return false;
         }
-
         if (currentDateTime.after(d1)) {
             return false;
         }
-
         SimpleDateFormat formatter2 = new SimpleDateFormat("EEE-dd-MMM-yyyy HH:mm:ss");
         formatter2.setTimeZone(TimeZone.getTimeZone("EST"));
         String day1 = formatter2.format(d1).substring(0, 1);
@@ -999,17 +722,4 @@ public class OrganizerSystem {
         }
     }
 
-
-    /**
-     * Check if the user already registered in this system or not
-     *
-     * @param userid The user_id of the user we want to check
-     * @return boolean Returns true if the user already registered, false otherwise
-     */
-    private boolean userExists(String userid) {
-        if (attendeeManager.userExist(userid) || organizerManager.userExist(userid) || speakerManager.userExist(userid)) {
-            return true;
-        }
-        return false;
-    }
 }

@@ -245,14 +245,6 @@ public class MessageSystem {
     }
 
     /**
-     * See all contacts of the user
-     * @param id The user_id of the user who wants to see its contacts
-     */
-    public void viewContacts(String id) {
-        chatManager.getContactsWithChat(id);
-    }
-
-    /**
      * Check the type of user, such as 1.organizer 2.attendee, or 3.speaker. Return -1 if the user cannot be defined.
      * @param id The user_id of the user we are checking
      * @return int Integer that refer to different type of user
@@ -277,7 +269,6 @@ public class MessageSystem {
      */
     public void addContact(String current, String id) {
         int current_role = userType(current);
-        int id_role = userType(id);
         boolean success = true;
         // adding contact based on their authority
         // organizer

@@ -1,9 +1,7 @@
 package Controller;
 
-import Entities.Chat;
 import Entities.Event;
 import Entities.Message;
-import Entities.Organizer;
 import Gateway.KeyboardInput;
 import Gateway.Serialization;
 import Presenter.TextPresenter;
@@ -37,6 +35,9 @@ public class AdminSystem {
      *
      * @param chatManager  The chat manager implements by ChatManager use case
      * @param eventManager The event manager implements by EventManager use case
+     * @param organizerManager The organizer manager implemented by OrganizerManager
+     * @param roomManager The room manager
+     * @param speakerManager The speaker manager
      */
     public AdminSystem(ChatManager chatManager, EventManager eventManager, SpeakerManager speakerManager, OrganizerManager organizerManager, RoomManager roomManager) {
         this.chatManager = chatManager;
@@ -49,7 +50,7 @@ public class AdminSystem {
     }
 
     /**
-     * Returns an arraylist of events that are empty (without any attendee).
+     * Returns an arraylist of event ids that are empty (without any attendee).
      *
      * @return ArrayList </Integer> list that contains all ids of empty events
      */
@@ -167,7 +168,7 @@ public class AdminSystem {
     /**
      * The start method of AdminSystem which can: 1.Delete Empty Event. 2.Delete Chat. 3.logout. 4.SHUTDOWN
      *
-     * @return object Returns different types based on the action taken
+     * @return object Returns true or false based on the action taken
      * @throws IOException any errors that may occur while running
      */
     public boolean start() throws IOException {

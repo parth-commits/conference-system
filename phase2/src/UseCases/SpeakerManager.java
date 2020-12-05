@@ -91,7 +91,6 @@ public class SpeakerManager implements Serializable{
      * @param userId the user id of this speaker
      */
     public void addEventToSpeaker (Integer EventId, String userId){
-        //assume the userid exists and is a speaker
         getSpeaker(userId).setAssignEvent(EventId);
     }
 
@@ -120,7 +119,6 @@ public class SpeakerManager implements Serializable{
      * @param otherUserId the user id which would be added
      */
     public void addContact (String userId, String otherUserId){
-        // assume both users exists (checked in controller) and userid is added to otherUserID's contacts in controller as well.
         getSpeaker(userId).addContact(otherUserId);
     }
 
@@ -130,7 +128,6 @@ public class SpeakerManager implements Serializable{
      * @param otherUserId the user id which would be removed
      */
     public void removeContact (String userId, String otherUserId){
-        //assume both users exists (checked in controller) and userid is removed from otherUserID's contacts in controller as well.
         getSpeaker(userId).removeContact(otherUserId);
     }
 

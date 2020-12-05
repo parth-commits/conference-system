@@ -88,26 +88,6 @@ public class ChatManager implements Serializable{
         return null;
     }
 
-
-    /**
-     * Finds all the contacts this person has a chat with and stores it in an arraylist.
-     * @param id1 the id of user who wants to perform this action
-     * @return ArraryList </Sting> a list containing all usernames of its contact
-     */
-    public ArrayList<String> getContactsWithChat(String id1){
-        ArrayList<String> listOfChatsPeople = new ArrayList<>();
-        for (Chat chat : chats) {
-            if (chat.getId1().equals(id1)) {
-                listOfChatsPeople.add(chat.getId2());
-            }
-            else if (chat.getId2().equals(id1)){
-                listOfChatsPeople.add(chat.getId1());
-            }
-        }
-        return listOfChatsPeople;
-    }
-
-
     /**
      * Deletes the chat between 2 users (given their user ids).
      * @param id1 the id of user1
@@ -143,7 +123,6 @@ public class ChatManager implements Serializable{
         }
         return null;
     }
-
 
     /**
      *

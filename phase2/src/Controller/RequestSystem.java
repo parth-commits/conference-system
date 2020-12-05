@@ -94,6 +94,11 @@ public class RequestSystem {
         }
     }
 
+    /**
+     * The attendee options for request. (givew requests, and see status of requests
+     * @param userid the userid of the attendee logged in
+     * @throws IOException if there is an io error
+     */
     public void attendeeOptions(String userid) throws IOException {
         boolean goback = false;
         while (!goback){
@@ -157,7 +162,7 @@ public class RequestSystem {
             Thread.sleep(1000);
         }
         catch (InterruptedException e) {
-            System.out.println("couldnt sleep!");
+            output.couldntSleep();
         }
     }
 }

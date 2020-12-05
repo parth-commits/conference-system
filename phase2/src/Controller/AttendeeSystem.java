@@ -6,8 +6,6 @@ import Presenter.TextPresenter;
 import UseCases.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * AttendeeSystem controller implements various actions that can be done for an attendee, including

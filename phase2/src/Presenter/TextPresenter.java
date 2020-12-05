@@ -623,6 +623,7 @@ public class TextPresenter {
      */
     public void createProvideEventTitle() {
         System.out.println("Please provide the event title.");
+        System.out.println("Press 0 to return to the previous menu.");
     }
 
     /**
@@ -758,6 +759,7 @@ public class TextPresenter {
     public void giveCapacityforEvent() {
         System.out.println("Max capacity is the maximum people that can attend this event.");
         System.out.println("Please provide the max capacity of the event:");
+        System.out.println("Press 0 to return to previous screen.");
     }
 
     /**
@@ -911,31 +913,6 @@ public class TextPresenter {
         System.out.println("\t4. SHUTDOWN");
     }
 
-    /**
-     * Prints "The empty events are now removed from the list of all events."
-     * "Please type 0 to go back to the previous menu."
-     */
-    public void RemoveEmptyEvent() {
-        System.out.println("The empty events are now removed from the list of all events.");
-        System.out.println("Please type 0 to go back to the previous menu.");
-    }
-
-    /**
-     * If the admin enters an invalid input that's not shown in the list of options,
-     * prints: Invalid input, please try again.
-     * Otherwise, prints: Please select the chat you want to delete by its number.
-     * and prints: Please type 0 to go back.
-     * @param invalid checks if the input is invalid
-     */
-    public void deleteChat(boolean invalid) {
-        if (invalid) {
-            System.out.println("Invalid input, please try again.");
-        } else {
-            System.out.println("Please enter the two user ids of owners of the chat that you want to delete (press enter after type in one user id then type in another)");
-        }
-        System.out.println("Please type 0 to go back to the previous menu.");
-    }
-
     public void thatEventHasBeenDeleted() {
         System.out.println("That event has been successfully deleted!");
     }
@@ -985,7 +962,6 @@ public class TextPresenter {
         }
         System.out.println("\nIf you want to return to the previous menu, please press 0.");
     }
-
 
     public void couldntSleep(){
         System.out.println("Couldn't sleep!");
