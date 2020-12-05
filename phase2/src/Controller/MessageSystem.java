@@ -122,7 +122,7 @@ public class MessageSystem {
 
                 if (in.equals("0")) {
                     validInput1 = true;
-                } else if (in.equals("1")) {
+                } else if (in.equals("1")) {                //mass message
                     // Select an event
                     ArrayList<ArrayList<String>> eventIDsandTitle = eventManager.getListofEventsBySpeaker(sender);
                     if (eventIDsandTitle.size() == 0) {
@@ -159,7 +159,7 @@ public class MessageSystem {
                         }
                     }
                     output.promptContextEvent(eventManager.getEvent(eventIDChoosen).getTitle());
-                    context = input.getKeyboardInput();
+                    context = input.getKeyboardInput();                                     //youve selected an event, now you write message.
 
                     ArrayList<String> attendeesOfEvent = eventManager.getEventAttendees(eventIDChoosen);
                     for (String id : attendeesOfEvent) {

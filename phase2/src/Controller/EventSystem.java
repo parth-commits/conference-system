@@ -305,7 +305,7 @@ public class EventSystem {
                             else if (organizerManager.userExist(userID)){
                                 organizerManager.addEventToOrganizer(listOfAllEventIDs.get(eventSelectedInt - 1), userID);         //add eventid to the attendees list of events.
                             }
-                            else {
+                            else {                                  //WE'VE ALREADY CHECKED THIS EARLIER, NO NEED TO REDO
                                 output.ActionFailed();
                                 return;
                             }
@@ -388,5 +388,179 @@ public class EventSystem {
             }
         }
     }
+
+    public void newJoinLeaveEvent(String userid){
+        boolean validInput = false;
+        while (!validInput){
+            output.joinOrLeave();                                                     //checks whether attendee wants to join or leave an event, or wants to return back to menu
+            String joinLeave = input.getKeyboardInput();
+            int joinLeaveInt;
+            try {
+                joinLeaveInt = Integer.parseInt(joinLeave);
+            }
+            catch (Exception e){
+                joinLeaveInt = -1;
+            }
+            if (joinLeaveInt == 0) {                                                  //if attendee wants to return to menu, we exit this loop, having done nothing.
+                validInput = true;
+            }
+            else if (joinLeaveInt==1){                                               //user wants to join event
+                int helperInt = helperJoinEvent(userid);
+                if (helperInt==1){
+                    validInput=true;
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch (Exception e){
+                        output.couldntSleep();
+                    }
+                }
+            }
+            else if (joinLeaveInt==2){                                               //user wants to leave event
+                int helperInt = helperLeaveEvent(userid);
+                if (helperInt==1){
+                    validInput=true;
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch (Exception e){
+                        output.couldntSleep();
+                    }
+                }
+            }
+            else{
+                output.invalidInput();
+            }
+        }
+    }
+
+    public ArrayList<Integer> helperJoinAvailableEventRetriever(String userid) {
+        ArrayList<Integer> listOfAllEventIDs = eventManager.getListOfEventIDs();                            //gets list of all events
+        ArrayList<Integer> listOfCurrentlyAttendingEventIds;
+        if (attendeeManager.userExist(userid)) {
+            listOfCurrentlyAttendingEventIds = attendeeManager.getSignedUpEvents(userid);    //gets list of all events this user is already attending
+        } else {                                                                            //userid has to be an organizer
+            listOfCurrentlyAttendingEventIds = organizerManager.getSignedUpEvents(userid);
+        }
+        listOfAllEventIDs.removeAll(listOfCurrentlyAttendingEventIds);                                      //now listOfAllEvents contains the events this organizer is NOT attending already
+        ArrayList<Integer> listOfEventsThatNeedToBeRemoved = new ArrayList<>();
+        for (Integer eventid : listOfAllEventIDs) {                                                            //goes through every event this organizer is not attending (list of events he can possible join)
+            Date newEventTime = eventManager.getTime(eventid);                                              //finds its time
+            for (Integer currenteventid : listOfCurrentlyAttendingEventIds) {
+                Date currentEventTime = eventManager.getTime(currenteventid);
+                if (newEventTime.equals(currentEventTime)) {                                                 //if this time is the same as any event the attendee is already attending,
+                    listOfEventsThatNeedToBeRemoved.add(eventid);                                                      //remove that event from the event from list of event he can possible join (listOfAllEventIDs)
+                }
+            }
+                //by now, listOfAllEventIDs contains the eventIDs of events that the attendee has not joined already and whose timings do not
+                //overlap/interfere with events he/she is already going to! Now from these events, we want to remove those that do not have
+                //room (sufficient capacity) to support one more attendee.
+            Event actualEvent = eventManager.getEvent(eventid);
+            int capacity = eventManager.eventCapacity(eventid);                                       //gets the capacity of the  event
+            int numExistingAttendees = actualEvent.getAttendees().size();                                   //gets the number of attendees that are attending this event
+            if (capacity - numExistingAttendees == 0) {                                                           //if the number of attendees attending this event has reached the max capacity of the room,
+                listOfEventsThatNeedToBeRemoved.add(eventid);                                                     //the organizer cannot join this room. Remove it from the list.
+            }
+        }
+        listOfAllEventIDs.removeAll(listOfEventsThatNeedToBeRemoved);
+        return listOfAllEventIDs;
+    }
+
+    public int helperJoinEvent(String userid){
+        while (true){
+            if (!(attendeeManager.userExist(userid)||organizerManager.userExist(userid))){
+                output.ActionFailed(); // if the user is not a organizer or a attendee, then he shouldnt be joining/leaving events
+                return 0;
+            }
+            ArrayList<Integer> listOfJoinableEventIDs = new ArrayList<Integer>();
+            listOfJoinableEventIDs = helperJoinAvailableEventRetriever(userid);
+            if (listOfJoinableEventIDs.isEmpty()) {
+                output.noEventAvailableToJoin();
+                return 0;
+            }
+            ArrayList<Event> listOfJoinableEvents = new ArrayList<>();                                          //list of all events this Attendee can join
+            for (Integer eventid : listOfJoinableEventIDs) {
+                listOfJoinableEvents.add(eventManager.getEvent(eventid));
+            }
+
+            output.joinDeleteEventSelector(listOfJoinableEvents);
+            String eventSelected = input.getKeyboardInput();
+            int eventSelectedInt;
+            try {
+                eventSelectedInt = Integer.parseInt(eventSelected);
+            }
+            catch (Exception e){
+                eventSelectedInt = -1;
+            }
+            if (eventSelectedInt == 0) {
+                return 0;
+            }
+            else if (1 <= eventSelectedInt && eventSelectedInt <= listOfJoinableEvents.size()) {
+                if (attendeeManager.userExist(userid)){
+                    attendeeManager.addEventToAttendee(listOfJoinableEventIDs.get(eventSelectedInt - 1), userid);         //add eventid to the attendees list of events.
+                }
+                else if (organizerManager.userExist(userid)){
+                    organizerManager.addEventToOrganizer(listOfJoinableEventIDs.get(eventSelectedInt - 1), userid);         //add eventid to the attendees list of events.
+                }
+                eventManager.addAttendee(listOfJoinableEventIDs.get(eventSelectedInt - 1), userid);                     //add attendee to events list of attendees for this event.
+                output.ActionDone();
+                return 1;
+            } else {
+                output.joinLeaveInvalidResponse();
+            }
+        }
+    }
+
+    public int helperLeaveEvent(String userID){
+        while(true){
+            ArrayList<Integer> listOfAttendingEventIds;
+            if (attendeeManager.userExist(userID)){
+                listOfAttendingEventIds = attendeeManager.getSignedUpEvents(userID);            //get the list of signed up eventids
+            }
+            else if (organizerManager.userExist(userID)){
+                listOfAttendingEventIds = organizerManager.getSignedUpEvents(userID);
+            }
+            else {
+                output.ActionFailed();
+                return 0;
+            }
+            ArrayList<Event> listofAttendingEvents = new ArrayList<>();
+            for (Integer eventid : listOfAttendingEventIds) {                                                      //get the list of events
+                listofAttendingEvents.add(eventManager.getEvent(eventid));
+            }
+            if (listofAttendingEvents.isEmpty()) {
+                output.noSignedUpEvents();
+                return 0;
+            } else {
+                output.joinDeleteEventSelector(listofAttendingEvents);                                              //select which event they want to leave
+                String eventSelected = input.getKeyboardInput();
+                int eventSelectedInt;
+                try {
+                    eventSelectedInt = Integer.parseInt(eventSelected);
+                }
+                catch (Exception e){
+                    eventSelectedInt = -1;
+                }
+
+                if (eventSelectedInt == 0) {
+                    return 0;
+                } else if (1 <= eventSelectedInt && eventSelectedInt <= listofAttendingEvents.size()) {
+                    int eventid = listOfAttendingEventIds.get(eventSelectedInt - 1);
+                    eventManager.removeAttendee(eventid, userID);
+                    if (attendeeManager.userExist(userID)){
+                        attendeeManager.removeEvent(eventid, userID);
+                    }
+                    else if (organizerManager.userExist(userID)){
+                        organizerManager.removeEvent(eventid, userID);
+                    }
+                    output.ActionDone();
+                    return 1;
+                } else {
+                    output.joinLeaveInvalidResponse();
+                }
+            }
+        }
+    }
+
 }
 

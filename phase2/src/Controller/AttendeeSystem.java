@@ -77,7 +77,7 @@ public class AttendeeSystem {
             }
             //2. Sign up for Events / leave an event
             else if (i.equals("2")) {
-                eventSystem.joinLeaveEvent(userID);
+                eventSystem.newJoinLeaveEvent(userID);
             }
             //3. Check Schedule for an Signed Up Event
             else if (i.equals("3")) {

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import Entities.Chat;
 import Entities.Event;
 import Entities.Message;
+import org.w3c.dom.ls.LSOutput;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -67,7 +68,9 @@ public class TextPresenter {
      */
     public void enterCreatingEventID() {
         System.out.println("Please enter an integer ID for the new event:");
+        System.out.println("Please enter 0 to back.");
     }
+
 
     //SpeakerSystem
 
