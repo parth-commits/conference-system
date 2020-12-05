@@ -7,3 +7,29 @@ This text file documents all design patterns that can be observed in this progra
    according to their needs.
 
 2)
+
+
+
+
+
+
+
+
+Design Implementations (Parth/Tanmay)
+	We didn't use the Iterator design pattern for the sake of simplicity and since for-each loops worked to accomplish
+	our purpose. We also needed to access the index of the items inside the items.
+
+	We've indirectly implemented an oberver. In the requests, when an attendee makes a requst, every organizer can see
+	the request. Every organizer can see updates made to the system (by other organizers). From our lecture slides
+	(week 7), it is explained that generally in practice, people don't subclass from Observable and rather create their
+	 own implementation. We wanted to keep our program as realist as possible.
+
+	Strategy Design Pattern: There are different ways to implement some of our algorithms. For example in sendMessage.
+	We didn't make a different class for the different variations of our algorithms since this would unncessarily create
+	a lot of classes which negatively impacts the space-time complexity of our program.
+
+
+	The mangers are dependency injected into the controllers so the controllers can modify and update them.
+
+	We have a factory - loginReigstration system creates different types of user (only put this if we need to add more
+	stuff).
