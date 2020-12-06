@@ -54,7 +54,11 @@ Optional Extensions (Approved by Prof)
     5) Throughout our program, the user can always decide to "go back" to the previous menu without completing the task
     at hand. This is handy in case they accidentally click a button or decide they want to change a previous input.
 
-    6) (Small Extension) Any organizer can change the name of any event.
+    6) Organizer can export a .txt file with all the events and their info, so they can eventually print it out and
+    have it on hand during the conference to keep a track of when is which event, and who's speaking, and who's
+    attending.
+
+    7) (Small Extension) Any organizer can change the name of any event.
 
 
 IF YOU FACE ANY UNEXPECTED ERRORS AND REQUIRE CLARIFICATION, PLEASE EMAIL US.
