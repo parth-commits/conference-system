@@ -96,7 +96,7 @@ public class OrganizerSystem {
                     scheduleASpeaker();
                     break;
                 case "3":   //3. Message a speaker
-                    messageSystem.sendMessage(userID);
+                    messageSystem.newSendMessage(userID);
                     break;
                 case "4":   //4. Create/Delete/Modify an Event
                     newCreateDeleteModify(userID);
@@ -105,7 +105,7 @@ public class OrganizerSystem {
                     createRoom();
                     break;
                 case "7":   //7. Add or remove a contact
-                    messageSystem.addRemoveContact(userID);
+                    messageSystem.newAddRemoveContact(userID);
                     break;
                 case "8":   //8. Join/Leave an Event
                     eventSystem.newJoinLeaveEvent(userID);

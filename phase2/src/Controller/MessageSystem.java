@@ -119,7 +119,6 @@ public class MessageSystem {
             while (!validInput1) {
                 output.replyOrAutomessage();
                 in = input.getKeyboardInput();
-
                 if (in.equals("0")) {
                     validInput1 = true;
                 } else if (in.equals("1")) {                //mass message
@@ -146,7 +145,6 @@ public class MessageSystem {
                             break;
                         }
                     }
-
                     while (!validInput) {
                         output.promptEvents(eventIDsandTitle, true);
                         getInput = input.getKeyboardInput();
@@ -179,6 +177,132 @@ public class MessageSystem {
             }
         }
         saveState();
+    }
+
+    public void newSendMessage(String sender) throws IOException {
+        int role = userType(sender);
+        if (role==1){                               //organizer
+            helperSendMessageOrganizer(sender);
+        }
+        else if (role==2){                          //attendee
+            singleUserMessageHelper(sender);
+        }
+        else if(role==3){                           //speaker
+            helperSendMessageSpeaker(sender);
+        }
+        saveState();
+    }
+
+    public void helperSendMessageOrganizer(String sender){
+        while(true){
+            output.sendMsgOptions(1);
+            String action = input.getKeyboardInput();
+            if (action.equals("0")){
+                return;
+            }
+            else if(action.matches("1|2|3")) {
+                boolean contextGoBack = false;
+                while (!contextGoBack) {
+                    output.promptContext();
+                    String context = input.getKeyboardInput();
+                    if (context.equals("0")) {
+                        contextGoBack = true;
+                    } else {
+                        ArrayList<String> ids;
+                        if (action.equals("1")) {
+                            ids = speakerManager.getUserIDs();
+                        } else if (action.equals("2")) {
+                            ids = organizerManager.getUserIDs();
+                        } else {
+                            ids = attendeeManager.getUserIDs();
+                        }
+                        for (String id : ids) {
+                            if (sender.equals(id)) {
+                                continue;
+                            }
+                            if (!(chatManager.chatExists(sender, id))) {
+                                chatManager.createChat(sender, id);
+                                addContact(sender, id);
+                                addContact(id, sender);
+                            }
+                            chatManager.addMessageToChat(sender, id, context);
+                        }
+                        output.messageSentToEveryone();
+                        return;
+                    }
+                }
+            }
+            else if(action.equals("4")){
+                    singleUserMessageHelper(sender);
+                    return;
+                }
+            else{
+                output.msgOptionInvalid();
+            }
+        }
+    }
+
+    public void helperSendMessageSpeaker(String sender){
+        String in;
+        boolean validInput1 = false;
+        while (!validInput1) {
+            output.replyOrAutomessage();
+            in = input.getKeyboardInput();
+            if (in.equals("0")) {
+                validInput1 = true;
+            } else if (in.equals("1")) {                //mass message
+                // Select an event
+                ArrayList<ArrayList<String>> eventIDsandTitle = eventManager.getListofEventsBySpeaker(sender);
+                if (eventIDsandTitle.size() == 0) {
+                    output.youHaveNoEvents();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        output.couldntSleep();
+                    }
+                    return;
+                }
+                output.promptEvents(eventIDsandTitle, false);
+                String getInput = input.getKeyboardInput();
+                boolean validInput = false;
+                int eventIDChoosen = -1;// will guarantee change, -1 is a place holder
+                for (ArrayList<String> stringArrayList : eventIDsandTitle) {
+                    if (stringArrayList.get(0).equals(getInput)) {
+                        validInput = true;
+                        eventIDChoosen = Integer.parseInt(getInput);
+                        break;
+                    }
+                }
+                while (!validInput) {
+                    output.promptEvents(eventIDsandTitle, true);
+                    getInput = input.getKeyboardInput();
+                    for (ArrayList<String> strings : eventIDsandTitle) {
+                        if (strings.get(0).equals(getInput)) {
+                            validInput = true;
+                            eventIDChoosen = Integer.parseInt(getInput);
+                            break;
+                        }
+                    }
+                }
+                output.promptContextEvent(eventManager.getEvent(eventIDChoosen).getTitle());
+                String context = input.getKeyboardInput();                                     //youve selected an event, now you write message.
+
+                ArrayList<String> attendeesOfEvent = eventManager.getEventAttendees(eventIDChoosen);
+                for (String id : attendeesOfEvent) {
+                    if (!(chatManager.chatExists(sender, id))) {
+                        chatManager.createChat(sender, id);
+                        addContact(sender, id);
+                        addContact(id, sender);
+                    }
+                    chatManager.addMessageToChat(sender, id, context);
+                }
+                output.messageSentToEveryone();
+            } else if (in.equals("2")) {
+                singleUserMessageHelper(sender);
+            } else {
+                output.invalidInputSelection();
+            }
+        }
     }
 
     private void singleUserMessageHelper(String sender) {
@@ -426,6 +550,130 @@ public class MessageSystem {
                 else {
                     output.invalidInputSelection();
                 }
+            }
+        }
+    }
+    
+    public void newAddRemoveContact(String userid) throws IOException {
+        boolean main = false;
+        while(!main){
+            output.addRemoveContact();
+            String option = input.getKeyboardInput();
+            if (option.equals("0")){
+                return;
+            }
+            else if (option.equals("1")){
+                int helper = helperAddContact(userid);
+                if (helper==1){
+                    return;
+                }
+            }
+            else if (option.equals("2")){
+                int helper = helperRemoveContact(userid);
+                if (helper==1){
+                    return;
+                }
+            }
+            else{
+                output.invalidInputSelection();
+            }
+        }
+        saveState();
+    }
+    
+    private int helperAddContact(String userid){
+        while (true){
+            ArrayList<String> listOfContactsID = findAllUsersThatArentContacts(userid);
+            if (listOfContactsID.isEmpty()){
+                output.allUsersAreYourContact();
+                return 0;
+            }
+            output.enterContactUserid(false);
+            output.showContacts(listOfContactsID); // new
+            int userIndex;
+            try {
+                userIndex = Integer.parseInt(input.getKeyboardInput());
+            }
+            catch (Exception e){
+                userIndex = -1;
+            }
+            if (userIndex == 0){
+                return 0;
+            }
+            else if (1<=userIndex && userIndex <= listOfContactsID.size()){
+                String user = listOfContactsID.get(userIndex-1);
+                if (organizerManager.userExist(userid) && !organizerManager.contactExists(userid, user)) {
+                    organizerManager.addContact(userid, user);
+                    addContact(user, userid);
+                    chatManager.createChat(user, userid);
+                    output.ActionDone();
+                    return 1;
+                }
+                else if (attendeeManager.userExist(userid) && !attendeeManager.contactExists(userid, user)){
+                    attendeeManager.addContact(userid, user);
+                    addContact(user, userid);
+                    chatManager.createChat(user, userid);
+                    output.ActionDone();
+                    return 1;
+                }
+                else {
+                    output.userAlreadyInYourContacts();
+                }
+            }
+            else {
+                output.enterContactUserid(true);
+            }
+            
+        }
+    }
+    
+    private int helperRemoveContact(String userid){
+        while (true){
+            ArrayList<String> contactList;
+            if (organizerManager.userExist(userid)){
+                contactList = organizerManager.contactList(userid);
+            }
+            else {
+                contactList = attendeeManager.contactList(userid);
+            }
+            if (contactList.isEmpty()){
+                output.youHaveNoContactstoRemove();
+                return 0;
+            }
+            output.enterContactUseridtoRemove();
+            output.showContacts(contactList);
+            int userIndex;
+            try {
+                userIndex = Integer.parseInt(input.getKeyboardInput());
+            }
+            catch (Exception e){
+                userIndex = -1;
+            }
+            if (userIndex == 0){
+                return 0;
+            }
+            else if (1<=userIndex && userIndex <= contactList.size()){
+                String user = contactList.get(userIndex-1);
+                if (organizerManager.userExist(userid) && organizerManager.contactExists(userid, user)) {
+                    organizerManager.removeContact(userid, user);
+
+                }
+                else if (attendeeManager.userExist(userid) && attendeeManager.contactExists(userid, user)){
+                    attendeeManager.removeContact(userid, user);
+                }
+                if (organizerManager.userExist(user)) {
+                    organizerManager.removeContact(user, userid);
+                } else if (attendeeManager.userExist(user)) {
+                    attendeeManager.removeContact(user, userid);
+                } else {
+                    speakerManager.removeContact(user, userid);
+                }
+                chatManager.deleteChat(user, userid);
+                output.ActionDone();
+                return 1;
+            }
+            else {
+                output.invalidInput();
             }
         }
     }
