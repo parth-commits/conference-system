@@ -83,11 +83,11 @@ public class AttendeeSystem {
             }
             //4. Add or Remove Attendee in Contact
             else if (i.equals("4")) {
-                messageSystem.addRemoveContact(userID);
+                messageSystem.newAddRemoveContact(userID);
             }
             //5. Message Other Users
             else if (i.equals("5")) {
-                messageSystem.sendMessage(userID);
+                messageSystem.newSendMessage(userID);
             }
             //6. requests
             else if (i.equals("6")) {

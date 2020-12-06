@@ -137,7 +137,11 @@ public class ChatManager implements Serializable{
         }
         return chatString;
     }
-
+    /**
+     * Returns the chat object of a given index
+     * @param i the index of the chat
+     * @return The chat object of the given index
+     */
     public Chat getChatAtIndex(int i) {
         return chats.get(i);
     }
