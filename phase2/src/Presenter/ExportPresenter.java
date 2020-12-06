@@ -18,11 +18,34 @@ public class ExportPresenter {
     public void exportOption(){
         System.out.println("Do you want to export? (y/n)");
     }
+
+
     /**
+     * Prints: Invalid input, please try again!
+     */
+    public void invalidInput() {
+        System.out.println("Invalid input, please try again!");
+    }
+
+    /**
+     * Prints: Exported File!
+     */
+    public void exportedFile(){
+        System.out.println("Exported File!");
+    }
+
+    /**
+     * Prints: Not exporting File!
+     */
+    public void notexportingFile(){
+        System.out.println("Not Exporting File!");
+    }
+
+    /*
      * The Export Presenter Class implements methods to export string as a text file.
      * @param info info of the conference
      */
-    public void exportToFile(String info) throws IOException {
+    /*public void exportToFile(String info) throws IOException {
         try {
             OutputStream output = new FileOutputStream("phase2" + File.separator + "eventinfo.txt");
             output.write(info.getBytes(StandardCharsets.UTF_8));
@@ -31,5 +54,5 @@ public class ExportPresenter {
             System.out.println("Error export file.");
             throw new IOException();
         }
-    }
+    }*/
 }

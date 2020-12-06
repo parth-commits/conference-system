@@ -1,0 +1,27 @@
+Full Schedule:
+Room Room6:
+	31-12-2020 12:00:00
+		Event:Event321
+			Speaker: 
+				Speaker
+			Attendees: 
+				Mike Tyson
+			Organizer: 
+				Tanmay
+
+	25-12-2020 09:00:00
+		Event:Christmas
+			Speaker: 
+			Attendees: 
+				Mike Tyson
+			Organizer: 
+				Tanmay
+
+Room Room567:
+	25-12-2020 09:00:00
+		Event:Another Christmas Event
+			Speaker: 
+			Attendees: 
+			Organizer: 
+				Tanmay
+
