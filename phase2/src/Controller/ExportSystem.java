@@ -1,12 +1,9 @@
 package Controller;
 
 import Gateway.KeyboardInput;
-import Presenter.TextPresenter;
 import Presenter.ExportPresenter;
-import UseCases.ChatManager;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,11 +33,10 @@ public class ExportSystem {
      * @param speakerManager The speaker manager implements by SpeakerManager use case
      * @param organizerManager The organizer manager implements by OrganizerManager use case
      * @param eventManager The event manager implements by EventManager use case
-     * @param chatManager      The chat manager implements by ChatManager use case
      * @param attendeeManager The attendee manager implements by AttendeeManager use case
      * @param roomManager The room manager implements by RoomManager use case
      */
-    public ExportSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager, RoomManager roomManager) {
+    public ExportSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, EventManager eventManager, AttendeeManager attendeeManager, RoomManager roomManager) {
         this.speakerManager = speakerManager;
         this.organizerManager = organizerManager;
         this.eventManager = eventManager;
@@ -49,6 +45,20 @@ public class ExportSystem {
         this.roomManager = roomManager;
         this.exportOutput = new ExportPresenter();
     }
+
+    public boolean run() throws IOException {
+        exportOutput.exportOption();
+        String option = input.getKeyboardInput();
+        if (option.equals("y")){
+            exportEvent();
+            System.out.println("Exported File");
+        }
+        else{
+            System.out.println("Not Exporting");
+        }
+        return true;
+    }
+
 
     /**
      * Gets the info of the whole conference
