@@ -2,6 +2,7 @@ package Controller;
 
 import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
+import Presenter.ExportPresenter;
 import UseCases.ChatManager;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -20,14 +21,13 @@ import java.util.ArrayList;
  * @since December 1st, 2020
  */
 public class ExportSystem {
-    private TextPresenter output;
     private KeyboardInput input;
-    private ChatManager chatManager;
     private SpeakerManager speakerManager;
     private OrganizerManager organizerManager;
     private EventManager eventManager;
     private AttendeeManager attendeeManager;
     private RoomManager roomManager;
+    private ExportPresenter exportOutput;
 
     /**
      * Constructor
@@ -42,11 +42,10 @@ public class ExportSystem {
         this.speakerManager = speakerManager;
         this.organizerManager = organizerManager;
         this.eventManager = eventManager;
-        this.chatManager = chatManager;
         this.attendeeManager = attendeeManager;
-        this.output = new TextPresenter();
         this.input = new KeyboardInput();
         this.roomManager = roomManager;
+        this.exportOutput = new ExportPresenter();
     }
 
     /**
@@ -73,7 +72,7 @@ public class ExportSystem {
         StringBuilder roomInfo = new StringBuilder("Room "+roomLocation+":\n");
         for (Event event : eventList){
             if (event.getLocation().equals(roomLocation)){
-                roomInfo.append(getEventInfo(event)).append("\n");
+                roomInfo.append(getEventInfo(event.getID())).append("\n");
             }
         }
         return roomInfo.toString();
@@ -119,6 +118,6 @@ public class ExportSystem {
      */
     public void exportEvent(){
         String info = getInfo().toString();
-        exportEventsToFile(info);
+        exportOutput.exportToFile(info);
     }
 }
