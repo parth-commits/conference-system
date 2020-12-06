@@ -13,6 +13,12 @@ import Entities.*;
 
 import java.util.ArrayList;
 
+/**
+ * The Export System Class implements methods to allow users to export conference information as a text file.
+ * @author Group_0112
+ * @version 1.0
+ * @since December 1st, 2020
+ */
 public class ExportSystem {
     private TextPresenter output;
     private KeyboardInput input;
@@ -23,6 +29,15 @@ public class ExportSystem {
     private AttendeeManager attendeeManager;
     private RoomManager roomManager;
 
+    /**
+     * Constructor
+     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * @param organizerManager The organizer manager implements by OrganizerManager use case
+     * @param eventManager The event manager implements by EventManager use case
+     * @param chatManager      The chat manager implements by ChatManager use case
+     * @param attendeeManager The attendee manager implements by AttendeeManager use case
+     * @param roomManager The room manager implements by RoomManager use case
+     */
     public ExportSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager, RoomManager roomManager) {
         this.speakerManager = speakerManager;
         this.organizerManager = organizerManager;
@@ -34,6 +49,10 @@ public class ExportSystem {
         this.roomManager = roomManager;
     }
 
+    /**
+     * Gets the info of the whole conference
+     * @return StringBuilder with info of the whole conference
+     */
     public StringBuilder getInfo(){
         StringBuilder info = new StringBuilder("Full Schedule:\n");
         ArrayList<String> roomLocList = roomManager.getAllRoomLocs();
@@ -44,6 +63,10 @@ public class ExportSystem {
         return info;
     }
 
+    /**
+     * Gets the info of a single room
+     * @return String info of a single room
+     */
     public String getRoomInfo(String roomLocation){
         ArrayList<Event> eventList = eventManager.getListOfEvents();
 
@@ -57,8 +80,14 @@ public class ExportSystem {
     }
 
 // CONCERN: Can I pass event in like this? or should I access it as eventID
-    public String getEventInfo(Event event){
+// Change to event id
+    /**
+     * Gets the info of an event
+     * @return String info of an event
+     */
+    public String getEventInfo(int eventId){
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        Event event = eventManager.getEvent(eventId);
         String strDate = dateFormat.format(event.getTime());
 
         StringBuilder eventInfo = new StringBuilder(strDate + "\n");
@@ -85,4 +114,11 @@ public class ExportSystem {
         return eventInfo.toString();
     }
 
+    /**
+     * Make the presenter export info of the conference
+     */
+    public void exportEvent(){
+        String info = getInfo().toString();
+        exportEventsToFile(info);
+    }
 }
