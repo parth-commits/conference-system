@@ -19,8 +19,13 @@ public class ExportPresenter {
      * @param info info of the conference
      */
     public void exportToFile(String info) throws IOException {
-        OutputStream output = new FileOutputStream("phase2" + File.separator + "eventinfo.txt");
-        output.write(info.getBytes(StandardCharsets.UTF_8));
-        output.close();
+        try {
+            OutputStream output = new FileOutputStream("phase2" + File.separator + "eventinfo.txt");
+            output.write(info.getBytes(StandardCharsets.UTF_8));
+            output.close();
+        }catch(Exception IOException){
+            System.out.println("Error export file.");
+            throw new IOException();
+        }
     }
 }

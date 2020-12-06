@@ -4,6 +4,8 @@ import Gateway.KeyboardInput;
 import Presenter.TextPresenter;
 import Presenter.ExportPresenter;
 import UseCases.ChatManager;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -116,7 +118,7 @@ public class ExportSystem {
     /**
      * Make the presenter export info of the conference
      */
-    public void exportEvent(){
+    public void exportEvent() throws IOException {
         String info = getInfo().toString();
         exportOutput.exportToFile(info);
     }
