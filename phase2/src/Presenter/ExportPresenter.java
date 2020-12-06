@@ -14,6 +14,10 @@ import java.nio.charset.StandardCharsets;
  * @since December 1st, 2020
  */
 public class ExportPresenter {
+
+    public void exportOption(){
+        System.out.println("Do you want to export? (y/n)");
+    }
     /**
      * The Export Presenter Class implements methods to export string as a text file.
      * @param info info of the conference
