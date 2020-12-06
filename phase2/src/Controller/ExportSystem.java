@@ -101,26 +101,26 @@ public class ExportSystem {
         Event event = eventManager.getEvent(eventId);
         String strDate = dateFormat.format(event.getTime());
 
-        StringBuilder eventInfo = new StringBuilder(strDate + "\n");
+        StringBuilder eventInfo = new StringBuilder("\t" + strDate + "\n");
 
-        eventInfo.append("\tEvent:").append(event.getTitle()).append("\n");
+        eventInfo.append("\t\tEvent:").append(event.getTitle()).append("\n");
         // get speaker info string
         ArrayList<String> speakers = event.getSpeakerID();
-        eventInfo.append("\t\tSpeaker: " + "\n");
+        eventInfo.append("\t\t\tSpeaker: " + "\n");
 
         for (String speaker : speakers){
-            eventInfo.append("\t\t\t").append(speakerManager.getSpeaker(speaker).getName()).append("\n");
+            eventInfo.append("\t\t\t\t").append(speakerManager.getSpeaker(speaker).getName()).append("\n");
         }
         // get attendee info string
-        eventInfo.append("\t\tAttendees: " + "\n");
+        eventInfo.append("\t\t\tAttendees: " + "\n");
         ArrayList<String> attendees = event.getAttendees();
         for (String attendee : attendees){
-            eventInfo.append("\t\t\t").append(attendeeManager.getAttendee(attendee).getName()).append("\n");
+            eventInfo.append("\t\t\t\t").append(attendeeManager.getAttendee(attendee).getName()).append("\n");
         }
         // get organizer info string
         String organizer = organizerManager.getOrganizer(event.getOrganizerID()).getName();
-        eventInfo.append("\t\tOrganizer: " + "\n");
-        eventInfo.append("\t\t\t").append(organizer).append("\n");
+        eventInfo.append("\t\t\tOrganizer: " + "\n");
+        eventInfo.append("\t\t\t\t").append(organizer).append("\n");
 
         return eventInfo.toString();
     }
