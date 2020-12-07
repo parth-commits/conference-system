@@ -1,6 +1,7 @@
 package Controller;
 
 import Gateway.KeyboardInput;
+import Gateway.Serialization;
 import Presenter.ExportPresenter;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ExportSystem {
     private AttendeeManager attendeeManager;
     private RoomManager roomManager;
     private ExportPresenter exportOutput;
+    private Serialization saveFile;
 
     /**
      * Constructor
@@ -44,19 +46,26 @@ public class ExportSystem {
         this.input = new KeyboardInput();
         this.roomManager = roomManager;
         this.exportOutput = new ExportPresenter();
+        this.saveFile = new Serialization();
     }
 
     public boolean run() throws IOException {
-        exportOutput.exportOption();
-        String option = input.getKeyboardInput();
-        if (option.equals("y")){
-            exportEvent();
-            System.out.println("Exported File");
+        while (true){
+            exportOutput.exportOption();
+            String option = input.getKeyboardInput();
+            if (option.equals("y")){
+                exportEvent();
+                exportOutput.exportedFile();
+                return true;
+            }
+            else if (option.equals("n")){
+                exportOutput.notexportingFile();
+                return true;
+            }
+            else {
+                exportOutput.invalidInput();
+            }
         }
-        else{
-            System.out.println("Not Exporting");
-        }
-        return true;
     }
 
 
@@ -90,8 +99,6 @@ public class ExportSystem {
         return roomInfo.toString();
     }
 
-// CONCERN: Can I pass event in like this? or should I access it as eventID
-// Change to event id
     /**
      * Gets the info of an event
      * @return String info of an event
@@ -130,6 +137,6 @@ public class ExportSystem {
      */
     public void exportEvent() throws IOException {
         String info = getInfo().toString();
-        exportOutput.exportToFile(info);
+        saveFile.exportToFile(info);
     }
 }

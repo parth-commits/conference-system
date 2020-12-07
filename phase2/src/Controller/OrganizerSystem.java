@@ -37,11 +37,12 @@ public class OrganizerSystem {
     private MessageSystem messageSystem;
     private EventSystem eventSystem;
     private RequestSystem requestSystem;
+    private ExportSystem exportSystem;
 
 
     /**
      * Constructor
-     *  @param speakerManager   The speaker manager implements by SpeakerManager use case
+     * @param speakerManager   The speaker manager implements by SpeakerManager use case
      * @param roomManager      The room manager implements by RoomManager use case
      * @param organizerManager The organizer manager implements by OrganizerManager use case
      * @param eventManager     The event manager implements by EventManager use case
@@ -66,6 +67,7 @@ public class OrganizerSystem {
         this.messageSystem = messageSystem;
         this.eventSystem = eventSystem;
         this.requestSystem = requestSystem;
+        this.exportSystem = new ExportSystem(speakerManager, organizerManager, eventManager, attendeeManager, roomManager);
     }
 
     /**
@@ -84,41 +86,43 @@ public class OrganizerSystem {
             String o;
             output.organizationSystemStartOptions();
             o = input.getKeyboardInput();
-
             switch (o) {
-                case "5":   //5. manage requests
-                    requestSystem.organizerOptions();
-                    break;
-                case "1":   //1. Create a speaker
+                case "1":   //1. Create accounts
                     createAccounts(userID);
                     break;
                 case "2":   //2. Schedule a speaker
                     scheduleASpeaker();
                     break;
-                case "3":   //3. Message a speaker
+                case "3":   //3. Message
                     messageSystem.newSendMessage(userID);
                     break;
                 case "4":   //4. Create/Delete/Modify an Event
                     newCreateDeleteModify(userID);
                     break;
-                case "6":   //6. Create a room
+                case "5":   //5. manage requests
+                    requestSystem.organizerOptions();
+                    break;
+                case "6":   //6. Export file
+                    exportSystem.run();
+                    break;
+                case "7":   //7. Create a room
                     createRoom();
                     break;
-                case "7":   //7. Add or remove a contact
+                case "8":   //8. Add or remove a contact
                     messageSystem.newAddRemoveContact(userID);
                     break;
-                case "8":   //8. Join/Leave an Event
+                case "9":   //9. Join/Leave an Event
                     eventSystem.newJoinLeaveEvent(userID);
                     break;
-                case "9":   //9. Check all events
+                case "10":   //10. Check all events
                     eventSystem.checkAllEvents();
                     break;
-                case "10":   //10. Check signed up events
+                case "11":   //11. Check signed up events
                     eventSystem.checkSignedUpEvent(userID);
                     break;
-                case "11":  //11. LOGOUT
+                case "12":  //12. LOGOUT
                     return false;
-                case "12":  //12. SHUTDOWN
+                case "13":  //13. SHUTDOWN
                     return true;
                 default:
                     output.invalidInput();

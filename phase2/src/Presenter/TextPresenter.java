@@ -2,17 +2,11 @@ package Presenter;
 
 import Entities.*;
 
-import java.net.Socket;
-import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import Entities.Chat;
 import Entities.Event;
 import Entities.Message;
-import org.w3c.dom.ls.LSOutput;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.TimeZone;
 
 /**
@@ -375,6 +369,7 @@ public class TextPresenter {
         else if (role == 3) {
             System.out.println("1. Select an event to send to all attendees 2. respond to an attendee ");
         }
+        System.out.println("Please enter 0 to return to previous screen.");
     }
 
     /**
@@ -407,14 +402,16 @@ public class TextPresenter {
      * 2. Schedule a Speaker
      * 3. Message
      * 4. Create/Delete event
-     * 5. Create Rooms
+     * 5. Manage Attendee Requests
+     * 6. Export a file with all Event Info
+     * 7. Create Rooms
      * Regular Attendee Options:
-     * 6. Add/Remove contact
-     * 7. Join/Leave event
-     * 8. See all Events
-     * 9. See Scheduled Events
-     * 10. LOGOUT
-     * 11. SHUTDOWN
+     * 8. Add/Remove contact
+     * 9. Join/Leave event
+     * 10. See all Events
+     * 11. See Scheduled Events
+     * 12. LOGOUT
+     * 13. SHUTDOWN
      */
     public void organizationSystemStartOptions() {
         System.out.println("What would you like to do:\n");
@@ -424,14 +421,15 @@ public class TextPresenter {
         System.out.println("\t3. Message");
         System.out.println("\t4. Create/Delete/Modify event");
         System.out.println("\t5. Manage Attendee Requests");
-        System.out.println("\t6. Create Rooms\n");
+        System.out.println("\t6. Export a file with all Events info");
+        System.out.println("\t7. Create Rooms\n");
         System.out.println("Regular Attendee Options:");
-        System.out.println("\t7. Add/Remove contact");
-        System.out.println("\t8. Join/Leave event");
-        System.out.println("\t9. See all Events");
-        System.out.println("\t10. See Scheduled Events");
-        System.out.println("\t11. LOGOUT");
-        System.out.println("\t12. SHUTDOWN");
+        System.out.println("\t8. Add/Remove contact");
+        System.out.println("\t9. Join/Leave event");
+        System.out.println("\t10. See all Events");
+        System.out.println("\t11. See Scheduled Events");
+        System.out.println("\t12. LOGOUT");
+        System.out.println("\t13. SHUTDOWN");
     }
 
     /**

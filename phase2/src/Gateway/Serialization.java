@@ -3,6 +3,7 @@ package Gateway;
 import UseCases.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Serialization {
 
@@ -139,6 +140,21 @@ public class Serialization {
             else {
                 return new SpeakerManager();
             }
+        }
+    }
+
+    /**
+     * The Export string as a text file.
+     * @param info info of the conference
+     */
+    public void exportToFile(String info) throws IOException {
+        try {
+            OutputStream output = new FileOutputStream(directory + File.separator + "eventinfo.txt");
+            output.write(info.getBytes(StandardCharsets.UTF_8));
+            output.close();
+        }catch(Exception IOException){
+            System.out.println("Error export file.");
+            throw new IOException();
         }
     }
 }
