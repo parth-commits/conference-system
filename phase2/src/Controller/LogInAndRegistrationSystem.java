@@ -142,23 +142,28 @@ public class LogInAndRegistrationSystem {
      * @return object Returns the String user_id if verified (LogIn successfully), false otherwise
      */
     public String loginUser() {
-        output.loginEnterID(true);
-        String inputID = "";
-        inputID = input.getKeyboardInput();
-        output.loginPassword(true);
-        String inputPassword = "";
-        inputPassword = input.getKeyboardInput();
-        if (attendeeManager.verifyLogIn(inputID, inputPassword)) {
-            return inputID;
-        } else if (organizerManager.verifyLogIn(inputID, inputPassword)) {
-            return inputID;
-        } else if (speakerManager.verifyLogIn(inputID, inputPassword)) {
-            return inputID;
-        }else if (adminManager.verifyLogIn(inputID, inputPassword)) {
-            return inputID;
-        } else {
-            output.loginEnterID(false);
-            return "false";
+        while (true){
+            output.loginEnterID(true);
+            String inputID = input.getKeyboardInput();
+            if (inputID.equals("0")){
+                return "false";
+            }
+            output.loginPassword(true);
+            String inputPassword = input.getKeyboardInput();
+            if (inputPassword.equals("0")){
+                continue;
+            }
+            if (attendeeManager.verifyLogIn(inputID, inputPassword)) {
+                return inputID;
+            } else if (organizerManager.verifyLogIn(inputID, inputPassword)) {
+                return inputID;
+            } else if (speakerManager.verifyLogIn(inputID, inputPassword)) {
+                return inputID;
+            }else if (adminManager.verifyLogIn(inputID, inputPassword)) {
+                return inputID;
+            } else{
+                output.loginEnterID(false);
+            }
         }
     }
 }

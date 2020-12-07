@@ -10,11 +10,13 @@ import UseCases.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/** MessageSystem controller implements various actions that can be done for the users, including
- *  sent message, get chat history, view contact list, add contact.
- *  @author Group_0112
- *  @version 2.0
- *  @since December 1st, 2020
+/**
+ * MessageSystem controller implements various actions that can be done for the users, including
+ * sent message, get chat history, view contact list, add contact.
+ *
+ * @author Group_0112
+ * @version 2.0
+ * @since December 1st, 2020
  */
 
 public class MessageSystem {
@@ -27,12 +29,13 @@ public class MessageSystem {
     private AttendeeManager attendeeManager;
 
     /**
-     *Constructor
-     * @param speakerManager The speaker manager implements by SpeakerManager use case
+     * Constructor
+     *
+     * @param speakerManager   The speaker manager implements by SpeakerManager use case
      * @param organizerManager The organizer manager implements by OrganizerManager use case
-     * @param eventManager The event manager implements by EventManager use case
-     * @param chatManager The chat manager implements by ChatManager use case
-     * @param attendeeManager The attendee manager implements by AttendeeManager use case
+     * @param eventManager     The event manager implements by EventManager use case
+     * @param chatManager      The chat manager implements by ChatManager use case
+     * @param attendeeManager  The attendee manager implements by AttendeeManager use case
      */
     public MessageSystem(SpeakerManager speakerManager, OrganizerManager organizerManager, EventManager eventManager, ChatManager chatManager, AttendeeManager attendeeManager) {
         this.speakerManager = speakerManager;
@@ -46,6 +49,7 @@ public class MessageSystem {
 
     /**
      * Gets the chat between two users (user1 and user2)
+     *
      * @param id1 The user_id of user1
      * @param id2 The user_id of user2
      * @return Chat The chat history between user1 and user2
@@ -56,6 +60,7 @@ public class MessageSystem {
 
     /**
      * Sends message to other users, the options are different for different kinds of user.
+     *
      * @param sender The user_id of the user who wants to send the message
      * @throws IOException Throw IOException to avoid errors that might occur
      */
@@ -181,26 +186,23 @@ public class MessageSystem {
 
     public void newSendMessage(String sender) throws IOException {
         int role = userType(sender);
-        if (role==1){                               //organizer
+        if (role == 1) {                               //organizer
             helperSendMessageOrganizer(sender);
-        }
-        else if (role==2){                          //attendee
+        } else if (role == 2) {                          //attendee
             singleUserMessageHelper(sender);
-        }
-        else if(role==3){                           //speaker
+        } else if (role == 3) {                           //speaker
             helperSendMessageSpeaker(sender);
         }
         saveState();
     }
 
-    public void helperSendMessageOrganizer(String sender){
-        while(true){
+    public void helperSendMessageOrganizer(String sender) {
+        while (true) {
             output.sendMsgOptions(1);
             String action = input.getKeyboardInput();
-            if (action.equals("0")){
+            if (action.equals("0")) {
                 return;
-            }
-            else if(action.matches("1|2|3")) {
+            } else if (action.matches("1|2|3")) {
                 boolean contextGoBack = false;
                 while (!contextGoBack) {
                     output.promptContext();
@@ -231,18 +233,16 @@ public class MessageSystem {
                         return;
                     }
                 }
-            }
-            else if(action.equals("4")){
-                    singleUserMessageHelper(sender);
-                    return;
-                }
-            else{
+            } else if (action.equals("4")) {
+                singleUserMessageHelper(sender);
+                return;
+            } else {
                 output.msgOptionInvalid();
             }
         }
     }
 
-    public void helperSendMessageSpeaker(String sender){
+    public void helperSendMessageSpeaker(String sender) {
         String in;
         boolean validInput1 = false;
         while (!validInput1) {
@@ -264,6 +264,9 @@ public class MessageSystem {
                 }
                 output.promptEvents(eventIDsandTitle, false);
                 String getInput = input.getKeyboardInput();
+                if (getInput.equals("0")){
+                    return;
+                }
                 boolean validInput = false;
                 int eventIDChoosen = -1;// will guarantee change, -1 is a place holder
                 for (ArrayList<String> stringArrayList : eventIDsandTitle) {
@@ -276,6 +279,9 @@ public class MessageSystem {
                 while (!validInput) {
                     output.promptEvents(eventIDsandTitle, true);
                     getInput = input.getKeyboardInput();
+                    if (getInput.equals("0")){
+                        return;
+                    }
                     for (ArrayList<String> strings : eventIDsandTitle) {
                         if (strings.get(0).equals(getInput)) {
                             validInput = true;
@@ -355,7 +361,8 @@ public class MessageSystem {
 
 
     /**
-     *Saves states of the entire system.
+     * Saves states of the entire system.
+     *
      * @throws IOException Throw IOException to avoid errors that might occur
      */
     private void saveState() throws IOException {
@@ -370,6 +377,7 @@ public class MessageSystem {
 
     /**
      * Check the type of user, such as 1.organizer 2.attendee, or 3.speaker. Return -1 if the user cannot be defined.
+     *
      * @param id The user_id of the user we are checking
      * @return int Integer that refer to different type of user
      */
@@ -388,8 +396,9 @@ public class MessageSystem {
 
     /**
      * Adds the user into the contact list
+     *
      * @param current The type of user who is the own of this contact list
-     * @param id The user_id of the user we want to add
+     * @param id      The user_id of the user we want to add
      */
     public void addContact(String current, String id) {
         int current_role = userType(current);
@@ -441,13 +450,12 @@ public class MessageSystem {
                 if (option.equals("0")) {
                     validAddRemove = true;
                     goBack = true;
-                }
-                else if (option.equals("1")) {
+                } else if (option.equals("1")) {
                     boolean validUserID = false;
                     while (!validUserID) {
 
                         ArrayList<String> listOfContactsID = findAllUsersThatArentContacts(userID);
-                        if (listOfContactsID.isEmpty()){
+                        if (listOfContactsID.isEmpty()) {
                             output.allUsersAreYourContact();
                             validUserID = true;
                             continue;
@@ -457,15 +465,13 @@ public class MessageSystem {
                         int userIndex;
                         try {
                             userIndex = Integer.parseInt(input.getKeyboardInput());
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             userIndex = -1;
                         }
-                        if (userIndex == 0){
+                        if (userIndex == 0) {
                             validUserID = true;
-                        }
-                        else if (1<=userIndex && userIndex <= listOfContactsID.size()){
-                            String user = listOfContactsID.get(userIndex-1);
+                        } else if (1 <= userIndex && userIndex <= listOfContactsID.size()) {
+                            String user = listOfContactsID.get(userIndex - 1);
                             if (organizerManager.userExist(userID) && !organizerManager.contactExists(userID, user)) {
                                 organizerManager.addContact(userID, user);
                                 addContact(user, userID);
@@ -474,8 +480,7 @@ public class MessageSystem {
                                 validUserID = true;
                                 validAddRemove = true;
                                 goBack = true;
-                            }
-                            else if (attendeeManager.userExist(userID) && !attendeeManager.contactExists(userID, user)){
+                            } else if (attendeeManager.userExist(userID) && !attendeeManager.contactExists(userID, user)) {
                                 attendeeManager.addContact(userID, user);
                                 addContact(user, userID);
                                 chatManager.createChat(user, userID);
@@ -483,27 +488,23 @@ public class MessageSystem {
                                 validUserID = true;
                                 validAddRemove = true;
                                 goBack = true;
-                            }
-                            else {
+                            } else {
                                 output.userAlreadyInYourContacts();
                             }
-                        }
-                        else {
+                        } else {
                             output.enterContactUserid(true);
                         }
                     }
-                }
-                else if (option.equals("2")) {
+                } else if (option.equals("2")) {
                     boolean validUserID = false;
                     while (!validUserID) {
                         ArrayList<String> contactList;
-                        if (organizerManager.userExist(userID)){
+                        if (organizerManager.userExist(userID)) {
                             contactList = organizerManager.contactList(userID);
-                        }
-                        else {
+                        } else {
                             contactList = attendeeManager.contactList(userID);
                         }
-                        if (contactList.isEmpty()){
+                        if (contactList.isEmpty()) {
                             output.youHaveNoContactstoRemove();
                             validUserID = true;
                             continue;
@@ -513,20 +514,17 @@ public class MessageSystem {
                         int userIndex;
                         try {
                             userIndex = Integer.parseInt(input.getKeyboardInput());
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             userIndex = -1;
                         }
-                        if (userIndex == 0){
+                        if (userIndex == 0) {
                             validUserID = true;
-                        }
-                        else if (1<=userIndex && userIndex <= contactList.size()){
-                            String user = contactList.get(userIndex-1);
+                        } else if (1 <= userIndex && userIndex <= contactList.size()) {
+                            String user = contactList.get(userIndex - 1);
                             if (organizerManager.userExist(userID) && organizerManager.contactExists(userID, user)) {
                                 organizerManager.removeContact(userID, user);
 
-                            }
-                            else if (attendeeManager.userExist(userID) && attendeeManager.contactExists(userID, user)){
+                            } else if (attendeeManager.userExist(userID) && attendeeManager.contactExists(userID, user)) {
                                 attendeeManager.removeContact(userID, user);
                             }
                             if (organizerManager.userExist(user)) {
@@ -541,50 +539,45 @@ public class MessageSystem {
                             validUserID = true;
                             validAddRemove = true;
                             goBack = true;
-                        }
-                        else {
+                        } else {
                             output.invalidInput();
                         }
                     }
-                }
-                else {
+                } else {
                     output.invalidInputSelection();
                 }
             }
         }
     }
-    
+
     public void newAddRemoveContact(String userid) throws IOException {
         boolean main = false;
-        while(!main){
+        while (!main) {
             output.addRemoveContact();
             String option = input.getKeyboardInput();
-            if (option.equals("0")){
+            if (option.equals("0")) {
                 return;
-            }
-            else if (option.equals("1")){
+            } else if (option.equals("1")) {
                 int helper = helperAddContact(userid);
-                if (helper==1){
+                if (helper == 1) {
                     return;
                 }
-            }
-            else if (option.equals("2")){
+            } else if (option.equals("2")) {
                 int helper = helperRemoveContact(userid);
-                if (helper==1){
+                if (helper == 1) {
                     return;
                 }
-            }
-            else{
+            } else {
                 output.invalidInputSelection();
             }
         }
         saveState();
     }
-    
-    private int helperAddContact(String userid){
-        while (true){
+
+    private int helperAddContact(String userid) {
+        while (true) {
             ArrayList<String> listOfContactsID = findAllUsersThatArentContacts(userid);
-            if (listOfContactsID.isEmpty()){
+            if (listOfContactsID.isEmpty()) {
                 output.allUsersAreYourContact();
                 return 0;
             }
@@ -593,50 +586,44 @@ public class MessageSystem {
             int userIndex;
             try {
                 userIndex = Integer.parseInt(input.getKeyboardInput());
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 userIndex = -1;
             }
-            if (userIndex == 0){
+            if (userIndex == 0) {
                 return 0;
-            }
-            else if (1<=userIndex && userIndex <= listOfContactsID.size()){
-                String user = listOfContactsID.get(userIndex-1);
+            } else if (1 <= userIndex && userIndex <= listOfContactsID.size()) {
+                String user = listOfContactsID.get(userIndex - 1);
                 if (organizerManager.userExist(userid) && !organizerManager.contactExists(userid, user)) {
                     organizerManager.addContact(userid, user);
                     addContact(user, userid);
                     chatManager.createChat(user, userid);
                     output.ActionDone();
                     return 1;
-                }
-                else if (attendeeManager.userExist(userid) && !attendeeManager.contactExists(userid, user)){
+                } else if (attendeeManager.userExist(userid) && !attendeeManager.contactExists(userid, user)) {
                     attendeeManager.addContact(userid, user);
                     addContact(user, userid);
                     chatManager.createChat(user, userid);
                     output.ActionDone();
                     return 1;
-                }
-                else {
+                } else {
                     output.userAlreadyInYourContacts();
                 }
-            }
-            else {
+            } else {
                 output.enterContactUserid(true);
             }
-            
+
         }
     }
-    
-    private int helperRemoveContact(String userid){
-        while (true){
+
+    private int helperRemoveContact(String userid) {
+        while (true) {
             ArrayList<String> contactList;
-            if (organizerManager.userExist(userid)){
+            if (organizerManager.userExist(userid)) {
                 contactList = organizerManager.contactList(userid);
-            }
-            else {
+            } else {
                 contactList = attendeeManager.contactList(userid);
             }
-            if (contactList.isEmpty()){
+            if (contactList.isEmpty()) {
                 output.youHaveNoContactstoRemove();
                 return 0;
             }
@@ -645,20 +632,17 @@ public class MessageSystem {
             int userIndex;
             try {
                 userIndex = Integer.parseInt(input.getKeyboardInput());
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 userIndex = -1;
             }
-            if (userIndex == 0){
+            if (userIndex == 0) {
                 return 0;
-            }
-            else if (1<=userIndex && userIndex <= contactList.size()){
-                String user = contactList.get(userIndex-1);
+            } else if (1 <= userIndex && userIndex <= contactList.size()) {
+                String user = contactList.get(userIndex - 1);
                 if (organizerManager.userExist(userid) && organizerManager.contactExists(userid, user)) {
                     organizerManager.removeContact(userid, user);
 
-                }
-                else if (attendeeManager.userExist(userid) && attendeeManager.contactExists(userid, user)){
+                } else if (attendeeManager.userExist(userid) && attendeeManager.contactExists(userid, user)) {
                     attendeeManager.removeContact(userid, user);
                 }
                 if (organizerManager.userExist(user)) {
@@ -671,24 +655,22 @@ public class MessageSystem {
                 chatManager.deleteChat(user, userid);
                 output.ActionDone();
                 return 1;
-            }
-            else {
+            } else {
                 output.invalidInput();
             }
         }
     }
 
-    private ArrayList<String> findAllUsersThatArentContacts(String userID){
+    private ArrayList<String> findAllUsersThatArentContacts(String userID) {
         ArrayList<String> listOfContactsID;
         ArrayList<String> listofAllIDs = new ArrayList<>();
         listofAllIDs.addAll(organizerManager.getUserIDs());
         listofAllIDs.addAll(speakerManager.getUserIDs());
         listofAllIDs.addAll(attendeeManager.getUserIDs());
 
-        if (organizerManager.userExist(userID)){
+        if (organizerManager.userExist(userID)) {
             listOfContactsID = organizerManager.contactList(userID); // new
-        }
-        else {
+        } else {
             listOfContactsID = attendeeManager.contactList(userID);
         }
         listofAllIDs.removeAll(listOfContactsID);

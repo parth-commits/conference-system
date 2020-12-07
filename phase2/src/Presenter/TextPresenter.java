@@ -198,31 +198,33 @@ public class TextPresenter {
 
     /**
      * Prints: Please enter your UserID.
-     * If the UserID is incorrect, prints: "Your UserID is incorrect. If you currently do not have an acocunt please make one!
+     * If the UserID is incorrect, prints: "Your UserID is incorrect. If you currently do not have an account please make one!
      * You are being redirected to main menu where you can make an account."
      *
      * @param checker Checks if the userID is valid
      */
     public void loginEnterID(boolean checker) {
-        if (checker) {
-            System.out.println("Please enter your UserID.");
-        } else {
-            System.out.println("Your UserID is incorrect. If you currently do not have an acocunt please make one!");
-            System.out.println("You are being redirected to main menu where you can make an account.");
+        if (!checker) {
+            System.out.println("Your UserID is incorrect. If you currently do not have an account please make one!");
+        }
+        else{
+            System.out.println("Please enter your userid");
+            System.out.println("Or press 0 to go back.");
         }
     }
 
     /**
      * Prints: Please enter your password.
-     * If the password is incorrect, prints: Your password is incorrect. If you currently do not have an acocunt please make one!
+     * If the password is incorrect, prints: Your password is incorrect. If you currently do not have an account please make one!
      *
      * @param checker Checks if the password is valid
      */
     public void loginPassword(boolean checker) {
         if (checker) {
             System.out.println("Please enter your password.");
+            System.out.println("Or press 0 to go back.");
         } else {
-            System.out.println("Your password is incorrect. If you currently do not have an acocunt please make one!");
+            System.out.println("Your password is incorrect. If you currently do not have an account please make one!");
         }
     }
 

@@ -88,7 +88,7 @@ public class EventManager implements Serializable{
     public ArrayList<ArrayList<String>> getListofEventsBySpeaker(String speakerID){
         ArrayList<ArrayList<String>> listofEventsbySpeaker = new ArrayList<>();
         for (Event listOfEvent : listOfEvents) {
-            if (listOfEvent.getSpeakerID().equals(speakerID)) {
+            if (listOfEvent.getSpeakerID().contains(speakerID)) {
                 ArrayList<String> eventInfo = new ArrayList<>();
                 eventInfo.add(String.valueOf(listOfEvent.getID()));
                 eventInfo.add(listOfEvent.getTitle());

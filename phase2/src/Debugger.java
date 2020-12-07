@@ -45,7 +45,7 @@ public class Debugger {
         for (String room: roomLOCS){
             System.out.println(roomManager.getRoom(room).toString());
         }
-        System.out.println("\n\nAll the requests in the system and their status");
+        System.out.println("\n\nAll the requests in the system and their status:");
         TextPresenter output = new TextPresenter();
         output.requestList(requestManager.getListOfRequests());
 
