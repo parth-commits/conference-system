@@ -56,7 +56,7 @@ Optional Extensions (Approved by Prof)
 
     6) Organizer can export a .txt file with all the events and their info, so they can eventually print it out and
     have it on hand during the conference to keep a track of when is which event, and who's speaking, and who's
-    attending.
+    attending. The file exported is called : "eventinfo.txt"
 
     7) (Small Extension) Any organizer can change the name of any event.
 

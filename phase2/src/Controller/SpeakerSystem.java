@@ -69,7 +69,7 @@ public class SpeakerSystem {
             }
             //3. Message Attendees
             else if (i.equals("3")){
-                messageSystem.sendMessage(userID);
+                messageSystem.newSendMessage(userID);
             }
             //4. logout
             else if (i.equals("4")){
