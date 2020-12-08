@@ -262,47 +262,45 @@ public class MessageSystem {
                     }
                     return;
                 }
-                output.promptEvents(eventIDsandTitle, false);
-                String getInput = input.getKeyboardInput();
-                if (getInput.equals("0")){
-                    return;
-                }
-                boolean validInput = false;
-                int eventIDChoosen = -1;// will guarantee change, -1 is a place holder
-                for (ArrayList<String> stringArrayList : eventIDsandTitle) {
-                    if (stringArrayList.get(0).equals(getInput)) {
-                        validInput = true;
-                        eventIDChoosen = Integer.parseInt(getInput);
-                        break;
-                    }
-                }
-                while (!validInput) {
-                    output.promptEvents(eventIDsandTitle, true);
-                    getInput = input.getKeyboardInput();
-                    if (getInput.equals("0")){
-                        return;
-                    }
-                    for (ArrayList<String> strings : eventIDsandTitle) {
-                        if (strings.get(0).equals(getInput)) {
-                            validInput = true;
-                            eventIDChoosen = Integer.parseInt(getInput);
-                            break;
+                else{
+                    boolean validInput = false;
+                    while(!validInput){
+                        output.promptEvents(eventIDsandTitle, false);
+                        String getInput = input.getKeyboardInput();
+                        if (getInput.equals("0")){
+                            validInput=true;
+                        }
+                        else {
+                            int eventIDChosen = -1;
+                            for (ArrayList<String> stringArrayList : eventIDsandTitle) {
+                                if (stringArrayList.get(0).equals(getInput)) {
+                                    eventIDChosen = Integer.parseInt(getInput);
+                                }
+                            }
+                            if (eventIDChosen==-1){
+                                output.promptEvents(eventIDsandTitle, true);
+                            }
+                            else{
+                                output.promptContextEvent(eventManager.getEvent(eventIDChosen).getTitle());
+                                String context = input.getKeyboardInput();                                     //youve selected an event, now you write message.
+                                if (context.equals("0")){
+                                    continue;
+                                }
+                                ArrayList<String> attendeesOfEvent = eventManager.getEventAttendees(eventIDChosen);
+                                for (String id : attendeesOfEvent) {
+                                    if (!(chatManager.chatExists(sender, id))) {
+                                        chatManager.createChat(sender, id);
+                                        addContact(sender, id);
+                                        addContact(id, sender);
+                                    }
+                                    chatManager.addMessageToChat(sender, id, context);
+                                }
+                                output.messageSentToEveryone();
+                                return;
+                            }
                         }
                     }
                 }
-                output.promptContextEvent(eventManager.getEvent(eventIDChoosen).getTitle());
-                String context = input.getKeyboardInput();                                     //youve selected an event, now you write message.
-
-                ArrayList<String> attendeesOfEvent = eventManager.getEventAttendees(eventIDChoosen);
-                for (String id : attendeesOfEvent) {
-                    if (!(chatManager.chatExists(sender, id))) {
-                        chatManager.createChat(sender, id);
-                        addContact(sender, id);
-                        addContact(id, sender);
-                    }
-                    chatManager.addMessageToChat(sender, id, context);
-                }
-                output.messageSentToEveryone();
             } else if (in.equals("2")) {
                 singleUserMessageHelper(sender);
             } else {

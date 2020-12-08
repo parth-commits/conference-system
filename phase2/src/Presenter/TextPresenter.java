@@ -313,7 +313,7 @@ public class TextPresenter {
         for (int i = 0; i < eventList.size(); i++) {
             System.out.println((i + 1) + ". ID: " + eventList.get(i).get(0) + " Name: " + eventList.get(i).get(1));
         }
-        System.out.println("Enter the event ID of your choice:");
+        System.out.println("Enter the event ID of your choice or press 0 to go back");
     }
 
     /**
@@ -330,6 +330,7 @@ public class TextPresenter {
      */
     public void promptContextEvent(String title) {
         System.out.println("Please enter the automated message for " + title + " event: ");
+        System.out.println("Or type 0 to go back");
     }
 
     /**
