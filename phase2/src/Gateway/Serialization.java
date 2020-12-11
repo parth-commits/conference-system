@@ -12,7 +12,7 @@ public class Serialization {
 
 
     /**
-     * Saves states of attendee manager.
+     * Saves states of all managers.
      * @throws IOException throw IOException to avoid errors that might occur
      */
     public void saveState(Object obj, String type) throws IOException {
@@ -65,7 +65,7 @@ public class Serialization {
 
     /**
      * Imports ser files.
-     * @return AttendeeManager returns an implement of this use case
+     * @return Object returns an implement of this use case (all the managers)
      */
     public Object importState(String type) {
         String fileName = directory + File.separator + "src" + File.separator + type + ".ser";
